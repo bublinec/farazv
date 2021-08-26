@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  height: 80px;
+  background: white;
+  align-items: center;
+
+  nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-items {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.navLink {
+  font-size: 2rem;
+  font-weight: 600;
+
+  color: black;
+  padding: 0 20px;
+
+  &.active {
+    color: blue;
+  }
+}
