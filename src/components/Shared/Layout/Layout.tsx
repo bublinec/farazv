@@ -1,21 +1,36 @@
+import { Box, Flex } from "@chakra-ui/react";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { ReactNode } from "react";
 import { Footer } from "../Footer/Footer";
 import { Header } from "../Header/Header";
 import "./global.css";
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+  noHeader?: boolean;
+  children: ReactNode | ReactNode[];
+}
+
+const Layout = (props: LayoutProps) => {
+  const { children, noHeader = false } = props;
+
   return (
-    <div>
-      <Header />
-      <main>{children}</main>
+    <Flex
+      width="full"
+      minHight="screen"
+      justify="space-between"
+      flexDir="column"
+    >
+      <Box>
+        {!noHeader && <Header />}
+        <main>{children}</main>
+      </Box>
       <Footer />
-    </div>
+    </Flex>
   );
 };
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 export default Layout;
