@@ -2,26 +2,23 @@ import { graphql, useStaticQuery } from "gatsby";
 import { Hero } from "../model/hero.model";
 
 export const useHero = (): Hero => {
-  const {
-    strapiHome: { hero },
-  } = useStaticQuery(graphql`
-    {
-      strapiHome {
+  const data = useStaticQuery(graphql`
+    query HeroQuery {
+      strapiHomePage {
         hero {
-          title
-          superscript
-          subtitle
           image {
             localFile {
               childImageSharp {
-                gatsbyImageData(placeholder: BLURRED)
+                gatsbyImageData(placeholder: BLURRED, quality: 100)
               }
             }
           }
+          title
+          subtitle
         }
       }
     }
   `);
 
-  return hero;
+  return data.strapiHomePage.hero;
 };

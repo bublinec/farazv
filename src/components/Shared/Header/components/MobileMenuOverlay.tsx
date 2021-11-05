@@ -1,47 +1,45 @@
-import { Link } from "gatsby";
-import React from "react";
-import { routes } from "../../../../lib/routes";
-import { Container } from "../../Container/Container";
-import { LogoLink } from "../../LogoLink/LogoLink";
+import { Link } from 'gatsby';
+import { StaticImage } from 'gatsby-plugin-image';
+import React from 'react';
+import { routes } from '../../../../lib/routes';
+import { Container } from '../../Container/Container';
+import { LogoLink } from '../../LogoLink/LogoLink';
 
 export interface MobileMenuOverlayProps {
-  className?: string;
-  open?: boolean;
-  setOpen?: (open: boolean) => void;
+    className?: string;
+    open?: boolean;
+    setOpen?: (open: boolean) => void;
 }
 
 const renderMobileMenuLinkItems = () =>
-  Object.values(routes)
-    .filter((item) => item?.showInMenu != false)
-    .map((route) => (
-      <div key={route.to}>
-        <Link
-          className="uppercase"
-          activeClassName="text-secondary"
-          to={route.to}
-        >
-          {route.label}
-        </Link>
-      </div>
-    ));
+    Object.values(routes)
+        .filter((item) => item?.showInMenu != false)
+        .map((route) => (
+            <Link className='uppercase' activeClassName='text-secondary' to={route.to} key={route.label}>
+                <div className='p-3 w-72 text-center'>{route.label}</div>
+            </Link>
+        ));
 
 const MobileMenuOverlayInner = (props: MobileMenuOverlayProps) => {
-  return (
-    <div
-      className={`${
-        props.open ? "left-0" : "-left-full"
-      } fixed top-0  bg-white h-screen w-screen z-40 transition-all duration-200 py-4`}
-    >
-      <Container>
-        <div className="flex items-center space-x-5 py-4">
-          <LogoLink />
+    return (
+        <div
+            className={`${
+                props.open ? 'left-0' : '-left-full'
+            } fixed top-0  bg-white h-screen w-screen z-40 transition-all duration-200 py-4 `}
+        >
+            <Container>
+                <div className='flex items-center text-black text-2xl'>
+                    <LogoLink />
+                </div>
+                <div className='flex justify-center flex-col items-center font-bold text-lg mt-14 space-y-1'>
+                    {renderMobileMenuLinkItems()}
+                </div>
+            </Container>
+            <div className='opacity-5 absolute bottom-0 right-0'>
+                <StaticImage src={'../../../../assets/churchWatermark.png'} alt='church watermark' />
+            </div>
         </div>
-        <div className="flex justify-center flex-col items-center space-y-4 mt-10 font-bold text-lg">
-          {renderMobileMenuLinkItems()}
-        </div>
-      </Container>
-    </div>
-  );
+    );
 };
 
 export const MobileMenuOverlay = MobileMenuOverlayInner;

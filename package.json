@@ -1,7 +1,7 @@
 {
-  "name": "momentum-gatsby-starter",
+  "name": "farazv",
   "version": "2.0.0",
-  "description": "Our in-house gatsby starter",
+  "description": "A presence web page for the parish community in Zvolen",
   "keywords": [
     "gatsby",
     "gatsby-starter",
@@ -9,7 +9,7 @@
   ],
   "license": "MIT",
   "author": {
-    "name": "Jakob Rolik"
+    "name": "Juraj Bublinec"
   },
   "files": [],
   "scripts": {
@@ -43,9 +43,11 @@
     "gatsby-plugin-sass": "^4.1.0",
     "gatsby-plugin-sharp": "^3.6.0",
     "gatsby-plugin-sitemap": "^4.2.0",
-    "gatsby-plugin-webfonts": "^2.0.0",
+    "gatsby-plugin-webfonts": "^2.1.1",
     "gatsby-source-filesystem": "^3.6.0",
+    "gatsby-source-strapi": "^1.0.2",
     "gatsby-transformer-sharp": "^3.6.0",
+    "gbimage-bridge": "^0.1.4",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
