@@ -10,7 +10,9 @@ export const NavbarItemButton = (props: NavbarItemButtonProps) => {
   const { className = "", label, setIsDropdownOpen } = props;
   return (
     <div
-      className={`${className} px-8 py-4 cursor-pointer uppercase text-2xl hover:bg-black hover:bg-opacity-40 text-white`}
+      className={`${className} px-8 py-4 cursor-pointer uppercase text-2xl hover:bg-black hover:bg-opacity-20 text-white
+      transition duration-200 ease-in-out
+      `}
       onClick={() => setIsDropdownOpen(true)}
       onMouseEnter={() => setIsDropdownOpen(true)}
     >

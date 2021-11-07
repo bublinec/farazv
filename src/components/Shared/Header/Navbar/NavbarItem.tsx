@@ -23,7 +23,7 @@ export const NavbarItem = (props: NavbarItemProps) => {
           <NavbarItemButton
             label={route.label}
             setIsDropdownOpen={setIsDropdownOpen}
-            className={isDropdownOpen ? "bg-black bg-opacity-40" : ""}
+            className={isDropdownOpen ? "bg-black bg-opacity-20" : ""}
           />
           <div
             className={`${isDropdownOpen || "hidden"}`}
