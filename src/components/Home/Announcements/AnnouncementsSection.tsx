@@ -10,7 +10,6 @@ export interface AnnouncementsSectionProps extends BoxProps {}
 export const AnnouncementsSection = (props: AnnouncementsSectionProps) => {
   const { ...restOfProps } = props;
   const announcements = useAnnouncements();
-  console.log(announcements);
 
   return (
     <Box {...restOfProps}>
