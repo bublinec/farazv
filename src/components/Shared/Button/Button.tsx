@@ -12,11 +12,12 @@ export const Button = (props: ButtonProps) => {
   return (
     <ChakraButton
       rounded="none"
-      py={5}
-      px={6}
+      // py={5}
+      // px={6}
       color="primary"
       bg="none"
-      borderWidth={2}
+      // fontSize="lg"
+      borderWidth={"2px"}
       borderColor={"primary"}
       {...restOfProps}
     >

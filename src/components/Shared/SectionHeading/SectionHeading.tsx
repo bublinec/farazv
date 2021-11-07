@@ -12,10 +12,10 @@ export interface SectionHeadingProps extends BoxProps {
 export const SectionHeading = (props: SectionHeadingProps) => {
   const { heading, superscript, ...restOfProps } = props;
   return (
-    <Box {...restOfProps} w="max-content">
+    <Box {...restOfProps} w="max-content" mb={3}>
       {superscript && <Superscript mb={-1}>{superscript}</Superscript>}
       <Heading>{heading}</Heading>
-      <Underline />
+      <Underline maxW={280} />
     </Box>
   );
 };
