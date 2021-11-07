@@ -10,7 +10,7 @@ export const Superscript = (props: SuperscriptProps) => {
   return (
     <Box
       {...restOfProps}
-      fontSize="lg"
+      fontSize={{ base: "md", md: "md" }}
       fontWeight="600"
       color="primary"
       textTransform="uppercase"

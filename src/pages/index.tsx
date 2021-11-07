@@ -10,7 +10,7 @@ const HomePage = () => (
   <Layout noHeader>
     <SEO description="This is an Home page" />
     <Hero />
-    <Container className="py-20">
+    <Container className="py-12">
       <Stack spacing={{ base: 6, md: 12 }}>
         <AnnouncementsSection />
       </Stack>

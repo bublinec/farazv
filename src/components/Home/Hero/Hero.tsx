@@ -26,8 +26,8 @@ export const Hero = (props: HeroProps) => {
         <Container>
           <Box
             height={{
-              base: "400px",
-              lg: "620px"
+              base: "360px",
+              lg: "580px"
             }}
             pb={{
               base: "20",

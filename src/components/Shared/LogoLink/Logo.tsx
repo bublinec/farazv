@@ -1,10 +1,14 @@
-import React from 'react';
+import React from "react";
 
 export interface LogoProps {
-    className?: string;
+  className?: string;
 }
 
 export const Logo = (props: LogoProps) => {
-    const { className = '' } = props;
-    return <div className={`${className}`}>Farnosť sv. Alžbety</div>;
+  const { className = "" } = props;
+  return (
+    <div className={`${className} uppercase font-medium text-2xl`}>
+      Farnosť sv. Alžbety
+    </div>
+  );
 };

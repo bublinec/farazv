@@ -60,7 +60,8 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
                     fontWeight="500"
                     color={color || "primary"}
                     _hover={{
-                      color: "primaryShade"
+                      color: "primaryShade",
+                      transition: "all ease-in-out 200ms"
                     }}
                   >
                     {props.children}

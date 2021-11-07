@@ -11,7 +11,8 @@ export const Heading = (props: HeadingProps) => {
     <Box
       {...restOfProps}
       as="h2"
-      fontSize="5xl"
+      lineHeight={{ base: 9, sm: "unset" }}
+      fontSize={{ base: "3xl", md: "4xl", xl: "4xl" }}
       fontWeight="600"
       color="darkGray"
     >
