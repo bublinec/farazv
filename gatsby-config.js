@@ -75,8 +75,19 @@ module.exports = {
       options: {
         apiURL: `https://farazv.herokuapp.com`,
         queryLimit: 1000,
-        collectionTypes: ["announcements"],
-        singleTypes: ["home-page"]
+        collectionTypes: [
+          "announcements",
+          "events",
+          "priests",
+          "weekly-announcements"
+        ],
+        singleTypes: [
+          "home-page",
+          "contact",
+          "groups",
+          "sacraments",
+          "slideshow"
+        ]
       }
     },
 
