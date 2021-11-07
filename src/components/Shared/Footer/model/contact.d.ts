@@ -22,6 +22,7 @@ declare module Contact {
     address: string;
     email: string;
     googleMapEmbedLink: string;
+    googleMapLink: string;
     iban: string;
     ico: string;
     id: number;

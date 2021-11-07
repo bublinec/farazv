@@ -21,6 +21,7 @@ export const useContact = (): Contact.Contact => {
           address
           email
           googleMapEmbedLink
+          googleMapLink
           iban
           ico
           id
