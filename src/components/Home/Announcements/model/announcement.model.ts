@@ -3,5 +3,5 @@ export interface Announcement {
   description: string;
   content: string;
   slug: string;
-  published_at: Date;
+  published_at: any;
 }
