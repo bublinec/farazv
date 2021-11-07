@@ -15,8 +15,6 @@ export const Hero = (props: HeroProps) => {
   const { className = "" } = props;
   const { image, title, subtitle } = useHero();
 
-  console.log(image, title, subtitle);
-
   const extractedImage = getImage(image.localFile);
   const bgImage = convertToBgImage(extractedImage);
 
