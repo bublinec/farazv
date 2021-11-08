@@ -1,22 +1,30 @@
 import { Stack } from "@chakra-ui/react";
+import { graphql } from "gatsby";
 import React from "react";
-import { AnnouncementsSection } from "../components/Home/Announcements/AnnouncementsSection";
-import { Hero } from "../components/Home/Hero/Hero";
 import { Container } from "../components/Shared/Container/Container";
 import Layout from "../components/Shared/Layout/Layout";
-import { MarkdownRenderer } from "../components/Shared/MarkdownRenderer/MarkdownRenderer";
-import { SEO } from "../components/Shared/SEO/SEO";
+import { SectionHeading } from "../components/Shared/SectionHeading/SectionHeading";
 
-const HomePage = () => (
-  <Layout noHeader>
-    <SEO description="This is an Home page" />
-    <Hero />
-    <Container className="py-12 md:py-20">
-      <Stack spacing={{ base: 6, md: 12 }}>
-        <MarkdownRenderer />
-      </Stack>
-    </Container>
-  </Layout>
-);
+export const query = graphql`
+  query useContactPage {
+    strapiAdminPages(slug: { eq: "kontakt" }) {
+      ...AdminPagesFragment
+    }
+  }
+`;
 
-export default HomePage;
+const ContactPage = (props: any) => {
+  const page = props.data.strapiAdminPages;
+
+  return (
+    <Layout page={page}>
+      <Container className="py-12 md:py-20">
+        <Stack spacing={{ base: 6, md: 12 }}>
+          <SectionHeading heading="Obsah pripravujeme" superscript="Farnosť" />
+        </Stack>
+      </Container>
+    </Layout>
+  );
+};
+
+export default ContactPage;

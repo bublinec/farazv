@@ -4,21 +4,25 @@ import React, { ReactNode } from "react";
 import { Hero } from "../../Home/Hero/Hero";
 import { Footer } from "../Footer/Footer";
 import { MiniHero } from "../MiniHero/MiniHero";
+import { SEO } from "../SEO/SEO";
 import "./global.css";
-
 interface LayoutProps {
   home?: boolean;
-  heroImage?: any;
-  heroTitle?: string;
+  page?: Page.StrapiPage;
   children: ReactNode | ReactNode[];
 }
 
 const Layout = (props: LayoutProps) => {
-  const { heroImage, heroTitle, children, home = false } = props;
+  const { page, children, home = false } = props;
 
   return (
     <Box>
-      {home ? <Hero /> : <MiniHero image={heroImage} title={heroTitle} />}
+      <SEO
+        description={page?.content}
+        title={page?.title}
+        image={page?.image?.url}
+      />
+      {home ? <Hero /> : page?.image && <MiniHero image={page?.image} title={page?.title} />}
       <main>{children}</main>
       <Footer />
     </Box>

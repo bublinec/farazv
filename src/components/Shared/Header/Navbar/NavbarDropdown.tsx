@@ -18,7 +18,7 @@ export const NavbarDropdown = (props: NavbarDropdownProps) => {
     >
       <div className="flex flex-col">
         {route.children?.map((childRoute) => (
-          <Link to={`${route.to}${childRoute.to}`}>
+          <Link to={`${route.to}${childRoute.to}`} key={childRoute.to}>
             <div
               className="bg-black bg-opacity-100 hover:bg-opacity-100 
             py-2 pl-4 text-lg text-white hover:text-secondary font-light

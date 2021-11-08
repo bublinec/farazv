@@ -14,8 +14,6 @@ export interface MiniHeroProps {
 
 export const MiniHero = (props: MiniHeroProps) => {
   const { title, image, className = "" } = props;
-  console.log(image);
-
   const extractedImage = getImage(image.localFile);
   const bgImage = convertToBgImage(extractedImage);
 
@@ -35,12 +33,12 @@ export const MiniHero = (props: MiniHeroProps) => {
               lg: "32"
             }}
             w="full"
-            className="flex flex-col items-center justify-center text-white z-10 relative text-center space-y-4 lg:space-y-3.5"
+            className="flex flex-col items-center text-white z-10 relative text-center space-y-4 lg:space-y-3.5"
           >
             <Box
               as="h1"
               color="white"
-              mt={6}
+              mt={16}
               lineHeight={{
                 base: "40px",
                 sm: "60px",
@@ -53,7 +51,7 @@ export const MiniHero = (props: MiniHeroProps) => {
                 lg: "5xl",
                 xl: "6xl"
               }}
-              className="uppercase font-bold tracking-wider"
+              className="uppercase font-semibold tracking-wider"
             >
               {title}
             </Box>

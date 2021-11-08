@@ -1,11 +1,13 @@
-import React from 'react';
-
-import Layout from '../components/Shared/Layout/Layout';
+import { Stack } from "@chakra-ui/react";
+import React from "react";
+import { Container } from "../components/Shared/Container/Container";
+import Layout from "../components/Shared/Layout/Layout";
 
 const NotFoundPage = () => (
   <Layout>
-    <h1>NOT FOUND</h1>
-    <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
+    <Container className="py-12 md:py-20">
+      <Stack spacing={{ base: 6, md: 12 }}>Zdá sa že ste sa stratili</Stack>
+    </Container>
   </Layout>
 );
 

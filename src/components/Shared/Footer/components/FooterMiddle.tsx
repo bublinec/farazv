@@ -48,15 +48,30 @@ export const FooterMiddle = (props: FooterMiddleProps) => {
         >
           <FooterColumn
             title={routes.parish.label}
-            items={Object.values(routes.parish?.children || [])}
+            items={
+              routes.parish?.children?.map((r) => ({
+                label: r.label,
+                to: `${routes.parish.to}${r.to}`
+              })) || []
+            }
           />
           <FooterColumn
             title={routes.sacraments.label}
-            items={Object.values(routes.sacraments?.children || [])}
+            items={
+              routes.sacraments?.children?.map((r) => ({
+                label: r.label,
+                to: `${routes.sacraments.to}${r.to}`
+              })) || []
+            }
           />
           <FooterColumn
             title={routes.groups.label}
-            items={Object.values(routes.groups?.children || [])}
+            items={
+              routes.groups?.children?.map((r) => ({
+                label: r.label,
+                to: `${routes.groups.to}${r.to}`
+              })) || []
+            }
           />
           <FooterColumn
             title={"Úradné hodiny"}

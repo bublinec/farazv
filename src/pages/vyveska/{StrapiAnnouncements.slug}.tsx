@@ -6,7 +6,6 @@ import { IconDate } from "../../components/Shared/IconDate/IconDate";
 import Layout from "../../components/Shared/Layout/Layout";
 import { MarkdownRenderer } from "../../components/Shared/MarkdownRenderer/MarkdownRenderer";
 import { SectionHeading } from "../../components/Shared/SectionHeading/SectionHeading";
-import { SEO } from "../../components/Shared/SEO/SEO";
 
 export const query = graphql`
   query useAnnouncement($slug: String) {
@@ -17,14 +16,19 @@ export const query = graphql`
       content
       description
     }
+
+    strapiAdminPages(slug: { eq: "vyveska" }) {
+      ...AdminPagesFragment
+    }
   }
 `;
 
 const AnnouncementPage = (props: any) => {
   const announcement = props.data.strapiAnnouncements;
+  const page = props.data.strapiAdminPages;
+
   return (
-    <Layout>
-      <SEO description={announcement.description} />
+    <Layout page={page}>
       <Container maxW="container.lg">
         <Stack spacing={{ base: 4, md: 8 }} py={{ base: 10, md: 14 }}>
           <Box>
