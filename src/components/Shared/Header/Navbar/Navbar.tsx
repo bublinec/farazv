@@ -19,7 +19,7 @@ export const Navbar = (props: NavbarProps) => {
         <div className="mm xl:hidden flex justify-end items-center">
           <MobileMenu />
         </div>
-        <div className="hidden lg:flex">
+        <div className="hidden lg:flex h-full">
           {routesArray.map((r) => (
             <NavbarItem route={r} key={r.to} />
           ))}

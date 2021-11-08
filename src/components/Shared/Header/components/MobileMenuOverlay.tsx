@@ -17,7 +17,7 @@ const renderMobileMenuLinkItems = () =>
     .filter((item) => item?.showInMenu != false)
     .map((route) => {
       if (route.children) {
-        return <MobileMenuAccordionItem route={route} />;
+        return <MobileMenuAccordionItem route={route} key={route.label} />;
       }
       return (
         <Link

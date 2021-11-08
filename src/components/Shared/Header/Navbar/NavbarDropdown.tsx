@@ -5,11 +5,11 @@ import { Route } from "../../../../lib/routes";
 export interface NavbarDropdownProps {
   className?: string;
   onMouseEnter: any;
-  routes: Route[];
+  route: Route;
 }
 
 export const NavbarDropdown = (props: NavbarDropdownProps) => {
-  const { className = "", onMouseEnter, routes } = props;
+  const { className = "", onMouseEnter, route } = props;
 
   return (
     <section
@@ -17,15 +17,15 @@ export const NavbarDropdown = (props: NavbarDropdownProps) => {
       onMouseEnter={onMouseEnter}
     >
       <div className="flex flex-col">
-        {routes.map((r) => (
-          <Link to={r.to}>
+        {route.children?.map((childRoute) => (
+          <Link to={`${route.to}${childRoute.to}`} key={childRoute.to}>
             <div
               className="bg-black bg-opacity-100 hover:bg-opacity-100 
-            py-3 pl-4 text-xl text-white hover:text-secondary 
+            py-2 pl-4 text-lg text-white hover:text-secondary font-light
             transition duration-200 ease-in-out
             "
             >
-              {r.label}
+              {childRoute.label}
             </div>
           </Link>
         ))}

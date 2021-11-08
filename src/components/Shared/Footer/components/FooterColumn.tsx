@@ -16,7 +16,7 @@ export const FooterColumn = (props: FooterColumnProps) => {
       <SectionHeadingSmall heading={title} color="white" />
       <Stack spacing={0}>
         {items.map((i) => (
-          <LinkItem label={i.label} to={i.to} icon={i.icon} />
+          <LinkItem label={i.label} to={i.to} icon={i.icon} key={i.label} />
         ))}
       </Stack>
     </Box>

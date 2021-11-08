@@ -22,7 +22,7 @@ export const routes = {
       }),
       asRoute({
         label: "Kalendár akcií",
-        to: "/farske-oznamy"
+        to: "/kalendar-akcii"
       }),
       asRoute({
         label: "História farnosti",
@@ -74,7 +74,7 @@ export const routes = {
       }),
       asRoute({
         label: "Detský spevokol",
-        to: "/sviatost-manzelstva"
+        to: "/detsky-spevokol"
       }),
       asRoute({
         label: "Ružencové bratstvo",
@@ -82,7 +82,7 @@ export const routes = {
       }),
       asRoute({
         label: "Akolyti",
-        to: "/Akolyti"
+        to: "/akolyti"
       })
     ]
   }),

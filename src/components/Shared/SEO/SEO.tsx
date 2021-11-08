@@ -123,7 +123,7 @@ const SEO: React.FC<SEOProps> = (props) => {
 
   return (
     <Helmet
-      htmlAttributes={{ lang: "en" }}
+      htmlAttributes={{ lang: "sk" }}
       title={siteTitle}
       titleTemplate={titleTemplate}
       meta={metaData}

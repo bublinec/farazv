@@ -1,31 +1,31 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import React, { ReactNode } from "react";
+import { Hero } from "../../Home/Hero/Hero";
 import { Footer } from "../Footer/Footer";
-import { Header } from "../Header/Header";
+import { MiniHero } from "../MiniHero/MiniHero";
+import { SEO } from "../SEO/SEO";
 import "./global.css";
-
 interface LayoutProps {
-  noHeader?: boolean;
+  home?: boolean;
+  page?: Page.StrapiPage;
   children: ReactNode | ReactNode[];
 }
 
 const Layout = (props: LayoutProps) => {
-  const { children, noHeader = false } = props;
+  const { page, children, home = false } = props;
 
   return (
-    <Flex
-      width="full"
-      minHight="screen"
-      justify="space-between"
-      flexDir="column"
-    >
-      <Box>
-        {!noHeader && <Header />}
-        <main>{children}</main>
-      </Box>
+    <Box>
+      <SEO
+        description={page?.content}
+        title={page?.title}
+        image={page?.image?.url}
+      />
+      {home ? <Hero /> : page?.image && <MiniHero image={page?.image} title={page?.title} />}
+      <main>{children}</main>
       <Footer />
-    </Flex>
+    </Box>
   );
 };
 

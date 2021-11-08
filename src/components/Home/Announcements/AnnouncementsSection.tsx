@@ -25,6 +25,7 @@ export const AnnouncementsSection = (props: AnnouncementsSectionProps) => {
                 a.description || a.content,
                 ANNOUNCEMENT_DESCRIPTION_MAX_LENGTH
               )}
+              key={a.published_at}
               cta={{
                 url: `/vyveska/${a.slug}`,
                 text: "Čítať ďalej"

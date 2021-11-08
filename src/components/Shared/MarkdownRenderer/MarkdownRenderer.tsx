@@ -1,14 +1,16 @@
-import { Box, BoxProps, Heading, Text } from "@chakra-ui/react";
+import { Box, BoxProps, Text } from "@chakra-ui/react";
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import { SectionHeading } from "../SectionHeading/SectionHeading";
 import { Subheading } from "../Subheading/Subheading";
 
 export interface MarkdownRendererProps extends BoxProps {
   children?: string;
+  headingSuperscript?: string;
 }
 
 export const MarkdownRenderer = (props: MarkdownRendererProps) => {
-  const { children, color, ...restOfProps } = props;
+  const { children, color, headingSuperscript, ...restOfProps } = props;
 
   return (
     <Box {...restOfProps} color={color || "darkGray"}>
@@ -16,9 +18,13 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
         <ReactMarkdown
           components={{
             h1: ({ children }) => (
-              <Heading as="h1" color={color}>
-                {children}
-              </Heading>
+              <SectionHeading
+                as="h1"
+                color={color}
+                heading={children}
+                superscript={headingSuperscript}
+                mb={{ base: 2, md: 4 }}
+              />
             ),
             h2: ({ children }) => (
               <Subheading as="h2" color={color}>

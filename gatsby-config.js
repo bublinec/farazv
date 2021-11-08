@@ -79,7 +79,9 @@ module.exports = {
           "announcements",
           "events",
           "priests",
-          "weekly-announcements"
+          "weekly-announcements",
+          "page",
+          "admin-pages"
         ],
         singleTypes: [
           "home-page",
