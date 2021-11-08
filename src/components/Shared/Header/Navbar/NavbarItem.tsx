@@ -31,7 +31,7 @@ export const NavbarItem = (props: NavbarItemProps) => {
             onMouseEnter={() => setIsDropdownOpen(true)}
           >
             <NavbarDropdown
-              routes={route.children}
+              route={route}
               onMouseEnter={() => setIsDropdownOpen(true)}
             />
           </div>
