@@ -1,19 +1,19 @@
 import { Stack } from "@chakra-ui/react";
 import { graphql } from "gatsby";
 import React from "react";
-import { Container } from "../../components/Shared/Container/Container";
-import Layout from "../../components/Shared/Layout/Layout";
-import { MarkdownRenderer } from "../../components/Shared/MarkdownRenderer/MarkdownRenderer";
+import { Container } from "../../src/components/Shared/Container/Container";
+import Layout from "../../src/components/Shared/Layout/Layout";
+import { MarkdownRenderer } from "../../src/components/Shared/MarkdownRenderer/MarkdownRenderer";
 
 export const query = graphql`
-  query useParishHistoryPage {
-    strapiAdminPages(slug: { eq: "historia-farnosti" }) {
+  query useChurchPage {
+    strapiAdminPages(slug: { eq: "farsky-kostol" }) {
       ...AdminPagesFragment
     }
   }
 `;
 
-const ParishHistoryPage = (props: any) => {
+const ChurchPage = (props: any) => {
   const page = props.data.strapiAdminPages;
 
   return (
@@ -27,4 +27,4 @@ const ParishHistoryPage = (props: any) => {
   );
 };
 
-export default ParishHistoryPage;
+export default ChurchPage;

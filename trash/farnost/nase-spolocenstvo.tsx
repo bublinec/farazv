@@ -1,9 +1,9 @@
 import { Stack } from "@chakra-ui/react";
 import { graphql } from "gatsby";
 import React from "react";
-import { Container } from "../../components/Shared/Container/Container";
-import Layout from "../../components/Shared/Layout/Layout";
-import { SectionHeading } from "../../components/Shared/SectionHeading/SectionHeading";
+import { Container } from "../../src/components/Shared/Container/Container";
+import Layout from "../../src/components/Shared/Layout/Layout";
+import { SectionHeading } from "../../src/components/Shared/SectionHeading/SectionHeading";
 
 export const query = graphql`
   query useBlogPage {

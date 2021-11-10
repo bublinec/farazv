@@ -2,89 +2,26 @@ import { Stack } from "@chakra-ui/react";
 import { graphql } from "gatsby";
 import React from "react";
 import { AnnouncementsSection } from "../components/Home/Announcements/AnnouncementsSection";
-import { Container } from "../components/Shared/Container/Container";
 import Layout from "../components/Shared/Layout/Layout";
 
-export const pageFragment = graphql`
-  fragment PageFragment on StrapiPage {
-    content
-    title
-    description
-    slug
-    useGlobalSlideshow
-    image {
-      localFile {
-        childImageSharp {
-          gatsbyImageData(placeholder: BLURRED, quality: 100)
-        }
-      }
-      url
-    }
-    slideshow {
-      buttons {
-        external
-        link
-        text
-        type
-      }
-      description
-      superscript
-      title
-      image {
-        localFile {
-          childImageSharp {
-            gatsbyImageData(placeholder: BLURRED, quality: 100)
-          }
-        }
-        url
-      }
-    }
-  }
-
-  fragment AdminPagesFragment on StrapiAdminPages {
-    content
-    title
-    description
-    slug
-    useGlobalSlideshow
-    image {
-      localFile {
-        childImageSharp {
-          gatsbyImageData(placeholder: BLURRED, quality: 100)
-        }
-      }
-      url
-    }
-    slideshow {
-      buttons {
-        external
-        link
-        text
-        type
-      }
-      description
-      superscript
-      title
-      image {
-        localFile {
-          childImageSharp {
-            gatsbyImageData(placeholder: BLURRED, quality: 100)
-          }
-        }
-        url
+export const query = graphql`
+  query useHomePage {
+    STRAPI {
+      adminPages(where: { slug: "index" }) {
+        ...STRAPI_AdminPagesFragment
       }
     }
   }
 `;
 
-const HomePage = () => (
-  <Layout home>
-    <Container className="py-12 md:py-20">
-      <Stack spacing={{ base: 6, md: 12 }}>
+const HomePage = (props: any) => {
+  const page = props.data.STRAPI.adminPages[0];
+  return (
+    <Layout page={page} home>
+      <Stack spacing={{ base: 6, md: 12 }} py={20}>
         <AnnouncementsSection />
       </Stack>
-    </Container>
-  </Layout>
-);
-
+    </Layout>
+  );
+};
 export default HomePage;
