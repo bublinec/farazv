@@ -1,28 +1,34 @@
-import { Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/layout";
 import { graphql } from "gatsby";
 import React from "react";
+import { ContactDetailsSection } from "../components/Contact/ContactDetailsSection";
+import { PriestsSection } from "../components/Contact/PriestsSection";
 import { Container } from "../components/Shared/Container/Container";
+import { ContentRenderer } from "../components/Shared/ContentRenderer/ContentRenderer";
 import Layout from "../components/Shared/Layout/Layout";
-import { SectionHeading } from "../components/Shared/SectionHeading/SectionHeading";
 
 export const query = graphql`
   query useContactPage {
-    strapiAdminPages(slug: { eq: "kontakt" }) {
-      ...AdminPagesFragment
+    STRAPI {
+      adminPages(where: { slug: "kontakt" }) {
+        ...STRAPI_AdminPagesFragment
+      }
     }
   }
 `;
 
 const ContactPage = (props: any) => {
-  const page = props.data.strapiAdminPages;
+  const page = props.data.STRAPI.adminPages[0];
 
   return (
     <Layout page={page}>
-      <Container className="py-12 md:py-20">
-        <Stack spacing={{ base: 6, md: 12 }}>
-          <SectionHeading heading="Obsah pripravujeme" superscript="Farnosť" />
+      <Container>
+        <Stack spacing={{ base: 10, md: 14 }} py={20}>
+          <ContactDetailsSection />
+          <PriestsSection />
         </Stack>
       </Container>
+      <ContentRenderer contentSections={page.contentSections} />
     </Layout>
   );
 };

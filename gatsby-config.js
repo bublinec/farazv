@@ -83,13 +83,19 @@ module.exports = {
           "page",
           "admin-pages"
         ],
-        singleTypes: [
-          "home-page",
-          "contact",
-          "groups",
-          "sacraments",
-          "slideshow"
-        ]
+        singleTypes: ["contact", "global"]
+      }
+    },
+
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        // Arbitrary name for the remote schema Query type
+        typeName: "STRAPI",
+        // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
+        fieldName: "STRAPI",
+        // Url to query from
+        url: "https://farazv.herokuapp.com/graphql"
       }
     },
 

@@ -5,15 +5,16 @@ import { convertToBgImage } from "gbimage-bridge";
 import React from "react";
 import { Container } from "../../Shared/Container/Container";
 import { Header } from "../../Shared/Header/Header";
-import { useHero } from "./hooks/useHero";
 
 export interface HeroProps {
   className?: string;
+  image: any;
+  title: string;
+  subtitle: string;
 }
 
 export const Hero = (props: HeroProps) => {
-  const { className = "" } = props;
-  const { image, title, subtitle } = useHero();
+  const { image, title, subtitle, className = "" } = props;
 
   const extractedImage = getImage(image.localFile);
   const bgImage = convertToBgImage(extractedImage);

@@ -22,7 +22,16 @@ const Layout = (props: LayoutProps) => {
         title={page?.title}
         image={page?.image?.url}
       />
-      {home ? <Hero /> : page?.image && <MiniHero image={page?.image} title={page?.title} />}
+      {page?.image &&
+        (home ? (
+          <Hero
+            title={page.title}
+            image={page.image}
+            subtitle={page.description}
+          />
+        ) : (
+          <MiniHero image={page?.image} title={page?.title} />
+        ))}
       <main>{children}</main>
       <Footer />
     </Box>
