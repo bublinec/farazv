@@ -38,7 +38,7 @@ export const fragments = graphql`
           ...STRAPI_ComponentSectionsTextFragment
         }
       }
-      ... on STRAPI_ComponentSectionsMultiParagraphDarkBanner {
+      ... on STRAPI_ComponentSectionsMultiParagraphImageBanner {
         __typename
         heading {
           ...STRAPI_ComponentSectionsTextFragment
@@ -153,7 +153,7 @@ export const fragments = graphql`
           ...STRAPI_ComponentSectionsTextFragment
         }
       }
-      ... on STRAPI_ComponentSectionsMultiParagraphDarkBanner {
+      ... on STRAPI_ComponentSectionsMultiParagraphImageBanner {
         __typename
         heading {
           ...STRAPI_ComponentSectionsTextFragment

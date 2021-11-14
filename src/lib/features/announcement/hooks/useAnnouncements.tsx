@@ -4,7 +4,7 @@ import { Announcement } from "../model/announcement.model";
 export const useAnnouncements = (): Announcement[] => {
   const data = useStaticQuery(graphql`
     query useAnnouncements {
-      allStrapiAnnouncements {
+      allStrapiAnnouncements(limit: 4) {
         nodes {
           ...StrapiAnnouncementsFragment
         }
