@@ -1,7 +1,7 @@
 import { Stack } from "@chakra-ui/react";
 import { graphql } from "gatsby";
 import React from "react";
-import { AnnouncementsSection } from "../components/Home/Announcements/AnnouncementsSection";
+import { ContentRenderer } from "../components/Shared/ContentRenderer/ContentRenderer";
 import Layout from "../components/Shared/Layout/Layout";
 
 export const query = graphql`
@@ -19,7 +19,7 @@ const HomePage = (props: any) => {
   return (
     <Layout page={page} home>
       <Stack spacing={{ base: 6, md: 12 }} py={20}>
-        <AnnouncementsSection />
+        <ContentRenderer contentSections={page.contentSections} />
       </Stack>
     </Layout>
   );

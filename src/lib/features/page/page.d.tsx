@@ -1,26 +1,10 @@
-declare module Page {
-  export interface Button {
-    external: boolean;
-    link: string;
-    text: string;
-    type: string;
-  }
+import { ContentSection } from "./content-sections.d.";
+import { Image } from "./image.d";
 
-  export interface Slideshow {
-    buttons: Button[];
-    description: string;
-    superscript: string;
-    title: string;
-    image: any;
-  }
-
-  export interface StrapiPage {
-    content?: string;
-    title: string;
-    description: string;
-    slug?: string;
-    useGlobalSlideshow?: boolean;
-    image?: any;
-    slideshow?: Slideshow[];
-  }
+export interface AdminPage {
+  title: string;
+  slug: string;
+  description: string;
+  image: Image;
+  contentSections: ContentSection[];
 }

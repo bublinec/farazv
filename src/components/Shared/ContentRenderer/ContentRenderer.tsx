@@ -1,9 +1,13 @@
 import { Box, BoxProps, Stack } from "@chakra-ui/react";
 import React from "react";
+import { ContentSection } from "../../../lib/features/page/content-sections.d.";
+import { AnnouncementsSection } from "../../ContentSections/AnnouncementsSection/AnnouncementsSection";
+import { Text } from "../../ContentSections/Text/Text";
+import { Container } from "../Container/Container";
 import { ComponentPlaceholder } from "./components/ComponentPlaceholder";
 
 export interface ContentRendererProps extends BoxProps {
-  contentSections: any[];
+  contentSections: ContentSection[];
 }
 
 export const COMPONENT_PREFIX = "STRAPI_ComponentSections";
@@ -22,7 +26,12 @@ export const ContentRenderer = (props: ContentRendererProps) => {
 
             switch (shortSectionName) {
               case "Text":
-                <div>Text</div>;
+                return;
+                <Container>
+                  <Text {...props} />;
+                </Container>;
+              case "AnnouncementsSection":
+                return <AnnouncementsSection {...props} />;
               default:
                 return (
                   <ComponentPlaceholder

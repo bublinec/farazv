@@ -6,11 +6,7 @@ export const useAnnouncements = (): Announcement[] => {
     query useAnnouncements {
       allStrapiAnnouncements {
         nodes {
-          description
-          content
-          slug
-          title
-          published_at
+          ...StrapiAnnouncementsFragment
         }
       }
     }
