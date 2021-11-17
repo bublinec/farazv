@@ -12,6 +12,7 @@ export interface Paragraph {
   content: string;
   reactIconName?: string;
   title: string;
+  link?: string;
 }
 
 export enum MultiParagraphImageBannerConfiguration {

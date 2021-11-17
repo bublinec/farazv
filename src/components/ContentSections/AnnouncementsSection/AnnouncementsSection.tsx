@@ -1,9 +1,8 @@
 import { Box } from "@chakra-ui/react";
 import BackgroundImage from "gatsby-background-image";
-import { getImage } from "gatsby-plugin-image";
-import { convertToBgImage } from "gbimage-bridge";
 import React from "react";
 import { useAnnouncements } from "../../../lib/features/announcement/hooks/useAnnouncements";
+import { convertImage } from "../../../lib/features/image/utils/imageUtils";
 import { AnnouncementsSectionProps } from "../../../lib/features/page/content-sections.d.";
 import { Container } from "../../Shared/Container/Container";
 import { Overlay } from "../../Shared/Overlay/Overlay";
@@ -13,11 +12,7 @@ import { AnnouncementsGrid } from "./AnnouncementsGrid";
 export const AnnouncementsSection = (props: AnnouncementsSectionProps) => {
   const { heading, backgroundImage, useMostRecent, ...restOfProps } = props;
 
-  let bgImage = null;
-  if (backgroundImage) {
-    const extractedImage = getImage(backgroundImage.localFile);
-    const bgImage = convertToBgImage(extractedImage);
-  }
+  let bgImage = convertImage(backgroundImage);
 
   let announcements = useAnnouncements();
   if (!useMostRecent) {

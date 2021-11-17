@@ -1,7 +1,10 @@
 import { Box, BoxProps, Stack } from "@chakra-ui/react";
 import React from "react";
+import { useGroups } from "../../../lib/features/global/hooks/useGroups";
+import { useSacraments } from "../../../lib/features/global/hooks/useSacraments";
 import { ContentSection } from "../../../lib/features/page/content-sections.d.";
 import { AnnouncementsSection } from "../../ContentSections/AnnouncementsSection/AnnouncementsSection";
+import { MultiParagraphImageBanner } from "../../ContentSections/MultiParagraphImageBanner/MultiParagraphImageBanner";
 import { Text } from "../../ContentSections/Text/Text";
 import { Container } from "../Container/Container";
 import { ComponentPlaceholder } from "./components/ComponentPlaceholder";
@@ -32,6 +35,21 @@ export const ContentRenderer = (props: ContentRendererProps) => {
                 </Container>;
               case "AnnouncementsSection":
                 return <AnnouncementsSection {...props} />;
+              case "MultiParagraphImageBanner":
+                const sacraments = useSacraments();
+                const groups = useGroups();
+                const configGlobalMap = {
+                  sacraments,
+                  groups,
+                  custom: props
+                };
+                console.log(sacraments, groups);
+                return (
+                  <MultiParagraphImageBanner
+                    // @ts-ignore
+                    {...configGlobalMap[props.configuration]}
+                  />
+                );
               default:
                 return (
                   <ComponentPlaceholder

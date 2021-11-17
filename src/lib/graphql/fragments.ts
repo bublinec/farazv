@@ -48,6 +48,7 @@ export const fragments = graphql`
           reactIconName
           title
         }
+        configuration
       }
       ... on STRAPI_ComponentSectionsBackgroundImageContent {
         __typename
@@ -163,6 +164,7 @@ export const fragments = graphql`
           reactIconName
           title
         }
+        configuration
       }
       ... on STRAPI_ComponentSectionsBackgroundImageContent {
         __typename
