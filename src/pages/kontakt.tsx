@@ -4,7 +4,7 @@ import React from "react";
 import { ContactDetailsSection } from "../components/Contact/ContactDetailsSection";
 import { PriestsSection } from "../components/Contact/PriestsSection";
 import { Container } from "../components/Shared/Container/Container";
-import { ContentRenderer } from "../components/Shared/ContentRenderer/ContentRenderer";
+import { DynamicZoneRenderer } from "../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
 import Layout from "../components/Shared/Layout/Layout";
 
 export const query = graphql`
@@ -28,7 +28,7 @@ const ContactPage = (props: any) => {
           <PriestsSection />
         </Stack>
       </Container>
-      <ContentRenderer contentSections={page.contentSections} />
+      <DynamicZoneRenderer contentSections={page.contentSections} />
     </Layout>
   );
 };

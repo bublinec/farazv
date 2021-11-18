@@ -1,4 +1,4 @@
-import { Image } from "./image.d";
+import { Image } from "../image/model/image.model";
 
 export type ContentSection =
   | TextProps
@@ -100,8 +100,8 @@ export interface EventsSectionProps {
   events: any[];
 }
 
-export interface PartnersSectionProps {
+export interface ImageLinksProps {
   heading: TextProps;
   useGlobalConfiguration: boolean;
-  partners: ImageLink;
+  images: ImageLink[];
 }

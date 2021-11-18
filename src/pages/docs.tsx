@@ -1,6 +1,6 @@
 import { graphql } from "gatsby";
 import React from "react";
-import { ContentRenderer } from "../components/Shared/ContentRenderer/ContentRenderer";
+import { DynamicZoneRenderer } from "../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
 import Layout from "../components/Shared/Layout/Layout";
 
 export const query = graphql`
@@ -18,7 +18,7 @@ const DocsPage = (props: any) => {
   
   return (
     <Layout page={page}>
-      <ContentRenderer contentSections={page.contentSections} />
+      <DynamicZoneRenderer contentSections={page.contentSections} />
     </Layout>
   );
 };

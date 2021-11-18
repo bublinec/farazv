@@ -4,7 +4,7 @@ export const fragments = graphql`
   fragment STRAPI_UploadFileFragment on STRAPI_UploadFile {
     localFile {
       childImageSharp {
-        gatsbyImageData
+        gatsbyImageData(placeholder: BLURRED)
       }
     }
     url
@@ -117,13 +117,13 @@ export const fragments = graphql`
           }
         }
       }
-      ... on STRAPI_ComponentSectionsPartnersSection {
+      ... on STRAPI_ComponentSectionsImageLinks {
         __typename
         heading {
           ...STRAPI_ComponentSectionsTextFragment
         }
         useGlobalConfiguration
-        partners {
+        images {
           url
           image {
             ...STRAPI_UploadFileFragment
@@ -233,13 +233,13 @@ export const fragments = graphql`
           }
         }
       }
-      ... on STRAPI_ComponentSectionsPartnersSection {
+      ... on STRAPI_ComponentSectionsImageLinks {
         __typename
         heading {
           ...STRAPI_ComponentSectionsTextFragment
         }
         useGlobalConfiguration
-        partners {
+        images {
           url
           image {
             ...STRAPI_UploadFileFragment

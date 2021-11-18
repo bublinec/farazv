@@ -3,7 +3,7 @@ import { graphql } from "gatsby";
 import React from "react";
 import { Text } from "../../components/ContentSections/Text/Text";
 import { Container } from "../../components/Shared/Container/Container";
-import { ContentRenderer } from "../../components/Shared/ContentRenderer/ContentRenderer";
+import { DynamicZoneRenderer } from "../../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
 import Layout from "../../components/Shared/Layout/Layout";
 
 export const query = graphql`
@@ -41,7 +41,7 @@ const AnnouncementPage = (props: any) => {
             content={announcement.content}
           />
         </Container>
-        <ContentRenderer contentSections={page.contentSections} />
+        <DynamicZoneRenderer contentSections={page.contentSections} />
       </Stack>
     </Layout>
   );
