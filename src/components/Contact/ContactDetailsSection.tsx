@@ -4,7 +4,7 @@ import { useContact } from "../Shared/Footer/hooks/useContact";
 
 export interface ContactDetailsSectionProps extends BoxProps {}
 
-export const ContactDetailsSection = (props: ContactDetailsSectionProps) => {
+export const  ContactDetailsSection = (props: ContactDetailsSectionProps) => {
   const { ...restOfProps } = props;
   const data = useContact();
 
