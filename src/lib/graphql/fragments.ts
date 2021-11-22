@@ -38,7 +38,7 @@ export const fragments = graphql`
           ...STRAPI_ComponentSectionsTextFragment
         }
       }
-      ... on STRAPI_ComponentSectionsMultiParagraphDarkBanner {
+      ... on STRAPI_ComponentSectionsMultiParagraphImageBanner {
         __typename
         heading {
           ...STRAPI_ComponentSectionsTextFragment
@@ -103,6 +103,7 @@ export const fragments = graphql`
         }
         useMostRecent
       }
+
       ... on STRAPI_ComponentSectionsEventsSection {
         __typename
         useMostRecent
@@ -112,19 +113,6 @@ export const fragments = graphql`
         events {
           link
           poster {
-            ...STRAPI_UploadFileFragment
-          }
-        }
-      }
-      ... on STRAPI_ComponentSectionsPartnersSection {
-        __typename
-        heading {
-          ...STRAPI_ComponentSectionsTextFragment
-        }
-        useGlobalConfiguration
-        partners {
-          url
-          image {
             ...STRAPI_UploadFileFragment
           }
         }
@@ -153,7 +141,7 @@ export const fragments = graphql`
           ...STRAPI_ComponentSectionsTextFragment
         }
       }
-      ... on STRAPI_ComponentSectionsMultiParagraphDarkBanner {
+      ... on STRAPI_ComponentSectionsMultiParagraphImageBanner {
         __typename
         heading {
           ...STRAPI_ComponentSectionsTextFragment
@@ -231,13 +219,13 @@ export const fragments = graphql`
           }
         }
       }
-      ... on STRAPI_ComponentSectionsPartnersSection {
+      ... on STRAPI_ComponentSectionsImageLinks {
         __typename
         heading {
           ...STRAPI_ComponentSectionsTextFragment
         }
         useGlobalConfiguration
-        partners {
+        images {
           url
           image {
             ...STRAPI_UploadFileFragment
