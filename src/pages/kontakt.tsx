@@ -1,6 +1,6 @@
 import { Stack } from "@chakra-ui/layout";
 import { graphql } from "gatsby";
-import React from "react";
+import React, { useState } from "react";
 import { ContactDetailsSection } from "../components/Contact/ContactDetailsSection";
 import { PriestsSection } from "../components/Contact/PriestsSection";
 import { Container } from "../components/Shared/Container/Container";
