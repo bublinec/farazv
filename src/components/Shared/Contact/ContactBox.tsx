@@ -5,13 +5,12 @@ interface ContactProps{
     heading:string;
     info?:string;
     children?:React.ReactChild[] ;
-
 }
 
 export const ContactBox:React.FC<ContactProps> =(props) => {
     return (
         <>
-            <Flex
+            <Box
             flexDir="column"
             paddingBottom="27px"
             >
@@ -24,7 +23,7 @@ export const ContactBox:React.FC<ContactProps> =(props) => {
                 </Flex>
                 {props.children}
                 
-            </Flex>
+            </Box>
         </>
     )
 }

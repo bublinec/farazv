@@ -1,4 +1,4 @@
-import { Grid, Text, Flex } from '@chakra-ui/react'
+import { Grid, Text, Flex, useMediaQuery } from '@chakra-ui/react'
 import React from 'react'
 
 interface ContactElementProps {
@@ -7,28 +7,29 @@ interface ContactElementProps {
 }
 
 export const ContactElement:React.FC<ContactElementProps> = ({title,value}) => {
+    const[isMobile, setIsmobile]=useMediaQuery([
+        "(max-width: 893px)"
+      ])
     return (
         <Flex 
         flexWrap="wrap"
+        display="flex"
         >
             <Text
             fontFamily="ubuntu"
             fontWeight={300}
             fontStyle="normal"
-            fontSize="18.98px"
-            overflow="hidden"
-            minWidth="25%"
-            >{title+":"}</Text>
+            fontSize={isMobile?"16px":"18px"}
+            overflow="hidden" 
+            >{title+" :"}</Text>
             
-
             <Text
             fontFamily="ubuntu"
             fontWeight={500}
             fontStyle="normal"
-            fontSize="18.98px"
+            fontSize={isMobile?"16px":"18px"}
             color="#012A57"
-            overflow="auto"
-            >{value}</Text>
+            >{" "+value}</Text>
         </Flex>
     )
 }

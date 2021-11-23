@@ -1,4 +1,4 @@
-import { Box, BoxProps, Container, Divider, Flex } from "@chakra-ui/react";
+import { Box, BoxProps, Center, Container, Divider, Flex, Stack, useMediaQuery } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useContact } from "../Shared/Footer/hooks/useContact";
 import { SectionHeading } from "../Shared/SectionHeading/SectionHeading";
@@ -15,65 +15,64 @@ export const ContactDetailsSection:React.FC = (props: ContactDetailsSectionProps
   const contactData=data.contactDetails;
   const officeHoursData=data.officeHours.officeDay;
   const meetingData=data.SacramentPreparationMettings.meeting;
+
+  const[isMobile, setIsmobile]=useMediaQuery([
+    "(max-width: 750px)"
+  ])
   return(
       <Container 
       {...restOfProps}
-      margin={0}
-      padding={0}
       >
-        <SectionHeading heading="Farská kancelária" superscript="kontakt" />
-        <Flex
-        flexDir="row"
-        flexWrap="wrap"
+        <Box
         >
+          <SectionHeading heading="Farská kancelária" superscript="kontakt" />
           {/* all contact data*/}
-          <Box
-          flexDir="column"
-          >
-            {/* remains */}
-            <ContactBox heading="Kontakt">
-              <ContactElement title="Telefón" value={contactData.phone}/>
-              <ContactElement title="Mobil" value={contactData.mobil}/>
-              <ContactElement title="Email" value={contactData.email}/>
-              <ContactElement title="IBAN" value={contactData.iban}/>
-            </ContactBox>
+          <Stack isInline={isMobile?false:true} pt={5}>
+            <Box
+            >
+              {/* remains */}
+              <ContactBox heading="Kontakt">
+                <ContactElement title="Telefón" value={contactData.phone}/>
+                <ContactElement title="Mobil" value={contactData.mobil}/>
+                <ContactElement title="Email" value={contactData.email}/>
+                <ContactElement title="IBAN" value={contactData.iban}/>
+              </ContactBox>
 
-            <ContactBox heading="Úradné hodiny">
-              {officeHoursData.map(item=>{
-                return <ContactElement title={item.day} value={item.openTime}/>
-              })}
-            </ContactBox> 
-            <ContactBox heading="Náuka">
-              {meetingData.map(item=>{
-                return <ContactElement title={item.name} value={item.time}/>
-              })}
-            </ContactBox>
-          </Box>
-
-
-          {/* hides */}
-          <Box >
-              <ContactBox heading="Kde nás najdete?" >
-                <Box padding="15px 0 10px 0"
-                w="519px"
-                h="337px">
-                  <iframe
-                    src={contactData.googleMapEmbedLink}
-                    width="100%"
-                    height="105%" // hide bottom text
-                    loading="lazy"
-                  ></iframe>
-                </Box>
-                <ContactElement title="Adresa" value={contactData.address}/>
-                <ContactElement title="IČO" value={contactData.ico}/>
+              <ContactBox heading="Úradné hodiny">
+                {officeHoursData.map(item=>{
+                  return <ContactElement title={item.day} value={item.openTime}/>
+                })}
+              </ContactBox> 
+              <ContactBox heading="Náuka">
+                {meetingData.map(item=>{
+                  return <ContactElement title={item.name} value={item.time}/>
+                })}
               </ContactBox>
             </Box>
 
+
+            {/* hides */}
+            <Box paddingLeft={isMobile?0:6}>
+                <ContactBox heading="Kde nás najdete?" >
+                  <Box
+                  paddingY={3}>
+                    <iframe
+                      src={contactData.googleMapEmbedLink}
+                      max-width="100%"
+                      height="300px"
+                      loading="lazy"
+                    ></iframe>
+                  </Box>
+                  <ContactElement title="Adresa" value={contactData.address}/>
+                  <ContactElement title="IČO" value={contactData.ico}/>
+                </ContactBox>
+              </Box>
+          </Stack>
           {/* form that hides in mobile */}
           <Box>
 
           </Box>
-        </Flex>
+        </Box>
       </Container>
   )
 };
