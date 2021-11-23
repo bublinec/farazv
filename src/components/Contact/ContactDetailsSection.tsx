@@ -1,4 +1,4 @@
-import { Box, BoxProps, Center, Container, Divider, Flex, Stack, useMediaQuery } from "@chakra-ui/react";
+import { Box, BoxProps, Center, Container, Divider, Flex, Spacer, Stack, useMediaQuery } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useContact } from "../Shared/Footer/hooks/useContact";
 import { SectionHeading } from "../Shared/SectionHeading/SectionHeading";
@@ -49,8 +49,6 @@ export const ContactDetailsSection:React.FC = (props: ContactDetailsSectionProps
                 })}
               </ContactBox>
             </Box>
-
-
             {/* hides */}
             <Box paddingLeft={isMobile?0:6}>
                 <ContactBox heading="Kde nás najdete?" >
