@@ -9,54 +9,26 @@ export interface PriestsSectionProps extends BoxProps {}
 export const PriestsSection = (props: PriestsSectionProps) => {
   const { ...restOfProps } = props;
 
-  const data = usePriests();
-  console.log(data);
+  const priests = usePriests();
 
   return (
     <Stack isInline={false}>
       <SectionHeading superscript="Kontakt" heading="Kňazi našej farnosti" />
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={3} w="full">
-        <PriestCard
-          name={data.name}
-          surname={data.surname}
-          photo={
-            data.photo.localFile.childImageSharp.gatsbyImageData.images.fallback
-              .src
-          }
-          email={data.mail}
-          phone={data.phone}
-        />
-        <PriestCard
-          name={data.name}
-          surname={data.surname}
-          photo={
-            data.photo.localFile.childImageSharp.gatsbyImageData.images.fallback
-              .src
-          }
-          email={data.mail}
-          phone={data.phone}
-        />
-        <PriestCard
-          name={data.name}
-          surname={data.surname}
-          photo={
-            data.photo.localFile.childImageSharp.gatsbyImageData.images.fallback
-              .src
-          }
-          email={data.mail}
-          phone={data.phone}
-        />
-
-        <PriestCard
-          name={data.name}
-          surname={data.surname}
-          photo={
-            data.photo.localFile.childImageSharp.gatsbyImageData.images.fallback
-              .src
-          }
-          email={data.mail}
-          phone={data.phone}
-        />
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={6} w="full">
+        {priests.map((priest: any) => {
+          return (
+            <PriestCard
+              role={priest.role}
+              title={`${priest.title || ""} ${priest.name} ${priest.surname}`}
+              photo={
+                priest.photo.localFile.childImageSharp.gatsbyImageData.images
+                  .fallback.src
+              }
+              email={priest.mail}
+              phone={priest.phone}
+            />
+          );
+        })}
       </SimpleGrid>
     </Stack>
   );

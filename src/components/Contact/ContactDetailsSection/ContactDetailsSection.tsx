@@ -1,10 +1,17 @@
-import { Box, BoxProps, GridItem, SimpleGrid, Stack } from "@chakra-ui/react";
+import {
+  Box,
+  BoxProps,
+  Flex,
+  GridItem,
+  SimpleGrid,
+  Stack
+} from "@chakra-ui/react";
 import React from "react";
-import { FaInfoCircle } from "react-icons/fa";
-import { ContactBox } from "../Shared/Contact/ContactBox";
-import { useContact } from "../Shared/Footer/hooks/useContact";
-import { IconText } from "../Shared/IconText/IconText";
-import { SectionHeading } from "../Shared/SectionHeading/SectionHeading";
+import { ContactBox } from "../../Shared/Contact/ContactBox";
+import { useContact } from "../../Shared/Footer/hooks/useContact";
+import { InfoNote } from "../../Shared/InfoNote/InfoNote";
+import { SectionHeading } from "../../Shared/SectionHeading/SectionHeading";
+import { Map } from "./Map";
 
 export interface ContactDetailsSectionProps extends BoxProps {}
 
@@ -16,7 +23,6 @@ export const ContactDetailsSection: React.FC = (
   const contactData = data.contactDetails;
   const officeHoursData = data.officeHours;
   const meetingData = data.SacramentPreparationMettings;
-  console.log(data);
 
   return (
     <Box {...restOfProps}>
@@ -46,11 +52,7 @@ export const ContactDetailsSection: React.FC = (
                 }))}
               >
                 {officeHoursData.infoNote && (
-                  <IconText
-                    mt={-2}
-                    text={officeHoursData.infoNote}
-                    icon={<FaInfoCircle />}
-                  />
+                  <InfoNote text={officeHoursData.infoNote} mt={-2} />
                 )}
               </ContactBox>
 
@@ -79,22 +81,21 @@ export const ContactDetailsSection: React.FC = (
                 }
               ]}
             >
-              <Box h={{ base: 80, md: "full" }} pb={2}>
+              <Flex h={{ base: 80, md: "full" }} pb={2} flexDir={"column"}>
                 {/* TODO: REPLACE WITH REACT MAP - (which is nicer) */}
-                <iframe
-                  src={contactData.googleMapEmbedLink}
-                  width="100%"
-                  height="91%"
-                  loading="lazy"
-                />
-                {contactData.infoNote && (
-                  <IconText
-                    pt={3}
-                    text={contactData.infoNote}
-                    icon={<FaInfoCircle />}
+                <Box flex={1}>
+                  <Map
+                    coordinates={{
+                      lat: 48.5781,
+                      lng: 19.1266
+                    }}
+                    pb={10}
                   />
+                </Box>
+                {contactData.infoNote && (
+                  <InfoNote text={contactData.infoNote} pt={3} />
                 )}
-              </Box>
+              </Flex>
             </ContactBox>
           </GridItem>
         </SimpleGrid>

@@ -1,7 +1,6 @@
 import { Box, BoxProps, Flex, Stack, Text } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
-import { FaInfoCircle } from "react-icons/fa";
-import { IconText } from "../IconText/IconText";
+import { InfoNote } from "../InfoNote/InfoNote";
 import { ContactElement, ContactElementProps } from "./ContactElement";
 // import Info from './Info';
 interface ContactBoxProps extends BoxProps {
@@ -23,7 +22,7 @@ export const ContactBox = (props: ContactBoxProps) => {
           alignItems={{ base: "flex-start", md: "center" }}
         >
           <Text fontSize="2xl">{heading}</Text>
-          {info && <IconText text={info} icon={<FaInfoCircle />} />}
+          {info && <InfoNote text={info} />}
         </Flex>
         {children && <Box flex={1}>{children}</Box>}
         <Stack spacing={1}>

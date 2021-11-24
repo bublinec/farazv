@@ -8,6 +8,7 @@ const theme = {
     secondary: "#E5AE49",
     darkGray: "#303030",
     lightGray: "#727272",
+    borderGray: "#7272721c",
     black: "#000000"
   },
   fonts: {
