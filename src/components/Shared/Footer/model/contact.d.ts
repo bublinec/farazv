@@ -1,12 +1,12 @@
 declare module Contact {
   export interface OfficeDay {
     day: string;
-    id: number;
     openTime: string;
   }
 
   export interface OfficeHours {
     officeDay: OfficeDay[];
+    infoNote?: string;
   }
 
   export interface Meeting {
@@ -16,6 +16,7 @@ declare module Contact {
 
   export interface SacramentPreparationMettings {
     meeting: Meeting[];
+    infoNote?: string;
   }
 
   export interface ContactDetails {
@@ -28,6 +29,7 @@ declare module Contact {
     id: number;
     mobil: string;
     phone: string;
+    infoNote?: string;
   }
 
   export interface Contact {

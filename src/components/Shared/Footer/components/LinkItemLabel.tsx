@@ -7,9 +7,9 @@ export interface LinkItemLabelProps extends BoxProps {
 }
 
 export const LinkItemLabel = (props: LinkItemLabelProps) => {
-  const { icon, label, ...restOfProps } = props;
+  const { icon, label, color = "white", ...restOfProps } = props;
   return (
-    <Box {...restOfProps} color="white" py={1}>
+    <Box {...restOfProps} color={color} py={1}>
       <HStack>
         {icon && (
           <Box fontSize="xl" py={1}>

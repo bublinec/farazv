@@ -10,12 +10,14 @@ export const useContact = (): Contact.Contact => {
             id
             openTime
           }
+          infoNote
         }
         SacramentPreparationMettings {
           meeting {
             name
             time
           }
+          infoNote
         }
         contactDetails {
           address
@@ -27,6 +29,7 @@ export const useContact = (): Contact.Contact => {
           id
           mobil
           phone
+          infoNote
         }
       }
     }
