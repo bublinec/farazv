@@ -1,4 +1,5 @@
-import { Box, Divider, Img, Stack, Text } from "@chakra-ui/react";
+import { Box, Divider, Stack, Text } from "@chakra-ui/react";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import React from "react";
 import { ImPhone } from "react-icons/im";
 import { LinkItem } from "../../Shared/Footer/components/LinkItem";
@@ -9,11 +10,12 @@ interface PriestCardProps {
   email?: string | null;
   title: string;
   role?: string;
-  photo?: string;
+  photo?: any;
 }
 
 export const PriestCard = (props: PriestCardProps) => {
   const { title, photo, role } = props;
+  const extractedImage = getImage(photo.localFile);
 
   return (
     <Box
@@ -22,10 +24,14 @@ export const PriestCard = (props: PriestCardProps) => {
       border="0.5px solid"
       borderColor="borderGray"
     >
-      <Img w="100%" h="64" p={0} m={0} src={props.photo} />
+      {extractedImage && (
+        <GatsbyImage image={extractedImage} alt="priest photo" />
+      )}
       <Box py={4} px={2}>
-        {role && <Superscript fontSize={"sm"}>{role}</Superscript>}
-        <Text fontSize="xl" fontWeight={400}>
+        {role && (
+          <Superscript fontSize={{ base: "xs", md: "sm" }}>{role}</Superscript>
+        )}
+        <Text fontSize={{ base: "md", md: "xl" }} fontWeight={400}>
           {title}
         </Text>
         <Stack mt={2} alignItems={"center"}>

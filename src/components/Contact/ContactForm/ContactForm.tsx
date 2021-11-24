@@ -101,7 +101,7 @@ export const ContactForm = (props: ContactFormProps) => {
               }
             }}
           />
-          <Stack spacing={0}>
+          <Stack spacing={{ base: 4, md: 0 }}>
             <FormControlGroupCheckbox
               label={agreementText}
               name={"agreement"}
@@ -112,7 +112,7 @@ export const ContactForm = (props: ContactFormProps) => {
               //   }
               // }}
             />
-            <Flex justifyContent="flex-end">
+            <Flex justifyContent={{ base: "flex-end", md: "flex-end" }}>
               <Button type="submit" colorScheme={"primary"}>
                 {submitText}
               </Button>

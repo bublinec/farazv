@@ -15,7 +15,12 @@ export const usePriests = (): any => {
           photo {
             localFile {
               childImageSharp {
-                gatsbyImageData
+                gatsbyImageData(
+                  placeholder: TRACED_SVG
+                  height: 280
+                  width: 240
+                  quality: 90
+                )
               }
             }
           }
