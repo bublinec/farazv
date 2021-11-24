@@ -1,7 +1,9 @@
 import { Box, BoxProps, GridItem, SimpleGrid, Stack } from "@chakra-ui/react";
 import React from "react";
+import { FaInfoCircle } from "react-icons/fa";
 import { ContactBox } from "../Shared/Contact/ContactBox";
 import { useContact } from "../Shared/Footer/hooks/useContact";
+import { IconText } from "../Shared/IconText/IconText";
 import { SectionHeading } from "../Shared/SectionHeading/SectionHeading";
 
 export interface ContactDetailsSectionProps extends BoxProps {}
@@ -12,8 +14,9 @@ export const ContactDetailsSection: React.FC = (
   const { ...restOfProps } = props;
   const data = useContact();
   const contactData = data.contactDetails;
-  const officeHoursData = data.officeHours.officeDay;
-  const meetingData = data.SacramentPreparationMettings.meeting;
+  const officeHoursData = data.officeHours;
+  const meetingData = data.SacramentPreparationMettings;
+  console.log(data);
 
   return (
     <Box {...restOfProps}>
@@ -37,15 +40,24 @@ export const ContactDetailsSection: React.FC = (
               />
               <ContactBox
                 heading="Úradné hodiny"
-                items={officeHoursData.map((item) => ({
+                items={officeHoursData.officeDay.map((item) => ({
                   title: item.day,
                   value: item.openTime
                 }))}
-              />
+              >
+                {officeHoursData.infoNote && (
+                  <IconText
+                    mt={-2}
+                    text={officeHoursData.infoNote}
+                    icon={<FaInfoCircle />}
+                  />
+                )}
+              </ContactBox>
 
               <ContactBox
                 heading="Náuky"
-                items={meetingData.map((meeting) => ({
+                info={meetingData.infoNote}
+                items={meetingData.meeting.map((meeting) => ({
                   title: meeting.name,
                   value: meeting.time
                 }))}
@@ -72,9 +84,16 @@ export const ContactDetailsSection: React.FC = (
                 <iframe
                   src={contactData.googleMapEmbedLink}
                   width="100%"
-                  height="100%"
+                  height="91%"
                   loading="lazy"
                 />
+                {contactData.infoNote && (
+                  <IconText
+                    pt={3}
+                    text={contactData.infoNote}
+                    icon={<FaInfoCircle />}
+                  />
+                )}
               </Box>
             </ContactBox>
           </GridItem>

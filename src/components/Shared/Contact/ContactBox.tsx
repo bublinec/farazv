@@ -1,5 +1,7 @@
-import { Box, BoxProps, Stack, Text } from "@chakra-ui/react";
+import { Box, BoxProps, Flex, Stack, Text } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
+import { FaInfoCircle } from "react-icons/fa";
+import { IconText } from "../IconText/IconText";
 import { ContactElement, ContactElementProps } from "./ContactElement";
 // import Info from './Info';
 interface ContactBoxProps extends BoxProps {
@@ -14,8 +16,15 @@ export const ContactBox = (props: ContactBoxProps) => {
   return (
     <Box {...restOfProps} h="full">
       {/* stack is basically a flex with direction column, with a spacing between elements */}
-      <Stack h="full" spacing={{ base: 0.5, md: 2 }}>
-        <Text fontSize="2xl">{heading}</Text>
+      <Stack h="full" spacing={{ base: 1, md: 2 }}>
+        <Flex
+          flexDir={{ base: "column", md: "row" }}
+          gridGap={{ base: 0, md: 3 }}
+          alignItems={{ base: "flex-start", md: "center" }}
+        >
+          <Text fontSize="2xl">{heading}</Text>
+          {info && <IconText text={info} icon={<FaInfoCircle />} />}
+        </Flex>
         {children && <Box flex={1}>{children}</Box>}
         <Stack spacing={1}>
           {items.map((item) => (

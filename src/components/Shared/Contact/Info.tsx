@@ -1,4 +1,3 @@
-import { InfoIcon } from '@chakra-ui/icons'
 import { Box, Text } from '@chakra-ui/react'
 import React from 'react'
 

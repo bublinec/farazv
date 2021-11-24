@@ -2,6 +2,7 @@ import { Stack } from "@chakra-ui/layout";
 import { graphql } from "gatsby";
 import React from "react";
 import { ContactDetailsSection } from "../components/Contact/ContactDetailsSection";
+import { PriestsSection } from "../components/Contact/PriestsSection/PriestsSection";
 import { Container } from "../components/Shared/Container/Container";
 import { ContentRenderer } from "../components/Shared/ContentRenderer/ContentRenderer";
 import Layout from "../components/Shared/Layout/Layout";
@@ -24,7 +25,7 @@ const ContactPage = (props: any) => {
       <Container maxW={"container.lg"}>
         <Stack spacing={{ base: 15, md: 14 }} py={20}>
           <ContactDetailsSection />
-          {/* <PriestsSection /> */}
+          <PriestsSection />
         </Stack>
       </Container>
       <ContentRenderer contentSections={page.contentSections} />
