@@ -12,7 +12,7 @@ export const Donations = (props: DonationsProps) => {
   console.log(donations);
 
   return (
-    <Box>
+    <Box paddingLeft={4}>
       <Text fontSize="x-large" pb={5}>Milodary</Text>
       <SimpleGrid columns={{base: 1, md: 4 }} spacing={{base: 3, md: 5 }} {...restOfProps}>
         {Object.entries(donations).map(([key, value])=>{
