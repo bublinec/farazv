@@ -1,30 +1,28 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
-import * as React from 'react'
+import { Box, BoxProps, Stack, Text } from "@chakra-ui/react";
+import React, { ReactNode } from "react";
+import { ContactElement, ContactElementProps } from "./ContactElement";
 // import Info from './Info';
-interface ContactProps{
-    heading:string;
-    info?:string;
-    children?:React.ReactChild[] ;
+interface ContactBoxProps extends BoxProps {
+  heading: string;
+  info?: string;
+  children?: ReactNode | ReactNode[];
+  items: ContactElementProps[];
 }
 
-export const ContactBox:React.FC<ContactProps> =(props) => {
-    return (
-        <>
-            <Box
-            flexDir="column"
-            paddingBottom="27px"
-            >
-                <Flex>
-                    <Text                 
-                    fontFamily="ubuntu"
-                    fontSize="29.83px" 
-                    >{props.heading}
-                    </Text>
-                </Flex>
-                {props.children}
-                
-            </Box>
-        </>
-    )
-}
-export default ContactBox;
+export const ContactBox = (props: ContactBoxProps) => {
+  const { heading, info, items, children, ...restOfProps } = props;
+  return (
+    <Box {...restOfProps} h="full">
+      {/* stack is basically a flex with direction column, with a spacing between elements */}
+      <Stack h="full" spacing={{ base: 0.5, md: 2 }}>
+        <Text fontSize="2xl">{heading}</Text>
+        {children && <Box flex={1}>{children}</Box>}
+        <Stack spacing={1}>
+          {items.map((item) => (
+            <ContactElement title={item.title} value={item.value} />
+          ))}
+        </Stack>
+      </Stack>
+    </Box>
+  );
+};

@@ -1,36 +1,28 @@
-import { Grid, Text, Flex, useMediaQuery } from '@chakra-ui/react'
-import React from 'react'
+import { Box, BoxProps, Flex, Text } from "@chakra-ui/react";
+import React from "react";
 
-interface ContactElementProps {
-    title:string ;
-    value:string;
+// each component should extend BoxProps
+// because then you can pass it any styling props (like color, padding, margin from outside)
+// you can create a snippet for it
+export interface ContactElementProps extends BoxProps {
+  title: string;
+  value: string;
 }
 
-export const ContactElement:React.FC<ContactElementProps> = ({title,value}) => {
-    const[isMobile, setIsmobile]=useMediaQuery([
-        "(max-width: 893px)"
-      ])
-    return (
-        <Flex 
-        flexWrap="wrap"
-        display="flex"
-        >
-            <Text
-            fontFamily="ubuntu"
-            fontWeight={300}
-            fontStyle="normal"
-            fontSize={isMobile?"16px":"18px"}
-            overflow="hidden" 
-            >{title+" :"}</Text>
-            
-            <Text
-            fontFamily="ubuntu"
-            fontWeight={500}
-            fontStyle="normal"
-            fontSize={isMobile?"16px":"18px"}
-            color="#012A57"
-            >{" "+value}</Text>
-        </Flex>
-    )
-}
-export default ContactElement;
+export const ContactElement = (props: ContactElementProps) => {
+  const { title, value, ...restOfProps } = props;
+
+  return (
+    <Box {...restOfProps} fontSize={"lg"}>
+      <Flex>
+        <Text w={24} fontWeight={300}>
+          {title}:
+        </Text>
+
+        <Text fontWeight={500} color="primary">
+          {value}
+        </Text>
+      </Flex>
+    </Box>
+  );
+};
