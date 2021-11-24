@@ -27,6 +27,7 @@ const WeeklyAnnouncementsPage = (props: any) => {
       <Container className="py-12 md:py-20">
         <Stack spacing={{ base: 6, md: 12 }}>
           <SectionHeading heading="Obsah pripravujeme" superscript="Farnosť" />
+          
           <Donations donations={data.donations} />
         </Stack>
       </Container>
