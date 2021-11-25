@@ -3,16 +3,25 @@ import { graphql, useStaticQuery } from "gatsby";
 export const usePriests = (): any => {
   const data = useStaticQuery(graphql`
     query usePriests {
-      strapiPriests {
-        email
-        guest
-        name
-        phone
-        surname
-        photo {
-          localFile {
-            childImageSharp {
-              gatsbyImageData
+      allStrapiPriests {
+        nodes {
+          role
+          title
+          email
+          guest
+          name
+          phone
+          surname
+          photo {
+            localFile {
+              childImageSharp {
+                gatsbyImageData(
+                  placeholder: TRACED_SVG
+                  height: 280
+                  width: 240
+                  quality: 90
+                )
+              }
             }
           }
         }
@@ -20,5 +29,5 @@ export const usePriests = (): any => {
     }
   `);
 
-  return data.strapiPriests;
+  return data.allStrapiPriests.nodes;
 };

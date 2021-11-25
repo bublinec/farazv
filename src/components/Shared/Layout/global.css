@@ -4,4 +4,21 @@
 
 body {
   color: #303030;
+  font-family: ubuntu;
+}
+
+/* react map - hide labels */
+a[href^="https://maps.google.com/maps"]
+{
+  display: none !important;
+}
+
+.gmnoprint a,
+.gmnoprint span,
+.gm-style-cc {
+  display: none;
+}
+
+.gmnoprint div {
+  background: none !important;
 }

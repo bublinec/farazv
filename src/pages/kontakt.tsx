@@ -1,8 +1,9 @@
 import { Stack } from "@chakra-ui/layout";
 import { graphql } from "gatsby";
 import React from "react";
-import { ContactDetailsSection } from "../components/Contact/ContactDetailsSection";
-import { PriestsSection } from "../components/Contact/PriestsSection";
+import { ContactDetailsSection } from "../components/Contact/ContactDetailsSection/ContactDetailsSection";
+import { ContactFormSection } from "../components/Contact/ContactForm/ContactFormSection";
+import { PriestsSection } from "../components/Contact/PriestsSection/PriestsSection";
 import { Container } from "../components/Shared/Container/Container";
 import { ContentRenderer } from "../components/Shared/ContentRenderer/ContentRenderer";
 import Layout from "../components/Shared/Layout/Layout";
@@ -22,10 +23,13 @@ const ContactPage = (props: any) => {
 
   return (
     <Layout page={page}>
-      <Container>
-        <Stack spacing={{ base: 10, md: 14 }} py={20}>
+      <Container maxW={"container.lg"}>
+        <Stack spacing={{ base: 8, md: 10 }} py={20}>
           <ContactDetailsSection />
-          <PriestsSection />
+          <Stack spacing={4}>
+            <ContactFormSection />
+            <PriestsSection />
+          </Stack>
         </Stack>
       </Container>
       <ContentRenderer contentSections={page.contentSections} />
