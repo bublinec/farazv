@@ -245,6 +245,7 @@ export const fragments = graphql`
         }
         useMostRecent
       }
+
       ... on STRAPI_ComponentSectionsEventsSection {
         __typename
         useMostRecent
@@ -258,13 +259,13 @@ export const fragments = graphql`
           }
         }
       }
-      ... on STRAPI_ComponentSectionsImageLinks {
+      ... on STRAPI_ComponentSectionsPartnersSection {
         __typename
         heading {
           ...STRAPI_ComponentSectionsTextFragment
         }
         useGlobalConfiguration
-        images {
+        partners {
           url
           image {
             localFile {
