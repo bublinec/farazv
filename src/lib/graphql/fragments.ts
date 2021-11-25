@@ -4,7 +4,7 @@ export const fragments = graphql`
   fragment STRAPI_UploadFileFragment on STRAPI_UploadFile {
     localFile {
       childImageSharp {
-        gatsbyImageData
+        gatsbyImageData(placeholder: BLURRED)
       }
     }
     url
@@ -40,6 +40,13 @@ export const fragments = graphql`
       }
       ... on STRAPI_ComponentSectionsMultiParagraphImageBanner {
         __typename
+        backgroundImage {
+          localFile {
+            childImageSharp {
+              gatsbyImageData(placeholder: BLURRED, quality: 90)
+            }
+          }
+        }
         heading {
           ...STRAPI_ComponentSectionsTextFragment
         }
@@ -48,6 +55,7 @@ export const fragments = graphql`
           reactIconName
           title
         }
+        configuration
       }
       ... on STRAPI_ComponentSectionsBackgroundImageContent {
         __typename
@@ -117,6 +125,28 @@ export const fragments = graphql`
           }
         }
       }
+      ... on STRAPI_ComponentSectionsPartnersSection {
+        __typename
+        heading {
+          ...STRAPI_ComponentSectionsTextFragment
+        }
+        useGlobalConfiguration
+        partners {
+          url
+          image {
+            localFile {
+              childImageSharp {
+                gatsbyImageData(
+                  placeholder: TRACED_SVG
+                  quality: 100
+                  height: 180
+                )
+              }
+            }
+            url
+          }
+        }
+      }
     }
   }
 
@@ -143,6 +173,13 @@ export const fragments = graphql`
       }
       ... on STRAPI_ComponentSectionsMultiParagraphImageBanner {
         __typename
+        backgroundImage {
+          localFile {
+            childImageSharp {
+              gatsbyImageData(placeholder: BLURRED, quality: 90)
+            }
+          }
+        }
         heading {
           ...STRAPI_ComponentSectionsTextFragment
         }
@@ -151,7 +188,9 @@ export const fragments = graphql`
           reactIconName
           title
         }
+        configuration
       }
+
       ... on STRAPI_ComponentSectionsBackgroundImageContent {
         __typename
         backgroundImage {
@@ -228,7 +267,16 @@ export const fragments = graphql`
         images {
           url
           image {
-            ...STRAPI_UploadFileFragment
+            localFile {
+              childImageSharp {
+                gatsbyImageData(
+                  placeholder: TRACED_SVG
+                  quality: 100
+                  height: 180
+                )
+              }
+            }
+            url
           }
         }
       }

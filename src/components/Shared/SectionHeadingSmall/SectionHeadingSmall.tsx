@@ -12,7 +12,7 @@ export const SectionHeadingSmall = (props: SectionHeadingSmallProps) => {
   return (
     <Box {...restOfProps} w="max-content" mb={3}>
       <Subheading color={color}>{heading}</Subheading>
-      <Underline maxW={120} />
+      <Underline maxW={120} color={"white"} />
     </Box>
   );
 };
