@@ -8,7 +8,7 @@ export const useSacraments = (): any => {
           backgroundImage {
             localFile {
               childImageSharp {
-                gatsbyImageData
+                gatsbyImageData(placeholder: BLURRED, quality: 90)
               }
             }
           }

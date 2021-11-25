@@ -6,15 +6,15 @@ import { ImageLink } from "../../Shared/ImageLink/ImageLink";
 import { Text } from "../Text/Text";
 
 export const ImageLinks = (props: ImageLinksProps) => {
-  const { heading, images, ...restOfProps } = props;
+  const { heading, images } = props;
 
   return (
-    <Box {...restOfProps}>
+    <Box>
       <Container>
         <Text {...heading} />
         <SimpleGrid
           columns={{ base: 1, md: 3, xl: images.length }}
-          gridGap={16}
+          gridGap={14}
           mt={10}
         >
           {images.map((i) => (

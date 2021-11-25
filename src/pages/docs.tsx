@@ -15,10 +15,13 @@ export const query = graphql`
 
 const DocsPage = (props: any) => {
   const page = props.data.STRAPI.adminPages[0];
-  
+
   return (
     <Layout page={page}>
-      <DynamicZoneRenderer contentSections={page.contentSections} />
+      <DynamicZoneRenderer
+        contentSections={page.contentSections}
+        py={{ base: 8, md: 12 }}
+      />
     </Layout>
   );
 };

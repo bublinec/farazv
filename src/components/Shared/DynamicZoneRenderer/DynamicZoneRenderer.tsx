@@ -8,6 +8,7 @@ import { AnnouncementsSection } from "../../ContentSections/AnnouncementsSection
 import { EventsSection } from "../../ContentSections/EventsSection/EventsSection";
 import { Gallery } from "../../ContentSections/Gallery/Gallery";
 import { MultiParagraphImageBanner } from "../../ContentSections/MultiParagraphImageBanner/MultiParagraphImageBanner";
+import { PartnersSection } from "../../ContentSections/PartnersSection/PartnersSection";
 import { Text } from "../../ContentSections/Text/Text";
 import { Container } from "../Container/Container";
 import { ComponentPlaceholder } from "./components/ComponentPlaceholder";
@@ -34,9 +35,11 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
               case "Text":
                 return (
                   <Container>
-                    <Text {...props} />;
+                    <Text {...props} />
                   </Container>
                 );
+              case "PartnersSection":
+                return <PartnersSection {...props} />;
               case "AnnouncementsSection":
                 return <AnnouncementsSection {...props} />;
               case "Gallery":

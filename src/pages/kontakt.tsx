@@ -28,7 +28,10 @@ const ContactPage = (props: any) => {
           <PriestsSection />
         </Stack>
       </Container>
-      <DynamicZoneRenderer contentSections={page.contentSections} />
+      <DynamicZoneRenderer
+        contentSections={page.contentSections}
+        py={{ base: 8, md: 12 }}
+      />
     </Layout>
   );
 };

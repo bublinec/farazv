@@ -102,6 +102,10 @@ export interface EventsSectionProps {
 
 export interface ImageLinksProps {
   heading: TextProps;
-  useGlobalConfiguration: boolean;
   images: ImageLink[];
+}
+
+export interface PartnersSectionProps {
+  heading: TextProps;
+  partners: ImageLink[];
 }
