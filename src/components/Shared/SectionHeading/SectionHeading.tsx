@@ -8,6 +8,7 @@ import { Underline } from "../Underline/Underline";
 export interface SectionHeadingProps extends BoxProps {
   heading: string | ReactNode | ReactNode[];
   superscript?: string;
+  light?: boolean;
 }
 
 export const SectionHeading = (props: SectionHeadingProps) => {
@@ -15,12 +16,17 @@ export const SectionHeading = (props: SectionHeadingProps) => {
     heading,
     superscript,
     mb = { base: 2, md: 3 },
+    light = false,
     ...restOfProps
   } = props;
   return (
     <Box {...restOfProps} w={{ md: "max-content" }} maxW="full" mb={mb}>
-      {superscript && <Superscript mb={-1}>{superscript}</Superscript>}
-      <Heading>{heading}</Heading>
+      {superscript && (
+        <Superscript mb={-1} color={light ? "secondary" : "primary"}>
+          {superscript}
+        </Superscript>
+      )}
+      <Heading color={light ? "white" : "darkGray"}>{heading}</Heading>
       <Underline maxW={280} />
     </Box>
   );

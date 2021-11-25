@@ -6,13 +6,13 @@ export interface SuperscriptProps extends BoxProps {
 }
 
 export const Superscript = (props: SuperscriptProps) => {
-  const { children, fontSize = "md", ...restOfProps } = props;
+  const { children, fontSize = "md", color = "primary", ...restOfProps } = props;
   return (
     <Box
       {...restOfProps}
       fontSize={fontSize}
       fontWeight="600"
-      color="primary"
+      color={color}
       textTransform="uppercase"
     >
       {children}

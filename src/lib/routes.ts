@@ -25,8 +25,16 @@ export const routes = {
         to: "/kalendar-akcii"
       }),
       asRoute({
-        label: "História farnosti",
-        to: "/historia-farnosti"
+        label: "O farnosti",
+        to: "/o-farnosti-zvolen-mesto"
+      }),
+      asRoute({
+        label: "Kostol v Lieskovci",
+        to: "/kostol-sv-jana-pavla-v-lieskovci"
+      }),
+      asRoute({
+        label: "Kostol v Zolnej",
+        to: "/kostol-sv-matusa-v-zolnej"
       }),
       asRoute({
         label: "Naše Spoločenstvo",
@@ -43,20 +51,28 @@ export const routes = {
     to: "/sviatosti",
     children: [
       asRoute({
-        label: "Krst",
-        to: "/krst"
+        label: "Sviatost krstu",
+        to: "/sviatost-krstu"
       }),
       asRoute({
-        label: "Sväté pirjímanie",
-        to: "/svate-prijimanie"
+        label: "Sviatost zmierenia",
+        to: "/sviatost-zmierenia"
       }),
       asRoute({
-        label: "Birmovka",
-        to: "/birmovka"
+        label: "Sviatosť eucharistie",
+        to: "/sviatost-eucharistie"
+      }),
+      asRoute({
+        label: "Sviatost birmovania",
+        to: "/sviatost-birmovania"
       }),
       asRoute({
         label: "Sviatosť manželstva",
         to: "/sviatost-manzelstva"
+      }),
+      asRoute({
+        label: "Sviatosť pomazania chorých",
+        to: "/sviatost-pomazania-chorych"
       })
     ]
   }),

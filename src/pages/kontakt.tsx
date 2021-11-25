@@ -5,7 +5,7 @@ import { ContactDetailsSection } from "../components/Contact/ContactDetailsSecti
 import { ContactFormSection } from "../components/Contact/ContactForm/ContactFormSection";
 import { PriestsSection } from "../components/Contact/PriestsSection/PriestsSection";
 import { Container } from "../components/Shared/Container/Container";
-import { ContentRenderer } from "../components/Shared/ContentRenderer/ContentRenderer";
+import { DynamicZoneRenderer } from "../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
 import Layout from "../components/Shared/Layout/Layout";
 
 export const query = graphql`
@@ -32,7 +32,10 @@ const ContactPage = (props: any) => {
           </Stack>
         </Stack>
       </Container>
-      <ContentRenderer contentSections={page.contentSections} />
+      <DynamicZoneRenderer
+        contentSections={page.contentSections}
+        py={{ base: 8, md: 12 }}
+      />
     </Layout>
   );
 };
