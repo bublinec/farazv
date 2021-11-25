@@ -5,9 +5,9 @@ import { Container } from "../../Shared/Container/Container";
 import { ImageLinks } from "../ImageLinks/ImageLinks";
 
 export const PartnersSection = (props: PartnersSectionProps) => {
-  const { heading, partners, ...restOfProps } = props;
+  const { heading, partners } = props;
   return (
-    <Box {...restOfProps}>
+    <Box>
       <Container maxW={"container.md"}>
         <ImageLinks images={partners} heading={heading} />
       </Container>

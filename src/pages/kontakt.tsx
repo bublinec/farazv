@@ -24,7 +24,7 @@ const ContactPage = (props: any) => {
   return (
     <Layout page={page}>
       <Container maxW={"container.lg"}>
-        <Stack spacing={{ base: 8, md: 10 }} py={20}>
+        <Stack spacing={{ base: 8, md: 10 }} pt={12}>
           <ContactDetailsSection />
           <Stack spacing={4}>
             <ContactFormSection />
@@ -34,7 +34,8 @@ const ContactPage = (props: any) => {
       </Container>
       <DynamicZoneRenderer
         contentSections={page.contentSections}
-        py={{ base: 8, md: 12 }}
+        pb={14}
+        pt={6}
       />
     </Layout>
   );
