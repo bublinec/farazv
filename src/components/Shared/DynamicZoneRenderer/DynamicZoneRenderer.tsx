@@ -4,6 +4,8 @@ import { useEvents } from "../../../lib/features/events/hooks/useEvents";
 import { useGroups } from "../../../lib/features/global/hooks/useGroups";
 import { useSacraments } from "../../../lib/features/global/hooks/useSacraments";
 import { ContentSection } from "../../../lib/features/page/content-sections.d.";
+import TextAndPic from "../../About/TextAndPicComponent/TextAndPic";
+import TextAndPicTable from "../../About/TextAndPicComponent/TextAndPicTable";
 import { AnnouncementsSection } from "../../ContentSections/AnnouncementsSection/AnnouncementsSection";
 import { EventsSection } from "../../ContentSections/EventsSection/EventsSection";
 import { Gallery } from "../../ContentSections/Gallery/Gallery";
@@ -42,6 +44,10 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
                 return <PartnersSection {...props} />;
               case "AnnouncementsSection":
                 return <AnnouncementsSection {...props} />;
+              case "TextAndPic":
+                return <TextAndPic {...props} />;
+              case "TextAndPicTable":
+                return <TextAndPicTable {...props} />;
               case "Gallery":
                 return <Gallery {...props} />;
 
