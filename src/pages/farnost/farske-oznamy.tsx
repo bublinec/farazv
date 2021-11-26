@@ -4,6 +4,7 @@ import React from "react";
 import { Container } from "../../components/Shared/Container/Container";
 import { DynamicZoneRenderer } from "../../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
 import Layout from "../../components/Shared/Layout/Layout";
+import Annoucements from "../../components/WeeklyAnnouncements/Annoucements/Annoucements";
 import { Donations } from "../../components/WeeklyAnnouncements/Donations/Donations";
 import { MassSchedule } from "../../components/WeeklyAnnouncements/MassSchedule/MassSchedule";
 import { useWeeklyAnnouncements } from "../../lib/graphql/hooks/useWeeklyAnnouncements";
@@ -22,6 +23,7 @@ const WeeklyAnnouncementsPage = (props: any) => {
   const page = props.data.STRAPI.adminPages[0];
 
   const data = useWeeklyAnnouncements();
+  console.log(data,"Weekly");
 
   return (
     <Layout page={page}>
@@ -39,6 +41,7 @@ const WeeklyAnnouncementsPage = (props: any) => {
                     colSpan={{ base: 12, md: 7 }}
                     mt={{ base: 6, md: 0 }}
                   >
+                    <Annoucements body={data.announcements} />
                     <Donations donations={data.donations} />
                   </GridItem>
                 </SimpleGrid>

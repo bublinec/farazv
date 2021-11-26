@@ -9,10 +9,10 @@ export interface DonationsProps extends BoxProps {
 
 export const Donations = (props: DonationsProps) => {
   const { donations, ...restOfProps } = props;
-  console.log(donations);
+  console.log(donations,"donations");
 
   return (
-    <Box paddingLeft={4}>
+    <Box >
       <Text fontSize="x-large" pb={5}>Milodary</Text>
       <SimpleGrid columns={{base: 1, md: 4 }} spacing={{base: 3, md: 5 }} {...restOfProps}>
         {Object.entries(donations).map(([key, value])=>{
