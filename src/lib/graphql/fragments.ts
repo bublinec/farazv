@@ -32,12 +32,20 @@ export const fragments = graphql`
         superscript
         title
       }
+
       ... on STRAPI_ComponentSectionsImagesTextGrid {
         __typename
         heading {
           ...STRAPI_ComponentSectionsTextFragment
         }
+        paragraphs {
+          content
+          image {
+            ...STRAPI_UploadFileFragment
+          }
+        }
       }
+
       ... on STRAPI_ComponentSectionsMultiParagraphImageBanner {
         __typename
         backgroundImage {
@@ -170,6 +178,12 @@ export const fragments = graphql`
         heading {
           ...STRAPI_ComponentSectionsTextFragment
         }
+        paragraphs {
+          content
+          image {
+            ...STRAPI_UploadFileFragment
+          }
+        }
       }
       ... on STRAPI_ComponentSectionsMultiParagraphImageBanner {
         __typename
@@ -259,6 +273,7 @@ export const fragments = graphql`
           }
         }
       }
+
       ... on STRAPI_ComponentSectionsPartnersSection {
         __typename
         heading {

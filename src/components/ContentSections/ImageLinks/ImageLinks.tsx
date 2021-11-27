@@ -1,6 +1,6 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
-import { ImageLinksProps } from "../../../lib/features/page/content-sections.d.";
+import { ImageLinksProps } from "../../../lib/features/page/content-sections.d";
 import { Container } from "../../Shared/Container/Container";
 import { ImageLink } from "../../Shared/ImageLink/ImageLink";
 import { Text } from "../Text/Text";

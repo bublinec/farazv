@@ -3,7 +3,7 @@ import BackgroundImage from "gatsby-background-image";
 import React from "react";
 import { useAnnouncements } from "../../../lib/features/announcement/hooks/useAnnouncements";
 import { convertImage } from "../../../lib/features/image/utils/imageUtils";
-import { AnnouncementsSectionProps } from "../../../lib/features/page/content-sections.d.";
+import { AnnouncementsSectionProps } from "../../../lib/features/page/content-sections.d";
 import { Container } from "../../Shared/Container/Container";
 import { Overlay } from "../../Shared/Overlay/Overlay";
 import { Text } from "../Text/Text";

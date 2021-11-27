@@ -17,6 +17,7 @@ export const useWeeklyAnnouncements = (): any => {
             time
           }
         }
+         
         announcements {
           text
         }

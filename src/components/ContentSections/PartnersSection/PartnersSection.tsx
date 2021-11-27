@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import { PartnersSectionProps } from "../../../lib/features/page/content-sections.d.";
+import { PartnersSectionProps } from "../../../lib/features/page/content-sections.d";
 import { Container } from "../../Shared/Container/Container";
 import { ImageLinks } from "../ImageLinks/ImageLinks";
 

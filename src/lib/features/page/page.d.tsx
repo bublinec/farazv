@@ -1,4 +1,4 @@
-import { ContentSection } from "./content-sections.d.";
+import { ContentSection } from "./content-sections.d";
 import { Image } from "./image.d";
 
 export interface AdminPage {
