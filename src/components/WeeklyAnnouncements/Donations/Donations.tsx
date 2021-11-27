@@ -1,44 +1,24 @@
-import { Box, BoxProps, Flex, Stack } from "@chakra-ui/react";
+import { Box, BoxProps, Flex, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { Subheading } from "../../Shared/Subheading/Subheading";
+import { DonationColumn } from "./DonationColumn";
 
 export interface DonationsProps extends BoxProps {
-  donations: any;
+  donations: Object;
 }
 
 export const Donations = (props: DonationsProps) => {
   const { donations, ...restOfProps } = props;
-  console.log(donations);
+  console.log(donations,"donations");
 
   return (
-    <Box {...restOfProps}>
-      <Subheading mb={2}>Milodary</Subheading>
-      <Stack spacing={0.5}>
-        {donations.weddings.map((donation: any) => (
-          <Flex gridGap={2}>
-            <Box>{donation.name}</Box>
-            <Box>{donation.amount}</Box>
-          </Flex>
-        ))}
-      </Stack>
-      <Subheading mb={2}>Milodary</Subheading>
-      <Stack spacing={0.5}>
-        {donations.weddings.map((donation: any) => (
-          <Flex gridGap={2}>
-            <Box>{donation.name}</Box>
-            <Box>{donation.amount}</Box>
-          </Flex>
-        ))}
-      </Stack>
-      <Subheading mb={2}>Milodary</Subheading>
-      <Stack spacing={0.5}>
-        {donations.weddings.map((donation: any) => (
-          <Flex gridGap={2}>
-            <Box>{donation.name}</Box>
-            <Box>{donation.amount}</Box>
-          </Flex>
-        ))}
-      </Stack>
+    <Box >
+      <Text fontSize="x-large" pb={5}>Milodary</Text>
+      <SimpleGrid columns={{base: 1, md: 4 }} spacing={{base: 3, md: 5 }} {...restOfProps}>
+        {Object.entries(donations).map(([key, value])=>{
+          return <DonationColumn heading={key} donations={value}/>
+        })}
+      </SimpleGrid>
     </Box>
   );
 };

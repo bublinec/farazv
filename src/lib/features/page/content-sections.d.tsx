@@ -26,9 +26,10 @@ export enum ButtonTypes {
   secondary
 }
 
-export interface ImageParagraph {
+export interface ImageParagraphProps {
   content: string;
-  image: Image;
+  image: any;
+  isImageOnTheLeft?: boolean;
 }
 
 export interface Button {
@@ -62,7 +63,7 @@ export interface TextProps {
 
 export interface ImagesTextGridProps {
   heading: TextProps;
-  paragraphs: ImageParagraph[];
+  paragraphs: ImageParagraphProps[];
 }
 
 export interface MultiParagraphImageBannerProps {
@@ -74,7 +75,7 @@ export interface MultiParagraphImageBannerProps {
 
 export interface BackgroundImageContentProps {
   backgroundImage: Image;
-  imageParagraph: ImageParagraph;
+  imageParagraph: ImageParagraphProps;
 }
 
 export interface SlideshowProps {
@@ -108,4 +109,11 @@ export interface ImageLinksProps {
 export interface PartnersSectionProps {
   heading: TextProps;
   partners: ImageLink[];
+}
+
+export interface TextAndPicProps {
+  text: string;
+  img_src: string;
+  heading: string;
+  direction?: 1 | 2;
 }

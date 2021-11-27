@@ -1,10 +1,12 @@
-import { Stack } from "@chakra-ui/react";
+import { Box, GridItem, SimpleGrid, Stack } from "@chakra-ui/react";
 import { graphql } from "gatsby";
 import React from "react";
 import { Container } from "../../components/Shared/Container/Container";
+import { DynamicZoneRenderer } from "../../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
 import Layout from "../../components/Shared/Layout/Layout";
-import { SectionHeading } from "../../components/Shared/SectionHeading/SectionHeading";
+import Annoucements from "../../components/WeeklyAnnouncements/Annoucements/Annoucements";
 import { Donations } from "../../components/WeeklyAnnouncements/Donations/Donations";
+import { MassSchedule } from "../../components/WeeklyAnnouncements/MassSchedule/MassSchedule";
 import { useWeeklyAnnouncements } from "../../lib/graphql/hooks/useWeeklyAnnouncements";
 
 export const query = graphql`
@@ -21,15 +23,37 @@ const WeeklyAnnouncementsPage = (props: any) => {
   const page = props.data.STRAPI.adminPages[0];
 
   const data = useWeeklyAnnouncements();
+  console.log(data,"Weekly");
 
   return (
     <Layout page={page}>
-      <Container className="py-12 md:py-20">
-        <Stack spacing={{ base: 6, md: 12 }}>
-          <SectionHeading heading="Obsah pripravujeme" superscript="Farnosť" />
-          <Donations donations={data.donations} />
+      <Container maxW={"container.lg"}>
+        <Stack spacing={{ base: 8, md: 10 }} py={20}>
+          <Stack spacing={4}>
+            <Box>
+              <Box>
+                <SimpleGrid columns={12}>
+                  <GridItem colSpan={{ base: 12, md: 5 }}>
+                    <MassSchedule />
+                  </GridItem>
+
+                  <GridItem
+                    colSpan={{ base: 12, md: 7 }}
+                    mt={{ base: 6, md: 0 }}
+                  >
+                    <Annoucements body={data.announcements} />
+                    <Donations donations={data.donations} />
+                  </GridItem>
+                </SimpleGrid>
+              </Box>
+            </Box>
+          </Stack>
         </Stack>
       </Container>
+      <DynamicZoneRenderer
+        contentSections={page.contentSections}
+        py={{ base: 8, md: 12 }}
+      />
     </Layout>
   );
 };

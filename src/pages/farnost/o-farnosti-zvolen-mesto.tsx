@@ -1,5 +1,7 @@
 import { graphql } from "gatsby";
 import React from "react";
+import TextAndPic from "../../components/About/TextAndPicComponent/TextAndPic";
+import TextAndPicTable from "../../components/About/TextAndPicComponent/TextAndPicTable";
 import { DynamicZoneRenderer } from "../../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
 import Layout from "../../components/Shared/Layout/Layout";
 

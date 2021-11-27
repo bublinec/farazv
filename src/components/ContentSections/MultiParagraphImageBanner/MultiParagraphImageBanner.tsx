@@ -2,7 +2,7 @@ import { Box, SimpleGrid } from "@chakra-ui/react";
 import BackgroundImage from "gatsby-background-image";
 import React from "react";
 import { convertImage } from "../../../lib/features/image/utils/imageUtils";
-import { MultiParagraphImageBannerProps } from "../../../lib/features/page/content-sections.d.";
+import { MultiParagraphImageBannerProps } from "../../../lib/features/page/content-sections.d";
 import { Container } from "../../Shared/Container/Container";
 import { Overlay } from "../../Shared/Overlay/Overlay";
 import { SectionHeading } from "../../Shared/SectionHeading/SectionHeading";
