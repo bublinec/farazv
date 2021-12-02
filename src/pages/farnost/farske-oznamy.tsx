@@ -23,7 +23,7 @@ const WeeklyAnnouncementsPage = (props: any) => {
   const page = props.data.STRAPI.adminPages[0];
 
   const data = useWeeklyAnnouncements();
-  console.log(data,"Weekly");
+  console.log(data, "Weekly");
 
   return (
     <Layout page={page}>
