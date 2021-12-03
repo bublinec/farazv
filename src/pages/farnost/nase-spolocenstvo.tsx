@@ -19,6 +19,7 @@ import { FaClock, FaRegCalendarAlt } from "react-icons/fa";
 import { BsPerson } from "react-icons/bs";
 import { BlogItemColumn } from "../../components/ContentSections/Blog/BlogItemColumn";
 import { BlogArchive } from "../../components/ContentSections/Blog/BlogArchive";
+import { Lastpeaces } from "../../components/ContentSections/Blog/Lastpeaces";
 
 export const query = graphql`
   query useBlogPage {
@@ -116,6 +117,20 @@ const BlogPage = (props: any) => {
           </SimpleGrid>
         </Center>
       </Container>
+      <Lastpeaces
+        items={[
+          {
+            month: "Januar"
+          },
+          {
+            month: "februar"
+          },
+          {
+            month: "Marec"
+          }
+        ]}
+        description="sdsdsvsv sdvsdvsdvsvsdv sdvsvdsvd"
+      />
       <BlogArchive />
     </Layout>
   );
