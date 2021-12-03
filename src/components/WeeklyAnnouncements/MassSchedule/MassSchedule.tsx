@@ -10,7 +10,6 @@ export interface MassSchedule extends BoxProps {
 
 export const MassSchedule = (props: MassSchedule) => {
   const { days, ...restOfProps } = props;
-  console.log(days);
 
   return (
     <Box {...restOfProps}>
@@ -23,6 +22,7 @@ export const MassSchedule = (props: MassSchedule) => {
           const date = new Date(day.date);
           return (
             <MassScheduleItem
+              key={day.date}
               day={capitalize(date.toLocaleString("sk", { weekday: "long" }))}
               date={day.date}
               items={day.masses.map((mass) => {

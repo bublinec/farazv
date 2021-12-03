@@ -1,0 +1,90 @@
+@charset 'UTF-8';
+
+/* THIS IS A MODIFIED VERSION OF ORIGINAL slick-theme.css FILE
+WHICH CAN BE FOUND IN NODE MODULES OR HERE
+https://github.com/akiran/react-slick/blob/5fb7ac78321f3469118a974af3852742b64fcbd3/docs/slick-theme.css */
+
+/* Dots */
+.slick-dotted.slick-slider {
+  margin-bottom: 30px;
+}
+
+.slick-dots {
+  position: absolute;
+  /* bottom: 48px !important; */
+
+  display: block;
+
+  width: 100%;
+  padding: 0;
+  margin: 0;
+
+  list-style: none;
+
+  text-align: center;
+}
+.slick-dots li {
+  position: relative;
+  display: inline-block;
+
+  width: 20px;
+  height: 20px;
+  margin: 0 8px !important;
+  padding: 0;
+
+  cursor: pointer;
+}
+.slick-dots li button {
+  font-size: 0;
+  line-height: 0;
+
+  display: block;
+
+  width: 20px;
+  height: 20px;
+  padding: 50px;
+
+  cursor: pointer;
+
+  color: transparent;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+.slick-dots li button:hover,
+.slick-dots li button:focus {
+  outline: none;
+}
+.slick-dots li button:hover:before,
+.slick-dots li button:focus:before {
+  opacity: 1;
+}
+.slick-dots li button:before {
+  font-family: "slick";
+  font-size: 6px;
+  line-height: 20px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 20px;
+  height: 20px;
+  background-color: #f6f6f6;
+
+  content: " " !important;
+  text-align: center;
+  opacity: 1 !important;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.slick-dots li.slick-active button:before {
+  opacity: 1 !important;
+  background-color: #ae2626;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  display: none;
+}

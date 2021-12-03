@@ -27,7 +27,10 @@ const WeeklyAnnouncementsPage = (props: any) => {
   const recentEvents = useEvents();
   const data = useWeeklyAnnouncements();
   const { announcements, donations, ...nextWeekDays } = data[1];
-  const days = [data[0].sunday, ...Object.values(nextWeekDays)];
+  const days: WeeklyAnnouncements.Day[] = [
+    data[0].sunday,
+    ...Object.values(nextWeekDays)
+  ];
 
   return (
     <Layout page={page}>

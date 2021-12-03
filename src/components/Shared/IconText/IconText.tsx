@@ -16,7 +16,7 @@ export const IconText = (props: IconTextProps) => {
   } = props;
   return (
     <Box {...restOfProps} color={color} fontSize="md">
-      <HStack alignItems={"center"} spacing={1}>
+      <HStack alignItems={"center"} spacing={1.5}>
         <Box>{icon}</Box>
         <Box fontSize={fontSize} fontWeight={200}>
           {text}
