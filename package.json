@@ -31,11 +31,12 @@
     "@mdx-js/react": "^1.0.20",
     "@types/dot-object": "^2.1.2",
     "@types/google-map-react": "^2.1.3",
+    "@types/react-slick": "^0.23.7",
     "@types/simple-react-lightbox": "^3.6.1",
     "babel-preset-gatsby": "^1.0.0",
     "dot-object": "^2.1.4",
     "framer-motion": "^4.1.17",
-    "gatsby": "^3.1.0",
+    "gatsby": "^4.3.0",
     "gatsby-alias-imports": "^1.0.6",
     "gatsby-background-image": "^1.1.1",
     "gatsby-image": "^3.0.0",
@@ -62,8 +63,10 @@
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.8.2",
     "react-icons": "^4.2.0",
+    "react-slick": "^0.28.1",
     "sass": "^1.32.8",
-    "simple-react-lightbox": "^3.6.9-0"
+    "simple-react-lightbox": "^3.6.9-0",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
