@@ -12,7 +12,13 @@ interface LastpeacesProps {
 
 export const Lastpeaces = (props: LastpeacesProps) => {
   return (
-    <Box w="100%" h="450px" backgroundColor="black" mb={20}>
+    <Box
+      w="100%"
+      h="450px"
+      backgroundColor="black"
+      mb={20}
+      display={{ md: "grid", base: "none" }}
+    >
       <Center flexDir="column" pt={6}>
         <Text color="secondary">Farnosť</Text>
         <Text fontSize="xl" color="white">
