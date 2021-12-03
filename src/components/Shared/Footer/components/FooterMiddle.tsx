@@ -3,7 +3,7 @@ import React from "react";
 import { HiLocationMarker } from "react-icons/hi";
 import { ImMobile, ImPhone } from "react-icons/im";
 import { MdMail } from "react-icons/md";
-import { routes } from "../../../../lib/routes";
+import { routes } from "../../../../lib/conts/routes";
 import { Container } from "../../Container/Container";
 import { useContact } from "../hooks/useContact";
 import { FooterColumn } from "./FooterColumn";

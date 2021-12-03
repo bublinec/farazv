@@ -16,3 +16,15 @@ export const shorten = (str: string, maxLen = 220, separator = " ") => {
   }
   return short;
 };
+
+export const capitalize = (s: string) => {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
+
+export const formatTime = (t: string) => {
+  let timeFormatted = t.slice(0, 5);
+  if (timeFormatted[0] === "0") {
+    timeFormatted = timeFormatted.slice(1);
+  }
+  return timeFormatted;
+};

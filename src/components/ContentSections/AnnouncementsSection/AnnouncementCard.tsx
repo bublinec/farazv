@@ -28,7 +28,7 @@ export const AnnouncementCard = (props: AnnouncementCardProps) => {
         justifyContent={"space-between"}
       >
         <Box>
-          <Subheading>{title}</Subheading>
+          <Subheading fontSize="xl">{title}</Subheading>
           <IconDate dateStr={date} />
           <MarkdownRenderer
             h={{ base: "auto", md: 122 }}

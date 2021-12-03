@@ -1,6 +1,6 @@
 import { Link } from "gatsby";
 import React, { useState } from "react";
-import { Route } from "../../../../lib/routes";
+import { Route } from "../../../../lib/conts/routes";
 import { NavbarDropdown } from "./NavbarDropdown";
 import { NavbarItemButton } from "./NavbarItemButton";
 

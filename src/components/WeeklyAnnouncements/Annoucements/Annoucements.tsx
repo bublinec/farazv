@@ -1,32 +1,29 @@
-import { Box, Center, Container, Flex, Icon, SimpleGrid, Stack, Text } from "@chakra-ui/react";
-import { CheckIcon} from "@chakra-ui/icons";
+import { Box, HStack, Stack } from "@chakra-ui/react";
 import React from "react";
 import { MarkdownRenderer } from "../../Shared/MarkdownRenderer/MarkdownRenderer";
 import { SectionHeading } from "../../Shared/SectionHeading/SectionHeading";
 
-interface Props {
-  body: Array<{ text: string }>;
+export interface AnnouncmentProps {
+  announcments: Array<{ text: string }>;
 }
 
-const Annoucements = (props: Props) => {
-  const { body, ...restOfProps } = props;
+export const Annoucements = (props: AnnouncmentProps) => {
+  const { announcments, ...restOfProps } = props;
   return (
-    <Stack>
-        <SimpleGrid column={1} >
-        <SectionHeading heading="Oznamy" superscript="Farské oznamy"/>
-        {body.map((annoucement) => {
-            return (
-            <Stack isInline>
-                <Center>
-                    <Icon as={CheckIcon} width={7} color="primary" pr={2}/>
-                    <MarkdownRenderer children={annoucement.text}/>
-                </Center>
-            </Stack>
-            );
+    <Box {...restOfProps}>
+      <SectionHeading heading="Oznamy" superscript="Farské oznamy" />
+      <Stack spacing={5}>
+        {announcments.map((annoucement) => {
+          return (
+            <HStack alignItems={"flex-start"}>
+              <Box fontSize="2xl" color="primary" mt={-1}>
+                ✓
+              </Box>
+              <MarkdownRenderer children={annoucement.text} fontWeight={300} />
+            </HStack>
+          );
         })}
-        </SimpleGrid>
-    </Stack>
+      </Stack>
+    </Box>
   );
 };
-
-export default Annoucements;

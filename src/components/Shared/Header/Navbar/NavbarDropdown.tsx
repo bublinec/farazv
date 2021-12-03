@@ -1,6 +1,6 @@
 import { Link } from "gatsby";
 import React from "react";
-import { Route } from "../../../../lib/routes";
+import { Route } from "../../../../lib/conts/routes";
 
 export interface NavbarDropdownProps {
   className?: string;

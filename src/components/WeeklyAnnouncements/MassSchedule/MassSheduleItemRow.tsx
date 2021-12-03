@@ -7,25 +7,20 @@ import React from "react";
 export interface MassScheduleItemRowProps extends BoxProps {
   time: string;
   name: string;
-  value:string
+  value: string;
 }
 
 export const MassScheduleItemRow = (props: MassScheduleItemRowProps) => {
-  const { time, name,value, ...restOfProps } = props;
+  const { time, name, value, ...restOfProps } = props;
 
   return (
-    <Box {...restOfProps} fontSize={"lg"} pl={2}>
+    <Box fontSize={"md"} fontWeight={300} {...restOfProps}>
       <Flex>
-        <Text w={20} fontWeight={300}>
-          {time}
-        </Text>
-
-        <Text w={20} fontWeight={500} color="primary">
+        <Text w={12}>{time}</Text>
+        <Text w={24} fontWeight={500} color="primary">
           {name}
         </Text>
-        <Text fontWeight={300}>
-          {value}
-        </Text>
+        <Text flex={1}>{value}</Text>
       </Flex>
     </Box>
   );

@@ -6,7 +6,6 @@ import { MarkdownRenderer } from "../MarkdownRenderer/MarkdownRenderer";
 
 export const ImageParagraph = (props: ImageParagraphProps) => {
   const { content, image, isImageOnTheLeft, ...restOfProps } = props;
-  console.log(props);
   const extractedImage = getImage(image.localFile);
 
   return (

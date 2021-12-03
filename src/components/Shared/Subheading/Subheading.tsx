@@ -7,9 +7,20 @@ export interface SubheadingProps extends BoxProps {
 }
 
 export const Subheading = (props: SubheadingProps) => {
-  const { children, color = "primary", ...restOfProps } = props;
+  const {
+    children,
+    color = "primary",
+    fontSize = "2xl",
+    ...restOfProps
+  } = props;
   return (
-    <Box {...restOfProps} as="h3" fontSize="2xl" fontWeight="500" color={color}>
+    <Box
+      {...restOfProps}
+      as="h3"
+      fontSize={fontSize}
+      fontWeight="500"
+      color={color}
+    >
       {children}
     </Box>
   );

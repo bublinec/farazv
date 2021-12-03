@@ -1,7 +1,7 @@
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
-import { routes } from "../../../../lib/routes";
+import { routes } from "../../../../lib/conts/routes";
 import { Container } from "../../Container/Container";
 import { LogoLink } from "../../LogoLink/LogoLink";
 import { MobileMenuAccordionItem } from "./MobileMenuAccordionItem";
