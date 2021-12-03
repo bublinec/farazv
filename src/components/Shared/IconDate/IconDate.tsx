@@ -8,7 +8,7 @@ export interface DateProps extends BoxProps {
 }
 
 export const IconDate = (props: DateProps) => {
-  const { dateStr, ...restOfProps } = props;
+  const { dateStr, color, ...restOfProps } = props;
   const date = new Date(dateStr);
 
   const dateFormatted = date.toLocaleString("sk-SK", {
@@ -19,7 +19,11 @@ export const IconDate = (props: DateProps) => {
 
   return (
     <Box {...restOfProps}>
-      <IconText icon={<FaRegCalendarAlt />} text={dateFormatted} />
+      <IconText
+        icon={<FaRegCalendarAlt />}
+        text={dateFormatted}
+        color={color}
+      />
     </Box>
   );
 };

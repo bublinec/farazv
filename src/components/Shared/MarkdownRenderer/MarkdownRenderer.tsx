@@ -54,7 +54,7 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
               </ul>
             ),
             strong: ({ children }) => (
-              <Text as="strong" fontWeight="500" color={color || "primary"}>
+              <Text as="strong" fontWeight="400" color={color || "primary"}>
                 {children}
               </Text>
             ),

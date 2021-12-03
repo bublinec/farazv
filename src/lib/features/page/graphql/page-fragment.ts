@@ -1,6 +1,6 @@
 import { graphql } from "gatsby";
 
-export const fragments = graphql`
+export const pageFragment = graphql`
   fragment STRAPI_UploadFileFragment on STRAPI_UploadFile {
     localFile {
       childImageSharp {

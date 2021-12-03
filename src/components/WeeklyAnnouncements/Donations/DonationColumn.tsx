@@ -15,15 +15,16 @@ export const DonationColumn = (props: DonationColumnProps) => {
   const { heading, donations, ...restOfProps } = props;
   return (
     <Box {...restOfProps}>
-      <Heading color="primary" fontSize="lg" fontWeight={500} mb={2}>
+      <Heading fontSize="lg" fontWeight={500} mb={1}>
         {heading}
       </Heading>
       <Stack spacing={0.5}>
         {donations.map((donation) => {
           return (
             <Flex gridGap={2}>
-              <Box>{donation.name}</Box>
-              <Box>{donation.amount}</Box>
+              <Box>
+                {donation.name} {donation.amount}
+              </Box>
             </Flex>
           );
         })}

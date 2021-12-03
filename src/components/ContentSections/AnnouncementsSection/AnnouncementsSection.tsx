@@ -24,7 +24,7 @@ export const AnnouncementsSection = (props: AnnouncementsSectionProps) => {
       {bgImage ? (
         <BackgroundImage {...bgImage} preserveStackingContext>
           <Overlay color="white" zIndex={0} opacity={90} />
-          <Container py={backgroundImage ? 14 : 0} position="relative">
+          <Container py={backgroundImage ? 16 : 0} position="relative">
             <Text {...heading} />
             <AnnouncementsGrid announcements={announcements} />
           </Container>

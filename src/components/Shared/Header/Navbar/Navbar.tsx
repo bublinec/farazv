@@ -1,5 +1,5 @@
 import React from "react";
-import { routesArray } from "../../../../lib/routes";
+import { routesArray } from "../../../../lib/conts/routes";
 import { Container } from "../../Container/Container";
 import { LogoLink } from "../../LogoLink/LogoLink";
 import { MobileMenu } from "../components/MobileMenu";

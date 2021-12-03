@@ -15,7 +15,7 @@ export const SectionHeading = (props: SectionHeadingProps) => {
   const {
     heading,
     superscript,
-    mb = { base: 2, md: 3 },
+    mb = { base: 2, md: 5 },
     light = false,
     ...restOfProps
   } = props;

@@ -51,10 +51,12 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
               case "EventsSection":
                 const recentEvents = useEvents();
                 return (
-                  <EventsSection
-                    {...props}
-                    events={props.useMostRecent ? recentEvents : props.events}
-                  />
+                  <Container>
+                    <EventsSection
+                      {...props}
+                      events={props.useMostRecent ? recentEvents : props.events}
+                    />
+                  </Container>
                 );
               case "MultiParagraphImageBanner":
                 const sacraments = useSacraments();

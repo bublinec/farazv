@@ -1,6 +1,6 @@
 import { Link } from "gatsby";
 import React from "react";
-import { routes } from "../../../lib/routes";
+import { routes } from "../../../lib/conts/routes";
 import { Logo } from "./Logo";
 
 export interface LogoLinkProps extends React.HTMLAttributes<HTMLElement> {
