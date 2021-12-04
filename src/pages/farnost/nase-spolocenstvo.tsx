@@ -19,7 +19,7 @@ import { FaClock, FaRegCalendarAlt } from "react-icons/fa";
 import { BsPerson } from "react-icons/bs";
 import { BlogItemColumn } from "../../components/ContentSections/Blog/BlogItemColumn";
 import { BlogArchive } from "../../components/ContentSections/Blog/BlogArchive";
-import { Lastpeaces } from "../../components/ContentSections/Blog/Lastpeaces";
+import { Lastpeaces } from "../../components/ContentSections/Blog/Lastpiaces";
 import { BlogItemRow } from "../../components/ContentSections/Blog/BlogItemRow";
 
 export const query = graphql`
