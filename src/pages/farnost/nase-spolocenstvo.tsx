@@ -20,6 +20,7 @@ import { BsPerson } from "react-icons/bs";
 import { BlogItemColumn } from "../../components/ContentSections/Blog/BlogItemColumn";
 import { BlogArchive } from "../../components/ContentSections/Blog/BlogArchive";
 import { Lastpeaces } from "../../components/ContentSections/Blog/Lastpeaces";
+import { BlogItemRow } from "../../components/ContentSections/Blog/BlogItemRow";
 
 export const query = graphql`
   query useBlogPage {
@@ -96,7 +97,15 @@ const BlogPage = (props: any) => {
   return (
     <Layout page={page}>
       <Container maxW={"container.lg"}>
-        <Center>
+        <Center flexDir="column">
+          <BlogItemRow
+            img={mockData[0].img}
+            title={mockData[0].title}
+            author={mockData[0].author}
+            date={mockData[0].date}
+            time={mockData[0].time}
+            content={mockData[0].content}
+          />
           <SimpleGrid
             spacing={{ base: 8, md: 10 }}
             py={20}

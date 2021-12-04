@@ -18,10 +18,10 @@ import { BlogItemColumnProps } from "./BlogItemColumn";
 export const BlogItemRow = (props: BlogItemColumnProps) => {
   const { img, title, author, date, time, content } = props;
   return (
-    <Box maxW="full" border="1px" borderColor="gray.200">
+    <Box maxW="full" border="1px" borderColor="gray.200" mt={4}>
       <SimpleGrid columns={12}>
         <GridItem colSpan={{ base: 12, md: 5 }}>
-          <Image src={img} w="full" />
+          <Image src={img} h="100%" overflowX="hidden" />
         </GridItem>
         <GridItem colSpan={{ base: 12, md: 5 }}>
           <Box marginY={4} ml={{ md: 5 }}>
