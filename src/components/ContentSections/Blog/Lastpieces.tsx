@@ -1,4 +1,11 @@
-import { Box, Center, Link, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  GridItem,
+  Link,
+  SimpleGrid,
+  Text
+} from "@chakra-ui/react";
 import React from "react";
 import { Image } from "../../../lib/features/image/model/image.model";
 
@@ -29,10 +36,10 @@ export const Lastpeaces = (props: LastpeacesProps) => {
         <Text maxW="400px" minH="60px">
           {props.description}
         </Text>
-        <SimpleGrid spacing={5} py={5} columns={3}>
+        <SimpleGrid spacing={5} py={5} columns={3} w="100%" paddingX={7}>
           {props.items.slice(0, 3).map((item) => {
             return (
-              <Box w="200px" h="300px" backgroundColor="grey">
+              <GridItem backgroundColor="grey" colSpan={1} h="300px">
                 <Link href={`${window.location.pathname}/${item.month}`}>
                   <Text
                     mt="200px"
@@ -48,7 +55,7 @@ export const Lastpeaces = (props: LastpeacesProps) => {
                     {item.month}
                   </Text>
                 </Link>
-              </Box>
+              </GridItem>
             );
           })}
         </SimpleGrid>

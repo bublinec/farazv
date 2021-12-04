@@ -12,6 +12,8 @@ import React from "react";
 import { BsPerson } from "react-icons/bs";
 import { FaRegCalendarAlt, FaClock } from "react-icons/fa";
 import { ContactElement } from "../../Shared/Contact/ContactElement";
+import { IconText } from "../../Shared/IconText/IconText";
+import { LinkButton } from "../../Shared/LinkButton/LinkButton";
 
 export interface BlogItemColumnProps {
   img: string;
@@ -31,44 +33,17 @@ export const BlogItemColumn = (props: BlogItemColumnProps) => {
         <Text ml={3} mr={7} marginY={3} fontSize="xl" fontWeight={500}>
           {title}
         </Text>
-        <Center w="100%">
-          <Flex color="grey.400" fontSize="xs" isInline width="100%">
-            <Stack marginX={3} isInline>
-              <Icon as={BsPerson} w={4} h={4} />
-              <Text>{author}</Text>
-            </Stack>
-            <Box h="100%" W={1} bg="grey.500" />
-            <Stack marginX={3} isInline>
-              <Icon as={FaRegCalendarAlt} w={4} h={4} />
-              <Text>{date}</Text>
-            </Stack>
-            <Box h="100%" W={1} bg="grey.500" />
-            <Stack marginX={3} isInline>
-              <Icon as={FaClock} w={4} h={4} />
-              <Text>{time}</Text>
-            </Stack>
-          </Flex>
-        </Center>
+        <Flex color="grey.400" fontSize="xs" isInline width="100%" item>
+          <IconText icon={<BsPerson />} text={author} />
+          <IconText icon={<FaRegCalendarAlt />} text={date} />
+          <IconText icon={<FaClock />} text={time} />
+        </Flex>
         <Text ml={3} mr={7} marginY={3} noOfLines={3}>
           {content}
         </Text>
       </Box>
       <Box w="100%" display="flex" justifyContent="center" pt={2} pb={2}>
-        <Link
-          href={"blog/" + title}
-          color="blue.900"
-          _hover={{
-            backgroundColor: "blue.600",
-            color: "white",
-            fontWeight: 450
-          }}
-        >
-          <Box border="2px" borderColor="blue.900">
-            <Text marginX={2} marginY={1}>
-              Čítaj ďalej
-            </Text>
-          </Box>
-        </Link>
+        <LinkButton children="Čítaj ďalej" to={title} />
       </Box>
     </Box>
   );
