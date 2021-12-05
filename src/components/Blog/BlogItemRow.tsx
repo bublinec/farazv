@@ -23,6 +23,7 @@ export const BlogItemRow = (props: BlogItemColumnProps) => {
           py={6}
           border="1px"
           borderColor="gray.200"
+          boxShadow={"lg"}
           borderLeft={"none"}
         >
           <Box>
@@ -32,10 +33,14 @@ export const BlogItemRow = (props: BlogItemColumnProps) => {
               <IconDate dateStr={date} />
             </HStack>
           </Box>
-          <Text marginY={3} noOfLines={7} textAlign={"justify"}>
+          <Text marginY={3} noOfLines={10} textAlign={"justify"}>
             {content}
           </Text>
-          <LinkButton children="Čítaj ďalej" to={href} alignSelf={"flex-end"} />
+          <LinkButton
+            children="Čítaj ďalej"
+            to={href}
+            alignSelf={"flex-start"}
+          />
         </Stack>
       </SimpleGrid>
     </Box>

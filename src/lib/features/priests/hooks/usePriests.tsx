@@ -3,7 +3,10 @@ import { graphql, useStaticQuery } from "gatsby";
 export const usePriests = (): any => {
   const data = useStaticQuery(graphql`
     query usePriests {
-      allStrapiPriests {
+      allStrapiPriests(
+        filter: { guest: { eq: false } }
+        sort: { fields: published_at, order: ASC }
+      ) {
         nodes {
           role
           title
@@ -17,8 +20,8 @@ export const usePriests = (): any => {
               childImageSharp {
                 gatsbyImageData(
                   placeholder: TRACED_SVG
-                  height: 280
-                  width: 240
+                  height: 320
+                  width: 280
                   quality: 90
                 )
               }

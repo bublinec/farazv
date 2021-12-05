@@ -1,4 +1,4 @@
-import { Box, BoxProps, Stack } from "@chakra-ui/react";
+import { Box, BoxProps, Flex, Stack } from "@chakra-ui/react";
 import React from "react";
 import { useEvents } from "../../../lib/features/events/hooks/useEvents";
 import { useGroups } from "../../../lib/features/global/hooks/useGroups";
@@ -54,12 +54,16 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
               case "EventsSection":
                 const recentEvents = useEvents();
                 return (
-                  <Container>
-                    <EventsSection
-                      {...props}
-                      events={props.useMostRecent ? recentEvents : props.events}
-                    />
-                  </Container>
+                  <Flex justifyContent={"center"} w="full">
+                    <Container>
+                      <EventsSection
+                        {...props}
+                        events={
+                          props.useMostRecent ? recentEvents : props.events
+                        }
+                      />
+                    </Container>
+                  </Flex>
                 );
               case "MultiParagraphImageBanner":
                 const sacraments = useSacraments();

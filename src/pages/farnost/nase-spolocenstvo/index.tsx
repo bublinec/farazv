@@ -19,7 +19,7 @@ const BlogPage = (props: any) => {
 
   return (
     <Layout page={page}>
-      <Stack spacing={{ base: 10, md: 16 }} py={16}>
+      <Stack spacing={{ base: 10, md: 16 }} py={16} mb={8}>
         <RecentBlogs />
         {/* <LastPieces /> */}
         {/* <BlogArchive /> */}

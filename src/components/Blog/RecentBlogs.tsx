@@ -29,7 +29,7 @@ export const RecentBlogs = (props: RecentBlogsProps) => {
             date={articles[0].published_at}
             content={articles[0].description}
             href={`/farnost/nase-spolocenstvo/${articles[0].slug}`}
-            mb={12}
+            mb={14}
           />
           <SimpleGrid
             spacing={{ base: 8, md: 10 }}

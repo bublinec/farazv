@@ -16,10 +16,10 @@ export const MultiParagraphImageBanner = (
   const bgImage = convertImage(backgroundImage);
 
   return (
-    <Box {...restOfProps} py={4}>
+    <Box {...restOfProps} py={5}>
       {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
-          <Overlay zIndex={0} opacity={90} />
+          <Overlay zIndex={0} opacity={70} />
           <Container py={backgroundImage ? 14 : 0} position="relative">
             <SectionHeading
               heading={heading.title}
