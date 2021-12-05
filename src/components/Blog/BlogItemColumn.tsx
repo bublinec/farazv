@@ -42,9 +42,8 @@ export const BlogItemColumn = (props: BlogItemColumnProps) => {
         <Stack
           w="full"
           spacing={4}
-          pt={4}
+          p={5}
           pb={6}
-          px={5}
           alignItems="flex-start"
           border="1px"
           borderColor={borderColor}
@@ -57,7 +56,12 @@ export const BlogItemColumn = (props: BlogItemColumnProps) => {
               <IconDate dateStr={date} />
             </HStack>
           </Box>
-          <Text marginY={3} noOfLines={6} fontWeight={400}>
+          <Text
+            marginY={3}
+            noOfLines={6}
+            fontWeight={400}
+            textAlign={"justify"}
+          >
             {content}
           </Text>
           {/* <LinkButton children="Čítaj ďalej" to={href} alignSelf={"flex-end"} /> */}

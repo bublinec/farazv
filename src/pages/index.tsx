@@ -1,7 +1,6 @@
 import { Stack } from "@chakra-ui/react";
 import { graphql } from "gatsby";
 import React from "react";
-import { MassTimesCarousel } from "../components/Home/MassTimesCarousel/MassTimesCarousel";
 import { BlogHomeSection } from "../components/Blog/BlogHomeSection";
 import { DynamicZoneRenderer } from "../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
 import Layout from "../components/Shared/Layout/Layout";

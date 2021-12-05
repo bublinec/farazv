@@ -29,7 +29,7 @@ export const BlogHomeSection = (props: BlogHomeSectionProps) => {
   }
 
   return (
-    <Box {...restOfProps} py={4} pb={BOTTOM_MARGIN}>
+    <Box {...restOfProps} py={4} pb={BOTTOM_MARGIN - 20}>
       {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
           <Overlay zIndex={0} opacity={90} />
@@ -43,7 +43,7 @@ export const BlogHomeSection = (props: BlogHomeSectionProps) => {
               mx={"auto"}
             />
 
-            <Stack mb={-BOTTOM_MARGIN} alignItems="center" spacing={10}>
+            <Stack mb={-BOTTOM_MARGIN} alignItems="center" spacing={12}>
               <SimpleGrid
                 spacing={{ base: 8, md: 12 }}
                 columns={{ base: 1, md: 3 }}

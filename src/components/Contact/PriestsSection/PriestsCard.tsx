@@ -38,6 +38,7 @@ export const PriestCard = (props: PriestCardProps) => {
           <Divider />
           {props.phone && (
             <LinkItem
+              hoverColor="primary"
               color={"lightGray"}
               label={props.phone}
               to={`/tel:${props.phone}`}

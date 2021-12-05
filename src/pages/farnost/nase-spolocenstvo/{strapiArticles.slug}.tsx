@@ -54,7 +54,7 @@ const ArticlePage = (props: any) => {
 
   return (
     <Layout page={page}>
-      <Stack spacing={{ base: 4, md: 16 }} py={{ base: 10, md: 14 }}>
+      <Stack spacing={{ base: 4, md: 16 }} py={{ base: 10, md: 14 }} mb={10}>
         <Container maxW="container.lg">
           <Text
             title={article.title}
