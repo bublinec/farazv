@@ -88,8 +88,16 @@ export interface SlideshowProps {
 export interface GalleryProps {
   images: Image[];
   heading: TextProps;
+  button: Button;
 }
 
+export interface IframesProps {
+  iframes: {
+    url: string;
+  }[];
+  heading?: TextProps;
+  button?: Button;
+}
 export interface AnnouncementsSectionProps {
   useMostRecent: boolean;
   backgroundImage: Image;

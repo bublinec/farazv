@@ -62,7 +62,7 @@ export const BlogHomeSection = (props: BlogHomeSectionProps) => {
                 })}
               </SimpleGrid>
               <LinkButton to={"/farnost/nase-spolocenstvo"}>
-                Zobraziť viac
+                Zobraziť viac článkov
               </LinkButton>
             </Stack>
           </Container>

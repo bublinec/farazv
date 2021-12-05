@@ -1,33 +1,61 @@
+import { SimpleGrid } from "@chakra-ui/react";
 import React from "react";
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
 import { Image } from "../../../lib/features/image/model/image.model";
 import { ImageCard } from "./components/ImageCard";
 
 export interface UniversalGalleryProps {
-  className?: string;
   galleryKey: string;
   images: Image[];
 }
 
+export const galleryConfig = {
+  base: {
+    columns: { base: 3, md: 3, lg: 3 },
+    gap: { base: 4, md: 6 }
+  },
+  large: {
+    columns: { base: 3, md: 4, lg: 4, xl: 4 },
+    gap: { base: 2, md: 3 }
+  }
+};
+
+export const galleryCardConfig = {
+  base: {
+    h: {
+      base: "36",
+      sm: "52",
+      md: "72",
+      lg: "350px"
+    }
+  },
+  large: {
+    h: {
+      base: "36",
+      sm: "52",
+      md: "72",
+      lg: "280px"
+    }
+  }
+};
+
 export const UniversalGallery = (props: UniversalGalleryProps) => {
-  const { className = "", galleryKey, images } = props;
+  const { galleryKey, images } = props;
+  // const size = images.length > 12 ? "large" : "base";
+  const size = "large";
+
   return (
     <SimpleReactLightbox>
       <SRLWrapper key={galleryKey}>
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
+        <SimpleGrid {...galleryConfig[size]}>
           {images.map((image, index) => (
             <ImageCard
               key={image.localFile.publicURL}
-              h={{
-                base: "36",
-                sm: "52",
-                md: "72",
-                lg: "350px"
-              }}
+              {...galleryCardConfig[size]}
               {...image}
             />
           ))}
-        </div>
+        </SimpleGrid>
       </SRLWrapper>
     </SimpleReactLightbox>
   );
