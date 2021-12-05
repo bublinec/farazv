@@ -21,9 +21,13 @@ export const routes = {
         to: "/farske-oznamy"
       }),
       asRoute({
-        label: "Kalendár akcií",
-        to: "/kalendar-akcii"
+        label: "Naše Spoločenstvo",
+        to: "/nase-spolocenstvo"
       }),
+      // asRoute({
+      //   label: "Kalendár akcií",
+      //   to: "/kalendar-akcii"
+      // }),
       asRoute({
         label: "O farnosti",
         to: "/o-farnosti-zvolen-mesto"
@@ -35,15 +39,11 @@ export const routes = {
       asRoute({
         label: "Kostol v Zolnej",
         to: "/kostol-sv-matusa-v-zolnej"
-      }),
-      asRoute({
-        label: "Naše Spoločenstvo",
-        to: "/nase-spolocenstvo"
-      }),
-      asRoute({
-        label: "Farský kostol",
-        to: "/farsky-kostol"
       })
+      // asRoute({
+      //   label: "Farský kostol",
+      //   to: "/farsky-kostol"
+      // })
     ]
   }),
   sacraments: asRoute({

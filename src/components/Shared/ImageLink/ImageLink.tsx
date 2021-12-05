@@ -14,7 +14,13 @@ export const ImageLink = (props: ImageLinkProps) => {
 
   return (
     <a href={href} target={external ? "_blank" : "_self"}>
-      <Box {...restOfProps}>
+      <Box
+        {...restOfProps}
+        _hover={{
+          transform: "scale(1.02)",
+          transition: "all ease-in-out 300ms"
+        }}
+      >
         {extractedImage && <GatsbyImage image={extractedImage} alt="" />}
       </Box>
     </a>

@@ -81,6 +81,9 @@ module.exports = {
           "priests",
           "weekly-announcements",
           "page",
+          "articles",
+          "categories",
+          "writers",
           "admin-pages"
         ],
         singleTypes: ["contact", "global"]

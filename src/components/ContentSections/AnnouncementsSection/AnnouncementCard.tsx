@@ -1,8 +1,7 @@
-import { Box, BoxProps, Flex } from "@chakra-ui/react";
+import { Box, BoxProps, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import { IconDate } from "../../Shared/IconDate/IconDate";
 import { LinkButton } from "../../Shared/LinkButton/LinkButton";
-import { MarkdownRenderer } from "../../Shared/MarkdownRenderer/MarkdownRenderer";
 import { Subheading } from "../../Shared/Subheading/Subheading";
 
 export interface AnnouncementCardProps extends BoxProps {
@@ -15,8 +14,6 @@ export interface AnnouncementCardProps extends BoxProps {
   };
 }
 
-// @IMRE: CTA MEANS 'CALL TO ACTION' WHICH IS A BUTTON THAT SUGGEST YOU TO DO SOMETHING
-
 export const AnnouncementCard = (props: AnnouncementCardProps) => {
   const { title, date, description, cta, ...restOfProps } = props;
   return (
@@ -24,19 +21,20 @@ export const AnnouncementCard = (props: AnnouncementCardProps) => {
       <Flex
         flexDir="column"
         gridGap={{ base: 2, md: 2 }}
-        h={{ base: "auto", md: 274 }}
+        h={{ base: "auto", md: 256 }}
         justifyContent={"space-between"}
       >
         <Box>
           <Subheading fontSize="xl">{title}</Subheading>
           <IconDate dateStr={date} />
-          <MarkdownRenderer
-            h={{ base: "auto", md: 122 }}
-            overflowY={"hidden"}
-            mt={2}
+          <Text
+            marginY={3}
+            noOfLines={7}
+            fontWeight={400}
+            textAlign={"justify"}
           >
             {description}
-          </MarkdownRenderer>
+          </Text>
         </Box>
         <LinkButton to={cta.url}>{cta.text}</LinkButton>
       </Flex>

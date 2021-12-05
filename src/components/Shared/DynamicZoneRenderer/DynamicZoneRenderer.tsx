@@ -1,4 +1,4 @@
-import { Box, BoxProps, Stack } from "@chakra-ui/react";
+import { Box, BoxProps, Flex, Stack } from "@chakra-ui/react";
 import React from "react";
 import { useEvents } from "../../../lib/features/events/hooks/useEvents";
 import { useGroups } from "../../../lib/features/global/hooks/useGroups";
@@ -22,6 +22,9 @@ export const COMPONENT_PREFIX = "STRAPI_ComponentSections";
 
 export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
   const { contentSections, ...restOfProps } = props;
+  if (!contentSections) {
+    return <div></div>;
+  }
 
   return (
     <Box {...restOfProps}>
@@ -35,7 +38,7 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
             switch (shortSectionName) {
               case "Text":
                 return (
-                  <Container>
+                  <Container maxW="container.lg">
                     <Text {...props} />
                   </Container>
                 );
@@ -51,12 +54,16 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
               case "EventsSection":
                 const recentEvents = useEvents();
                 return (
-                  <Container>
-                    <EventsSection
-                      {...props}
-                      events={props.useMostRecent ? recentEvents : props.events}
-                    />
-                  </Container>
+                  <Flex justifyContent={"center"} w="full">
+                    <Container>
+                      <EventsSection
+                        {...props}
+                        events={
+                          props.useMostRecent ? recentEvents : props.events
+                        }
+                      />
+                    </Container>
+                  </Flex>
                 );
               case "MultiParagraphImageBanner":
                 const sacraments = useSacraments();
