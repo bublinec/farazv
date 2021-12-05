@@ -1,7 +1,8 @@
+import { Stack } from "@chakra-ui/react";
 import { graphql } from "gatsby";
 import React from "react";
-import { DynamicZoneRenderer } from "../../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
-import Layout from "../../components/Shared/Layout/Layout";
+import { RecentBlogs } from "../../../components/Blog/RecentBlogs";
+import Layout from "../../../components/Shared/Layout/Layout";
 
 export const query = graphql`
   query useBlogPage {
@@ -18,10 +19,11 @@ const BlogPage = (props: any) => {
 
   return (
     <Layout page={page}>
-      <DynamicZoneRenderer
-        contentSections={page.contentSections}
-        py={{ base: 8, md: 12 }}
-      />
+      <Stack spacing={{ base: 10, md: 16 }} py={16}>
+        <RecentBlogs />
+        {/* <LastPieces /> */}
+        {/* <BlogArchive /> */}
+      </Stack>
     </Layout>
   );
 };

@@ -1,7 +1,6 @@
 import { Box, BoxProps, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
 import { Announcement } from "../../../lib/features/announcement/model/announcement.model";
-import { shorten } from "../../../lib/utils/stringUtils";
 import { AnnouncementCard } from "./AnnouncementCard";
 
 export interface AnnouncementsGridProps extends BoxProps {
@@ -24,10 +23,7 @@ export const AnnouncementsGrid = (props: AnnouncementsGridProps) => {
             <AnnouncementCard
               title={a.title}
               date={a.published_at}
-              description={shorten(
-                a.description || a.content,
-                ANNOUNCEMENT_DESCRIPTION_MAX_LENGTH
-              )}
+              description={a.description || a.content}
               key={a.published_at}
               cta={{
                 url: `/vyveska/${a.slug}`,

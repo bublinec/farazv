@@ -22,6 +22,9 @@ export const COMPONENT_PREFIX = "STRAPI_ComponentSections";
 
 export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
   const { contentSections, ...restOfProps } = props;
+  if (!contentSections) {
+    return <div></div>;
+  }
 
   return (
     <Box {...restOfProps}>
@@ -35,7 +38,7 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
             switch (shortSectionName) {
               case "Text":
                 return (
-                  <Container>
+                  <Container maxW="container.lg">
                     <Text {...props} />
                   </Container>
                 );

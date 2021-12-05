@@ -14,6 +14,7 @@ export const MultiParagraphImageBanner = (
   const { heading, paragraphs, backgroundImage, ...restOfProps } = props;
 
   const bgImage = convertImage(backgroundImage);
+
   return (
     <Box {...restOfProps} py={4}>
       {bgImage && (

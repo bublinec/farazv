@@ -7,7 +7,12 @@ export interface HeadingProps extends BoxProps {
 }
 
 export const Heading = (props: HeadingProps) => {
-  const { children, color = "darkGray", ...restOfProps } = props;
+  const {
+    children,
+    color = "darkGray",
+    fontWeight = 600,
+    ...restOfProps
+  } = props;
   return (
     <Box
       {...restOfProps}
