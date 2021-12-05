@@ -298,4 +298,137 @@ export const fragments = graphql`
       }
     }
   }
+
+  fragment STRAPI_ArticleFragment on STRAPI_ArticleContentSectionsDynamicZone {
+    ... on STRAPI_ComponentSectionsText {
+      __typename
+      content
+      info
+      superscript
+      title
+    }
+    ... on STRAPI_ComponentSectionsImagesTextGrid {
+      __typename
+      heading {
+        ...STRAPI_ComponentSectionsTextFragment
+      }
+      paragraphs {
+        content
+        image {
+          ...STRAPI_UploadFileFragment
+        }
+      }
+    }
+    ... on STRAPI_ComponentSectionsMultiParagraphImageBanner {
+      __typename
+      backgroundImage {
+        localFile {
+          childImageSharp {
+            gatsbyImageData(placeholder: BLURRED, quality: 90)
+          }
+        }
+      }
+      heading {
+        ...STRAPI_ComponentSectionsTextFragment
+      }
+      paragraphs {
+        content
+        reactIconName
+        title
+      }
+      configuration
+    }
+
+    ... on STRAPI_ComponentSectionsBackgroundImageContent {
+      __typename
+      backgroundImage {
+        ...STRAPI_UploadFileFragment
+      }
+      imageParagraph {
+        content
+        image {
+          ...STRAPI_UploadFileFragment
+        }
+      }
+    }
+    ... on STRAPI_ComponentSectionsSlideshow {
+      __typename
+      id
+      useGlogabalConfiguration
+      slides {
+        buttons {
+          external
+          link
+          text
+          type
+        }
+        heading {
+          ...STRAPI_ComponentSectionsTextFragment
+        }
+      }
+    }
+    ... on STRAPI_ComponentSectionsGallery {
+      __typename
+      heading {
+        ...STRAPI_ComponentSectionsTextFragment
+      }
+      images {
+        ...STRAPI_UploadFileFragment
+      }
+    }
+    ... on STRAPI_ComponentSectionsAnnouncementsSection {
+      __typename
+      announcements {
+        content
+        description
+        published_at
+        title
+        slug
+      }
+      backgroundImage {
+        ...STRAPI_UploadFileFragment
+      }
+      heading {
+        ...STRAPI_ComponentSectionsTextFragment
+      }
+      useMostRecent
+    }
+
+    ... on STRAPI_ComponentSectionsEventsSection {
+      __typename
+      useMostRecent
+      heading {
+        ...STRAPI_ComponentSectionsTextFragment
+      }
+      events {
+        link
+        poster {
+          ...STRAPI_UploadFileFragment
+        }
+      }
+    }
+
+    ... on STRAPI_ComponentSectionsPartnersSection {
+      __typename
+      heading {
+        ...STRAPI_ComponentSectionsTextFragment
+      }
+      useGlobalConfiguration
+      partners {
+        url
+        image {
+          localFile {
+            childImageSharp {
+              gatsbyImageData(
+                placeholder: TRACED_SVG
+                quality: 100
+                height: 180
+              )
+            }
+          }
+          url
+        }
+      }
+    }
+  }
 `;

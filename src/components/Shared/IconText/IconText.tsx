@@ -9,9 +9,9 @@ export interface IconTextProps extends BoxProps {
 export const IconText = (props: IconTextProps) => {
   const { icon, text, fontSize = "sm", ...restOfProps } = props;
   return (
-    <Box {...restOfProps} textColor="lightGray" fontSize="md" padding={2}>
+    <Box {...restOfProps} textColor="lightGray" fontSize="md">
       <HStack alignItems={"center"} spacing={1}>
-        <Box>{icon}</Box>
+        <Box mb={0.5}>{icon}</Box>
         <Box fontSize={fontSize} fontWeight={200}>
           {text}
         </Box>

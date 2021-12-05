@@ -1,3 +1,4 @@
+import { BoxProps } from "@chakra-ui/react";
 import { Image } from "../image/model/image.model";
 
 export type ContentSection =
@@ -54,11 +55,12 @@ export interface ImageLink {
 // SECTIONS
 //////////////////////////////////////
 
-export interface TextProps {
+export interface TextProps extends BoxProps {
   content?: string;
   info?: string;
   superscript?: string;
   title?: string;
+  light?: boolean;
 }
 
 export interface ImagesTextGridProps {

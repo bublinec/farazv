@@ -1,4 +1,4 @@
-import { Box, BoxProps } from "@chakra-ui/react";
+import { Box, BoxProps, Stack } from "@chakra-ui/react";
 import React from "react";
 import { ReactNode } from "react-markdown";
 import { Heading } from "../Heading/Heading";
@@ -17,17 +17,25 @@ export const SectionHeading = (props: SectionHeadingProps) => {
     superscript,
     mb = { base: 2, md: 3 },
     light = false,
+    alignItems = "flex-start",
     ...restOfProps
   } = props;
   return (
-    <Box {...restOfProps} w={{ md: "max-content" }} maxW="full" mb={mb}>
-      {superscript && (
-        <Superscript mb={-1} color={light ? "secondary" : "primary"}>
-          {superscript}
-        </Superscript>
-      )}
-      <Heading color={light ? "white" : "darkGray"}>{heading}</Heading>
-      <Underline maxW={280} />
+    <Box {...restOfProps} w={{ base: "max-content" }} maxW="full" mb={mb}>
+      <Stack alignItems={alignItems} spacing={0}>
+        {superscript && (
+          <Superscript mb={-1} color={light ? "secondary" : "primary"}>
+            {superscript}
+          </Superscript>
+        )}
+        <Heading
+          color={light ? "white" : "darkGray"}
+          fontWeight={light ? 500 : 600}
+        >
+          {heading}
+        </Heading>
+        <Underline maxW={280} w="full" alignItems={alignItems} />
+      </Stack>
     </Box>
   );
 };
