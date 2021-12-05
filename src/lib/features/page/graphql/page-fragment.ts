@@ -101,7 +101,30 @@ export const pageFragment = graphql`
         images {
           ...STRAPI_UploadFileFragment
         }
+        button {
+          external
+          link
+          text
+          type
+        }
       }
+
+      ... on STRAPI_ComponentSectionsIframes {
+        __typename
+        heading {
+          ...STRAPI_ComponentSectionsTextFragment
+        }
+        iframes {
+          url
+        }
+        button {
+          external
+          link
+          text
+          type
+        }
+      }
+
       ... on STRAPI_ComponentSectionsAnnouncementsSection {
         __typename
         announcements {
@@ -241,7 +264,30 @@ export const pageFragment = graphql`
         images {
           ...STRAPI_UploadFileFragment
         }
+        button {
+          external
+          link
+          text
+          type
+        }
       }
+
+      ... on STRAPI_ComponentSectionsIframes {
+        __typename
+        heading {
+          ...STRAPI_ComponentSectionsTextFragment
+        }
+        iframes {
+          url
+        }
+        button {
+          external
+          link
+          text
+          type
+        }
+      }
+
       ... on STRAPI_ComponentSectionsAnnouncementsSection {
         __typename
         announcements {
@@ -375,7 +421,30 @@ export const pageFragment = graphql`
       images {
         ...STRAPI_UploadFileFragment
       }
+      button {
+        external
+        link
+        text
+        type
+      }
     }
+
+    ... on STRAPI_ComponentSectionsIframes {
+      __typename
+      heading {
+        ...STRAPI_ComponentSectionsTextFragment
+      }
+      iframes {
+        url
+      }
+      button {
+        external
+        link
+        text
+        type
+      }
+    }
+
     ... on STRAPI_ComponentSectionsAnnouncementsSection {
       __typename
       announcements {

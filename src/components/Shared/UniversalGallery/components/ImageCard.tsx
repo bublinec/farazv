@@ -1,6 +1,5 @@
 import { Box, BoxProps } from "@chakra-ui/react";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import { convertToBgImage } from "gbimage-bridge";
 import React from "react";
 import { Image } from "../../../../lib/features/image/model/image.model";
 
@@ -10,20 +9,28 @@ export interface ImageCardProps extends Image, BoxProps {
 
 export const ImageCard = (props: ImageCardProps) => {
   const { className = "", alternativeText, localFile } = props;
+  // @ts-ignore
   const extractedImage = getImage(localFile);
-
-  // Use like this:
-  const bgImage = convertToBgImage(extractedImage);
 
   return (
     <Box
       as="a"
-      className={`${className} relative shadow-md overflow-hidden rounded-md hover:shadow-2xl transition-all duration-300 ease-in-out`}
-      display="flex"
-      {...props}
+      overflow={"hidden"}
       href={localFile.publicURL}
+      cursor="pointer"
+      {...props}
     >
-      <GatsbyImage image={extractedImage} />
+      <Box
+        _hover={{ transform: "scale(1.05)" }}
+        h="full"
+        display="flex"
+        position="relative"
+        transition="all ease-in-out 400ms"
+      >
+        {extractedImage && (
+          <GatsbyImage image={extractedImage} alt="gallery image" />
+        )}
+      </Box>
     </Box>
   );
 };

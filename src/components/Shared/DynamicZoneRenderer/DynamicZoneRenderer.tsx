@@ -7,6 +7,7 @@ import { ContentSection } from "../../../lib/features/page/content-sections.d";
 import { AnnouncementsSection } from "../../ContentSections/AnnouncementsSection/AnnouncementsSection";
 import { EventsSection } from "../../ContentSections/EventsSection/EventsSection";
 import { Gallery } from "../../ContentSections/Gallery/Gallery";
+import { Iframes } from "../../ContentSections/Iframes/Iframes";
 import { ImagesTextGrid } from "../../ContentSections/ImageTextGrid/ImagesTextGrid";
 import { MultiParagraphImageBanner } from "../../ContentSections/MultiParagraphImageBanner/MultiParagraphImageBanner";
 import { PartnersSection } from "../../ContentSections/PartnersSection/PartnersSection";
@@ -50,7 +51,8 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
                 return <ImagesTextGrid {...props} />;
               case "Gallery":
                 return <Gallery {...props} />;
-
+              case "Iframes":
+                return <Iframes {...props} />;
               case "EventsSection":
                 const recentEvents = useEvents();
                 return (
