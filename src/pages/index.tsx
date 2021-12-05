@@ -18,7 +18,7 @@ export const query = graphql`
 const HomePage = (props: any) => {
   const page = props.data.STRAPI.adminPages[0];
   const sectionsNumber = page.contentSections.length;
-  const staticComponentIndex = 1;
+  const staticComponentIndex = 2;
 
   return (
     <Layout page={page} home>
@@ -27,6 +27,7 @@ const HomePage = (props: any) => {
           contentSections={page.contentSections.slice(0, staticComponentIndex)}
           py={{ base: 8, md: 12 }}
         />
+
         <BlogHomeSection
           heading={{
             title: "Naše spoločenstvo",

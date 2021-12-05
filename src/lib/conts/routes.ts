@@ -39,6 +39,14 @@ export const routes = {
       asRoute({
         label: "Kostol v Zolnej",
         to: "/kostol-sv-matusa-v-zolnej"
+      }),
+      asRoute({
+        label: "Galéria",
+        to: "/galeria"
+      }),
+      asRoute({
+        label: "Virtuálna prehliadka",
+        to: "/virtualna-prehliadka"
       })
       // asRoute({
       //   label: "Farský kostol",

@@ -1,23 +1,22 @@
-import { Box } from "@chakra-ui/react";
+import { Box, BoxProps } from "@chakra-ui/react";
 import React from "react";
 
-export interface IframeProps {
-  iframeLink: string;
+export interface IframeProps extends BoxProps {
+  url: string;
 }
 
 export const Iframe = (props: IframeProps) => {
-  const { iframeLink, ...restOfProps } = props;
+  const { url, ...restOfProps } = props;
 
   return (
-    <Box {...restOfProps}>
-      <Box overflowY="hidden" boxShadow="xl">
-        <iframe
-          src={iframeLink}
-          width="100%"
-          height="105%" // hide bottom text
-          loading="lazy"
-        ></iframe>
-      </Box>
+    <Box {...restOfProps} boxShadow="xl" bg="darkGray">
+      <iframe
+        src={url}
+        width="100%"
+        height="100%"
+        loading="lazy"
+        allowFullScreen
+      ></iframe>
     </Box>
   );
 };
