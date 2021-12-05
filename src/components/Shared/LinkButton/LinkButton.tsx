@@ -11,7 +11,14 @@ export interface LinkButtonProps extends BoxProps {
 }
 
 export const LinkButton = (props: LinkButtonProps) => {
-  const { children, to, external = false, buttonProps, ...restOfProps } = props;
+  const {
+    children,
+    to,
+    external = false,
+
+    buttonProps,
+    ...restOfProps
+  } = props;
 
   return (
     <Box {...restOfProps}>

@@ -18,7 +18,7 @@ export const query = graphql`
 const HomePage = (props: any) => {
   const page = props.data.STRAPI.adminPages[0];
   const sectionsNumber = page.contentSections.length;
-  const staticComponentIndex = 2;
+  const staticComponentIndex = 3;
 
   return (
     <Layout page={page} home>

@@ -88,6 +88,9 @@ export const pageFragment = graphql`
             text
             type
           }
+          image {
+            ...STRAPI_UploadFileFragment
+          }
           heading {
             ...STRAPI_ComponentSectionsTextFragment
           }
@@ -254,6 +257,9 @@ export const pageFragment = graphql`
           heading {
             ...STRAPI_ComponentSectionsTextFragment
           }
+          image {
+            ...STRAPI_UploadFileFragment
+          }
         }
       }
       ... on STRAPI_ComponentSectionsGallery {
@@ -407,6 +413,9 @@ export const pageFragment = graphql`
           link
           text
           type
+        }
+        image {
+          ...STRAPI_UploadFileFragment
         }
         heading {
           ...STRAPI_ComponentSectionsTextFragment

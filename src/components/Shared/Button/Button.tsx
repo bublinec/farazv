@@ -3,22 +3,30 @@ import {
   ButtonProps as ChakraButtonProps
 } from "@chakra-ui/react";
 import React from "react";
+import { ButtonTypes } from "../../../lib/features/page/content-sections.d";
 
-export interface ButtonProps extends ChakraButtonProps {}
+export interface ButtonProps extends ChakraButtonProps {
+  buttonType?: ButtonTypes;
+}
+
+export const typeToColorMap = {
+  primary: "primary",
+  secondary: "white"
+};
 
 export const Button = (props: ButtonProps) => {
-  const { children, ...restOfProps } = props;
+  const { children, buttonType = ButtonTypes.primary, ...restOfProps } = props;
 
   return (
     <ChakraButton
       rounded="none"
-      // py={5}
-      // px={6}
-      color="primary"
+      color={typeToColorMap[buttonType]}
       bg="none"
-      // fontSize="lg"
+      _hover={{
+        bg: "none"
+      }}
       borderWidth={"2px"}
-      borderColor={"primary"}
+      borderColor={typeToColorMap[buttonType]}
       {...restOfProps}
     >
       {children}
