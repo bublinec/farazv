@@ -23,8 +23,8 @@ export enum MultiParagraphImageBannerConfiguration {
 }
 
 export enum ButtonTypes {
-  primary,
-  secondary
+  primary = "primary",
+  secondary = "secondary"
 }
 
 export interface ImageParagraphProps {
@@ -40,10 +40,12 @@ export interface Button {
   type: ButtonTypes;
 }
 
-export interface Slide {
+export interface SlideProps {
   image: Image;
   buttons: Button[];
   heading: TextProps;
+  next?: any;
+  prev?: any;
 }
 
 export interface ImageLink {
@@ -81,7 +83,7 @@ export interface BackgroundImageContentProps {
 }
 
 export interface SlideshowProps {
-  slides: Slide[];
+  slides: SlideProps[];
   useGlobalConfiguration: boolean;
 }
 

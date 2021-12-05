@@ -5,12 +5,14 @@ import { useGroups } from "../../../lib/features/global/hooks/useGroups";
 import { useSacraments } from "../../../lib/features/global/hooks/useSacraments";
 import { ContentSection } from "../../../lib/features/page/content-sections.d";
 import { AnnouncementsSection } from "../../ContentSections/AnnouncementsSection/AnnouncementsSection";
+import { BackgroundImageContent } from "../../ContentSections/BackgroundImageContent/BackgroundImageContent";
 import { EventsSection } from "../../ContentSections/EventsSection/EventsSection";
 import { Gallery } from "../../ContentSections/Gallery/Gallery";
 import { Iframes } from "../../ContentSections/Iframes/Iframes";
 import { ImagesTextGrid } from "../../ContentSections/ImageTextGrid/ImagesTextGrid";
 import { MultiParagraphImageBanner } from "../../ContentSections/MultiParagraphImageBanner/MultiParagraphImageBanner";
 import { PartnersSection } from "../../ContentSections/PartnersSection/PartnersSection";
+import { Slideshow } from "../../ContentSections/Slideshow/Slideshow";
 import { Text } from "../../ContentSections/Text/Text";
 import { Container } from "../Container/Container";
 import { ComponentPlaceholder } from "./components/ComponentPlaceholder";
@@ -45,6 +47,10 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
                 );
               case "PartnersSection":
                 return <PartnersSection {...props} />;
+              case "Slideshow":
+                return <Slideshow {...props} />;
+              case "BackgroundImageContent":
+                return <BackgroundImageContent {...props} />;
               case "AnnouncementsSection":
                 return <AnnouncementsSection {...props} />;
               case "ImagesTextGrid":

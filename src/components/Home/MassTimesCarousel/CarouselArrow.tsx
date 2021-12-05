@@ -10,9 +10,10 @@ export const CarouselArrow = (props: CarouselArrowProps) => {
   return (
     <Box
       fontSize="4xl"
+      cursor="pointer"
       color="white"
       zIndex={30}
-      _hover={{ color: "lightGray" }}
+      _hover={{ color: "gray.200" }}
       {...restOfProps}
     >
       {icon}
