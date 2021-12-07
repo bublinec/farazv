@@ -11,7 +11,7 @@ export const ImageLinks = (props: ImageLinksProps) => {
   return (
     <Box>
       <Container>
-        <Text {...heading} />
+        <Text {...heading} textAlign={"center"} />
         <SimpleGrid
           columns={{ base: 1, md: 3, xl: images.length }}
           gridGap={14}

@@ -10,17 +10,22 @@ export interface MarkdownRendererProps extends BoxProps {
 }
 
 export const MarkdownRenderer = (props: MarkdownRendererProps) => {
-  const { children, color, headingSuperscript, ...restOfProps } = props;
+  const {
+    children,
+    color = "darkGray",
+    headingSuperscript,
+    ...restOfProps
+  } = props;
 
   return (
-    <Box {...restOfProps} color={color || "darkGray"}>
+    <Box {...restOfProps} color={color}>
       {children && (
         <ReactMarkdown
           components={{
             h1: ({ children }) => (
               <SectionHeading
                 as="h1"
-                color={color}
+                light={color === "white" ? true : false}
                 heading={children}
                 superscript={headingSuperscript}
                 mb={{ base: 2, md: 4 }}

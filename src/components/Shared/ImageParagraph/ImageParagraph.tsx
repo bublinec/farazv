@@ -5,7 +5,7 @@ import { ImageParagraphProps } from "../../../lib/features/page/content-sections
 import { MarkdownRenderer } from "../MarkdownRenderer/MarkdownRenderer";
 
 export const ImageParagraph = (props: ImageParagraphProps) => {
-  const { content, image, isImageOnTheLeft, ...restOfProps } = props;
+  const { content, image, isImageOnTheLeft, light, ...restOfProps } = props;
   let extractedImage;
   if (image?.localFile) {
     extractedImage = getImage(image.localFile);
@@ -23,7 +23,9 @@ export const ImageParagraph = (props: ImageParagraphProps) => {
         )}
 
         <GridItem gridRowStart={isImageOnTheLeft ? 0 : 1}>
-          <MarkdownRenderer>{content}</MarkdownRenderer>
+          <MarkdownRenderer color={light ? "white" : "darkGray"}>
+            {content}
+          </MarkdownRenderer>
         </GridItem>
       </SimpleGrid>
     </Box>

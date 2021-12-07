@@ -41,9 +41,11 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
             switch (shortSectionName) {
               case "Text":
                 return (
-                  <Container maxW="container.lg">
-                    <Text {...props} />
-                  </Container>
+                  <Flex justifyContent={"center"} w="full">
+                    <Container>
+                      <Text {...props} />
+                    </Container>
+                  </Flex>
                 );
               case "PartnersSection":
                 return <PartnersSection {...props} />;

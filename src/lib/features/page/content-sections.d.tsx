@@ -31,6 +31,7 @@ export interface ImageParagraphProps {
   content: string;
   image: any;
   isImageOnTheLeft?: boolean;
+  light?: boolean;
 }
 
 export interface Button {

@@ -54,6 +54,7 @@ export const pageFragment = graphql`
               gatsbyImageData(placeholder: BLURRED, quality: 90)
             }
           }
+          url
         }
         heading {
           ...STRAPI_ComponentSectionsTextFragment
@@ -73,7 +74,17 @@ export const pageFragment = graphql`
         imageParagraph {
           content
           image {
-            ...STRAPI_UploadFileFragment
+            localFile {
+              childImageSharp {
+                gatsbyImageData(
+                  placeholder: TRACED_SVG
+                  width: 280
+                  height: 400
+                  quality: 90
+                )
+              }
+            }
+            url
           }
         }
       }
@@ -155,7 +166,17 @@ export const pageFragment = graphql`
         events {
           link
           poster {
-            ...STRAPI_UploadFileFragment
+            localFile {
+              childImageSharp {
+                gatsbyImageData(
+                  placeholder: TRACED_SVG
+                  width: 480
+                  height: 640
+                  quality: 90
+                )
+              }
+            }
+            url
           }
         }
       }
@@ -219,6 +240,7 @@ export const pageFragment = graphql`
               gatsbyImageData(placeholder: BLURRED, quality: 90)
             }
           }
+          url
         }
         heading {
           ...STRAPI_ComponentSectionsTextFragment
@@ -239,7 +261,17 @@ export const pageFragment = graphql`
         imageParagraph {
           content
           image {
-            ...STRAPI_UploadFileFragment
+            localFile {
+              childImageSharp {
+                gatsbyImageData(
+                  placeholder: TRACED_SVG
+                  width: 280
+                  height: 400
+                  quality: 90
+                )
+              }
+            }
+            url
           }
         }
       }
@@ -321,7 +353,17 @@ export const pageFragment = graphql`
         events {
           link
           poster {
-            ...STRAPI_UploadFileFragment
+            localFile {
+              childImageSharp {
+                gatsbyImageData(
+                  placeholder: TRACED_SVG
+                  width: 480
+                  height: 640
+                  quality: 90
+                )
+              }
+            }
+            url
           }
         }
       }
@@ -379,6 +421,7 @@ export const pageFragment = graphql`
             gatsbyImageData(placeholder: BLURRED, quality: 90)
           }
         }
+        url
       }
       heading {
         ...STRAPI_ComponentSectionsTextFragment
@@ -399,7 +442,17 @@ export const pageFragment = graphql`
       imageParagraph {
         content
         image {
-          ...STRAPI_UploadFileFragment
+          localFile {
+            childImageSharp {
+              gatsbyImageData(
+                placeholder: TRACED_SVG
+                width: 280
+                height: 400
+                quality: 90
+              )
+            }
+          }
+          url
         }
       }
     }
@@ -481,7 +534,17 @@ export const pageFragment = graphql`
       events {
         link
         poster {
-          ...STRAPI_UploadFileFragment
+          localFile {
+            childImageSharp {
+              gatsbyImageData(
+                placeholder: TRACED_SVG
+                width: 480
+                height: 640
+                quality: 90
+              )
+            }
+          }
+          url
         }
       }
     }

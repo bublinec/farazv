@@ -10,7 +10,7 @@ export interface ImageLinkProps extends BoxProps {
 
 export const ImageLink = (props: ImageLinkProps) => {
   const { href, image, external = true, ...restOfProps } = props;
-  const extractedImage = getImage(image.localFile);
+  const extractedImage = getImage(image?.localFile);
 
   return (
     <a href={href} target={external ? "_blank" : "_self"}>
