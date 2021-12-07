@@ -6,7 +6,7 @@ import Layout from "../components/Shared/Layout/Layout";
 export const query = graphql`
   query useDocsPage {
     STRAPI {
-      adminPages(where: { slug: "docs" }) {
+      adminPages(where: { slug: "dokumentacia" }) {
         ...STRAPI_AdminPagesFragment
       }
     }
