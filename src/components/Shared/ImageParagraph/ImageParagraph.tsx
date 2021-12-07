@@ -14,7 +14,7 @@ export const ImageParagraph = (props: ImageParagraphProps) => {
   return (
     <Box {...restOfProps}>
       <SimpleGrid
-        columns={{ md: 2 }}
+        columns={{ md: extractedImage ? 2 : 1 }}
         alignItems={"center"}
         gap={{ base: 10, md: 16 }}
       >
