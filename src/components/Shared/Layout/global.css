@@ -5,6 +5,40 @@
 body {
   color: #303030;
   font-family: ubuntu;
+  /* FIX MOBILE WIDTH */
+  overflow-x: hidden;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2925;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #545454;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: inset 7px 10px 12px #f0f0f0;
+}
+
+/* chakra focus */
+*:focus {
+  box-shadow: none !important;
+}
+
+*[data-focus] {
+  box-shadow: none !important;
+}
+
+/* smooth scrolling - for id links on subcategories*/
+html {
+  scroll-behavior: smooth;
 }
 
 /* react map - hide labels */
@@ -22,4 +56,3 @@ a[href^="https://maps.google.com/maps"]
 .gmnoprint div {
   background: none !important;
 }
-

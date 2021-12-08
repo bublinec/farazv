@@ -10,7 +10,7 @@ export const NavbarItemButton = (props: NavbarItemButtonProps) => {
   const { className = "", label, setIsDropdownOpen } = props;
   return (
     <div
-      className={`${className} px-8 h-full cursor-pointer uppercase text-xl hover:bg-black hover:bg-opacity-20 text-white
+      className={`${className} px-6 h-full cursor-pointer text-xl hover:bg-black hover:bg-opacity-20 text-white font-light
       flex items-center
       transition duration-200 ease-in-out
       `}
