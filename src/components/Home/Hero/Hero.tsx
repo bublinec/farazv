@@ -1,11 +1,10 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import BackgroundImage from "gatsby-background-image";
 import { getImage } from "gatsby-plugin-image";
 import { convertToBgImage } from "gbimage-bridge";
 import React from "react";
 import { Container } from "../../Shared/Container/Container";
 import { Header } from "../../Shared/Header/Header";
-import { MassTimesCarousel } from "../MassTimesCarousel/MassTimesCarousel";
 
 export interface HeroProps {
   className?: string;
@@ -64,11 +63,11 @@ export const Hero = (props: HeroProps) => {
           </Box>
         </Container>
       </BackgroundImage>
-      <Container mt={-64} zIndex={20}>
+      {/* <Container mt={-64} zIndex={20}>
         <Flex justifyContent="flex-end">
           <MassTimesCarousel />
         </Flex>
-      </Container>
+      </Container> */}
     </section>
   );
 };

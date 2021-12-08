@@ -79,7 +79,7 @@ export const routes = {
         to: "/sviatost-manzelstva"
       }),
       asRoute({
-        label: "Sviatosť pomazania chorých",
+        label: "Pomazania chorých",
         to: "/sviatost-pomazania-chorych"
       })
     ]
