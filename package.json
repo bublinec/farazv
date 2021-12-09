@@ -36,7 +36,7 @@
     "babel-preset-gatsby": "^1.0.0",
     "dot-object": "^2.1.4",
     "framer-motion": "^4.1.17",
-    "gatsby": "^4.3.0",
+    "gatsby": "^3.1.0",
     "gatsby-alias-imports": "^1.0.6",
     "gatsby-background-image": "^1.1.1",
     "gatsby-image": "^3.0.0",

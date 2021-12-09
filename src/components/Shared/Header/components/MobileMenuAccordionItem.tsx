@@ -20,19 +20,20 @@ export const MobileMenuAccordionItem = (
 ) => {
   const { className = "", route } = props;
   return (
-    <div className={`${className} my-3`}>
+    <div className={`${className}`}>
       <Accordion allowToggle>
         <AccordionItem border="none">
           <AccordionButton
-            _expanded={{ bg: "white" }}
-            _active={{ bg: "white" }}
-            _focus={{ bg: "white" }}
-            _closed={{ bg: "white" }}
-            _hover={{ bg: "white" }}
+            _expanded={{ bg: "transparent" }}
+            _active={{ bg: "transparent" }}
+            _focus={{ bg: "transparent" }}
+            _closed={{ bg: "transparent" }}
+            _hover={{ bg: "transparent" }}
             bg="wite"
             p={0}
-            backgroundColor="white"
-            className="py-5 px-10 uppercase"
+            zIndex={50}
+            backgroundColor="transparent"
+            className="uppercase"
           >
             <div className="flex justify-between text-darkGray text-2xl">
               <Box flex="1" textAlign="left">
@@ -45,7 +46,7 @@ export const MobileMenuAccordionItem = (
             <div className="flex flex-col items-start ">
               {route?.children?.map((r) => (
                 <Link activeClassName="text-secondary" to={r.to} key={r.label}>
-                  <div className="py-2 pr-6 pl-12 text-xl">{r.label}</div>
+                  <div className="py-2 pr-6 pl-1 text-xl">{r.label}</div>
                 </Link>
               ))}
             </div>

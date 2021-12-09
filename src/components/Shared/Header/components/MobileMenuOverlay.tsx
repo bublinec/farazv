@@ -17,7 +17,11 @@ const renderMobileMenuLinkItems = () =>
     .filter((item) => item?.showInMenu != false)
     .map((route) => {
       if (route.children) {
-        return <MobileMenuAccordionItem route={route} key={route.label} />;
+        return (
+          <div className="py-4 px-10 ">
+            <MobileMenuAccordionItem route={route} key={route.label} />
+          </div>
+        );
       }
       return (
         <Link
@@ -36,17 +40,17 @@ const MobileMenuOverlayInner = (props: MobileMenuOverlayProps) => {
     <div
       className={`${
         props.open ? "left-0" : "-left-full"
-      } fixed top-0  bg-white h-screen w-screen z-40 transition-all duration-200 py-4 relative`}
+      } fixed top-0  bg-white h-screen w-screen z-40 transition-all duration-200 py-4`}
     >
       <Container>
-        <div className="flex items-center text-black text-2xl">
+        <div className="flex items-center text-black text-2xl mt-3">
           <LogoLink />
         </div>
-        <div className="flex justify-center flex-col items-start text-2xl mt-14 space-y-1 z-50">
+        <div className="flex justify-center flex-col items-start text-2xl mt-14 space-y-1 z-50 absolute">
           {renderMobileMenuLinkItems()}
         </div>
       </Container>
-      <div className="opacity-10 absolute bottom-0 right-0 w-full -mr-5 z-10">
+      <div className="opacity-5 absolute bottom-0 right-0 w-full -mr-5 z-0">
         <StaticImage
           src={"../../../../assets/other/churchWatermark.png"}
           alt="church watermark"
