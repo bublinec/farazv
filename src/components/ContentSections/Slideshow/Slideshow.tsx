@@ -14,9 +14,10 @@ const settings: Settings = {
   slidesToScroll: 1,
   autoplay: true,
   speed: 2000,
-  autoplaySpeed: 5000,
+  autoplaySpeed: 8000,
   infinite: true,
-  arrows: true,
+  arrows: false,
+  dots: true,
   nextArrow: <CarouselArrow icon={<BsChevronRight />} zIndex={50} />,
   prevArrow: <CarouselArrow icon={<BsChevronLeft />} />
 };

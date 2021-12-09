@@ -11,10 +11,13 @@ export const IframeGrid = (props: IframeGridProps) => {
   const isSingle = links.length === 1;
   return (
     <Box {...restOfProps}>
-      <SimpleGrid columns={isSingle ? 1 : 2} gap={14}>
+      <SimpleGrid
+        columns={{ base: 1, md: isSingle ? 1 : 2 }}
+        gap={{ base: 10, md: 12 }}
+      >
         {links.map((link) => (
           <Box boxShadow="2xl">
-            <Iframe url={link} h={isSingle ? 704 : 328} />
+            <Iframe url={link} />
           </Box>
         ))}
       </SimpleGrid>

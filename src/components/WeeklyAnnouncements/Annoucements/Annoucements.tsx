@@ -10,16 +10,20 @@ export interface AnnouncmentProps {
 export const Annoucements = (props: AnnouncmentProps) => {
   const { announcments, ...restOfProps } = props;
   return (
-    <Box {...restOfProps}>
+    <Box {...restOfProps} w="full">
       <SectionHeading heading="Oznamy" superscript="Farské oznamy" />
-      <Stack spacing={5}>
+      <Stack spacing={{ base: 2, md: 5 }}>
         {announcments.map((annoucement) => {
           return (
             <HStack alignItems={"flex-start"}>
               <Box fontSize="2xl" color="primary" mt={-1}>
                 ✓
               </Box>
-              <MarkdownRenderer children={annoucement.text} fontWeight={300} />
+              <MarkdownRenderer
+                w="full"
+                children={annoucement.text}
+                fontWeight={300}
+              />
             </HStack>
           );
         })}

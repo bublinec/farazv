@@ -12,7 +12,7 @@ export const Gallery = (props: GalleryProps) => {
   return (
     <Box {...restOfProps}>
       <Container>
-        <Stack spacing={12}>
+        <Stack spacing={{ base: 10, md: 12 }}>
           <Stack>
             {heading && <Text {...heading} />}
             <UniversalGallery
