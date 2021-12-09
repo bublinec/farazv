@@ -5,7 +5,7 @@ import { ImageLink } from "../../Shared/ImageLink/ImageLink";
 import { Text } from "../Text/Text";
 
 export const EventsSection = (props: EventsSectionProps) => {
-  const { heading, events, gridGap = 16 } = props;
+  const { heading, events, gridGap = { base: 10, md: 16 } } = props;
 
   return (
     <Box>
@@ -15,7 +15,7 @@ export const EventsSection = (props: EventsSectionProps) => {
         </Box>
       )}
       <SimpleGrid
-        columns={{ base: 1, md: 3, xl: events.length }}
+        columns={{ base: 2, sm: 3, xl: events.length }}
         gridGap={gridGap}
       >
         {events.map((e) => (

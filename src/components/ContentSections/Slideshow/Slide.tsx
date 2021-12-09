@@ -36,7 +36,13 @@ export const Slide = (props: SlideProps) => {
                 spacing={8}
                 h="full"
               >
-                <Text {...heading} light alignItems="center" maxW={560} />
+                <Text
+                  {...heading}
+                  light
+                  alignItems="center"
+                  textAlign={"center"}
+                  maxW={{ base: 96, md: 560 }}
+                />
                 <HStack spacing={4}>
                   {buttons.map((button) => (
                     <LinkButton

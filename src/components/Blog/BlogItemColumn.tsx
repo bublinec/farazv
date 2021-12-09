@@ -33,9 +33,9 @@ export const BlogItemColumn = (props: BlogItemColumnProps) => {
     <Box
       w="full"
       bg="white"
-      {...restOfProps}
       boxShadow="lg"
       _hover={{ boxShadow: "xl" }}
+      {...restOfProps}
     >
       <Link to={href}>
         {extractedImage && <GatsbyImage image={extractedImage} alt={title} />}
@@ -56,15 +56,17 @@ export const BlogItemColumn = (props: BlogItemColumnProps) => {
               <IconDate dateStr={date} />
             </HStack>
           </Box>
-          <Text
-            marginY={3}
-            noOfLines={6}
-            fontWeight={400}
-            textAlign={"justify"}
-          >
-            {content}
-          </Text>
-          {/* <LinkButton children="Čítaj ďalej" to={href} alignSelf={"flex-end"} /> */}
+          <Box flex={1}>
+            <Text
+              marginY={3}
+              noOfLines={6}
+              fontWeight={400}
+              textAlign={"justify"}
+            >
+              {content}
+            </Text>
+            {/* <LinkButton children="Čítaj ďalej" to={href} alignSelf={"flex-end"} /> */}
+          </Box>
         </Stack>
       </Link>
     </Box>

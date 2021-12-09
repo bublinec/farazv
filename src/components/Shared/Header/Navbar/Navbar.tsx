@@ -12,7 +12,7 @@ export interface NavbarProps {
 export const Navbar = (props: NavbarProps) => {
   const { className = "" } = props;
   return (
-    <nav className={`${className} w-full bg-black bg-opacity-70 h-20`}>
+    <nav className={`${className} w-full bg-black bg-opacity-70 h-16`}>
       <Container className="flex justify-between items-center w-full h-full">
         <LogoLink className="text-2xl md:text-3xl z-10 text-white" />
 

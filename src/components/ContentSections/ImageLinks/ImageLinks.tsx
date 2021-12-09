@@ -13,9 +13,9 @@ export const ImageLinks = (props: ImageLinksProps) => {
       <Container>
         <Text {...heading} textAlign={"center"} />
         <SimpleGrid
-          columns={{ base: 1, md: 3, xl: images.length }}
-          gridGap={14}
-          mt={10}
+          columns={{ base: 3, md: 3, xl: images.length }}
+          gridGap={{ base: 8, md: 14 }}
+          mt={{ base: 6, md: 10 }}
         >
           {images.map((i) => (
             <ImageLink href={i.url} image={i.image} w="full" />

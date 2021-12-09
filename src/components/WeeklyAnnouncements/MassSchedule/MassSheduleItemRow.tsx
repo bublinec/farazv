@@ -1,9 +1,6 @@
 import { Box, BoxProps, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 
-// each component should extend BoxProps
-// because then you can pass it any styling props (like color, padding, margin from outside)
-// you can create a snippet for it
 export interface MassScheduleItemRowProps extends BoxProps {
   time: string;
   name: string;
@@ -16,8 +13,8 @@ export const MassScheduleItemRow = (props: MassScheduleItemRowProps) => {
   return (
     <Box fontSize={"md"} fontWeight={300} {...restOfProps}>
       <Flex>
-        <Text w={12}>{time}</Text>
-        <Text w={24} fontWeight={500} color="primary">
+        <Text w={{ base: 12, md: 12 }}>{time}</Text>
+        <Text w={{ base: 20, md: 24 }} fontWeight={500} color="primary">
           {name}
         </Text>
         <Text flex={1}>{value}</Text>

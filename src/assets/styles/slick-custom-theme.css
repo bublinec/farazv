@@ -6,7 +6,7 @@ https://github.com/akiran/react-slick/blob/5fb7ac78321f3469118a974af3852742b64fc
 
 /* Dots */
 .slick-dotted.slick-slider {
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 .slick-dots {
@@ -28,8 +28,8 @@ https://github.com/akiran/react-slick/blob/5fb7ac78321f3469118a974af3852742b64fc
   display: inline-block;
 
   width: 20px;
-  height: 20px;
-  margin: 0 8px !important;
+  height: 8px;
+  margin: 0 6px !important;
   padding: 0;
 
   cursor: pointer;
@@ -41,7 +41,7 @@ https://github.com/akiran/react-slick/blob/5fb7ac78321f3469118a974af3852742b64fc
   display: block;
 
   width: 20px;
-  height: 20px;
+  height: 8px;
   padding: 50px;
 
   cursor: pointer;
@@ -68,9 +68,9 @@ https://github.com/akiran/react-slick/blob/5fb7ac78321f3469118a974af3852742b64fc
   top: 0;
   left: 0;
 
-  width: 20px;
-  height: 20px;
-  background-color: #f6f6f6;
+  width: 24px;
+  height: 5px;
+  background-color: white;
 
   content: " " !important;
   text-align: center;
@@ -81,7 +81,7 @@ https://github.com/akiran/react-slick/blob/5fb7ac78321f3469118a974af3852742b64fc
 }
 .slick-dots li.slick-active button:before {
   opacity: 1 !important;
-  background-color: #ae2626;
+  background-color: #e5ae49;
 }
 
 .slick-prev:before,

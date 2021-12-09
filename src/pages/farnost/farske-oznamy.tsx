@@ -1,4 +1,4 @@
-import { Box, Flex, GridItem, SimpleGrid, Stack } from "@chakra-ui/react";
+import { Box, Flex, GridItem, SimpleGrid } from "@chakra-ui/react";
 import { graphql } from "gatsby";
 import React from "react";
 import { EventsSection } from "../../components/ContentSections/EventsSection/EventsSection";
@@ -34,36 +34,34 @@ const WeeklyAnnouncementsPage = (props: any) => {
 
   return (
     <Layout page={page}>
-      <Container>
-        <Stack spacing={{ base: 8, md: 10 }} py={20}>
-          <SimpleGrid columns={12} gap={10}>
-            <GridItem colSpan={{ base: 12, md: 5 }}>
-              <MassSchedule days={days} />
-            </GridItem>
-            <GridItem colSpan={{ base: 12, md: 7 }} mt={{ base: 6, md: 0 }}>
-              <Flex
-                flexDir="column"
-                // justifyContent={"space-between"}
-                gridGap={8}
-                minH="full"
-              >
-                <Annoucements announcments={announcements} />
-                <Donations donations={donations} />
-                <Box w="full">
-                  <Subheading mb={4}>Najbližšie udalosti</Subheading>
-                  <EventsSection
-                    events={recentEvents}
-                    gridGap={6}
-                    // heading={{
-                    //   title: "Najbližšie udalosti",
-                    //   superscript: "Farské oznamy"
-                    // }}
-                  />
-                </Box>
-              </Flex>
-            </GridItem>
-          </SimpleGrid>
-        </Stack>
+      <Container py={{ base: 14, md: 20 }}>
+        <SimpleGrid columns={{ base: 1, md: 12 }} gap={{ base: 6, md: 10 }}>
+          <GridItem colSpan={{ md: 5 }}>
+            <MassSchedule days={days} />
+          </GridItem>
+          <GridItem colSpan={{ md: 7 }} mt={{ base: 6, md: 0 }}>
+            <Flex
+              flexDir="column"
+              // justifyContent={"space-between"}
+              gridGap={8}
+              minH="full"
+            >
+              <Annoucements announcments={announcements} />
+              <Donations donations={donations} />
+              <Box w="full">
+                <Subheading mb={4}>Najbližšie udalosti</Subheading>
+                <EventsSection
+                  events={recentEvents}
+                  gridGap={6}
+                  // heading={{
+                  //   title: "Najbližšie udalosti",
+                  //   superscript: "Farské oznamy"
+                  // }}
+                />
+              </Box>
+            </Flex>
+          </GridItem>
+        </SimpleGrid>
       </Container>
       <DynamicZoneRenderer contentSections={page.contentSections} />
     </Layout>
