@@ -36,6 +36,10 @@ body {
   box-shadow: none !important;
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* smooth scrolling - for id links on subcategories*/
 html {
   scroll-behavior: smooth;
