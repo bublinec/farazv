@@ -37,7 +37,7 @@ export const BlogHomeSection = (props: BlogHomeSectionProps) => {
             <Text
               {...heading}
               alignItems="center"
-              mb={12}
+              mb={{ base: 8, md: 10 }}
               light
               maxW={560}
               mx={"auto"}

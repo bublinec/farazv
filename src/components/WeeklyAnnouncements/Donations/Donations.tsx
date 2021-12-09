@@ -30,7 +30,7 @@ export const Donations = (props: DonationsProps) => {
           base: 1,
           md: donationEntries.length > 4 ? 3 : donationEntries.length
         }}
-        spacing={{ base: 3, md: 5 }}
+        spacing={{ base: 6, md: 5 }}
         mt={3}
         gap={2}
       >

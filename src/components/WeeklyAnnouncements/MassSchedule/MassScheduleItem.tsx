@@ -19,7 +19,12 @@ export interface MassScheduleItemProps {
 const MassScheduleItem = (props: MassScheduleItemProps) => {
   const { day, date, iconText, items, ...restOfProps } = props;
   return (
-    <Box border="1px" borderColor="gray.200" p={3} {...restOfProps}>
+    <Box
+      border="1px"
+      borderColor="gray.200"
+      p={{ base: 2, md: 3 }}
+      {...restOfProps}
+    >
       <Stack spacing={3}>
         <Box>
           <Flex justifyContent={"space-between"} alignItems={"center"}>

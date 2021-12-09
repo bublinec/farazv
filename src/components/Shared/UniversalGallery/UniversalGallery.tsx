@@ -15,8 +15,8 @@ export const galleryConfig = {
     gap: { base: 4, md: 6 }
   },
   large: {
-    columns: { base: 3, md: 4, lg: 4, xl: 4 },
-    gap: { base: 2, md: 3 }
+    columns: { base: 2, md: 4, lg: 4, xl: 4 },
+    gap: { base: 3, md: 4 }
   }
 };
 
@@ -31,7 +31,7 @@ export const galleryCardConfig = {
   },
   large: {
     h: {
-      base: "36",
+      base: "44",
       sm: "52",
       md: "72",
       lg: "280px"

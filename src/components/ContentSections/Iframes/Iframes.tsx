@@ -12,7 +12,7 @@ export const Iframes = (props: IframesProps) => {
     <Box {...restOfProps}>
       <Box {...restOfProps}>
         <Container>
-          <Stack spacing={14}>
+          <Stack spacing={{ base: 10, md: 12 }}>
             <Stack>
               {heading && <Text {...heading} />}
               <IframeGrid links={iframes.map((i: any) => i.url)} />

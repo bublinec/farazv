@@ -19,6 +19,8 @@ export const MobileMenuAccordionItem = (
   props: MobileMenuAccordionItemProps
 ) => {
   const { className = "", route } = props;
+  console.log(route);
+
   return (
     <div className={`${className}`}>
       <Accordion allowToggle>
@@ -42,10 +44,14 @@ export const MobileMenuAccordionItem = (
               <AccordionIcon />
             </div>
           </AccordionButton>
-          <AccordionPanel pb={4}>
+          <AccordionPanel pb={1}>
             <div className="flex flex-col items-start ">
               {route?.children?.map((r) => (
-                <Link activeClassName="text-secondary" to={r.to} key={r.label}>
+                <Link
+                  activeClassName="text-secondary"
+                  to={`${route.to}/${r.to}`}
+                  key={r.label}
+                >
                   <div className="py-2 pr-6 pl-1 text-xl">{r.label}</div>
                 </Link>
               ))}
