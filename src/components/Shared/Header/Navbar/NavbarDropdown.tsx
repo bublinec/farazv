@@ -13,7 +13,7 @@ export const NavbarDropdown = (props: NavbarDropdownProps) => {
 
   return (
     <section
-      className="absolute top-0 left-1/2 transform -translate-x-1/2 w-56 mt-20 cursor-pointer z-20 text-center"
+      className="absolute top-0 left-1/2 transform -translate-x-1/2 w-56 mt-16 cursor-pointer z-20 text-center"
       onMouseEnter={onMouseEnter}
     >
       <div

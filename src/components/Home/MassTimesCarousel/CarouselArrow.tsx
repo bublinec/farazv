@@ -13,6 +13,7 @@ export const CarouselArrow = (props: CarouselArrowProps) => {
       cursor="pointer"
       color="white"
       zIndex={30}
+      p={3}
       _hover={{ color: "gray.200" }}
       {...restOfProps}
     >

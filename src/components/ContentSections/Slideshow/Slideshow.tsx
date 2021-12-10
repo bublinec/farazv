@@ -13,7 +13,7 @@ const settings: Settings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
-  speed: 2000,
+  speed: 1000,
   autoplaySpeed: 8000,
   infinite: true,
   arrows: false,
@@ -25,8 +25,6 @@ const settings: Settings = {
 export const Slideshow = (props: SlideshowProps) => {
   const { slides, ...restOfProps } = props;
   const sliderRef = React.createRef<Slider>();
-
-  console.log(slides);
 
   return (
     <Box {...restOfProps}>

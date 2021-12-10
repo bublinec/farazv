@@ -32,7 +32,7 @@ export const LastPieces = (props: LastPiecesProps) => {
     <Box {...restOfProps} py={4} h={500}>
       {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
-          <Overlay zIndex={0} opacity={90} />
+          <Overlay zIndex={0} opacity={60} />
           <Container>
             <Center flexDir="column" pt={6}>
               <Superscript color="secondary">Farnosť</Superscript>

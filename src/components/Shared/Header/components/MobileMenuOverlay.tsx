@@ -50,7 +50,7 @@ const MobileMenuOverlayInner = (props: MobileMenuOverlayProps) => {
           {renderMobileMenuLinkItems()}
         </div>
       </Container>
-      <div className="opacity-5 absolute bottom-0 right-0 w-full -mr-5 z-0">
+      <div className="opacity-5 absolute bottom-0 right-0 w-full mb-6 z-0">
         <StaticImage
           src={"../../../../assets/other/churchWatermark.png"}
           alt="church watermark"

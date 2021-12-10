@@ -41,9 +41,8 @@ export const BlogItemColumn = (props: BlogItemColumnProps) => {
         {extractedImage && <GatsbyImage image={extractedImage} alt={title} />}
         <Stack
           w="full"
-          spacing={4}
+          spacing={0}
           p={5}
-          pb={6}
           alignItems="flex-start"
           border="1px"
           borderColor={borderColor}

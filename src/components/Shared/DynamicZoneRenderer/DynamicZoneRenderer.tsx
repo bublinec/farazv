@@ -42,7 +42,7 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
               case "Text":
                 return (
                   <Container maxW="container.lg">
-                    <Text {...props} />
+                    <Text {...props} w="full" maxW={"full"} />
                   </Container>
                 );
               case "PartnersSection":

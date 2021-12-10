@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Stack } from "@chakra-ui/react";
+import { Box, Flex, HStack, Stack, useBreakpointValue } from "@chakra-ui/react";
 import BackgroundImage from "gatsby-background-image";
 import React from "react";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
@@ -16,49 +16,62 @@ import { Text } from "../Text/Text";
 export const Slide = (props: SlideProps) => {
   const { image, buttons, heading, next, prev, ...restOfProps } = props;
   const bgImage = convertImage(image);
+  const buttonSize = useBreakpointValue({ base: "sm", md: "md" });
 
   return (
     <Box {...restOfProps}>
       {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
-          <Overlay zIndex={0} opacity={70} />
-          <Container position="relative" h={400}>
+          <Overlay zIndex={0} opacity={60} />
+          <Container position="relative" h={{ base: 380, md: 400 }}>
             <Flex
               justifyContent="space-between"
               alignItems="center"
               w="full"
               h="full"
             >
-              <CarouselArrow icon={<BsChevronLeft />} onClick={prev} />
+              <CarouselArrow
+                icon={<BsChevronLeft />}
+                onClick={prev}
+                display={{ base: "none", md: "block" }}
+              />
               <Stack
                 alignItems="center"
                 justifyContent={"center"}
-                spacing={8}
+                spacing={{ base: 4, md: 8 }}
                 h="full"
+                flex={1}
               >
                 <Text
                   {...heading}
                   light
                   alignItems="center"
                   textAlign={"center"}
-                  maxW={{ base: 96, md: 560 }}
+                  w={{ base: "full", md: 560 }}
                 />
                 <HStack spacing={4}>
                   {buttons.map((button) => (
-                    <LinkButton
-                      to={button.link}
-                      external={button.external}
-                      alignSelf={"center"}
-                      buttonProps={{
-                        buttonType: button.type || ButtonTypes.secondary
-                      }}
-                    >
-                      {button.text}
-                    </LinkButton>
+                    <>
+                      <LinkButton
+                        to={button.link}
+                        external={button.external}
+                        alignSelf={"center"}
+                        buttonProps={{
+                          size: buttonSize,
+                          buttonType: button.type || ButtonTypes.secondary
+                        }}
+                      >
+                        {button.text}
+                      </LinkButton>
+                    </>
                   ))}
                 </HStack>
               </Stack>
-              <CarouselArrow icon={<BsChevronRight />} onClick={next} />
+              <CarouselArrow
+                icon={<BsChevronRight />}
+                onClick={next}
+                display={{ base: "none", md: "block" }}
+              />
             </Flex>
           </Container>
         </BackgroundImage>

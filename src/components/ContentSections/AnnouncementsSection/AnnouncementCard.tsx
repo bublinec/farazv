@@ -1,7 +1,7 @@
 import { Box, BoxProps, Flex, Text } from "@chakra-ui/react";
 import React from "react";
+import { ArrowLink } from "../../Shared/ArrowLink/ArrowLink";
 import { IconDate } from "../../Shared/IconDate/IconDate";
-import { LinkButton } from "../../Shared/LinkButton/LinkButton";
 import { Subheading } from "../../Shared/Subheading/Subheading";
 
 export interface AnnouncementCardProps extends BoxProps {
@@ -21,7 +21,6 @@ export const AnnouncementCard = (props: AnnouncementCardProps) => {
       <Flex
         flexDir="column"
         gridGap={{ base: 2, md: 2 }}
-        h={{ base: "auto", md: 256 }}
         justifyContent={"space-between"}
       >
         <Box>
@@ -36,7 +35,15 @@ export const AnnouncementCard = (props: AnnouncementCardProps) => {
             {description}
           </Text>
         </Box>
-        <LinkButton to={cta.url}>{cta.text}</LinkButton>
+        {/* <LinkButton to={cta.url}>{cta.text}</LinkButton> */}
+        <ArrowLink
+          mt={-3}
+          href={cta.url}
+          alignSelf={"flex-end"}
+          color="primary"
+          label="Čítať ďalej"
+          fontWeight={700}
+        />
       </Flex>
     </Box>
   );

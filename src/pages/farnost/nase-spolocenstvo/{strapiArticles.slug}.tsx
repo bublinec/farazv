@@ -27,7 +27,7 @@ export const query = graphql`
             childImageSharp {
               gatsbyImageData(
                 placeholder: BLURRED
-                height: 600
+                height: 680
                 width: 1200
                 quality: 90
               )
@@ -47,7 +47,6 @@ export const query = graphql`
 `;
 
 const ArticlePage = (props: any) => {
-  console.log(props);
   const article = props.data.STRAPI.articles[0];
   const page = props.data.STRAPI.adminPages[0];
   const extractedImage = getImage(article.image.localFile);

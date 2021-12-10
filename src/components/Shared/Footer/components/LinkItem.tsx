@@ -1,6 +1,7 @@
 import { Box, BoxProps } from "@chakra-ui/react";
 import { Link } from "gatsby";
 import React, { ReactNode } from "react";
+import { isExternal } from "../../../../lib/utils/routeUtils";
 import { LinkItemLabel } from "./LinkItemLabel";
 
 export interface LinkItemProps extends BoxProps {
@@ -19,9 +20,14 @@ export const LinkItem = (props: LinkItemProps) => {
     hoverColor = "secondary",
     ...restOfProps
   } = props;
+
+  if (!to) {
+    return <LinkItemLabel label={label} icon={icon} />;
+  }
+
   return (
     <Box {...restOfProps}>
-      {to ? (
+      {!isExternal(to) ? (
         <Link to={to}>
           <LinkItemLabel
             color={color}
@@ -31,7 +37,9 @@ export const LinkItem = (props: LinkItemProps) => {
           />
         </Link>
       ) : (
-        <LinkItemLabel label={label} icon={icon} />
+        <a href={to}>
+          <LinkItemLabel label={label} icon={icon} />
+        </a>
       )}
     </Box>
   );
