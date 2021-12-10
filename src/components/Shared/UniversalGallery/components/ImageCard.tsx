@@ -1,22 +1,21 @@
 import { Box, BoxProps } from "@chakra-ui/react";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import React from "react";
-import { Image } from "../../../../lib/features/image/model/image.model";
 
-export interface ImageCardProps extends Image, BoxProps {
+export interface ImageCardProps extends BoxProps {
   className?: string;
+  image: any;
 }
 
 export const ImageCard = (props: ImageCardProps) => {
-  const { className = "", alternativeText, localFile } = props;
-  // @ts-ignore
-  const extractedImage = getImage(localFile);
+  const { className = "", image } = props;
+  const extractedImage = getImage(image.localFile);
 
   return (
     <Box
       as="a"
       overflow={"hidden"}
-      href={localFile.publicURL}
+      href={image.localFile.publicURL}
       cursor="pointer"
       {...props}
     >
@@ -28,7 +27,7 @@ export const ImageCard = (props: ImageCardProps) => {
         transition="all ease-in-out 400ms"
       >
         {extractedImage && (
-          <GatsbyImage image={extractedImage} alt="gallery image" />
+          <GatsbyImage image={extractedImage} alt={image.alternativeText} />
         )}
       </Box>
     </Box>

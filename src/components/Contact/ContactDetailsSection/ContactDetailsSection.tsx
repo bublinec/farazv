@@ -38,7 +38,7 @@ export const ContactDetailsSection: React.FC = (
               <ContactBox
                 heading="Kontakt"
                 items={[
-                  { title: "Telefón", value: contactData.phone },
+                  // { title: "Telefón", value: contactData.phone },
                   { title: "Mobil", value: contactData.mobil },
                   { title: "Email", value: contactData.email },
                   { title: "IBAN", value: contactData.iban }

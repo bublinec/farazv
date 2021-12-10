@@ -21,8 +21,13 @@ export const SectionHeading = (props: SectionHeadingProps) => {
     ...restOfProps
   } = props;
   return (
-    <Box {...restOfProps} w={{ base: "max-content" }} maxW="full" mb={mb}>
-      <Stack alignItems={alignItems} spacing={0}>
+    <Box
+      {...restOfProps}
+      w={{ md: "max-content" }}
+      maxW={{ md: "full" }}
+      mb={mb}
+    >
+      <Stack alignItems={alignItems} spacing={{ base: 1 }}>
         {superscript && (
           <Superscript mb={-1} color={light ? "secondary" : "primary"}>
             {superscript}

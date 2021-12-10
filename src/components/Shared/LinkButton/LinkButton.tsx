@@ -11,24 +11,19 @@ export interface LinkButtonProps extends BoxProps {
 }
 
 export const LinkButton = (props: LinkButtonProps) => {
-  const {
-    children,
-    to,
-    external = false,
-
-    buttonProps,
-    ...restOfProps
-  } = props;
+  const { children, to, external = false, buttonProps, ...restOfProps } = props;
 
   return (
     <Box {...restOfProps}>
-      <Link
-        to={to}
-        target={external ? "_blank" : "_self"}
-        rel={external ? "noopener noreferer" : ""}
-      >
-        <Button {...buttonProps}>{children}</Button>
-      </Link>
+      {external ? (
+        <Link to={to}>
+          <Button {...buttonProps}>{children}</Button>
+        </Link>
+      ) : (
+        <a href={to} target={"_blank"} rel={"noopener noreferer"}>
+          <Button {...buttonProps}>{children}</Button>
+        </a>
+      )}
     </Box>
   );
 };

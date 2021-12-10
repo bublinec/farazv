@@ -47,7 +47,6 @@ export const query = graphql`
 `;
 
 const ArticlePage = (props: any) => {
-  console.log(props);
   const article = props.data.STRAPI.articles[0];
   const page = props.data.STRAPI.adminPages[0];
   const extractedImage = getImage(article.image.localFile);

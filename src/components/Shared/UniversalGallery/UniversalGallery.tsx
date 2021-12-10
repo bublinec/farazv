@@ -51,8 +51,8 @@ export const UniversalGallery = (props: UniversalGalleryProps) => {
           {images.map((image, index) => (
             <ImageCard
               key={image.localFile.publicURL}
+              image={image}
               {...galleryCardConfig[size]}
-              {...image}
             />
           ))}
         </SimpleGrid>

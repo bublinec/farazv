@@ -23,6 +23,7 @@ export const MultiParagraphImageBanner = (
           <Container py={backgroundImage ? 14 : 0} position="relative">
             <SectionHeading
               heading={heading.title}
+              maxWidth={"max-content"}
               superscript={heading.superscript}
               mb={10}
               light
