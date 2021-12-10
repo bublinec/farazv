@@ -20,7 +20,6 @@ export const Donations = (props: DonationsProps) => {
   const donationEntries = Object.entries(donations).filter(
     (i) => i[1].length > 0
   );
-  console.log(donationEntries);
 
   return (
     <Box {...restOfProps}>

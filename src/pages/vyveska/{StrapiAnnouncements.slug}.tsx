@@ -25,8 +25,6 @@ export const query = graphql`
 `;
 
 const AnnouncementPage = (props: any) => {
-  console.log(props.data);
-
   const announcement = props.data.strapiAnnouncements;
   const page = props.data.STRAPI.adminPages[0];
 

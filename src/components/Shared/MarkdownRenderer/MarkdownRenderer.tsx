@@ -47,7 +47,7 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
               </Text>
             ),
             p: ({ children }) => (
-              <Text as="p" fontSize="md" mb={2}>
+              <Text as="p" fontSize="md" mb={2} maxW="full">
                 {children}
               </Text>
             ),

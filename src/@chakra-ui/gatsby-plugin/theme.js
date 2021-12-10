@@ -4,8 +4,9 @@ import { darkGray } from "tailwindcss/colors";
 const theme = {
   colors: {
     primary: "#012A57",
-    primaryShade: "#012A57",
+    primaryShade: "#012A68",
     secondary: "#E5AE49",
+    secondary: "#E5AE00",
     darkGray: "#303030",
     lightGray: "#727272",
     borderGray: "#7272721c",

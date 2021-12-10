@@ -3,4 +3,5 @@
 
 ## Technology stack
 
-React + GatsbyJS, Tailwind + ChakraUI
+- React + GatsbyJS
+- Tailwind + ChakraUI

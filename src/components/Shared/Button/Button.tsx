@@ -22,6 +22,7 @@ export const Button = (props: ButtonProps) => {
       rounded="none"
       color={typeToColorMap[buttonType]}
       bg="none"
+      fontWeight={buttonType === ButtonTypes.secondary ? 500 : 600}
       _hover={{
         bg: "none"
       }}
