@@ -1,4 +1,4 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, SimpleGrid, Stack } from "@chakra-ui/react";
 import BackgroundImage from "gatsby-background-image";
 import React from "react";
 import { convertImage } from "../../../lib/features/image/utils/imageUtils";
@@ -20,19 +20,27 @@ export const MultiParagraphImageBanner = (
       {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
           <Overlay zIndex={0} opacity={70} />
-          <Container py={backgroundImage ? 14 : 0} position="relative">
-            <SectionHeading
-              heading={heading.title}
-              maxWidth={"max-content"}
-              superscript={heading.superscript}
-              mb={10}
-              light
-            />
-            <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gridGap={12}>
-              {paragraphs.map((p) => (
-                <Paragraph heading={p.title} content={p.content} />
-              ))}
-            </SimpleGrid>
+          <Container py={backgroundImage ? 16 : 0} position="relative">
+            <Stack spacing={{ base: 5, md: 8 }} alignItems={"center"}>
+              <SectionHeading
+                heading={heading.title}
+                alignItems="center"
+                superscript={heading.superscript}
+                light
+              />
+              <SimpleGrid
+                columns={{ base: 1, sm: 2, md: 3 }}
+                gridGap={{ base: 4, md: 12 }}
+              >
+                {paragraphs.map((p) => (
+                  <Paragraph
+                    heading={p.title}
+                    content={p.content}
+                    link={p.link}
+                  />
+                ))}
+              </SimpleGrid>
+            </Stack>
           </Container>
         </BackgroundImage>
       )}
