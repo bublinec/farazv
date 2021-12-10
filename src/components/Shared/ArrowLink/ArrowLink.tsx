@@ -12,17 +12,26 @@ export const ArrowLink = (props: ArrowLinkProps) => {
   const {
     label = "ZISTIŤ VIAC",
     href,
+    fontWeight = 400,
     color = "secondary",
     ...restOfProps
   } = props;
   return (
-    <Box {...restOfProps} color={color} letterSpacing={1.5}>
+    <Box
+      {...restOfProps}
+      color={color}
+      _hover={{
+        color: color === "secondary" ? "secondaryShade" : "primaryShade"
+      }}
+      letterSpacing={1.5}
+      fontWeight={fontWeight}
+    >
       <Link to={href}>
-        <HStack alignItems={"center"}>
+        <HStack alignItems={"center"} spacing={1}>
           <Box textTransform={"uppercase"} fontSize="sm">
             {label}
           </Box>
-          <Box>
+          <Box pb={0.5}>
             <HiArrowNarrowRight />
           </Box>
         </HStack>

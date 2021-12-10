@@ -8,6 +8,8 @@ import { Text } from "../Text/Text";
 
 export const Iframes = (props: IframesProps) => {
   const { iframes, heading, button, ...restOfProps } = props;
+  console.log(button);
+
   return (
     <Box {...restOfProps}>
       <Box {...restOfProps}>

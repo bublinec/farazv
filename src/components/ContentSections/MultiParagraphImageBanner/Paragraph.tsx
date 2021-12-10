@@ -25,7 +25,7 @@ export const Paragraph = (props: ParagraphProps) => {
         <Box color="white" fontWeight={200}>
           {content}
         </Box>
-        {link && <ArrowLink href={link} pt={4} />}
+        {link && <ArrowLink href={link} pt={3} />}
       </Stack>
     </Box>
   );
