@@ -45,6 +45,11 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
     }
   });
 
+  // after change - to hanlde swiping
+  settings.afterChange = (index) => {
+    setCurrentSlide(index);
+  };
+
   return (
     <Box {...restOfProps} h="full">
       <Flex
@@ -80,7 +85,11 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
               label={buttonLabels?.back}
               onClick={() => {
                 carouselRef?.current?.slickPrev();
-                setCurrentSlide(currentSlide - 1);
+                // although after change would be sufficient
+                // this causes buttons to appear faster and results in a better UX
+                if (currentSlide === 1) {
+                  setCurrentSlide(currentSlide - 1);
+                }
               }}
               rightIcon={false}
               leftIcon
@@ -92,6 +101,7 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
               mr={{ base: -4, md: 5 }}
               onClick={() => {
                 carouselRef?.current?.slickGoTo(0);
+
                 setCurrentSlide(0);
               }}
               rightIcon={false}
@@ -102,7 +112,9 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
               label={isFirstSlide ? "Zajtra" : buttonLabels?.next}
               onClick={() => {
                 carouselRef?.current?.slickNext();
-                setCurrentSlide(currentSlide + 1);
+                if (currentSlide === 0) {
+                  setCurrentSlide(currentSlide + 1);
+                }
               }}
             />
           )}
