@@ -73,7 +73,17 @@ export const pageFragment = graphql`
         imageParagraph {
           content
           image {
-            ...STRAPI_UploadFileFragment
+            localFile {
+              childImageSharp {
+                gatsbyImageData(
+                  placeholder: TRACED_SVG
+                  width: 400
+                  height: 400
+                  quality: 90
+                )
+              }
+            }
+            url
           }
         }
       }
@@ -239,7 +249,17 @@ export const pageFragment = graphql`
         imageParagraph {
           content
           image {
-            ...STRAPI_UploadFileFragment
+            localFile {
+              childImageSharp {
+                gatsbyImageData(
+                  placeholder: TRACED_SVG
+                  width: 400
+                  height: 400
+                  quality: 90
+                )
+              }
+            }
+            url
           }
         }
       }
@@ -399,7 +419,17 @@ export const pageFragment = graphql`
       imageParagraph {
         content
         image {
-          ...STRAPI_UploadFileFragment
+          localFile {
+            childImageSharp {
+              gatsbyImageData(
+                placeholder: TRACED_SVG
+                width: 400
+                height: 400
+                quality: 100
+              )
+            }
+          }
+          url
         }
       }
     }
