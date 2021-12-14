@@ -1,7 +1,7 @@
 import { Box, BoxProps, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
 import { HiLocationMarker } from "react-icons/hi";
-import { ImMobile } from "react-icons/im";
+import { ImPhone } from "react-icons/im";
 import { MdMail } from "react-icons/md";
 import { routes } from "../../../../lib/conts/routes";
 import { Container } from "../../Container/Container";
@@ -24,7 +24,7 @@ export const FooterMiddle = (props: FooterMiddleProps) => {
     {
       label: contact.contactDetails.mobil,
       to: `/tel:${contact.contactDetails.mobil}`,
-      icon: <ImMobile />
+      icon: <ImPhone />
     },
     {
       label: contact.contactDetails.email,

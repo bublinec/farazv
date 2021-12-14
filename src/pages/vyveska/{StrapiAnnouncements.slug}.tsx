@@ -41,7 +41,7 @@ const AnnouncementPage = (props: any) => {
         </Container>
         <DynamicZoneRenderer
           contentSections={page.contentSections}
-          py={{ base: 8, md: 12 }}
+          pt={{ base: 8, md: 12 }}
         />
       </Stack>
     </Layout>

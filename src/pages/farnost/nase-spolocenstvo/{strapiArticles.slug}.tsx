@@ -1,5 +1,4 @@
 import { Box, Stack } from "@chakra-ui/layout";
-import { Container } from "@chakra-ui/react";
 import { graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import React from "react";
@@ -28,7 +27,7 @@ export const query = graphql`
               gatsbyImageData(
                 placeholder: BLURRED
                 height: 680
-                width: 1200
+                width: 1020
                 quality: 90
               )
             }
@@ -53,29 +52,36 @@ const ArticlePage = (props: any) => {
 
   return (
     <Layout page={page}>
-      <Stack spacing={{ base: 4, md: 16 }} py={{ base: 10, md: 14 }} mb={10}>
-        <Container maxW="container.lg">
+      <Stack
+        spacing={{ base: 4, md: 16 }}
+        py={{ base: 10, md: 14 }}
+        alignItems="center"
+      >
+        <Box maxW="container.lg" mx="auto" px={4}>
           <Text
             title={article.title}
             superscript="Naše spoločenstvo"
             info={article.published_at}
-            mb={4}
           />
           <Box boxShadow="xl" w="full">
             {extractedImage && (
               <GatsbyImage image={extractedImage} alt={article.title} />
             )}
           </Box>
-        </Container>
-        <DynamicZoneRenderer contentSections={article.contentSections} />
-        <BlogHomeSection
-          heading={{
-            title: "Prečítajte si aj",
-            superscript: "Naše spoločenstvo"
-          }}
-          excludedBlogSlug={article.slug}
+        </Box>
+        <DynamicZoneRenderer
+          contentSections={article.contentSections}
+          maxW="container.lg"
         />
       </Stack>
+      <BlogHomeSection
+        mb={{ base: 16, md: 20 }}
+        heading={{
+          title: "Prečítajte si aj",
+          superscript: "Naše spoločenstvo"
+        }}
+        excludedBlogSlug={article.slug}
+      />
     </Layout>
   );
 };
