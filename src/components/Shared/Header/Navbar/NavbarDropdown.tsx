@@ -19,7 +19,7 @@ export const NavbarDropdown = (props: NavbarDropdownProps) => {
       <div
         className="flex flex-col mt-2 bg-black bg-opacity-80 backdrop-blur-3xl py-2"
         style={{
-          backdropFilter: "blur(2px)"
+          backdropFilter: "blur(4px)"
         }}
       >
         {route.children?.map((childRoute, i) => (

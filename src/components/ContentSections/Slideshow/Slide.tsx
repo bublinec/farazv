@@ -7,7 +7,7 @@ import {
   ButtonTypes,
   SlideProps
 } from "../../../lib/features/page/content-sections.d";
-import { CarouselArrow } from "../../Home/MassTimesCarousel/CarouselArrow";
+import { CarouselArrow } from "./CarouselArrow";
 import { Container } from "../../Shared/Container/Container";
 import { LinkButton } from "../../Shared/LinkButton/LinkButton";
 import { Overlay } from "../../Shared/Overlay/Overlay";

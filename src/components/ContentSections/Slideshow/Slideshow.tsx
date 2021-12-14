@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "../../../assets/styles/slick-custom-theme.css";
 import { SlideshowProps } from "../../../lib/features/page/content-sections.d";
-import { CarouselArrow } from "../../Home/MassTimesCarousel/CarouselArrow";
+import { CarouselArrow } from "./CarouselArrow";
 import { Slide } from "./Slide";
 
 const settings: Settings = {

@@ -1,67 +1,71 @@
-import { Box, Flex, Stack } from "@chakra-ui/react";
+import { Box, Flex, SimpleGrid, Stack } from "@chakra-ui/react";
 import React from "react";
-import { BiBookBookmark } from "react-icons/all";
 import { isMajorFeast } from "../../../lib/utils/dateUtils";
-import { IconDate } from "../../Shared/IconDate/IconDate";
-import { IconText } from "../../Shared/IconText/IconText";
-import { InfoNote } from "../../Shared/InfoNote/InfoNote";
-import { MassScheduleItemRow } from "../../WeeklyAnnouncements/MassSchedule/MassSheduleItemRow";
+import { IconDivider } from "../../Shared/IconDivider/IconDivider";
+import { Superscript } from "../../Shared/Superscript/Superscript";
+import { MassInfo, MassInfoProps } from "./MassInfo";
 
 export interface MassTimesCarouselItemProps {
-  day: string;
+  liturgy: string;
   date: string;
-  iconText: string;
-  items: {
-    time: string;
-    name: string;
-    value: string;
-  }[];
+  items: MassInfoProps[];
 }
 
 export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
-  const { day, date, iconText, items, ...restOfProps } = props;
+  const { liturgy, date, items } = props;
   const isFeast = isMajorFeast(date);
+  const dateFormatted = new Date(date).toLocaleString("sk", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  let size = items.length === 3 ? "xs" : "md";
 
   return (
-    <Flex w="full" justifyContent={"center"} {...restOfProps}>
+    <Flex
+      w="full"
+      flexDir={"column"}
+      justifyContent={"center"}
+      color="white"
+      h={{ base: 560, md: 560 }}
+    >
       <Stack
-        mx="auto"
-        maxW={424}
-        ml={4}
-        spacing={3}
-        border="1px"
-        borderColor="gray.200"
+        justifyContent={"space-between"}
+        spacing={{ md: 16 }}
         w="full"
-        bg="white"
-        p={3}
+        alignItems="center"
       >
-        <Box>
-          <Flex justifyContent={"space-between"} alignItems={"center"}>
-            <Box fontSize="2xl" fontWeight={500}>
-              {day}
-            </Box>
-            <IconDate dateStr={date} color="primary" />
-          </Flex>
-          <IconText icon={<BiBookBookmark />} text={iconText}></IconText>
-        </Box>
-        <Stack spacing={1}>
-          {items.map((row) => {
-            return (
-              <MassScheduleItemRow
-                time={row.time}
-                name={row.name}
-                value={row.value}
-              />
-            );
-          })}
+        <Stack alignItems="center" spacing={{ base: 0, md: 2 }}>
+          <Superscript color="secondary">Dnešná liturgia</Superscript>
+          <Box
+            fontSize={{ base: "3xl", md: "5xl" }}
+            textTransform="uppercase"
+            fontWeight={500}
+            textAlign="center"
+          >
+            {liturgy}
+          </Box>
+          <IconDivider />
+          <Box fontSize={{ base: "xl", md: "2xl" }} fontWeight={300}>
+            {dateFormatted}
+          </Box>
         </Stack>
-        <InfoNote
-          text={
-            isFeast
-              ? "V nedeľu sa nespovedá"
-              : "Spovedáme 30 minút pred svätou omšou"
-          }
-        />
+        <SimpleGrid
+          w={{ base: "full", sm: "auto" }}
+          gap={{ base: size === "xs" ? 3 : 6, sm: 8, md: 10, lg: 16 }}
+          alignItems="center"
+          columns={{
+            base: items.length > 3 ? 2 : items.length,
+            md: items.length
+          }}
+          mt={{ base: 10, md: 16 }}
+        >
+          {items.map((mass) => {
+            return <MassInfo {...mass} size={size} />;
+          })}
+        </SimpleGrid>
       </Stack>
     </Flex>
   );
