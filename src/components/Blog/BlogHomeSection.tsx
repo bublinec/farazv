@@ -32,7 +32,7 @@ export const BlogHomeSection = (props: BlogHomeSectionProps) => {
     <Box {...restOfProps} py={4} pb={BOTTOM_MARGIN - 20}>
       {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
-          <Overlay zIndex={0} opacity={60} />
+          <Overlay zIndex={0} opacity={80} />
           <Container py={14} position="relative">
             <Text
               {...heading}
