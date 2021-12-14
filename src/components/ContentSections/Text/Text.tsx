@@ -27,7 +27,7 @@ export const Text = (props: TextProps) => {
         )}
         {content && (
           <MarkdownRenderer
-            color={light ? "white" : "darkGray"}
+            light={light}
             maxW="full"
             textAlign={alignItems === "center" ? "center" : "left"}
             fontWeight={light ? 300 : 400}

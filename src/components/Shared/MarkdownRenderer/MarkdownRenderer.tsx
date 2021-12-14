@@ -7,15 +7,12 @@ import { Subheading } from "../Subheading/Subheading";
 export interface MarkdownRendererProps extends BoxProps {
   children?: string;
   headingSuperscript?: string;
+  light?: boolean;
 }
 
 export const MarkdownRenderer = (props: MarkdownRendererProps) => {
-  const {
-    children,
-    color = "darkGray",
-    headingSuperscript,
-    ...restOfProps
-  } = props;
+  const { children, light = false, headingSuperscript, ...restOfProps } = props;
+  const color = light ? "white" : "darkGray";
 
   return (
     <Box {...restOfProps} color={color}>
@@ -25,7 +22,7 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
             h1: ({ children }) => (
               <SectionHeading
                 as="h1"
-                light={color === "white" ? true : false}
+                light={light}
                 heading={children}
                 superscript={headingSuperscript}
                 mb={{ base: 2, md: 4 }}

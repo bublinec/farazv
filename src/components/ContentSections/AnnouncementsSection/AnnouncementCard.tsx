@@ -1,6 +1,6 @@
 import { Box, BoxProps, Flex, Text } from "@chakra-ui/react";
 import React from "react";
-import { ArrowLink } from "../../Shared/ArrowLink/ArrowLink";
+import { ArrowButtonLink } from "../../Shared/ArrowButtonLink/ArrowButtonLink";
 import { IconDate } from "../../Shared/IconDate/IconDate";
 import { Subheading } from "../../Shared/Subheading/Subheading";
 
@@ -36,13 +36,15 @@ export const AnnouncementCard = (props: AnnouncementCardProps) => {
           </Text>
         </Box>
         {/* <LinkButton to={cta.url}>{cta.text}</LinkButton> */}
-        <ArrowLink
-          mt={-3}
+        <ArrowButtonLink
           href={cta.url}
-          alignSelf={"flex-end"}
-          color="primary"
-          label="Čítať ďalej"
-          fontWeight={700}
+          buttonProps={{
+            mt: -3,
+            alignSelf: "flex-end",
+            color: "primary",
+            label: "Čítať ďalej",
+            fontWeight: 700
+          }}
         />
       </Flex>
     </Box>

@@ -22,7 +22,7 @@ const HomePage = (props: any) => {
 
   return (
     <Layout page={page} home>
-      <Stack spacing={{ base: 6, md: 12 }} py={{ base: 10, md: 16 }}>
+      <Stack spacing={{ base: 6, md: 12 }} pt={{ base: 10, md: 16 }}>
         <DynamicZoneRenderer
           contentSections={page.contentSections.slice(0, staticComponentIndex)}
           py={{ base: 8, md: 12 }}
@@ -38,7 +38,7 @@ const HomePage = (props: any) => {
         />
         <DynamicZoneRenderer
           contentSections={page.contentSections.slice(staticComponentIndex)}
-          py={{ base: 8, md: 12 }}
+          pt={{ base: 8, md: 12 }}
         />
       </Stack>
     </Layout>

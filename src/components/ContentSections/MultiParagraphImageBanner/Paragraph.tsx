@@ -1,6 +1,6 @@
 import { Box, BoxProps, Stack } from "@chakra-ui/react";
 import React from "react";
-import { ArrowLink } from "../../Shared/ArrowLink/ArrowLink";
+import { ArrowButtonLink } from "../../Shared/ArrowButtonLink/ArrowButtonLink";
 
 export interface ParagraphProps extends BoxProps {
   heading: string;
@@ -25,7 +25,14 @@ export const Paragraph = (props: ParagraphProps) => {
         <Box color="white" fontWeight={200}>
           {content}
         </Box>
-        {link && <ArrowLink href={link} pt={3} />}
+        {link && (
+          <ArrowButtonLink
+            href={link}
+            buttonProps={{
+              pt: { base: 1, md: 2 }
+            }}
+          />
+        )}
       </Stack>
     </Box>
   );

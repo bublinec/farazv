@@ -78,7 +78,7 @@ export const pageFragment = graphql`
               childImageSharp {
                 gatsbyImageData(
                   placeholder: TRACED_SVG
-                  width: 280
+                  width: 400
                   height: 400
                   quality: 90
                 )
@@ -265,7 +265,7 @@ export const pageFragment = graphql`
               childImageSharp {
                 gatsbyImageData(
                   placeholder: TRACED_SVG
-                  width: 280
+                  width: 400
                   height: 400
                   quality: 90
                 )
@@ -446,9 +446,9 @@ export const pageFragment = graphql`
             childImageSharp {
               gatsbyImageData(
                 placeholder: TRACED_SVG
-                width: 280
+                width: 400
                 height: 400
-                quality: 90
+                quality: 100
               )
             }
           }
