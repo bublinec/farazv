@@ -4,7 +4,7 @@ import React from "react";
 export interface OverlayProps extends BoxProps {}
 
 export const Overlay = (props: OverlayProps) => {
-  const { opacity = 30, zIndex = 1, color = "black", ...restOfProps } = props;
+  const { opacity = 40, zIndex = 1, color = "black", ...restOfProps } = props;
   return (
     <Box
       bg={color}
