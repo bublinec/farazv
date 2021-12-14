@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import BackgroundImage from "gatsby-background-image";
 import { getImage } from "gatsby-plugin-image";
 import { convertToBgImage } from "gbimage-bridge";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "../../Shared/Container/Container";
 import { Header } from "../../Shared/Header/Header";
 import { Overlay } from "../../Shared/Overlay/Overlay";
@@ -17,6 +17,11 @@ export interface HeroProps {
 
 export const Hero = (props: HeroProps) => {
   const { image, title, subtitle } = props;
+  const [height, setHeight] = useState(1000);
+
+  useEffect(() => {
+    setHeight(window.innerHeight);
+  }, []);
 
   const extractedImage = getImage(image.localFile);
   const bgImage = convertToBgImage(extractedImage);
@@ -29,8 +34,8 @@ export const Hero = (props: HeroProps) => {
         <Container position="relative">
           <Box
             height={{
-              base: "360px",
-              lg: "640px"
+              base: height,
+              md: "630px"
             }}
             w="full"
           >

@@ -1,4 +1,4 @@
-import { Box, BoxProps, Flex, Stack } from "@chakra-ui/react";
+import { Box, BoxProps, Flex, useBreakpointValue } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
@@ -31,13 +31,30 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const isFirstSlide = currentSlide === 0;
   const futureDays = days.slice(getTodayIndex(days));
+  const isLastSlide = currentSlide === futureDays.length - 1;
+  const buttonLabels = useBreakpointValue({
+    base: {
+      back: "Späť",
+      today: "Dnes",
+      next: "Zajtra"
+    },
+    md: {
+      back: "Predchádzajúci deň",
+      today: "Späť na dnes",
+      next: "Nasledujúci deň"
+    }
+  });
 
   return (
-    <Box {...restOfProps}>
-      <Stack>
+    <Box {...restOfProps} h="full">
+      <Flex
+        justifyContent={"space-between"}
+        h="full"
+        pb={{ base: 20, md: 12 }}
+        flexDir="column"
+      >
         <Slider {...settings} ref={carouselRef}>
           {Object.values(futureDays).map((day) => {
-            const date = new Date(day.date);
             return (
               <MassTimesCarouselItem
                 key={day.date}
@@ -60,7 +77,7 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
         >
           {!isFirstSlide && (
             <ArrowButton
-              label={"Predchádzajúci deň"}
+              label={buttonLabels?.back}
               onClick={() => {
                 carouselRef?.current?.slickPrev();
                 setCurrentSlide(currentSlide - 1);
@@ -71,7 +88,8 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
           )}
           {!isFirstSlide && (
             <ArrowButton
-              label={"Späť na dnes"}
+              label={buttonLabels?.today}
+              mr={{ md: 5 }}
               onClick={() => {
                 carouselRef?.current?.slickGoTo(0);
                 setCurrentSlide(0);
@@ -79,15 +97,17 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
               rightIcon={false}
             />
           )}
-          <ArrowButton
-            label={isFirstSlide ? "Zajtra" : "Nasledujúci deň"}
-            onClick={() => {
-              carouselRef?.current?.slickNext();
-              setCurrentSlide(currentSlide + 1);
-            }}
-          />
+          {!isLastSlide && (
+            <ArrowButton
+              label={isFirstSlide ? "Zajtra" : buttonLabels?.next}
+              onClick={() => {
+                carouselRef?.current?.slickNext();
+                setCurrentSlide(currentSlide + 1);
+              }}
+            />
+          )}
         </Flex>
-      </Stack>
+      </Flex>
     </Box>
   );
 };
