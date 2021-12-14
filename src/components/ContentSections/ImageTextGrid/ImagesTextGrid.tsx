@@ -10,7 +10,7 @@ export const ImagesTextGrid = (props: ImagesTextGridProps) => {
 
   return (
     <Box {...restOfProps}>
-      <Container>
+      <Container maxW="container.lg">
         <Text {...heading} />
         <Stack spacing={14} mt={10}>
           {paragraphs.map((p, i) => (
