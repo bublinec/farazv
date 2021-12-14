@@ -24,6 +24,10 @@ export const routes = {
         label: "Naše Spoločenstvo",
         to: "/nase-spolocenstvo"
       }),
+      asRoute({
+        label: "Cirkevná škola",
+        to: "/cirkevna-skola"
+      }),
       // asRoute({
       //   label: "Kalendár akcií",
       //   to: "/kalendar-akcii"
