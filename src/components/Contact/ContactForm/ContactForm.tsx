@@ -1,7 +1,10 @@
 import { Flex, SimpleGrid, Stack, useToast } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { awakeHerokuBackend } from "../../../lib/api/gqlApi";
 import { emailRegex } from "../../../lib/conts/email-regex";
+import { submitForm } from "../../../lib/features/contact/api/submitForm";
+import { FormSubmissionInput } from "../../../lib/features/contact/model/contact";
 import { Button } from "../../Shared/Button/Button";
 import { FormControlGroup } from "../../Shared/FormControl/FormControlGroup";
 import { FormControlGroupCheckbox } from "../../Shared/FormControl/FormControlGroupCheckbox";
@@ -9,11 +12,8 @@ import { FormControlGroupTextarea } from "../../Shared/FormControl/FormControlGr
 
 const DEAFULT_VALIDATION_MESSAGE = "Toto pole je povinné";
 
-export interface ContactFormValues {
-  name: string;
-  phone: string;
-  email: string;
-  message: string;
+export interface ContactFormValues extends FormSubmissionInput {
+  agreement: boolean;
 }
 
 export interface ContactFormProps {
@@ -31,20 +31,51 @@ export const ContactForm = (props: ContactFormProps) => {
     phonePlaceholder = "Telefón",
     emailPlaceholder = "Email",
     textaAreaPlaceholder = "Vaša správa...",
-    agreementText = "Súhlasím so spracovaním osobných údajom",
+    agreementText = "Súhlasím so spracovaním osobných údajov",
     submitText = "Odoslať"
   } = props;
 
-  const toast = useToast();
   const methods = useForm<ContactFormValues>({});
+  const toast = useToast();
+  const [loading, setLoading] = useState(false);
+
+  // awake heroku (if index page was not visited)
+  useEffect(() => {
+    console.log("Awake Heroku Backend");
+    try {
+      awakeHerokuBackend();
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
 
   const onSubmit = async (data: ContactFormValues) => {
-    const emailInput = {
-      from: data.email,
-      body: data.message,
-      subject: `${data.name}, ${data.phone}`
-    };
-    console.log(emailInput);
+    const { agreement, ...formSubmissionInput } = data;
+    setLoading(true);
+    try {
+      const formSubmission = await submitForm(formSubmissionInput);
+      setLoading(false);
+      methods.reset();
+      toast({
+        position: "top",
+        title: "Ďakujeme za Váš email.",
+        description: "Budeme Vás kontaktovať čo najskôr.",
+        status: "success",
+        duration: 5000,
+        isClosable: true
+      });
+    } catch (e) {
+      console.log(e);
+      toast({
+        position: "top",
+        title: "Niekde nastala chyba. ",
+        description: "Prosím kontaktujte nás telefonicky.",
+        status: "error",
+        duration: 20000,
+        isClosable: true
+      });
+      setLoading(false);
+    }
     // await mutateAsync(emailInput);
     methods.reset();
   };
@@ -61,7 +92,7 @@ export const ContactForm = (props: ContactFormProps) => {
           <SimpleGrid columns={{ md: 3 }} gap={{ base: 4, md: 5 }}>
             <FormControlGroup
               isRequired
-              name="name"
+              name="fullName"
               placeholder={namePlaceholder || ""}
               validation={{
                 required: {
@@ -92,7 +123,7 @@ export const ContactForm = (props: ContactFormProps) => {
           </SimpleGrid>
           <FormControlGroupTextarea
             isRequired
-            name="message"
+            name="body"
             placeholder={textaAreaPlaceholder || ""}
             validation={{
               required: {
@@ -105,15 +136,20 @@ export const ContactForm = (props: ContactFormProps) => {
             <FormControlGroupCheckbox
               label={agreementText}
               name={"agreement"}
-              // validation={{
-              //   required: {
-              //     value: true,
-              //     message: "Musíte súhlasiť s podmienkami"
-              //   }
-              // }}
+              validation={{
+                required: {
+                  value: true,
+                  message: "Musíte súhlasiť s podmienkami"
+                }
+              }}
             />
             <Flex justifyContent={{ base: "flex-end", md: "flex-end" }}>
-              <Button type="submit" colorScheme={"primary"}>
+              <Button
+                type="submit"
+                colorScheme={"primary"}
+                isLoading={loading}
+                loadingText="Odosielam"
+              >
                 {submitText}
               </Button>
             </Flex>
