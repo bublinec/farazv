@@ -28,6 +28,7 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
       w="full"
       flexDir={"column"}
       justifyContent={"center"}
+      px={1}
       color="white"
       h={{ base: 560, md: 560 }}
     >

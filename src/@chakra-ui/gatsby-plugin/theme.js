@@ -3,10 +3,10 @@ import { darkGray } from "tailwindcss/colors";
 
 const theme = {
   colors: {
-    primary: "#193F56",
-    primaryShade: "#0f2634",
-    secondary: "#B4893A",
-    secondaryShade: "#D3A247",
+    primary: "#2E5268",
+    primaryShade: "#204358",
+    secondary: "#BFA169",
+    secondaryShade: "#DDB66F",
     darkGray: "#303030",
     lightGray: "#727272",
     borderGray: "#7272721c",

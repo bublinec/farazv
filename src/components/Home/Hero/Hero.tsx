@@ -8,6 +8,8 @@ import { Header } from "../../Shared/Header/Header";
 import { Overlay } from "../../Shared/Overlay/Overlay";
 import { MassTimesCarousel } from "../MassTimesCarousel/MassTimesCarousel";
 
+export const BROWSER_BAR_WIDTH = 48;
+
 export interface HeroProps {
   className?: string;
   image: any;
@@ -20,7 +22,7 @@ export const Hero = (props: HeroProps) => {
   const [height, setHeight] = useState(1000);
 
   useEffect(() => {
-    setHeight(window.innerHeight);
+    setHeight(window.innerHeight - BROWSER_BAR_WIDTH);
   }, []);
 
   const extractedImage = getImage(image.localFile);
@@ -28,7 +30,7 @@ export const Hero = (props: HeroProps) => {
 
   return (
     <BackgroundImage {...bgImage} preserveStackingContext>
-      <Overlay zIndex={0} opacity={70} />
+      <Overlay zIndex={0} opacity={75} />
       <Box>
         <Header />
         <Container position="relative">

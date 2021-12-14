@@ -68,8 +68,8 @@ https://github.com/akiran/react-slick/blob/5fb7ac78321f3469118a974af3852742b64fc
   top: 0;
   left: 0;
 
-  width: 24px;
-  height: 5px;
+  width: 22px;
+  height: 4px;
   background-color: white;
 
   content: " " !important;
@@ -81,7 +81,7 @@ https://github.com/akiran/react-slick/blob/5fb7ac78321f3469118a974af3852742b64fc
 }
 .slick-dots li.slick-active button:before {
   opacity: 1 !important;
-  background-color: #e5ae49;
+  background-color: #bfa169;
 }
 
 .slick-prev:before,
