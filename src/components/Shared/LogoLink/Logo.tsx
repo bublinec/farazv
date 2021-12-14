@@ -7,8 +7,6 @@ export interface LogoProps {
 export const Logo = (props: LogoProps) => {
   const { className = "" } = props;
   return (
-    <div className={`${className} uppercase font-medium text-2xl`}>
-      Farnosť sv. Alžbety
-    </div>
+    <div className={`${className} uppercase text-2xl`}>Farnosť sv. Alžbety</div>
   );
 };

@@ -35,8 +35,8 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
   const buttonLabels = useBreakpointValue({
     base: {
       back: "Späť",
-      today: "Dnes",
-      next: "Zajtra"
+      today: "Späť na dnes",
+      next: "Ďalej"
     },
     md: {
       back: "Predchádzajúci deň",
@@ -50,7 +50,7 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
       <Flex
         justifyContent={"space-between"}
         h="full"
-        pb={{ base: 20, md: 12 }}
+        pb={{ base: 8, md: 12 }}
         flexDir="column"
       >
         <Slider {...settings} ref={carouselRef}>
@@ -89,7 +89,7 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
           {!isFirstSlide && (
             <ArrowButton
               label={buttonLabels?.today}
-              mr={{ md: 5 }}
+              mr={{ base: -4, md: 5 }}
               onClick={() => {
                 carouselRef?.current?.slickGoTo(0);
                 setCurrentSlide(0);
