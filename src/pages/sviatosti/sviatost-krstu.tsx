@@ -18,12 +18,13 @@ const BaptismPage = (props: any) => {
 
   return (
     <Layout page={page}>
+      <DynamicZoneRenderer contentSections={[page.contentSections[0]]} />
       <DynamicZoneRenderer
         contentSections={page.contentSections.slice(
-          0,
+          1,
           page.contentSections.length - 1
         )}
-        pt={{ base: 8, md: 20 }}
+        pt={{ base: 10, md: 16 }}
         maxW={"container.lg"}
         mx={"auto"}
       />

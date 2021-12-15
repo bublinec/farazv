@@ -12,6 +12,7 @@ import { Iframes } from "../../ContentSections/Iframes/Iframes";
 import { ImagesTextGrid } from "../../ContentSections/ImageTextGrid/ImagesTextGrid";
 import { MultiParagraphImageBanner } from "../../ContentSections/MultiParagraphImageBanner/MultiParagraphImageBanner";
 import { PartnersSection } from "../../ContentSections/PartnersSection/PartnersSection";
+import { QuotationSection } from "../../ContentSections/QuotationSection/QuotationSection";
 import { Slideshow } from "../../ContentSections/Slideshow/Slideshow";
 import { Text } from "../../ContentSections/Text/Text";
 import { Container } from "../Container/Container";
@@ -36,6 +37,13 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
           .filter((section) => section && Object.keys(section).length > 0)
           .map((section) => {
             const { __typename: sectionName, ...props } = section;
+            if (!sectionName) {
+              return (
+                <div>
+                  YOU HAVE FORGOTTEN TO INCLUDE __typename IN YOU QUERY!
+                </div>
+              );
+            }
             const shortSectionName = sectionName.replace(COMPONENT_PREFIX, "");
 
             switch (shortSectionName) {
@@ -49,6 +57,8 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
                 );
               case "PartnersSection":
                 return <PartnersSection {...props} />;
+              case "QuotationSection":
+                return <QuotationSection {...props} />;
               case "Slideshow":
                 return <Slideshow {...props} />;
               case "BackgroundImageContent":

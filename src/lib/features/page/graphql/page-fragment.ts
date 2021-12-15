@@ -33,6 +33,12 @@ export const pageFragment = graphql`
         title
       }
 
+      ... on STRAPI_ComponentSectionsQuotationSection {
+        __typename
+        quote
+        author
+      }
+
       ... on STRAPI_ComponentSectionsImagesTextGrid {
         __typename
         heading {
@@ -221,6 +227,13 @@ export const pageFragment = graphql`
         superscript
         title
       }
+
+      ... on STRAPI_ComponentSectionsQuotationSection {
+        __typename
+        quote
+        author
+      }
+
       ... on STRAPI_ComponentSectionsImagesTextGrid {
         __typename
         heading {
@@ -403,6 +416,7 @@ export const pageFragment = graphql`
       superscript
       title
     }
+
     ... on STRAPI_ComponentSectionsImagesTextGrid {
       __typename
       heading {
