@@ -19,7 +19,7 @@ export const MultiParagraphImageBanner = (
     <Box {...restOfProps}>
       {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
-          <Overlay zIndex={0} opacity={70} />
+          <Overlay zIndex={0} opacity={80} />
           <Container py={backgroundImage ? 16 : 0} position="relative">
             <Stack spacing={{ base: 5, md: 8 }} alignItems={"center"}>
               <SectionHeading
