@@ -67,10 +67,6 @@ export const routes = {
         to: "/sviatost-krstu"
       }),
       asRoute({
-        label: "Sviatost zmierenia",
-        to: "/sviatost-zmierenia"
-      }),
-      asRoute({
         label: "Sviatosť eucharistie",
         to: "/sviatost-eucharistie"
       }),
@@ -83,6 +79,10 @@ export const routes = {
         to: "/sviatost-manzelstva"
       }),
       asRoute({
+        label: "Sviatost zmierenia",
+        to: "/sviatost-zmierenia"
+      }),
+      asRoute({
         label: "Pomazanie chorých",
         to: "/sviatost-pomazania-chorych"
       })
@@ -93,25 +93,25 @@ export const routes = {
     to: "/spolocenstva",
     children: [
       asRoute({
-        label: "Miništranti",
-        to: "/ministranti"
+        label: "Detský spevokol",
+        to: "/detsky-spevokol"
       }),
       asRoute({
         label: "Mládežnícky zbor",
         to: "/mladeznicky-zbor"
       }),
       asRoute({
-        label: "Detský spevokol",
-        to: "/detsky-spevokol"
+        label: "Miništranti",
+        to: "/ministranti"
       }),
-      asRoute({
-        label: "Ružencové bratstvo",
-        to: "/ruzencove-bratstvo"
-      }),
-      asRoute({
-        label: "Akolyti",
-        to: "/akolyti"
-      })
+      // asRoute({
+      //   label: "Ružencové bratstvo",
+      //   to: "/ruzencove-bratstvo"
+      // }),
+      // asRoute({
+      //   label: "Akolyti",
+      //   to: "/akolyti"
+      // })
     ]
   }),
   contact: asRoute({
