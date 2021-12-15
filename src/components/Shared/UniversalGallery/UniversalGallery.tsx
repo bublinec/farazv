@@ -1,4 +1,4 @@
-import { SimpleGrid } from "@chakra-ui/react";
+import { AspectRatio, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
 import { Image } from "../../../lib/features/image/model/image.model";
@@ -20,24 +20,6 @@ export const galleryConfig = {
   }
 };
 
-export const galleryCardConfig = {
-  base: {
-    h: {
-      base: "36",
-      sm: "52",
-      md: "72",
-      lg: "350px"
-    }
-  },
-  large: {
-    h: {
-      base: "44",
-      sm: "52",
-      md: "72",
-      lg: "280px"
-    }
-  }
-};
 
 export const UniversalGallery = (props: UniversalGalleryProps) => {
   const { galleryKey, images } = props;
@@ -49,11 +31,15 @@ export const UniversalGallery = (props: UniversalGalleryProps) => {
       <SRLWrapper key={galleryKey}>
         <SimpleGrid {...galleryConfig[size]}>
           {images.map((image, index) => (
-            <ImageCard
-              key={image.localFile.publicURL}
-              image={image}
-              {...galleryCardConfig[size]}
-            />
+            <AspectRatio ratio={1}>
+              <ImageCard
+                key={image.localFile.publicURL}
+                image={image}
+                // {...galleryCardConfig[size]}
+                h="full"
+                w="full"
+              />
+            </AspectRatio>
           ))}
         </SimpleGrid>
       </SRLWrapper>
