@@ -63,6 +63,7 @@ export const pageFragment = graphql`
           content
           reactIconName
           title
+          link
         }
         configuration
       }
@@ -249,6 +250,7 @@ export const pageFragment = graphql`
           content
           reactIconName
           title
+          link
         }
         configuration
       }
@@ -430,6 +432,7 @@ export const pageFragment = graphql`
         content
         reactIconName
         title
+        link
       }
       configuration
     }

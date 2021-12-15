@@ -16,7 +16,7 @@ export const MultiParagraphImageBanner = (
   const bgImage = convertImage(backgroundImage);
 
   return (
-    <Box {...restOfProps} py={5}>
+    <Box {...restOfProps}>
       {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
           <Overlay zIndex={0} opacity={70} />

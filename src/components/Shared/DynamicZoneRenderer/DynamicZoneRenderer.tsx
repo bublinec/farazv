@@ -33,7 +33,7 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
     <Box {...restOfProps}>
       <Stack spacing={{ base: 10, md: 14 }}>
         {contentSections
-          .filter((section) => Object.keys(section).length > 0)
+          .filter((section) => section && Object.keys(section).length > 0)
           .map((section) => {
             const { __typename: sectionName, ...props } = section;
             const shortSectionName = sectionName.replace(COMPONENT_PREFIX, "");
