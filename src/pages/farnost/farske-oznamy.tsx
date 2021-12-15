@@ -26,9 +26,9 @@ const WeeklyAnnouncementsPage = (props: any) => {
   const page = props.data.STRAPI.adminPages[0];
   const recentEvents = useEvents();
   const data = useWeeklyAnnouncements();
-  const { announcements, donations, ...nextWeekDays } = data[1];
+  const { announcements, donations, ...nextWeekDays } = data[0];
   const days: WeeklyAnnouncements.Day[] = [
-    data[0].sunday,
+    data[1].sunday,
     ...Object.values(nextWeekDays)
   ];
 
