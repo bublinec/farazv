@@ -22,10 +22,10 @@ const settings: Settings = {
 export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
   const { ...restOfProps } = props;
   const data = useWeeklyAnnouncements();
-  const { announcements, donations, ...nextWeekDays } = data[1];
+  const { announcements, donations, ...nextWeekDays } = data[0];
   const carouselRef = React.createRef<Slider>();
   const days: WeeklyAnnouncements.Day[] = [
-    data[0].sunday,
+    data[1].sunday,
     ...Object.values(nextWeekDays)
   ];
   const [currentSlide, setCurrentSlide] = useState(0);
