@@ -19,17 +19,17 @@ export const ImageCard = (props: ImageCardProps) => {
       cursor="pointer"
       {...props}
     >
-      <Box
-        _hover={{ transform: "scale(1.05)" }}
-        h="full"
-        display="flex"
-        position="relative"
-        transition="all ease-in-out 400ms"
-      >
-        {extractedImage && (
-          <GatsbyImage image={extractedImage} alt={image.alternativeText} />
-        )}
-      </Box>
+        <Box
+          _hover={{ transform: "scale(1.05)" }}
+          h="full"
+          display="flex"
+          position="relative"
+          transition="all ease-in-out 400ms"
+        >
+          {extractedImage && (
+            <GatsbyImage image={extractedImage} alt={image.alternativeText} />
+          )}
+        </Box>
     </Box>
   );
 };

@@ -29,7 +29,7 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
               />
             ),
             h2: ({ children }) => (
-              <Subheading as="h2" color={color}>
+              <Subheading as="h2" color={color} pb={0.5}>
                 {children}
               </Subheading>
             ),
@@ -44,7 +44,7 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
               </Text>
             ),
             p: ({ children }) => (
-              <Text as="p" fontSize="md" mb={2} maxW="full">
+              <Text as="p" fontSize="md" mb={5} maxW="full">
                 {children}
               </Text>
             ),
@@ -56,7 +56,7 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
               </ul>
             ),
             strong: ({ children }) => (
-              <Text as="strong" fontWeight="400" color={color || "primary"}>
+              <Text as="strong" fontWeight="500" color={color || "primary"}>
                 {children}
               </Text>
             ),
@@ -65,8 +65,8 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
                 <a href={props.href} rel={"noopener norefer"} target={"_blank"}>
                   <Text
                     as="strong"
-                    fontWeight="500"
-                    color={color || "primary"}
+                    fontWeight="600"
+                    color={color}
                     _hover={{
                       color: "primaryShade",
                       transition: "all ease-in-out 200ms"
