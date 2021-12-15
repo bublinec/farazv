@@ -84,7 +84,8 @@ module.exports = {
           "articles",
           "categories",
           "writers",
-          "admin-pages"
+          "admin-pages",
+          "post",
         ],
         singleTypes: ["contact", "global"]
       }
