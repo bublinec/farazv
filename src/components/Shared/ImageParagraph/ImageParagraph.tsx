@@ -22,13 +22,13 @@ export const ImageParagraph = (props: ImageParagraphProps) => {
       <SimpleGrid
         columns={{ md: extractedImage ? 2 : 1 }}
         alignItems={"center"}
-        gap={{ base: 10, md: 16 }}
+        gap={{ base: 10, md: 10 }}
       >
-        <Flex justifyContent={"flex-end"}>
-          {extractedImage && (
+        {extractedImage && (
+          <Flex justifyContent={"flex-end"}>
             <GatsbyImage image={extractedImage} alt={content.slice(20)} />
-          )}
-        </Flex>
+          </Flex>
+        )}
         <GridItem gridRowStart={isImageOnTheLeft ? 0 : 1}>
           <MarkdownRenderer light={light}>{content}</MarkdownRenderer>
         </GridItem>
