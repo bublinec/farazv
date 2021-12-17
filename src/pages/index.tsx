@@ -2,6 +2,7 @@ import { Stack } from "@chakra-ui/react";
 import { graphql } from "gatsby";
 import React from "react";
 import { BlogHomeSection } from "../components/Blog/BlogHomeSection";
+import { PostsHomeSection } from "../components/Home/Posts/PostsHomeSection";
 import { DynamicZoneRenderer } from "../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
 import Layout from "../components/Shared/Layout/Layout";
 
@@ -24,7 +25,17 @@ const HomePage = (props: any) => {
     <Layout page={page} home>
       <Stack spacing={{ base: 6, md: 12 }} pt={{ base: 10, md: 16 }}>
         <DynamicZoneRenderer
-          contentSections={page.contentSections.slice(0, staticComponentIndex)}
+          contentSections={[page.contentSections[0]]}
+          py={{ base: 8, md: 12 }}
+        />
+        <PostsHomeSection
+          heading={{
+            title: "Najnovšie príspevky",
+            superscript: "Farnosť"
+          }}
+        />
+        <DynamicZoneRenderer
+          contentSections={page.contentSections.slice(1, staticComponentIndex)}
           py={{ base: 8, md: 12 }}
         />
 

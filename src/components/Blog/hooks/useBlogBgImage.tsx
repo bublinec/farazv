@@ -3,7 +3,7 @@ import { graphql, useStaticQuery } from "gatsby";
 export const useBlogBgImage = (): any => {
   const data = useStaticQuery(graphql`
     query {
-      fileName: file(relativePath: { eq: "pews.png" }) {
+      fileName: file(relativePath: { eq: "blog-bg.png" }) {
         childImageSharp {
           gatsbyImageData(
             placeholder: TRACED_SVG

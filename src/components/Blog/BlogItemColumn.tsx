@@ -3,6 +3,7 @@ import { Link } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import React from "react";
 import { BsPerson } from "react-icons/bs";
+import { PostLabel } from "../Home/Posts/PostLabel";
 import { IconDate } from "../Shared/IconDate/IconDate";
 import { IconText } from "../Shared/IconText/IconText";
 import { Subheading } from "../Shared/Subheading/Subheading";
@@ -38,7 +39,10 @@ export const BlogItemColumn = (props: BlogItemColumnProps) => {
       {...restOfProps}
     >
       <Link to={href}>
-        {extractedImage && <GatsbyImage image={extractedImage} alt={title} />}
+        <Box>
+          {extractedImage && <GatsbyImage image={extractedImage} alt={title} />}
+          <PostLabel label="Naše spoločenstvo" />
+        </Box>
         <Stack
           w="full"
           spacing={0}
@@ -49,7 +53,9 @@ export const BlogItemColumn = (props: BlogItemColumnProps) => {
           borderTop="none"
         >
           <Box>
-            <Subheading color="darkGray">{title}</Subheading>
+            <Subheading color="darkGray" fontSize="2xl">
+              {title}
+            </Subheading>
             <HStack spacing={8}>
               {author && <IconText icon={<BsPerson />} text={author} />}
               <IconDate dateStr={date} />
