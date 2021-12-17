@@ -77,7 +77,7 @@ const ArticlePage = (props: any) => {
       <BlogHomeSection
         mb={{ base: 16, md: 20 }}
         heading={{
-          title: "Prečítajte si aj",
+          title: "Ostatné príspevky",
           superscript: "Naše spoločenstvo"
         }}
         excludedBlogSlug={article.slug}
