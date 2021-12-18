@@ -15,7 +15,7 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
   const color = light ? "white" : "darkGray";
 
   return (
-    <Box {...restOfProps} color={color}>
+    <Box {...restOfProps} color={color} fontWeight={light ? 400 : 500}>
       {children && (
         <ReactMarkdown
           components={{

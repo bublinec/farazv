@@ -21,23 +21,17 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
     year: "numeric"
   });
 
-  let size = items.length === 3 ? "xs" : "md";
+  let size = items.length === 3 || items.length > 4 ? "xs" : "md";
 
   return (
     <Flex
-      w="full"
       flexDir={"column"}
       justifyContent={"center"}
       px={1}
       color="white"
       h={{ base: 560, md: 560 }}
     >
-      <Stack
-        justifyContent={"space-between"}
-        spacing={{ md: 16 }}
-        w="full"
-        alignItems="center"
-      >
+      <Stack justifyContent={"space-between"} w="full" alignItems="center">
         <Stack alignItems="center" spacing={{ base: 0, md: 2 }}>
           <Superscript color="secondary">Dnešná liturgia</Superscript>
           <Box
@@ -54,14 +48,20 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
           </Box>
         </Stack>
         <SimpleGrid
-          w={{ base: "full", sm: "auto" }}
-          gap={{ base: size === "xs" ? 3 : 6, sm: 8, md: 10, lg: 16 }}
+          w={{ base: "full", md: "auto" }}
+          gap={{
+            base: size === "xs" ? 3 : 6,
+            sm: 8,
+            md: items.length === 4 ? 8 : 10,
+            lg: items.length > 4 ? (items.length > 5 ? 10 : 12) : 16
+          }}
           alignItems="center"
           columns={{
-            base: items.length > 3 ? 2 : items.length,
-            md: items.length
+            base: items.length < 3 || items.length === 4 ? 2 : 3,
+            md: items.length === 6 ? 3 : items.length,
+            lg: items.length
           }}
-          mt={{ base: 10, md: 16 }}
+          pt={{ base: 6, md: items.length === 4 ? 2 : 10, lg: 12 }}
         >
           {items.map((mass) => {
             return <MassInfo {...mass} size={size} />;

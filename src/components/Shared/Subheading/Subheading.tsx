@@ -10,7 +10,7 @@ export const Subheading = (props: SubheadingProps) => {
   const {
     children,
     color = "primary",
-    fontSize = "2xl",
+    fontSize = { base: "xl", md: "2xl" },
     ...restOfProps
   } = props;
   return (

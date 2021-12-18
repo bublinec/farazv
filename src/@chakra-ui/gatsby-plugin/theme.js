@@ -21,7 +21,7 @@ const theme = {
       sm: "640px",
       md: "768px",
       lg: "960px",
-      xl: "1280px",
+      xl: "1260px",
       "2xl": "1480px"
     }
   }

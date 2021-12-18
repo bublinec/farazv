@@ -4,7 +4,10 @@ export const useWeeklyAnnouncements =
   (): WeeklyAnnouncements.WeeklyAnnouncements[] => {
     const data = useStaticQuery(graphql`
       query useWeeklyAnnouncements {
-        allStrapiWeeklyAnnouncements(limit: 2) {
+        allStrapiWeeklyAnnouncements(
+          limit: 10
+          sort: { fields: updated_at, order: DESC }
+        ) {
           nodes {
             monday {
               date

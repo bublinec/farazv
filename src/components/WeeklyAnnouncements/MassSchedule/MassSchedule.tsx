@@ -17,7 +17,7 @@ export const MassSchedule = (props: MassSchedule) => {
         heading="Rozpis svätých omší"
         superscript="Farské oznamy"
       />
-      <Stack spacing={{ base: 4, md: 3 }}>
+      <Stack spacing={{ base: 4, md: 6 }}>
         {Object.values(days).map((day) => {
           const date = new Date(day.date);
           return (

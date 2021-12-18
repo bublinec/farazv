@@ -25,7 +25,7 @@ export const ArrowButton = (props: ArrowButtonProps) => {
         color: color === "secondary" ? "secondaryShade" : "primaryShade"
       }}
       letterSpacing={1.5}
-      p={2}
+      py={2}
       cursor={"pointer"}
       fontWeight={fontWeight}
     >

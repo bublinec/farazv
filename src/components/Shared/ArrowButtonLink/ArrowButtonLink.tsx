@@ -1,8 +1,9 @@
+import { BoxProps } from "@chakra-ui/react";
 import { Link } from "gatsby";
 import React from "react";
 import { ArrowButton, ArrowButtonProps } from "../ArrowButton/ArrowButton";
 
-export interface ArrowButtonLinkProps {
+export interface ArrowButtonLinkProps  {
   buttonProps: ArrowButtonProps;
   href: string;
 }

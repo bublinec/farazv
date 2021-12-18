@@ -14,7 +14,7 @@ export const MassScheduleItemRow = (props: MassScheduleItemRowProps) => {
     <Box fontSize={"md"} fontWeight={300} {...restOfProps}>
       <Flex>
         <Text w={{ base: 12, md: 12 }}>{time}</Text>
-        <Text w={{ base: 20, md: 24 }} fontWeight={500} color="primary">
+        <Text w={{ base: 84, md: 24 }} fontWeight={500} color="primary">
           {name}
         </Text>
         <Text flex={1}>{value}</Text>

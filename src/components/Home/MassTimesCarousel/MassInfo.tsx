@@ -16,12 +16,17 @@ export const MassInfo = (props: MassInfoProps) => {
     <Box
       borderWidth={1}
       borderColor={"white"}
-      w={{ base: "full", sm: 36, md: 40, lg: 48 }}
-      maxW={48}
+      w={{ base: "full" }}
+      maxW={{ base: "full", sm: 36, md: 40, lg: 48 }}
       h={{ base: isXs ? 24 : 28, sm: 28, md: 32 }}
       {...restOfProps}
     >
-      <Stack alignItems="center" spacing={0} mt={{ base: isXs ? 2 : 3, md: 4 }}>
+      <Stack
+        alignItems="center"
+        spacing={0}
+        mt={{ base: isXs ? 2 : 3, md: 4 }}
+        px={{ base: 0, md: 4, lg: 6 }}
+      >
         <Flex flexDir="column" alignItems="center">
           <Box
             h={4}
