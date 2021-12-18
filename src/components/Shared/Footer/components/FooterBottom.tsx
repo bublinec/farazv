@@ -15,7 +15,7 @@ export const FooterBottom = (props: FooterBottomProps) => {
       className={`${className} py-12 text-white text-sm lg:text-base font-light`}
     >
       <Container className="text-center">
-        {/* <span className="opacity-100">Stránka vytvorená spoločnosťou </span>
+        <span className="opacity-100">Stránka vytvorená spoločnosťou </span>
         <a
           target="_blank"
           rel="noopener noreferrer"
@@ -26,17 +26,18 @@ export const FooterBottom = (props: FooterBottomProps) => {
           <br className="md:hidden" />
           Momentum Digital
         </a>{" "}
-        <span className="opacity-100">© {year}</span> */}
-        <span className="opacity-100"> </span>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          className="opacity-70 text-secondary hover:opacity-100 transition-all duration-300 ease-in-out"
-          href="https://gdpr.kbs.sk/"
-        >
-          Ochrana osobných údajov
-        </a>{" "}
-        <span className="opacity-100">© {year}</span>
+        <span className="opacity-100">
+          |
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            className="opacity-70 text-secondary hover:opacity-100 transition-all duration-300 ease-in-out"
+            href="https://gdpr.kbs.sk/"
+          >
+            GDPR
+          </a>{" "}
+          © {year}
+        </span>
       </Container>
     </Box>
   );

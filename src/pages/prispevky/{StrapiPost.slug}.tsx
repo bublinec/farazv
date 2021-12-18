@@ -46,7 +46,7 @@ const PostPage = (props: any) => {
             title: "Prečítajte si aj",
             superscript: "Príspevky"
           }}
-          excludedPostSlug={post.slug}
+          // excludedPostSlug={post.slug}
         />
         <DynamicZoneRenderer
           contentSections={page.contentSections}
