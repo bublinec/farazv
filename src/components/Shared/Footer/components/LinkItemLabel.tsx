@@ -2,7 +2,7 @@ import { Box, BoxProps, HStack } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
 
 export interface LinkItemLabelProps extends BoxProps {
-  label: string;
+  label: string | ReactNode;
   icon?: ReactNode;
 }
 

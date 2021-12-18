@@ -63,7 +63,7 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
             return (
               <MassTimesCarouselItem
                 key={day.date}
-                liturgy={day.liturgy}
+                liturgy={day.liturgy.replace(" (slávnosť)", "")}
                 date={day.date}
                 items={day.masses.map((mass) => {
                   return {
@@ -80,25 +80,28 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
           w="full"
           justifyContent={isFirstSlide ? "flex-end" : "space-between"}
         >
+          <Box w={{ base: 28, md: 56 }}>
+            {!isFirstSlide && (
+              <ArrowButton
+                label={buttonLabels?.back}
+                onClick={() => {
+                  carouselRef?.current?.slickPrev();
+                  // although after change would be sufficient
+                  // this causes buttons to appear faster and results in a better UX
+                  if (currentSlide === 1) {
+                    setCurrentSlide(currentSlide - 1);
+                  }
+                }}
+                rightIcon={false}
+                leftIcon
+              />
+            )}
+          </Box>
+
           {!isFirstSlide && (
             <ArrowButton
-              label={buttonLabels?.back}
-              onClick={() => {
-                carouselRef?.current?.slickPrev();
-                // although after change would be sufficient
-                // this causes buttons to appear faster and results in a better UX
-                if (currentSlide === 1) {
-                  setCurrentSlide(currentSlide - 1);
-                }
-              }}
-              rightIcon={false}
-              leftIcon
-            />
-          )}
-          {!isFirstSlide && (
-            <ArrowButton
+              pl={4}
               label={buttonLabels?.today}
-              mr={{ base: -4, md: 5 }}
               onClick={() => {
                 carouselRef?.current?.slickGoTo(0);
 
@@ -107,17 +110,20 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
               rightIcon={false}
             />
           )}
-          {!isLastSlide && (
-            <ArrowButton
-              label={isFirstSlide ? "Zajtra" : buttonLabels?.next}
-              onClick={() => {
-                carouselRef?.current?.slickNext();
-                if (currentSlide === 0) {
-                  setCurrentSlide(currentSlide + 1);
-                }
-              }}
-            />
-          )}
+          <Box w={{ base: 28, md: 56 }}>
+            {!isLastSlide && (
+              <ArrowButton
+                float="right"
+                label={isFirstSlide ? "Zajtra" : buttonLabels?.next}
+                onClick={() => {
+                  carouselRef?.current?.slickNext();
+                  if (currentSlide === 0) {
+                    setCurrentSlide(currentSlide + 1);
+                  }
+                }}
+              />
+            )}
+          </Box>
         </Flex>
       </Flex>
     </Box>

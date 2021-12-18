@@ -37,7 +37,7 @@ export const LinkItem = (props: LinkItemProps) => {
           />
         </Link>
       ) : (
-        <a href={to}>
+        <a href={to} target={"_blank"} rel={"noopener noreferer"}>
           <LinkItemLabel label={label} icon={icon} />
         </a>
       )}

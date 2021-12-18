@@ -27,11 +27,11 @@ export const Donations = (props: DonationsProps) => {
       <SimpleGrid
         columns={{
           base: 1,
-          md: donationEntries.length > 4 ? 3 : donationEntries.length
+          md: 3
         }}
         spacing={{ base: 6, md: 5 }}
         mt={3}
-        gap={2}
+        gap={{ base: 6, md: 2 }}
       >
         {donationEntries.map(([key, value]) => (
           <DonationColumn heading={donationTypeMap[key]} donations={value} />

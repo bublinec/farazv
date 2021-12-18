@@ -15,7 +15,7 @@ export const LinkButton = (props: LinkButtonProps) => {
 
   return (
     <Box {...restOfProps}>
-      {external ? (
+      {!external ? (
         <Link to={to}>
           <Button {...buttonProps}>{children}</Button>
         </Link>

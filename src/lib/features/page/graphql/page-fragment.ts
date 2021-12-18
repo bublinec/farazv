@@ -22,7 +22,17 @@ export const pageFragment = graphql`
     slug
     description
     image {
-      ...STRAPI_UploadFileFragment
+      localFile {
+        childImageSharp {
+          gatsbyImageData(
+            placeholder: BLURRED
+            layout: FULL_WIDTH
+            height: 720
+            quality: 50
+          )
+        }
+      }
+      url
     }
     contentSections {
       ... on STRAPI_ComponentSectionsText {

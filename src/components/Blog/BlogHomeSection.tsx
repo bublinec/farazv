@@ -45,7 +45,7 @@ export const BlogHomeSection = (props: BlogHomeSectionProps) => {
 
             <Stack mb={-BOTTOM_MARGIN} alignItems="center" spacing={12}>
               <SimpleGrid
-                spacing={{ base: 8, md: 12 }}
+                spacing={{ base: 4, md: 12 }}
                 columns={{ base: 1, md: 3 }}
               >
                 {articles.slice(0, 3).map((article: any) => {

@@ -16,7 +16,7 @@ export const PriestsSection = (props: PriestsSectionProps) => {
       <Stack spacing={{ base: 4, md: 5 }}>
         <SectionHeading superscript="Kontakt" heading="Kňazi našej farnosti" />
         <SimpleGrid
-          columns={{ base: 2, sm: 2, md: 4 }}
+          columns={{ base: 2, sm: 2, md: priests.length }}
           gap={{ base: 4, md: 6 }}
           w="full"
         >

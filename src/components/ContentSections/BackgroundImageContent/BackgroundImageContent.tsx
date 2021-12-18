@@ -17,7 +17,11 @@ export const BackgroundImageContent = (props: BackgroundImageContentProps) => {
       {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
           <Overlay zIndex={0} opacity={70} />
-          <Container py={backgroundImage ? 14 : 0} position="relative">
+          <Container
+            py={backgroundImage ? 14 : 0}
+            position="relative"
+            maxW="container.lg"
+          >
             <ImageParagraph {...imageParagraph} light isImageOnTheLeft />
           </Container>
         </BackgroundImage>

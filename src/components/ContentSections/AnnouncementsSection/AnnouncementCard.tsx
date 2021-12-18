@@ -16,6 +16,7 @@ export interface AnnouncementCardProps extends BoxProps {
 
 export const AnnouncementCard = (props: AnnouncementCardProps) => {
   const { title, date, description, cta, ...restOfProps } = props;
+
   return (
     <Box {...restOfProps}>
       <Flex
@@ -25,27 +26,28 @@ export const AnnouncementCard = (props: AnnouncementCardProps) => {
       >
         <Box>
           <Subheading fontSize="xl">{title}</Subheading>
+
           <IconDate dateStr={date} />
           <Text
             marginY={3}
-            noOfLines={7}
+            noOfLines={6}
             fontWeight={400}
             textAlign={"justify"}
           >
             {description}
           </Text>
         </Box>
-        {/* <LinkButton to={cta.url}>{cta.text}</LinkButton> */}
-        <ArrowButtonLink
-          href={cta.url}
-          buttonProps={{
-            mt: -3,
-            alignSelf: "flex-end",
-            color: "primary",
-            label: "Čítať ďalej",
-            fontWeight: 700
-          }}
-        />
+        <Box alignSelf={"center"}>
+          <ArrowButtonLink
+            href={cta.url}
+            buttonProps={{
+              mt: -3,
+              color: "primary",
+              label: "Čítať ďalej",
+              fontWeight: 700
+            }}
+          />
+        </Box>
       </Flex>
     </Box>
   );

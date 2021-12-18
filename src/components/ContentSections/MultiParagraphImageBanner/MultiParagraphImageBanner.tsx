@@ -25,6 +25,7 @@ export const MultiParagraphImageBanner = (
               <SectionHeading
                 heading={heading.title}
                 alignItems="center"
+                textAlign={"center"}
                 superscript={heading.superscript}
                 light
               />

@@ -74,6 +74,8 @@ export const FooterMiddle = (props: FooterMiddleProps) => {
             }
           />
           <FooterColumn
+            w={248}
+            ml={{ md: -6 }}
             title={"Úradné hodiny"}
             items={contact.officeHours.officeDay.map((d) => ({
               label: `${d.day}: ${d.openTime}`

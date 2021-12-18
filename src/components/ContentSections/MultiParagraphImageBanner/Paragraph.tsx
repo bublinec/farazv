@@ -29,7 +29,7 @@ export const Paragraph = (props: ParagraphProps) => {
           <ArrowButtonLink
             href={link}
             buttonProps={{
-              pt: { base: 1, md: 2 }
+              pt: { md: 2 }
             }}
           />
         )}

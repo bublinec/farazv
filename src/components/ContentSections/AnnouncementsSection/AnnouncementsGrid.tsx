@@ -15,8 +15,8 @@ export const AnnouncementsGrid = (props: AnnouncementsGridProps) => {
     <Box {...restOfProps}>
       <SimpleGrid
         zIndex={20}
-        columns={{ base: 1, md: 2, xl: 3 }}
-        gap={{ base: 10, md: 12 }}
+        columns={{ base: 1, md: 3, xl: 3 }}
+        gap={{ base: 8, md: 8, lg: 12 }}
       >
         {announcements.slice(0, 3).map((a) => {
           return (

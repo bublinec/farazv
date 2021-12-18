@@ -4,16 +4,16 @@ import { MarkdownRenderer } from "../../Shared/MarkdownRenderer/MarkdownRenderer
 import { SectionHeading } from "../../Shared/SectionHeading/SectionHeading";
 
 export interface AnnouncmentProps {
-  announcments: Array<{ text: string }>;
+  announcements: Array<{ text: string }>;
 }
 
 export const Annoucements = (props: AnnouncmentProps) => {
-  const { announcments, ...restOfProps } = props;
+  const { announcements, ...restOfProps } = props;
   return (
     <Box {...restOfProps} w="full">
-      <SectionHeading heading="Oznamy" superscript="Farské oznamy" />
       <Stack spacing={{ base: 2, md: 5 }}>
-        {announcments.map((annoucement) => {
+        <SectionHeading heading="Oznamy" superscript="Farské oznamy" />
+        {announcements.map((announcement) => {
           return (
             <HStack alignItems={"flex-start"}>
               <Box fontSize="2xl" color="primary" mt={-1}>
@@ -21,7 +21,7 @@ export const Annoucements = (props: AnnouncmentProps) => {
               </Box>
               <MarkdownRenderer
                 w="full"
-                children={annoucement.text}
+                children={announcement.text}
                 fontWeight={300}
               />
             </HStack>
