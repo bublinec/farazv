@@ -49,7 +49,7 @@ export const routes = {
         to: "/virtualna-prehliadka"
       }),
       asRoute({
-        label: "Galéria",
+        label: "Galéria kostola",
         to: "/galeria"
       })
       // asRoute({

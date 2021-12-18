@@ -1,14 +1,29 @@
-import { Stack } from "@chakra-ui/react";
+import { graphql } from "gatsby";
 import React from "react";
-import { Container } from "../components/Shared/Container/Container";
+import { DynamicZoneRenderer } from "../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
 import Layout from "../components/Shared/Layout/Layout";
 
-const NotFoundPage = () => (
-  <Layout>
-    <Container className="py-12 md:py-20">
-      <Stack spacing={{ base: 6, md: 12 }}>Zdá sa že ste sa stratili</Stack>
-    </Container>
-  </Layout>
-);
+export const query = graphql`
+  query useNotFoundPage {
+    STRAPI {
+      adminPages(where: { slug: "404" }) {
+        ...STRAPI_AdminPagesFragment
+      }
+    }
+  }
+`;
+
+const NotFoundPage = (props: any) => {
+  const page = props.data.STRAPI.adminPages[0];
+
+  return (
+    <Layout page={page}>
+      <DynamicZoneRenderer
+        contentSections={page.contentSections}
+        py={{ base: 8, md: 20 }}
+      />
+    </Layout>
+  );
+};
 
 export default NotFoundPage;
