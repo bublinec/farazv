@@ -4,7 +4,7 @@ export const useArticles = (): any => {
   const data = useStaticQuery(graphql`
     query getArticles {
       STRAPI {
-        articles(limit: 10, sort: "published_at:desc") {
+        articles(sort: "published_at:desc") {
           author {
             name
           }

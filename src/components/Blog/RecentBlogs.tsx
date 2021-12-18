@@ -1,6 +1,7 @@
 import { Box, BoxProps, Center, SimpleGrid } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { useArticles } from "../../lib/features/blog/hooks/useArticles";
+import { Button } from "../Shared/Button/Button";
 import { Container } from "../Shared/Container/Container";
 import { SectionHeading } from "../Shared/SectionHeading/SectionHeading";
 import { BlogItemColumn } from "./BlogItemColumn";
@@ -8,9 +9,13 @@ import { BlogItemRow } from "./BlogItemRow";
 
 export interface RecentBlogsProps extends BoxProps {}
 
+const INITIAL_UPPER_LIMIT = 10;
+const STEP = 6;
+
 export const RecentBlogs = (props: RecentBlogsProps) => {
   const { ...restOfProps } = props;
   const articles = useArticles();
+  const [upperLimit, setUpperLimit] = useState(INITIAL_UPPER_LIMIT);
 
   return (
     <Box {...restOfProps}>
@@ -44,7 +49,7 @@ export const RecentBlogs = (props: RecentBlogsProps) => {
               content={articles[0].description}
               href={`/farnost/nase-spolocenstvo/${articles[0].slug}`}
             />
-            {articles.slice(1).map((article: any) => {
+            {articles.slice(1, upperLimit).map((article: any) => {
               return (
                 <BlogItemColumn
                   img={article.image}
@@ -57,6 +62,14 @@ export const RecentBlogs = (props: RecentBlogsProps) => {
               );
             })}
           </SimpleGrid>
+          {articles.length >= upperLimit && (
+            <Button
+              mt={{ base: 10, md: 14 }}
+              onClick={() => setUpperLimit(upperLimit + STEP)}
+            >
+              Zobraziť viac
+            </Button>
+          )}
         </Center>
       </Container>
     </Box>
