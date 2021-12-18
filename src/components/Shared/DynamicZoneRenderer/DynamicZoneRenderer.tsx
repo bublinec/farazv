@@ -49,7 +49,7 @@ export const DynamicZoneRenderer = (props: DynamicZoneRendererProps) => {
             switch (shortSectionName) {
               case "Text":
                 return (
-                  <Flex justifyContent={"center"} w="full">
+                  <Flex justifyContent={"center"} w="full" mb={-4}>
                     <Container maxW="container.lg">
                       <Text {...props} />
                     </Container>
