@@ -13,7 +13,7 @@ export const NavbarDropdown = (props: NavbarDropdownProps) => {
 
   return (
     <section
-      className="absolute top-0 left-1/2 transform -translate-x-1/2 w-56 mt-16 cursor-pointer z-20 text-center"
+      className="absolute top-0 left-1/2 transform -translate-x-1/2 w-48 mt-16 cursor-pointer text-center z-20 "
       onMouseEnter={onMouseEnter}
     >
       <div
@@ -25,11 +25,8 @@ export const NavbarDropdown = (props: NavbarDropdownProps) => {
         {route.children?.map((childRoute, i) => (
           <Link to={`${route.to}${childRoute.to}`} key={childRoute.to}>
             <div
-              className={`py-3 text-lg text-white hover:text-secondary font-light
-              mx-6 ${
-                !(route.children && i === route.children.length - 1) &&
-                "border-b"
-              }
+              className={`py-2 text-md text-white hover:text-secondary font-light
+              mx-6 ${!(route.children && i === route.children.length - 1) && ""}
               transition duration-300 ease-in-out`}
             >
               {childRoute.label}

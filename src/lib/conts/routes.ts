@@ -29,6 +29,10 @@ export const routes = {
       //   to: "/kalendar-akcii"
       // }),
       asRoute({
+        label: "Cirkevná škola",
+        to: "/cirkevna-skola"
+      }),
+      asRoute({
         label: "Kostol sv. Alžbety",
         to: "/kostol-sv-alzbety"
       }),
@@ -40,14 +44,7 @@ export const routes = {
         label: "Kostol v Zolnej",
         to: "/kostol-sv-matusa-v-zolnej"
       }),
-      asRoute({
-        label: "Cirkevná škola",
-        to: "/cirkevna-skola"
-      }),
-      asRoute({
-        label: "Virtuálna prehliadka",
-        to: "/virtualna-prehliadka"
-      }),
+
       asRoute({
         label: "Galéria kostola",
         to: "/galeria"
