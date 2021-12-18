@@ -11,8 +11,8 @@ export const ImagesTextGrid = (props: ImagesTextGridProps) => {
   return (
     <Box {...restOfProps}>
       <Container maxW="container.lg">
-        <Text {...heading} />
-        <Stack spacing={14} mt={10}>
+        <Text {...heading} mb={10} />
+        <Stack spacing={14}>
           {paragraphs.map((p, i) => (
             <ImageParagraph isImageOnTheLeft={!!(i & 1)} {...p} />
           ))}

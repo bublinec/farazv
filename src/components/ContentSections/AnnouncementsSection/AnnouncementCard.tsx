@@ -37,7 +37,9 @@ export const AnnouncementCard = (props: AnnouncementCardProps) => {
             {description}
           </Text>
         </Box>
-        <Box alignSelf={"center"}>
+        <Box alignSelf={"flex-end"}>
+          {/* <LinkButton to={cta.url}>{cta.text}</LinkButton> */}
+
           <ArrowButtonLink
             href={cta.url}
             buttonProps={{

@@ -20,7 +20,7 @@ export const AnnouncementsSection = (props: AnnouncementsSectionProps) => {
   }
 
   return (
-    <Box {...restOfProps}>
+    <Box {...restOfProps} my={-2}>
       {bgImage ? (
         <BackgroundImage {...bgImage} preserveStackingContext>
           <Overlay color="white" zIndex={0} opacity={90} />

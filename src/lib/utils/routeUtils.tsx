@@ -1,5 +1,4 @@
 export const isExternal = (href: string) => {
-  console.log(href, href.includes("tel:"));
   return (
     href.includes("http") ||
     href.includes("www") ||

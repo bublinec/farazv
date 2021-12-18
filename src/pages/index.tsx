@@ -24,10 +24,7 @@ const HomePage = (props: any) => {
   return (
     <Layout page={page} home>
       <Stack spacing={{ base: 6, md: 12 }} pt={{ base: 10, md: 16 }}>
-        <DynamicZoneRenderer
-          contentSections={[page.contentSections[0]]}
-          py={{ base: 8, md: 12 }}
-        />
+        <DynamicZoneRenderer contentSections={[page.contentSections[0]]} />
         <PostsHomeSection
           heading={{
             title: "Najnovšie príspevky",
@@ -36,15 +33,11 @@ const HomePage = (props: any) => {
         />
         <DynamicZoneRenderer
           contentSections={page.contentSections.slice(1, staticComponentIndex)}
-          py={{ base: 8, md: 12 }}
         />
-
         <BlogHomeSection
           heading={{
             title: "Naše spoločenstvo",
-            superscript: "Farnosť",
-            content:
-              "Poprosim poslat text co by sme sem mohli. Pripadne ak mate este nieco co by ste chceli napisat tak to mozeme tiez potom pridat"
+            superscript: "Farnosť"
           }}
         />
         <DynamicZoneRenderer

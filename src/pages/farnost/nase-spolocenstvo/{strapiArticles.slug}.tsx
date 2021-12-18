@@ -61,7 +61,8 @@ const ArticlePage = (props: any) => {
           <Text
             title={article.title}
             superscript="Naše spoločenstvo"
-            info={article.published_at}
+            date={article.published_at}
+            author={article.author.name}
           />
           <Box boxShadow="xl" w="full">
             {extractedImage && (

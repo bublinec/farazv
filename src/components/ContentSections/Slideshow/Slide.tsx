@@ -7,11 +7,11 @@ import {
   ButtonTypes,
   SlideProps
 } from "../../../lib/features/page/content-sections.d";
-import { CarouselArrow } from "./CarouselArrow";
 import { Container } from "../../Shared/Container/Container";
 import { LinkButton } from "../../Shared/LinkButton/LinkButton";
 import { Overlay } from "../../Shared/Overlay/Overlay";
 import { Text } from "../Text/Text";
+import { CarouselArrow } from "./CarouselArrow";
 
 export const Slide = (props: SlideProps) => {
   const { image, buttons, heading, next, prev, ...restOfProps } = props;
@@ -38,7 +38,7 @@ export const Slide = (props: SlideProps) => {
               <Stack
                 alignItems="center"
                 justifyContent={"center"}
-                spacing={{ base: 4, md: 8 }}
+                spacing={{ base: 3, md: 2 }}
                 h="full"
                 flex={1}
               >
