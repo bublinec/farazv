@@ -1,4 +1,10 @@
-import { Box, Flex, GridItem, SimpleGrid } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  GridItem,
+  SimpleGrid,
+  useBreakpointValue
+} from "@chakra-ui/react";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import React from "react";
 import { ImageParagraphProps } from "../../../lib/features/page/content-sections.d";
@@ -17,6 +23,11 @@ export const ImageParagraph = (props: ImageParagraphProps) => {
     extractedImage = getImage(image.localFile);
   }
 
+  const gridStart = useBreakpointValue({
+    base: 1,
+    md: isImageOnTheLeft ? 0 : 1
+  });
+
   return (
     <Box {...restOfProps}>
       <SimpleGrid
@@ -29,7 +40,7 @@ export const ImageParagraph = (props: ImageParagraphProps) => {
             <GatsbyImage image={extractedImage} alt={content.slice(20)} />
           </Flex>
         )}
-        <GridItem gridRowStart={{ base: 1, md: isImageOnTheLeft ? 0 : 1 }}>
+        <GridItem gridRowStart={gridStart}>
           <MarkdownRenderer light={light}>{content}</MarkdownRenderer>
         </GridItem>
       </SimpleGrid>

@@ -23,12 +23,12 @@ export const FooterMiddle = (props: FooterMiddleProps) => {
     // },
     {
       label: contact.contactDetails.mobil,
-      to: `/tel:${contact.contactDetails.mobil}`,
+      to: `tel:${contact.contactDetails.mobil}`,
       icon: <ImPhone />
     },
     {
       label: contact.contactDetails.email,
-      to: `/mailto:${contact.contactDetails.email}`,
+      to: `mailto:${contact.contactDetails.email}`,
       icon: <MdMail />
     },
     {
