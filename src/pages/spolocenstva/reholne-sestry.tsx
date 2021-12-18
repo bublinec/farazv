@@ -4,16 +4,16 @@ import { DynamicZoneRenderer } from "../../components/Shared/DynamicZoneRenderer
 import Layout from "../../components/Shared/Layout/Layout";
 
 export const query = graphql`
-  query useAboutParishPage {
+  query useSistersPage {
     STRAPI {
-      adminPages(where: { slug: "o-farnosti-zvolen-mesto" }) {
+      adminPages(where: { slug: "reholne-sestry" }) {
         ...STRAPI_AdminPagesFragment
       }
     }
   }
 `;
 
-const AboutParishPage = (props: any) => {
+const SistersPage = (props: any) => {
   const page = props.data.STRAPI.adminPages[0];
 
   return (
@@ -37,4 +37,4 @@ const AboutParishPage = (props: any) => {
   );
 };
 
-export default AboutParishPage;
+export default SistersPage;

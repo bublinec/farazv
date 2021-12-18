@@ -53,7 +53,7 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
             base: size === "xs" ? 3 : 6,
             sm: 8,
             md: items.length === 4 ? 8 : 10,
-            lg: items.length > 4 ? (items.length > 5 ? 10 : 12) : 16
+            lg: items.length > 4 ? (items.length > 5 ? 8 : 12) : 16
           }}
           alignItems="center"
           columns={{

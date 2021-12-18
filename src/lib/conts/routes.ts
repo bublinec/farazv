@@ -24,17 +24,13 @@ export const routes = {
         label: "Naše Spoločenstvo",
         to: "/nase-spolocenstvo"
       }),
-      asRoute({
-        label: "Cirkevná škola",
-        to: "/cirkevna-skola"
-      }),
       // asRoute({
       //   label: "Kalendár akcií",
       //   to: "/kalendar-akcii"
       // }),
       asRoute({
-        label: "O farnosti",
-        to: "/o-farnosti-zvolen-mesto"
+        label: "Kostol sv. Alžbety",
+        to: "/kostol-sv-alzbety"
       }),
       asRoute({
         label: "Kostol v Lieskovci",
@@ -45,12 +41,16 @@ export const routes = {
         to: "/kostol-sv-matusa-v-zolnej"
       }),
       asRoute({
-        label: "Galéria",
-        to: "/galeria"
+        label: "Cirkevná škola",
+        to: "/cirkevna-skola"
       }),
       asRoute({
         label: "Virtuálna prehliadka",
         to: "/virtualna-prehliadka"
+      }),
+      asRoute({
+        label: "Galéria",
+        to: "/galeria"
       })
       // asRoute({
       //   label: "Farský kostol",
@@ -67,7 +67,7 @@ export const routes = {
         to: "/sviatost-krstu"
       }),
       asRoute({
-        label: "Sviatosť eucharistie",
+        label: "Sviatosť Eucharistie",
         to: "/sviatost-eucharistie"
       }),
       asRoute({
@@ -104,6 +104,10 @@ export const routes = {
         label: "Miništranti",
         to: "/ministranti"
       }),
+      asRoute({
+        label: "Rehoľné sestry",
+        to: "/reholne-sestry"
+      })
       // asRoute({
       //   label: "Ružencové bratstvo",
       //   to: "/ruzencove-bratstvo"
