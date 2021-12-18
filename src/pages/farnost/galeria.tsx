@@ -19,19 +19,8 @@ const GalleryPage = (props: any) => {
   return (
     <Layout page={page}>
       <DynamicZoneRenderer
-        contentSections={page.contentSections.slice(
-          0,
-          page.contentSections.length - 1
-        )}
-        pt={{ base: 8, md: 20 }}
-        maxW={"container.lg"}
-        mx={"auto"}
-      />
-      <DynamicZoneRenderer
-        contentSections={[
-          page.contentSections[page.contentSections.length - 1]
-        ]}
-        pt={{ base: 10, md: 16 }}
+        contentSections={page.contentSections}
+        py={{ base: 8, md: 20 }}
       />
     </Layout>
   );

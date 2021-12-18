@@ -38,7 +38,12 @@ export const LinkItem = (props: LinkItemProps) => {
         </Link>
       ) : (
         <a href={to} target={"_blank"} rel={"noopener noreferer"}>
-          <LinkItemLabel label={label} icon={icon} />
+          <LinkItemLabel
+            label={label}
+            icon={icon}
+            color={color}
+            _hover={{ color: hoverColor, transition: "all ease-in-out 200ms" }}
+          />
         </a>
       )}
     </Box>
