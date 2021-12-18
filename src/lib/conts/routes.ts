@@ -104,6 +104,10 @@ export const routes = {
         label: "Miništranti",
         to: "/ministranti"
       }),
+      asRoute({
+        label: "Rehoľné sestry",
+        to: "/reholne-sestry"
+      })
       // asRoute({
       //   label: "Ružencové bratstvo",
       //   to: "/ruzencove-bratstvo"
