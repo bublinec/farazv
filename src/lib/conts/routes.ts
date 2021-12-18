@@ -33,8 +33,8 @@ export const routes = {
       //   to: "/kalendar-akcii"
       // }),
       asRoute({
-        label: "O farnosti",
-        to: "/o-farnosti-zvolen-mesto"
+        label: "Kostol sv. Alžbety",
+        to: "/kostol-sv-alzbety"
       }),
       asRoute({
         label: "Kostol v Lieskovci",
@@ -67,7 +67,7 @@ export const routes = {
         to: "/sviatost-krstu"
       }),
       asRoute({
-        label: "Sviatosť eucharistie",
+        label: "Sviatosť Eucharistie",
         to: "/sviatost-eucharistie"
       }),
       asRoute({

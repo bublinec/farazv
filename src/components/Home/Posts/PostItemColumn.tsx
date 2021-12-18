@@ -64,7 +64,7 @@ export const PostItemColumn = (props: PostItemColumnProps) => {
           <Box flex={1}>
             <Text
               marginY={3}
-              noOfLines={6}
+              noOfLines={5}
               fontWeight={400}
               textAlign={"justify"}
             >

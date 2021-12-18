@@ -6,7 +6,7 @@ import Layout from "../../components/Shared/Layout/Layout";
 export const query = graphql`
   query useAboutParishPage {
     STRAPI {
-      adminPages(where: { slug: "o-farnosti-zvolen-mesto" }) {
+      adminPages(where: { slug: "kostol-sv-alzbety" }) {
         ...STRAPI_AdminPagesFragment
       }
     }
