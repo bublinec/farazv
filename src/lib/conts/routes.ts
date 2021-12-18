@@ -67,7 +67,7 @@ export const routes = {
         to: "/sviatost-krstu"
       }),
       asRoute({
-        label: "Sviatosť eucharistie",
+        label: "Sviatosť Eucharistie",
         to: "/sviatost-eucharistie"
       }),
       asRoute({
@@ -104,6 +104,10 @@ export const routes = {
         label: "Miništranti",
         to: "/ministranti"
       }),
+      asRoute({
+        label: "Rehoľné sestry",
+        to: "/reholne-sestry"
+      })
       // asRoute({
       //   label: "Ružencové bratstvo",
       //   to: "/ruzencove-bratstvo"
