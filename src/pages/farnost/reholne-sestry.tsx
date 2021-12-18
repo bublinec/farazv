@@ -4,7 +4,7 @@ import { DynamicZoneRenderer } from "../../components/Shared/DynamicZoneRenderer
 import Layout from "../../components/Shared/Layout/Layout";
 
 export const query = graphql`
-  query useSchoolPage {
+  query useSistersPage {
     STRAPI {
       adminPages(where: { slug: "reholne-sestry" }) {
         ...STRAPI_AdminPagesFragment
@@ -13,7 +13,7 @@ export const query = graphql`
   }
 `;
 
-const SchoolPage = (props: any) => {
+const SistersPage = (props: any) => {
   const page = props.data.STRAPI.adminPages[0];
 
   return (
@@ -37,4 +37,4 @@ const SchoolPage = (props: any) => {
   );
 };
 
-export default SchoolPage;
+export default SistersPage;
