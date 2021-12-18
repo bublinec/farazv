@@ -28,7 +28,7 @@ export const PostsHomeSection = (props: PostsHomeSectionProps) => {
   }
 
   return (
-    <Box {...restOfProps} py={4} pb={BOTTOM_MARGIN - 20}>
+    <Box {...restOfProps} py={4} pb={56}>
       {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
           <Overlay zIndex={0} opacity={80} />
@@ -36,15 +36,15 @@ export const PostsHomeSection = (props: PostsHomeSectionProps) => {
             <Text
               {...heading}
               alignItems="center"
-              mb={{ base: 8, md: 10 }}
+              mb={{ base: 8, md: 8 }}
               light
               maxW={560}
               mx={"auto"}
             />
 
-            <Stack mb={-BOTTOM_MARGIN} alignItems="center" spacing={12}>
+            <Stack mb={-BOTTOM_MARGIN} alignItems="center" spacing={10}>
               <SimpleGrid
-                spacing={{ base: 8, md: 12 }}
+                spacing={{ base: 10, md: 12 }}
                 columns={{ base: 1, md: 3 }}
               >
                 {posts.slice(0, 3).map((post: any) => {

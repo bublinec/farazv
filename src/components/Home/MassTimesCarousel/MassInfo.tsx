@@ -16,7 +16,7 @@ export const MassInfo = (props: MassInfoProps) => {
     <Box
       borderWidth={1}
       borderColor={"white"}
-      w={{ base: "full" }}
+      w={{ base: "full", lg: 48 }}
       maxW={{ base: "full", sm: 36, md: 40, lg: 48 }}
       h={{ base: isXs ? 24 : 28, sm: 28, md: 32 }}
       {...restOfProps}

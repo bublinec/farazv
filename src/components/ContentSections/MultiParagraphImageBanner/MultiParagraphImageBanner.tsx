@@ -30,7 +30,11 @@ export const MultiParagraphImageBanner = (
                 light
               />
               <SimpleGrid
-                columns={{ base: 1, sm: 2, md: 3 }}
+                columns={{
+                  base: 1,
+                  sm: 2,
+                  md: paragraphs.length > 2 ? 3 : paragraphs.length
+                }}
                 gridGap={{ base: 4, md: 12 }}
               >
                 {paragraphs.map((p) => (

@@ -28,6 +28,7 @@ export enum ButtonTypes {
 }
 
 export interface ImageParagraphProps {
+  
   content: string;
   image: any;
   isImageOnTheLeft?: boolean;
@@ -59,6 +60,8 @@ export interface ImageLink {
 //////////////////////////////////////
 
 export interface TextProps extends BoxProps {
+  author?: string;
+  date?: string;
   content?: string;
   info?: string;
   superscript?: string;

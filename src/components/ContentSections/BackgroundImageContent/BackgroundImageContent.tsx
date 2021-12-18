@@ -22,7 +22,17 @@ export const BackgroundImageContent = (props: BackgroundImageContentProps) => {
             position="relative"
             maxW="container.lg"
           >
-            <ImageParagraph {...imageParagraph} light isImageOnTheLeft />
+            <Box display={{ base: "none", md: "flex" }}>
+              <ImageParagraph {...imageParagraph} light isImageOnTheLeft />
+            </Box>
+            <Box display={{ md: "none" }}>
+              <ImageParagraph
+                {...imageParagraph}
+                image={null}
+                light
+                isImageOnTheLeft
+              />
+            </Box>
           </Container>
         </BackgroundImage>
       )}
