@@ -7,7 +7,7 @@ export interface IconDividerProps extends BoxProps {
 }
 
 export const IconDivider = (props: IconDividerProps) => {
-  const { icon = "☩", ...restOfProps } = props;
+  const { icon = <span>&#x2629;&#xFE0E;</span>, ...restOfProps } = props;
   return (
     <Box {...restOfProps}>
       <Flex alignItems={"center"} gridGap={4}>
