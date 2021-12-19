@@ -27,7 +27,7 @@ export const FooterBottom = (props: FooterBottomProps) => {
           Momentum Digital
         </a>{" "}
         <span className="opacity-100">
-          |
+          {/* |
           <a
             target="_blank"
             rel="noopener noreferrer"
@@ -35,7 +35,7 @@ export const FooterBottom = (props: FooterBottomProps) => {
             href="https://gdpr.kbs.sk/"
           >
             GDPR
-          </a>{" "}
+          </a>{" "} */}
           © {year}
         </span>
       </Container>
