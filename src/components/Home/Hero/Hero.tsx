@@ -19,7 +19,7 @@ export interface HeroProps {
 
 export const Hero = (props: HeroProps) => {
   const { image, title, subtitle } = props;
-  const [height, setHeight] = useState(1000);
+  const [height, setHeight] = useState(760);
 
   useEffect(() => {
     setHeight(window.innerHeight - BROWSER_BAR_WIDTH);
@@ -29,7 +29,11 @@ export const Hero = (props: HeroProps) => {
   const bgImage = convertToBgImage(extractedImage);
 
   return (
-    <BackgroundImage {...bgImage} preserveStackingContext>
+    <BackgroundImage
+      backgroundColor="black"
+      {...bgImage}
+      preserveStackingContext
+    >
       <Overlay zIndex={0} opacity={75} />
       <Box>
         <Header />
