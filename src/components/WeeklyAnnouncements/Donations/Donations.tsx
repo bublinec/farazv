@@ -12,7 +12,8 @@ const donationTypeMap: { [key: string]: string } = {
   funerals: "Z pohrebu",
   baptism: "Z krstu",
   urnBurials: "Z kladenia urny",
-  other: "Iné"
+  other: "Iné",
+  charity: "Na charitu"
 };
 
 export const Donations = (props: DonationsProps) => {
