@@ -97,6 +97,10 @@ export const useWeeklyAnnouncements =
               text
             }
             donations {
+              funerals {
+                amount
+                name
+              }
               weddings {
                 amount
                 name
@@ -105,7 +109,7 @@ export const useWeeklyAnnouncements =
                 amount
                 name
               }
-              funerals {
+              charity {
                 amount
                 name
               }

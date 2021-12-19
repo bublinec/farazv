@@ -36,7 +36,7 @@ export const SectionHeading = (props: SectionHeadingProps) => {
     >
       <Stack alignItems={alignItems} spacing={{ base: 1 }}>
         {superscript && (
-          <Superscript mb={-1} color={light ? "secondary" : "primary"}>
+          <Superscript mb={-1.5} color={light ? "secondary" : "primary"}>
             {superscript}
           </Superscript>
         )}
@@ -46,7 +46,11 @@ export const SectionHeading = (props: SectionHeadingProps) => {
         >
           {heading}
         </Heading>
-        <Underline maxW={280} w="full" alignItems={alignItems} />
+        <Underline
+          maxW={{ base: 120, md: 200 }}
+          w="full"
+          alignItems={alignItems}
+        />
         <HStack spacing={8}>
           {author && <IconText icon={<BsPerson />} text={author} />}
           {date && <IconDate dateStr={date} />}

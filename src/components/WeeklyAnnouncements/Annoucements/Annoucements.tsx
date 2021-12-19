@@ -11,7 +11,7 @@ export const Annoucements = (props: AnnouncmentProps) => {
   const { announcements, ...restOfProps } = props;
   return (
     <Box {...restOfProps} w="full">
-      <Stack spacing={{ base: 2, md: 5 }}>
+      <Stack spacing={{ base: 1, md: 5 }}>
         <SectionHeading heading="Oznamy" superscript="Farské oznamy" />
         {announcements.map((announcement) => {
           return (
