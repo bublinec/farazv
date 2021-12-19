@@ -19,7 +19,7 @@ export interface HeroProps {
 
 export const Hero = (props: HeroProps) => {
   const { image, title, subtitle } = props;
-  const [height, setHeight] = useState(760);
+  const [height, setHeight] = useState(800);
 
   useEffect(() => {
     setHeight(window.innerHeight - BROWSER_BAR_WIDTH);
