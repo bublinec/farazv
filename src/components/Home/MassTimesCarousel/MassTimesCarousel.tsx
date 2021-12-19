@@ -15,6 +15,7 @@ export interface MassTimesCarouselProps extends BoxProps {}
 const settings: Settings = {
   slidesToShow: 1,
   slidesToScroll: 1,
+  speed: 300,
   infinite: false,
   arrows: false
 };

@@ -13,7 +13,7 @@ export const ImageLinks = (props: ImageLinksProps) => {
       <Container>
         <Text {...heading} textAlign={"center"} />
         <SimpleGrid
-          columns={{ base: 3, md: 3, xl: images.length }}
+          columns={{ base: 2, md: 4, xl: images.length }}
           gridGap={{ base: 8, md: 14 }}
           mt={{ base: 6, md: 10 }}
         >
