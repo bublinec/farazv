@@ -52,7 +52,7 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
   };
 
   return (
-    <Box {...restOfProps} h="full">
+    <Box {...restOfProps} h="full" overflowY="hidden">
       <Flex
         justifyContent={"space-between"}
         h="full"

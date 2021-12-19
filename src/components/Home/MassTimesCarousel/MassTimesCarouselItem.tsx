@@ -29,7 +29,7 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
       justifyContent={"center"}
       px={1}
       color="white"
-      h={{ base: 560, md: 560 }}
+      h={{ base: 520, md: 560 }}
     >
       <Stack justifyContent={"space-between"} w="full" alignItems="center">
         <Stack alignItems="center" spacing={{ base: 0, md: 2 }}>
