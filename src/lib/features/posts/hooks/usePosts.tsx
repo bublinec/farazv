@@ -3,7 +3,7 @@ import { graphql, useStaticQuery } from "gatsby";
 export const usePosts = (): any => {
   const data = useStaticQuery(graphql`
     query getPosts {
-      allStrapiPost(limit: 4) {
+      allStrapiPost(limit: 4, sort: { fields: published_at, order: DESC }) {
         nodes {
           content
           description
