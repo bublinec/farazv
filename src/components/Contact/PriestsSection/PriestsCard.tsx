@@ -41,7 +41,7 @@ export const PriestCard = (props: PriestCardProps) => {
               hoverColor="primary"
               color={"lightGray"}
               label={props.phone}
-              to={`/tel:${props.phone}`}
+              to={`tel:${props.phone}`}
               icon={<ImPhone />}
             />
           )}

@@ -19,6 +19,7 @@ export const useWeeklyAnnouncements =
                 priest {
                   surname
                 }
+                otherPriests
               }
             }
             tuesday {
@@ -31,6 +32,7 @@ export const useWeeklyAnnouncements =
                 priest {
                   surname
                 }
+                otherPriests
               }
             }
             wednesday {
@@ -55,6 +57,7 @@ export const useWeeklyAnnouncements =
                 priest {
                   surname
                 }
+                otherPriests
               }
             }
             friday {
@@ -67,11 +70,13 @@ export const useWeeklyAnnouncements =
                 priest {
                   surname
                 }
+                otherPriests
               }
             }
             saturday {
               date
               liturgy
+
               masses {
                 intention
                 label
@@ -79,6 +84,7 @@ export const useWeeklyAnnouncements =
                 priest {
                   surname
                 }
+                otherPriests
               }
             }
             sunday {
@@ -91,6 +97,7 @@ export const useWeeklyAnnouncements =
                 priest {
                   surname
                 }
+                otherPriests
               }
             }
             announcements {

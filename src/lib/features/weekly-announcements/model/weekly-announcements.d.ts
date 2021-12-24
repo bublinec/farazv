@@ -6,6 +6,7 @@ declare module WeeklyAnnouncements {
   export interface Mass {
     intention: string;
     label: string;
+    otherPriests: string;
     time: string;
     priest: Priest;
   }

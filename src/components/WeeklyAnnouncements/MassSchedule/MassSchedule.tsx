@@ -28,7 +28,7 @@ export const MassSchedule = (props: MassSchedule) => {
               items={day.masses.map((mass) => {
                 return {
                   time: formatTime(mass.time),
-                  name: mass.priest.surname,
+                  name: mass.priest?.surname || mass.otherPriests || "",
                   value: mass.intention
                 };
               })}
