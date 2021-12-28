@@ -45,6 +45,7 @@ export const useWeeklyAnnouncements =
                 priest {
                   surname
                 }
+                otherPriests
               }
             }
             thursday {
