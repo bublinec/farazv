@@ -59,7 +59,7 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
           columns={{
             base: items.length < 3 || items.length === 4 ? 2 : 3,
             md: items.length === 6 ? 3 : items.length,
-            lg: items.length
+            lg: 6
           }}
           pt={{ base: 6, md: items.length === 4 ? 2 : 10, lg: 12 }}
         >
