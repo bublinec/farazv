@@ -47,7 +47,7 @@ export const Slide = (props: SlideProps) => {
                   light
                   alignItems="center"
                   textAlign={"center"}
-                  w={{ base: "full", md: 560 }}
+                  w={{ base: "full", md: 640 }}
                 />
                 <HStack spacing={4}>
                   {buttons.map((button) => (
