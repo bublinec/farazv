@@ -49,6 +49,7 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
         </Stack>
         <SimpleGrid
           w={{ base: "full", md: "auto" }}
+          justifyContent="center"
           gap={{
             base: size === "xs" ? 3 : 6,
             sm: 8,
