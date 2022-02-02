@@ -26,7 +26,11 @@ export const NavbarDropdown = (props: NavbarDropdownProps) => {
           // handle external route
           if (childRoute.isExternal) {
             return (
-              <a href={childRoute.to} rel="noopener noreferrer">
+              <a
+                href={childRoute.to}
+                rel={"noopener norefer"}
+                target={"_blank"}
+              >
                 <div
                   className={`py-2 text-md text-white hover:text-secondary font-light
                   mx-6 ${

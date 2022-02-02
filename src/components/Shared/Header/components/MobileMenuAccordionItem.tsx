@@ -45,15 +45,24 @@ export const MobileMenuAccordionItem = (
           </AccordionButton>
           <AccordionPanel pb={1}>
             <div className="flex flex-col items-start ">
-              {route?.children?.map((r) => (
-                <Link
-                  activeClassName="text-secondary"
-                  to={`${route.to}${r.to}`}
-                  key={r.label}
-                >
-                  <div className="py-2 pr-6 pl-1 text-xl">{r.label}</div>
-                </Link>
-              ))}
+              {route?.children?.map((r) => {
+                if (r.isExternal) {
+                  return (
+                    <a href={r.to} rel={"noopener norefer"} target={"_blank"}>
+                      <div className="py-2 pr-6 pl-1 text-xl">{r.label}</div>
+                    </a>
+                  );
+                }
+                return (
+                  <Link
+                    activeClassName="text-secondary"
+                    to={`${route.to}${r.to}`}
+                    key={r.label}
+                  >
+                    <div className="py-2 pr-6 pl-1 text-xl">{r.label}</div>
+                  </Link>
+                );
+              })}
             </div>
           </AccordionPanel>
         </AccordionItem>

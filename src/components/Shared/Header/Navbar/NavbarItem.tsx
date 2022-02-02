@@ -14,7 +14,7 @@ export const NavbarItem = (props: NavbarItemProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   if (route.isExternal) {
     return (
-      <a href={route.to}>
+      <a href={route.to} rel={"noopener norefer"} target={"_blank"}>
         <NavbarItemButton label={route.label} />
       </a>
     );
