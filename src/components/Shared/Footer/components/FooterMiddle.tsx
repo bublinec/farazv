@@ -49,10 +49,12 @@ export const FooterMiddle = (props: FooterMiddleProps) => {
           <FooterColumn
             title={routes.parish.label}
             items={
-              routes.parish?.children?.map((r) => ({
-                label: r.label,
-                to: `${routes.parish.to}${r.to}`
-              })) || []
+              routes.parish?.children?.map((r) => {
+                return {
+                  label: r.label,
+                  to: r.isExternal ? r.to : `${routes.parish.to}${r.to}`
+                };
+              }) || []
             }
           />
           <FooterColumn
