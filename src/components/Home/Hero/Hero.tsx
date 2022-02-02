@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import BackgroundImage from "gatsby-background-image";
 import { getImage } from "gatsby-plugin-image";
 import { convertToBgImage } from "gbimage-bridge";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Container } from "../../Shared/Container/Container";
 import { Header } from "../../Shared/Header/Header";
 import { Overlay } from "../../Shared/Overlay/Overlay";
@@ -13,17 +13,10 @@ export const BROWSER_BAR_WIDTH = 48;
 export interface HeroProps {
   className?: string;
   image: any;
-  title: string;
-  subtitle: string;
 }
 
 export const Hero = (props: HeroProps) => {
-  const { image, title, subtitle } = props;
-  const [height, setHeight] = useState(800);
-
-  useEffect(() => {
-    setHeight(window.innerHeight - BROWSER_BAR_WIDTH);
-  }, []);
+  const { image } = props;
 
   const extractedImage = getImage(image.localFile);
   const bgImage = convertToBgImage(extractedImage);
@@ -38,13 +31,7 @@ export const Hero = (props: HeroProps) => {
       <Box>
         <Header />
         <Container position="relative">
-          <Box
-            height={{
-              base: height,
-              md: "630px"
-            }}
-            w="full"
-          >
+          <Box w="full">
             <MassTimesCarousel />
           </Box>
         </Container>

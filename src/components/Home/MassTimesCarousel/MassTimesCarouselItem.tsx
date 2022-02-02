@@ -1,8 +1,8 @@
 import { Box, Flex, SimpleGrid, Stack } from "@chakra-ui/react";
-import React from "react";
-import { isMajorFeast } from "../../../lib/utils/dateUtils";
+import React, { useEffect, useState } from "react";
 import { IconDivider } from "../../Shared/IconDivider/IconDivider";
 import { Superscript } from "../../Shared/Superscript/Superscript";
+import { BROWSER_BAR_WIDTH } from "../Hero/Hero";
 import { MassInfo, MassInfoProps } from "./MassInfo";
 
 export interface MassTimesCarouselItemProps {
@@ -11,9 +11,36 @@ export interface MassTimesCarouselItemProps {
   items: MassInfoProps[];
 }
 
+const itemsNumberLayoutMap: { [key: number]: any } = {
+  1: {
+    columns: 1,
+    size: "md"
+  },
+  2: {
+    columns: 2,
+    size: "md"
+  },
+  3: {
+    columns: 3,
+    size: "xs"
+  },
+  4: {
+    columns: { base: 2, md: 4 },
+    size: "md"
+  },
+  5: {
+    columns: { base: 3, md: 5 },
+    size: "xs"
+  },
+  6: {
+    columns: { base: 3, md: 6 },
+    size: "xs"
+  }
+};
+
 export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
   const { liturgy, date, items } = props;
-  const isFeast = isMajorFeast(date);
+  // const isFeast = isMajorFeast(date);
   const dateFormatted = new Date(date).toLocaleString("sk", {
     weekday: "long",
     day: "numeric",
@@ -21,7 +48,13 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
     year: "numeric"
   });
 
-  let size = items.length === 3 || items.length > 4 ? "xs" : "md";
+  const [height, setHeight] = useState(800);
+
+  useEffect(() => {
+    setHeight(window.innerHeight - BROWSER_BAR_WIDTH - 100);
+  }, []);
+
+  console.log("LOG", date, items);
 
   return (
     <Flex
@@ -29,13 +62,18 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
       justifyContent={"center"}
       px={1}
       color="white"
-      h={{ base: 520, md: 560 }}
+      minH="full"
+      flex={1}
+      height={{
+        base: height,
+        md: "630px"
+      }}
     >
       <Stack justifyContent={"space-between"} w="full" alignItems="center">
         <Stack alignItems="center" spacing={{ base: 0, md: 2 }}>
           <Superscript color="secondary">Dnešná liturgia</Superscript>
           <Box
-            fontSize={{ base: "3xl", md: "5xl" }}
+            fontSize={{ base: "2xl", md: "5xl" }}
             textTransform="uppercase"
             fontWeight={500}
             textAlign="center"
@@ -43,29 +81,23 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
             {liturgy}
           </Box>
           <IconDivider />
-          <Box fontSize={{ base: "xl", md: "2xl" }} fontWeight={300}>
+          <Box fontSize={{ base: "lg", md: "2xl" }} fontWeight={300}>
             {dateFormatted}
           </Box>
         </Stack>
         <SimpleGrid
-          w={{ base: "full", md: "auto" }}
-          justifyContent="center"
-          gap={{
-            base: size === "xs" ? 3 : 6,
-            sm: 8,
-            md: items.length === 4 ? 8 : 10,
-            lg: items.length > 4 ? (items.length > 5 ? 8 : 12) : 16
-          }}
-          alignItems="center"
-          columns={{
-            base: items.length < 3 || items.length === 4 ? 2 : 3,
-            md: items.length === 6 ? 3 : items.length,
-            lg: 6
-          }}
-          pt={{ base: 6, md: items.length === 4 ? 2 : 10, lg: 12 }}
+          pt={6}
+          w="full"
+          columns={itemsNumberLayoutMap[items.length].columns}
+          gridGap={itemsNumberLayoutMap[items.length].size === "xs" ? 4 : 6}
         >
           {items.map((mass) => {
-            return <MassInfo {...mass} size={size} />;
+            return (
+              <MassInfo
+                {...mass}
+                size={itemsNumberLayoutMap[items.length].size}
+              />
+            );
           })}
         </SimpleGrid>
       </Stack>
