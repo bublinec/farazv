@@ -25,7 +25,7 @@ const itemsNumberLayoutMap: { [key: number]: any } = {
     size: "xs"
   },
   4: {
-    columns: { base: 2, md: 4 },
+    columns: { base: 2, sm: 4 },
     size: "md"
   },
   5: {
@@ -73,7 +73,7 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
         <Stack alignItems="center" spacing={{ base: 0, md: 2 }}>
           <Superscript color="secondary">Dnešná liturgia</Superscript>
           <Box
-            fontSize={{ base: "2xl", md: "5xl" }}
+            fontSize={{ base: "2xl", sm: "3xl", lg: "5xl" }}
             textTransform="uppercase"
             fontWeight={500}
             textAlign="center"
@@ -81,15 +81,18 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
             {liturgy}
           </Box>
           <IconDivider />
-          <Box fontSize={{ base: "lg", md: "2xl" }} fontWeight={300}>
+          <Box fontSize={{ base: "lg", sm: "2xl" }} fontWeight={300}>
             {dateFormatted}
           </Box>
         </Stack>
         <SimpleGrid
           pt={6}
-          w="full"
+          w={{ base: "full", md: "auto" }}
           columns={itemsNumberLayoutMap[items.length].columns}
-          gridGap={itemsNumberLayoutMap[items.length].size === "xs" ? 4 : 6}
+          gridGap={{
+            base: itemsNumberLayoutMap[items.length].size === "xs" ? 4 : 6,
+            md: 10
+          }}
         >
           {items.map((mass) => {
             return (
