@@ -11,7 +11,6 @@ export interface NavbarProps {
 }
 
 export const Navbar = (props: NavbarProps) => {
-  console.log(routesArray);
   const { className = "" } = props;
   return (
     <nav className={`${className} w-full bg-black bg-opacity-70 h-16`}>

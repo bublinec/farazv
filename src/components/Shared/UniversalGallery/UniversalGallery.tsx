@@ -20,7 +20,6 @@ export const galleryConfig = {
   }
 };
 
-
 export const UniversalGallery = (props: UniversalGalleryProps) => {
   const { galleryKey, images } = props;
   // const size = images.length > 12 ? "large" : "base";
@@ -29,7 +28,11 @@ export const UniversalGallery = (props: UniversalGalleryProps) => {
   return (
     <SimpleReactLightbox>
       <SRLWrapper key={galleryKey}>
-        <SimpleGrid {...galleryConfig[size]}>
+        <SimpleGrid
+          {...(images.length <= 3
+            ? { columns: images.length, gap: { base: 3, md: 8 } }
+            : galleryConfig[size])}
+        >
           {images.map((image, index) => (
             <AspectRatio ratio={1}>
               <ImageCard

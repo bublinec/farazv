@@ -22,6 +22,10 @@ export const Donations = (props: DonationsProps) => {
     (i) => i[1].length > 0
   );
 
+  if (donationEntries.length === 0) {
+    return <div></div>;
+  }
+
   return (
     <Box {...restOfProps}>
       <Subheading>Milodary</Subheading>
