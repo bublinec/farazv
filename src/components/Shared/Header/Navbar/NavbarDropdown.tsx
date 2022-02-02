@@ -22,17 +22,38 @@ export const NavbarDropdown = (props: NavbarDropdownProps) => {
           backdropFilter: "blur(4px)"
         }}
       >
-        {route.children?.map((childRoute, i) => (
-          <Link to={`${route.to}${childRoute.to}`} key={childRoute.to}>
-            <div
-              className={`py-2 text-md text-white hover:text-secondary font-light
-              mx-6 ${!(route.children && i === route.children.length - 1) && ""}
-              transition duration-300 ease-in-out`}
-            >
-              {childRoute.label}
-            </div>
-          </Link>
-        ))}
+        {route.children?.map((childRoute, i) => {
+          // handle external route
+          if (childRoute.isExternal) {
+            return (
+              <a href={childRoute.to} rel="noopener noreferrer">
+                <div
+                  className={`py-2 text-md text-white hover:text-secondary font-light
+                  mx-6 ${
+                    !(route.children && i === route.children.length - 1) && ""
+                  }
+                   transition duration-300 ease-in-out`}
+                >
+                  {childRoute.label}
+                </div>
+              </a>
+            );
+          } else {
+            return (
+              <Link to={`${route.to}${childRoute.to}`} key={childRoute.to}>
+                <div
+                  className={`py-2 text-md text-white hover:text-secondary font-light
+                mx-6 ${
+                  !(route.children && i === route.children.length - 1) && ""
+                }
+                transition duration-300 ease-in-out`}
+                >
+                  {childRoute.label}
+                </div>
+              </Link>
+            );
+          }
+        })}
       </div>
     </section>
   );

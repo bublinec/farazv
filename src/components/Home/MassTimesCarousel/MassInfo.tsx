@@ -24,7 +24,8 @@ export const MassInfo = (props: MassInfoProps) => {
       <Stack
         alignItems="center"
         spacing={0}
-        mt={{ base: isXs ? 2 : 3, md: 4 }}
+        mt={{ base: isXs ? 2 : 3, md: 3 }}
+        pt={0.5}
         px={{ base: 0, md: 4, lg: 6 }}
       >
         <Flex flexDir="column" alignItems="center">
@@ -32,13 +33,14 @@ export const MassInfo = (props: MassInfoProps) => {
             h={4}
             fontWeight={300}
             textTransform={"uppercase"}
-            fontSize={{ base: "xs", md: "sm" }}
+            fontSize={{ base: "xs", md: "0.8rem" }}
+            letterSpacing={"0.06rem"}
           >
             {label}
           </Box>
           <Box
             color="secondary"
-            fontSize={{ base: isXs ? "xl" : "2xl", sm: "2xl", md: "3xl" }}
+            fontSize={{ base: isXs ? "xl" : "2xl", sm: "2xl", md: "1.75rem" }}
             h={{ base: isXs ? 7 : 9, md: 10 }}
           >
             {name}

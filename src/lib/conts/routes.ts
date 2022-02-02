@@ -3,6 +3,7 @@ export interface Route {
   to: string;
   children?: Route[];
   showInMenu?: boolean;
+  isExternal?: boolean;
 }
 
 const asRoute = (route: Route): Route => route;
@@ -24,14 +25,14 @@ export const routes = {
         label: "Naše Spoločenstvo",
         to: "/nase-spolocenstvo"
       }),
+      asRoute({
+        label: "Galéria kostola",
+        to: "/galeria"
+      }),
       // asRoute({
       //   label: "Kalendár akcií",
       //   to: "/kalendar-akcii"
       // }),
-      asRoute({
-        label: "Cirkevná škola",
-        to: "/cirkevna-skola"
-      }),
       asRoute({
         label: "Kostol sv. Alžbety",
         to: "/kostol-sv-alzbety"
@@ -44,10 +45,14 @@ export const routes = {
         label: "Kostol v Zolnej",
         to: "/kostol-sv-matusa-v-zolnej"
       }),
-
       asRoute({
-        label: "Galéria kostola",
-        to: "/galeria"
+        label: "Cirkevná škola",
+        to: "/cirkevna-skola"
+      }),
+      asRoute({
+        label: "Charita",
+        to: "https://www.charitazvolen.sk/",
+        isExternal: true
       })
       // asRoute({
       //   label: "Farský kostol",

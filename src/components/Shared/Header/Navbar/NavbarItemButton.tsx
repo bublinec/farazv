@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction } from "react";
 export interface NavbarItemButtonProps {
   className?: string;
   label: string;
-  setIsDropdownOpen: Dispatch<SetStateAction<boolean>>;
+  setIsDropdownOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 export const NavbarItemButton = (props: NavbarItemButtonProps) => {
@@ -14,8 +14,12 @@ export const NavbarItemButton = (props: NavbarItemButtonProps) => {
       flex items-center
       transition duration-200 ease-in-out
       `}
-      onClick={() => setIsDropdownOpen(true)}
-      onMouseEnter={() => setIsDropdownOpen(true)}
+      onClick={() => {
+        if (setIsDropdownOpen) setIsDropdownOpen(true);
+      }}
+      onMouseEnter={() => {
+        if (setIsDropdownOpen) setIsDropdownOpen(true);
+      }}
     >
       {label}
     </div>

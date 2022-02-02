@@ -11,10 +11,7 @@ export const LogoLink: React.FC<LogoLinkProps> = (props: LogoLinkProps) => {
   const { light = false } = props;
 
   return (
-    <Link
-      to={routes.home.to}
-      className={props.className + " flex items-center"}
-    >
+    <Link to={routes.home.to}>
       <Logo />
     </Link>
   );

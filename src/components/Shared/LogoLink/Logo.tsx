@@ -1,12 +1,23 @@
+import { Box, BoxProps, Flex } from "@chakra-ui/react";
 import React from "react";
 
-export interface LogoProps {
-  className?: string;
-}
+export interface LogoProps extends BoxProps {}
 
 export const Logo = (props: LogoProps) => {
-  const { className = "" } = props;
+  const { ...restOfProps } = props;
   return (
-    <div className={`${className} uppercase text-2xl`}>Farnosť sv. Alžbety</div>
+    <Flex
+      {...restOfProps}
+      flexDir={"column"}
+      alignItems="flex-start"
+      color="white"
+    >
+      <Box fontSize={"2xl"} textTransform="uppercase">
+        Farnosť sv. Alžbety
+      </Box>
+      <Box fontSize="xs" mt={-2} fontWeight={300}>
+        Zvolen - mesto
+      </Box>
+    </Flex>
   );
 };

@@ -12,6 +12,13 @@ export interface NavbarItemProps {
 export const NavbarItem = (props: NavbarItemProps) => {
   const { className = "", route } = props;
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  if (route.isExternal) {
+    return (
+      <a href={route.to}>
+        <NavbarItemButton label={route.label} />
+      </a>
+    );
+  }
 
   return (
     <div
