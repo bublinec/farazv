@@ -48,7 +48,7 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
     year: "numeric"
   });
 
-  const [height, setHeight] = useState(600);
+  const [height, setHeight] = useState(650);
 
   useEffect(() => {
     setHeight(window.innerHeight - BROWSER_BAR_WIDTH - 80);
