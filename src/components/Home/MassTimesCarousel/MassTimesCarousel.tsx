@@ -51,8 +51,6 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
     setCurrentSlide(index);
   };
 
-  console.log(futureDays);
-
   return (
     <Box {...restOfProps} h="full" overflowY="hidden">
       <Flex

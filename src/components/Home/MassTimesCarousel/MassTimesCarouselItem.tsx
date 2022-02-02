@@ -48,10 +48,10 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
     year: "numeric"
   });
 
-  const [height, setHeight] = useState(800);
+  const [height, setHeight] = useState(600);
 
   useEffect(() => {
-    setHeight(window.innerHeight - BROWSER_BAR_WIDTH - 100);
+    setHeight(window.innerHeight - BROWSER_BAR_WIDTH - 80);
   }, []);
 
   console.log("LOG", date, items);
@@ -73,7 +73,7 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
         <Stack alignItems="center" spacing={{ base: 0, md: 2 }}>
           <Superscript color="secondary">Dnešná liturgia</Superscript>
           <Box
-            fontSize={{ base: "2xl", sm: "3xl", lg: "5xl" }}
+            fontSize={{ base: "3xl", sm: "3xl", lg: "5xl" }}
             textTransform="uppercase"
             fontWeight={500}
             textAlign="center"
