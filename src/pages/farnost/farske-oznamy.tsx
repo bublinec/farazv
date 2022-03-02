@@ -32,7 +32,7 @@ const WeeklyAnnouncementsPage = (props: any) => {
 
   return (
     <Layout page={page}>
-      <Container pt={{ base: 14, md: 20 }}>
+      <Container py={{ base: 14, md: 20 }}>
         <SimpleGrid columns={{ base: 1, md: 12 }} gap={{ base: 6, md: 10 }}>
           <GridItem colSpan={{ md: 6 }}>
             <MassSchedule days={days} />
