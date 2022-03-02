@@ -1,9 +1,10 @@
 import { Box, Flex, SimpleGrid, Stack } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IconDivider } from "../../Shared/IconDivider/IconDivider";
 import { Superscript } from "../../Shared/Superscript/Superscript";
 import { BROWSER_BAR_WIDTH } from "../Hero/Hero";
 import { MassInfo, MassInfoProps } from "./MassInfo";
+import * as React from 'react';
 
 export interface MassTimesCarouselItemProps {
   liturgy: string;
@@ -54,6 +55,11 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
     setHeight(window.innerHeight - BROWSER_BAR_WIDTH - 80);
   }, []);
 
+  let [liturgyDay, liturgyDesc ]= liturgy.split(' (') 
+  liturgyDesc = liturgyDesc?.replace(')', '') 
+  
+
+
 
   return (
     <Flex
@@ -71,14 +77,25 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
       <Stack justifyContent={"space-between"} w="full" alignItems="center">
         <Stack alignItems="center" spacing={{ base: 0, md: 2 }}>
           <Superscript color="secondary">Dnešná liturgia</Superscript>
+          <Box>
+
           <Box
             fontSize={{ base: "3xl", sm: "3xl", lg: "5xl" }}
             textTransform="uppercase"
             fontWeight={500}
             textAlign="center"
-          >
-            {liturgy}
+            >
+            {liturgyDay}
           </Box>
+         {liturgyDesc && <Box
+            fontSize={{ base: "lg", sm: "xl", lg: "2xl" }}
+            // textTransform="uppercase"
+            fontWeight={400}
+            textAlign="center"
+            >
+            {liturgyDesc}
+          </Box>}
+            </Box>
           <IconDivider />
           <Box fontSize={{ base: "lg", sm: "2xl" }} fontWeight={300}>
             {dateFormatted}
