@@ -1,8 +1,8 @@
-import { Box, BoxProps } from "@chakra-ui/react";
+import { Box, BoxProps, Text, TextProps } from "@chakra-ui/react";
 import React from "react";
 import { ReactNode } from "react-markdown";
 
-export interface SubheadingProps extends BoxProps {
+export interface SubheadingProps extends TextProps {
   children: string | ReactNode | ReactNode[];
 }
 
@@ -14,7 +14,7 @@ export const Subheading = (props: SubheadingProps) => {
     ...restOfProps
   } = props;
   return (
-    <Box
+    <Text
       {...restOfProps}
       as="h3"
       fontSize={fontSize}
@@ -22,6 +22,6 @@ export const Subheading = (props: SubheadingProps) => {
       color={color}
     >
       {children}
-    </Box>
+    </Text>
   );
 };

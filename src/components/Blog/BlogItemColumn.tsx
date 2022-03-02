@@ -53,7 +53,7 @@ export const BlogItemColumn = (props: BlogItemColumnProps) => {
           borderTop="none"
         >
           <Box>
-            <Subheading color="darkGray" fontSize="2xl">
+            <Subheading color="darkGray" fontSize="1.2em" noOfLines={1}>
               {title}
             </Subheading>
             <HStack spacing={8}>
