@@ -11,6 +11,9 @@ export interface MassInfoProps extends BoxProps {
 export const MassInfo = (props: MassInfoProps) => {
   const { time, name, label, size, ...restOfProps } = props;
   const isXs = size === "xs";
+  if (!React) {
+    return <div></div>;
+  }
 
   return (
     <Box
@@ -26,15 +29,18 @@ export const MassInfo = (props: MassInfoProps) => {
         spacing={0}
         mt={{ base: isXs ? 2 : 3, md: 3 }}
         pt={0.5}
-        px={{ base: 0, md: 4, lg: 6 }}
+        px={{ base: 0, md: 2, lg: 1 }}
       >
         <Flex flexDir="column" alignItems="center">
           <Box
             h={4}
+            w="full"
+            // mx={-10}
             fontWeight={300}
             textTransform={"uppercase"}
+            textAlign="center"
             fontSize={{ base: "xs", md: "0.8rem" }}
-            letterSpacing={"0.06rem"}
+            letterSpacing={"0.02rem"}
           >
             {label}
           </Box>

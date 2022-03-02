@@ -26,6 +26,8 @@ export const PostsHomeSection = (props: PostsHomeSectionProps) => {
   if (excludedPostSlug) {
     posts = posts.filter((a: any) => a.slug != excludedPostSlug);
   }
+  console.log(posts);
+  
 
   return (
     <Box {...restOfProps} py={4} pb={56}>

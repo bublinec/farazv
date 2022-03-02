@@ -1,5 +1,5 @@
 import { Box, BoxProps, Flex, useBreakpointValue } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -29,10 +29,11 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
     data[1].sunday,
     ...Object.values(nextWeekDays)
   ];
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const todayIndex = getTodayIndex(days);
+  const [currentSlide, setCurrentSlide] = useState(todayIndex);
   const isFirstSlide = currentSlide === 0;
-  const futureDays = days.slice(getTodayIndex(days));
-  const isLastSlide = currentSlide === futureDays.length - 1;
+  // const futureDays = days.slice(getTodayIndex(days));
+  const isLastSlide = currentSlide === days.length - 1;
   const buttonLabels = useBreakpointValue({
     base: {
       back: "Späť",
@@ -45,6 +46,12 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
       next: "Nasledujúci deň"
     }
   });
+
+  console.log(todayIndex, days, currentSlide);
+
+  useEffect(() => {
+    carouselRef.current?.slickGoTo(todayIndex);
+  }, [todayIndex]);
 
   // after change - to hanlde swiping
   settings.afterChange = (index) => {
@@ -60,7 +67,7 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
         flexDir="column"
       >
         <Slider {...settings} ref={carouselRef}>
-          {Object.values(futureDays).map((day) => {
+          {Object.values(days).map((day) => {
             return (
               <MassTimesCarouselItem
                 key={day.date}
@@ -104,9 +111,9 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
               pl={4}
               label={buttonLabels?.today}
               onClick={() => {
-                carouselRef?.current?.slickGoTo(0);
+                carouselRef?.current?.slickGoTo(todayIndex);
 
-                setCurrentSlide(0);
+                setCurrentSlide(todayIndex);
               }}
               rightIcon={false}
             />

@@ -17,13 +17,16 @@ export const Slide = (props: SlideProps) => {
   const { image, buttons, heading, next, prev, ...restOfProps } = props;
   const bgImage = convertImage(image);
   const buttonSize = useBreakpointValue({ base: "sm", md: "md" });
+  if(!React){
+    return;
+  }
 
   return (
     <Box {...restOfProps}>
       {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
           <Overlay zIndex={0} opacity={60} />
-          <Container position="relative" h={{ base: 380, md: 400 }}>
+          <Container position="relative" h={{ base: 380, md: 440 }}>
             <Flex
               justifyContent="space-between"
               alignItems="center"
@@ -36,6 +39,7 @@ export const Slide = (props: SlideProps) => {
                 display={{ base: "none", md: "block" }}
               />
               <Stack
+              py={20}
                 alignItems="center"
                 justifyContent={"center"}
                 spacing={{ base: 3, md: 2 }}
@@ -47,7 +51,7 @@ export const Slide = (props: SlideProps) => {
                   light
                   alignItems="center"
                   textAlign={"center"}
-                  w={{ base: "full", md: 680 }}
+                  maxW={{ base: "full", md: 680 }}
                 />
                 <HStack spacing={4}>
                   {buttons.map((button) => (

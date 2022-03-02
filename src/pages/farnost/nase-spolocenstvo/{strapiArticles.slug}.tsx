@@ -1,7 +1,6 @@
 import { Box, Stack } from "@chakra-ui/layout";
 import { graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import React from "react";
 import { BlogHomeSection } from "../../../components/Blog/BlogHomeSection";
 import { Text } from "../../../components/ContentSections/Text/Text";
 import { DynamicZoneRenderer } from "../../../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
@@ -62,7 +61,7 @@ const ArticlePage = (props: any) => {
             title={article.title}
             superscript="Naše spoločenstvo"
             date={article.published_at}
-            author={article.author.name}
+            author={article.author?.name}
           />
           <Box boxShadow="xl" w="full">
             {extractedImage && (
