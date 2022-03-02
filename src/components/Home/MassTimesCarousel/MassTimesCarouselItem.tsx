@@ -54,7 +54,6 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
     setHeight(window.innerHeight - BROWSER_BAR_WIDTH - 80);
   }, []);
 
-  console.log("LOG", date, items);
 
   return (
     <Flex

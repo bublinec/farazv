@@ -47,7 +47,6 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
     }
   });
 
-  console.log(todayIndex, days, currentSlide);
 
   useEffect(() => {
     carouselRef.current?.slickGoTo(todayIndex);
