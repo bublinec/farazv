@@ -5,6 +5,8 @@ import { BlogHomeSection } from "../../../components/Blog/BlogHomeSection";
 import { Text } from "../../../components/ContentSections/Text/Text";
 import { DynamicZoneRenderer } from "../../../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
 import Layout from "../../../components/Shared/Layout/Layout";
+import * as React from 'react';
+
 
 export const query = graphql`
   query useArticlePageData($slug: String) {
