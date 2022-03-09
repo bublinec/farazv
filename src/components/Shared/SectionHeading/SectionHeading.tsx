@@ -34,10 +34,10 @@ export const SectionHeading = (props: SectionHeadingProps) => {
       maxW={{ md: "full" }}
       mb={mb}
     >
-      <Stack alignItems={alignItems} spacing={{ base: 1 }}>
+      <Stack alignItems={alignItems} spacing={{ base: 0.5, md: 1 }}>
         {superscript && (
           <Superscript
-            mb={{ base: -0.5, md: -1.5 }}
+            mb={{ base: -1, md: -1.5 }}
             color={light ? "secondary" : "primary"}
           >
             {superscript}

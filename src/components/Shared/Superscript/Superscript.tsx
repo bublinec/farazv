@@ -8,7 +8,7 @@ export interface SuperscriptProps extends BoxProps {
 export const Superscript = (props: SuperscriptProps) => {
   const {
     children,
-    fontSize = { base: "sm", md: "md" },
+    fontSize = { base: "xs", md: "md" },
     color = "primary",
     ...restOfProps
   } = props;

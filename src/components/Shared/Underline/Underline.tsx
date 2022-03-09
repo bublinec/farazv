@@ -8,7 +8,7 @@ export const Underline = (props: UnderlineProps) => {
   const { alignItems = "flex-start", ...restOfProps } = props;
   return (
     <Box {...restOfProps}>
-      <Stack spacing={1} alignItems={alignItems}>
+      <Stack spacing={{base: 0.5, md: 1}} alignItems={alignItems}>
         <HLine />
         <HLine w={8 / 12} />
       </Stack>

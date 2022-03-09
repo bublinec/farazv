@@ -107,7 +107,7 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
           columns={itemsNumberLayoutMap[items.length].columns}
           gridGap={{
             base: itemsNumberLayoutMap[items.length].size === "xs" ? 4 : 6,
-            md: 10
+            md: 9
           }}
         >
           {items.map((mass) => {
