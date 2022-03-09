@@ -1,5 +1,6 @@
 import { Box, BoxProps, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
+import { BsArrowRight } from "react-icons/bs";
 import { HiLocationMarker } from "react-icons/hi";
 import { ImPhone } from "react-icons/im";
 import { MdMail } from "react-icons/md";
@@ -35,6 +36,11 @@ export const FooterMiddle = (props: FooterMiddleProps) => {
       label: contact.contactDetails.address,
       to: contact.contactDetails.googleMapLink,
       icon: <HiLocationMarker />
+    },
+    {
+      label: "Všetky kontakty",
+      to: routes.contact.to,
+      icon: <BsArrowRight />
     }
   ];
 
