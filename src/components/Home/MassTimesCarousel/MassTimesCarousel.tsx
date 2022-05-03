@@ -47,7 +47,6 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
     }
   });
 
-
   useEffect(() => {
     carouselRef.current?.slickGoTo(todayIndex);
   }, [todayIndex]);
@@ -58,13 +57,13 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
   };
 
   return (
-    <Box {...restOfProps} h="full" overflowY="hidden">
+    <Box {...restOfProps} h="full" w="full" overflowY="hidden">
       <Flex
         justifyContent={"space-between"}
         h="full"
         pb={{ base: 8, md: 12 }}
         flexDir="column"
-        w='full'
+        w="full"
       >
         <Slider {...settings} ref={carouselRef}>
           {Object.values(days).map((day) => {
@@ -87,7 +86,6 @@ export const MassTimesCarousel = (props: MassTimesCarouselProps) => {
         <Flex
           w="full"
           justifyContent={isFirstSlide ? "flex-end" : "space-between"}
-
         >
           <Box w={{ base: 28, md: 56 }}>
             {!isFirstSlide && (

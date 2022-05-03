@@ -10,7 +10,7 @@ export const Iframe = (props: IframeProps) => {
 
   return (
     <Box {...restOfProps} bg="darkGray">
-      <AspectRatio ratio={1.78}>
+      <AspectRatio ratio={1.78} backgroundColor="white">
         <iframe
           src={url}
           width="100%"

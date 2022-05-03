@@ -7,6 +7,7 @@ import { TextProps } from "../../../lib/features/page/content-sections.d";
 import { usePosts } from "../../../lib/features/posts/hooks/usePosts";
 import { Text } from "../../ContentSections/Text/Text";
 import { Container } from "../../Shared/Container/Container";
+import { LinkButton } from "../../Shared/LinkButton/LinkButton";
 import { Overlay } from "../../Shared/Overlay/Overlay";
 import { usePostsBgImage } from "./hooks/usPostsBgImage";
 import { PostItemColumn } from "./PostItemColumn";
@@ -28,16 +29,16 @@ export const PostsHomeSection = (props: PostsHomeSectionProps) => {
   }
 
   return (
-    <Box {...restOfProps} py={4} pb={56}>
-      {bgImage && (
+    <Box {...restOfProps} pb={64}>
+      {/* {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
-          <Overlay zIndex={0} opacity={80} />
-          <Container py={14} position="relative">
+          <Overlay zIndex={0} opacity={80} /> */}
+          <Container py={4} position="relative">
             <Text
               {...heading}
               alignItems="center"
               mb={{ base: 8, md: 8 }}
-              light
+              // light
               maxW={560}
               mx={"auto"}
             />
@@ -59,13 +60,13 @@ export const PostsHomeSection = (props: PostsHomeSectionProps) => {
                   );
                 })}
               </SimpleGrid>
-              {/* <LinkButton to={"/farnost/nase-spolocenstvo"}>
+              <LinkButton to={"/farnost/nase-spolocenstvo"}>
                 Zobraziť viac článkov
-              </LinkButton> */}
+              </LinkButton>
             </Stack>
           </Container>
-        </BackgroundImage>
-      )}
+        {/* </BackgroundImage>
+      )} */}
     </Box>
   );
 };

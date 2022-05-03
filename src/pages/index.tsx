@@ -19,12 +19,12 @@ export const query = graphql`
 const HomePage = (props: any) => {
   const page = props.data.STRAPI.adminPages[0];
   const sectionsNumber = page.contentSections.length;
-  const staticComponentIndex = 3;
+  const staticComponentIndex = 2;
 
   return (
     <Layout page={page} home>
       <Stack spacing={{ base: 6, md: 12 }} pt={{ base: 10, md: 16 }}>
-        <DynamicZoneRenderer contentSections={[page.contentSections[0]]} />
+        {/* <DynamicZoneRenderer contentSections={[page.contentSections[0]]} /> */}
         <PostsHomeSection
           heading={{
             title: "Najnovšie príspevky",
@@ -32,7 +32,7 @@ const HomePage = (props: any) => {
           }}
         />
         <DynamicZoneRenderer
-          contentSections={page.contentSections.slice(1, staticComponentIndex)}
+          contentSections={page.contentSections.slice(0, staticComponentIndex)}
         />
         <BlogHomeSection
           heading={{

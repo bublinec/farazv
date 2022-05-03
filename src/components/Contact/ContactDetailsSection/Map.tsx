@@ -11,7 +11,7 @@ export interface MapProps extends BoxProps {
   };
 }
 
-const MAP_KEY = "AIzaSyBMePsrPSWpSEipq6olgSTQ7HynliRaRv0";
+const MAP_KEY = "AIzaSyAJANUuKIFRxo-wO6GJdmP2TF6Vmfdb0ks";
 
 export const Map = (props: MapProps) => {
   const { coordinates } = props;
