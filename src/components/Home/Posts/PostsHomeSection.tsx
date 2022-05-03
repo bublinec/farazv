@@ -60,9 +60,9 @@ export const PostsHomeSection = (props: PostsHomeSectionProps) => {
                   );
                 })}
               </SimpleGrid>
-              <LinkButton to={"/farnost/nase-spolocenstvo"}>
+              {/* <LinkButton to={"/farnost/nase-spolocenstvo"}>
                 Zobraziť viac článkov
-              </LinkButton>
+              </LinkButton> */}
             </Stack>
           </Container>
         {/* </BackgroundImage>
