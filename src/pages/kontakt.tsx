@@ -27,7 +27,7 @@ const ContactPage = (props: any) => {
         <Stack spacing={{ base: 8, md: 12 }} pt={12}>
           <ContactDetailsSection />
           <Stack spacing={4}>
-            <ContactFormSection />
+            {/* <ContactFormSection /> */}
             <PriestsSection />
           </Stack>
         </Stack>
