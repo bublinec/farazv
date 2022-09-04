@@ -1,10 +1,10 @@
 import { Box, BoxProps } from "@chakra-ui/react";
-import React from "react";
+import * as React from 'react';
 
 export interface OverlayProps extends BoxProps {}
 
 export const Overlay = (props: OverlayProps) => {
-  const { opacity = 40, zIndex = 1, color = "black", ...restOfProps } = props;
+  const { opacity = 40, zIndex = 1, color = "#282828", ...restOfProps } = props;
   return (
     <Box
       bg={color}
