@@ -26,7 +26,7 @@ export const Slide = (props: SlideProps) => {
       {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
           <Overlay zIndex={0} opacity={60} />
-          <Container position="relative" h={{ base: 490, md: 440 }}>
+          <Container position="relative" h={{ base: 560, md: 560 }}>
             <Flex
               justifyContent="space-between"
               alignItems="center"
@@ -51,7 +51,7 @@ export const Slide = (props: SlideProps) => {
                   light
                   alignItems="center"
                   textAlign={"center"}
-                  maxW={{ base: "full", md: 680 }}
+                  maxW={{ base: "full", md: 720 }}
                 />
                 <HStack spacing={4}>
                   {buttons.map((button) => (
