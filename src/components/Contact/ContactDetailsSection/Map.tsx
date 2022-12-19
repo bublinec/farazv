@@ -32,7 +32,7 @@ export const Map = (props: MapProps) => {
           lng={coordinates.lng}
         >
           <FaMapMarkerAlt />
-        </Box>
+        </Box>.
       </GoogleMapReact>
     </Box>
   );

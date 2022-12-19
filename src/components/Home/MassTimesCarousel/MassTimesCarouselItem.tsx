@@ -4,7 +4,7 @@ import { IconDivider } from "../../Shared/IconDivider/IconDivider";
 import { Superscript } from "../../Shared/Superscript/Superscript";
 import { BROWSER_BAR_WIDTH } from "../Hero/Hero";
 import { MassInfo, MassInfoProps } from "./MassInfo";
-import * as React from 'react';
+import * as React from "react";
 
 export interface MassTimesCarouselItemProps {
   liturgy: string;
@@ -55,11 +55,8 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
     setHeight(window.innerHeight - BROWSER_BAR_WIDTH - 80);
   }, []);
 
-  let [liturgyDay, liturgyDesc ]= liturgy.split(' (') 
-  liturgyDesc = liturgyDesc?.replace(')', '') 
-  
-
-
+  let [liturgyDay, liturgyDesc] = liturgy.split(" (");
+  liturgyDesc = liturgyDesc?.replace(")", "");
 
   return (
     <Flex
@@ -78,24 +75,25 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
         <Stack alignItems="center" spacing={{ base: 0, md: 2 }}>
           <Superscript color="secondary">Dnešná liturgia</Superscript>
           <Box>
-
-          <Box
-            fontSize={{ base: "3xl", sm: "3xl", lg: "5xl" }}
-            textTransform="uppercase"
-            fontWeight={500}
-            textAlign="center"
+            <Box
+              fontSize={{ base: "3xl", sm: "3xl", lg: "5xl" }}
+              textTransform="uppercase"
+              fontWeight={500}
+              textAlign="center"
             >
-            {liturgyDay}
-          </Box>
-         {liturgyDesc && <Box
-            fontSize={{ base: "lg", sm: "xl", lg: "2xl" }}
-            // textTransform="uppercase"
-            fontWeight={400}
-            textAlign="center"
-            >
-            {liturgyDesc}
-          </Box>}
+              {liturgyDay}
             </Box>
+            {liturgyDesc && (
+              <Box
+                fontSize={{ base: "lg", sm: "xl", lg: "2xl" }}
+                // textTransform="uppercase"
+                fontWeight={400}
+                textAlign="center"
+              >
+                {liturgyDesc}
+              </Box>
+            )}
+          </Box>
           <IconDivider />
           <Box fontSize={{ base: "lg", sm: "2xl" }} fontWeight={300}>
             {dateFormatted}
@@ -104,9 +102,9 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
         <SimpleGrid
           pt={6}
           w={{ base: "full", md: "auto" }}
-          columns={itemsNumberLayoutMap[items.length].columns}
+          columns={itemsNumberLayoutMap[items.length]?.columns || 4}
           gridGap={{
-            base: itemsNumberLayoutMap[items.length].size === "xs" ? 4 : 6,
+            base: itemsNumberLayoutMap[items.length]?.size === "xs" ? 4 : 6,
             md: 9
           }}
         >
@@ -114,7 +112,7 @@ export const MassTimesCarouselItem = (props: MassTimesCarouselItemProps) => {
             return (
               <MassInfo
                 {...mass}
-                size={itemsNumberLayoutMap[items.length].size}
+                size={itemsNumberLayoutMap[items.length]?.size}
               />
             );
           })}
