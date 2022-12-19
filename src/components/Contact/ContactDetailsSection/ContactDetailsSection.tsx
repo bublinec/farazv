@@ -82,7 +82,6 @@ export const ContactDetailsSection: React.FC = (
               ]}
             >
               <Flex h={{ base: 80, md: "full" }} pb={2} flexDir={"column"}>
-                {/* TODO: REPLACE WITH REACT MAP - (which is nicer) */}
                 <Box flex={1}>
                   <Map
                     coordinates={{

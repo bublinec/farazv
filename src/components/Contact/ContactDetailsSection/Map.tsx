@@ -15,6 +15,8 @@ const MAP_KEY = "AIzaSyAJANUuKIFRxo-wO6GJdmP2TF6Vmfdb0ks";
 
 export const Map = (props: MapProps) => {
   const { coordinates } = props;
+  console.log(coordinates);
+
   return (
     <Box h={"full"}>
       <GoogleMapReact
@@ -32,7 +34,7 @@ export const Map = (props: MapProps) => {
           lng={coordinates.lng}
         >
           <FaMapMarkerAlt />
-        </Box>.
+        </Box>
       </GoogleMapReact>
     </Box>
   );
