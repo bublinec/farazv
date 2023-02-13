@@ -73,7 +73,7 @@ module.exports = {
     {
       resolve: `gatsby-source-strapi`,
       options: {
-        apiURL: `https://farazv.up.railway.app/`,
+        apiURL: `https://farazv.up.railway.app`,
         queryLimit: 1000,
         collectionTypes: [
           "announcements",
