@@ -73,7 +73,7 @@ module.exports = {
     {
       resolve: `gatsby-source-strapi`,
       options: {
-        apiURL: `https://farazv.herokuapp.com`,
+        apiURL: `https://farazv.up.railway.app/`,
         queryLimit: 1000,
         collectionTypes: [
           "announcements",
@@ -99,7 +99,7 @@ module.exports = {
         // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
         fieldName: "STRAPI",
         // Url to query from
-        url: "https://farazv.herokuapp.com/graphql"
+        url: "https://farazv.up.railway.app/graphql"
       }
     },
 
