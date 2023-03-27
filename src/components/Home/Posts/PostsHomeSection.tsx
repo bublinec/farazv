@@ -48,7 +48,7 @@ export const PostsHomeSection = (props: PostsHomeSectionProps) => {
                 spacing={{ base: 10, md: 12 }}
                 columns={{ base: 1, md: 3 }}
               >
-                {posts.slice(0, 3).map((post: any) => {
+                {posts.map((post: any) => {
                   return (
                     <PostItemColumn
                       img={post.image}
