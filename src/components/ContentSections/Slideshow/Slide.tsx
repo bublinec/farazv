@@ -26,7 +26,7 @@ export const Slide = (props: SlideProps) => {
       {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
           <Overlay zIndex={0} opacity={60} />
-          <Container position="relative" h={{ base: 560, md: 560 }}>
+          <Container position="relative" h={{ base: 660, md: 560 }}>
             <Flex
               justifyContent="space-between"
               alignItems="center"

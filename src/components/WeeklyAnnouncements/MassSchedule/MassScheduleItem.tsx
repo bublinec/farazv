@@ -1,6 +1,6 @@
 import { Box, Flex, Stack } from "@chakra-ui/react";
 import React from "react";
-import { BiBookBookmark } from "react-icons/all";
+import { BiBookBookmark } from "react-icons/bi";
 import { IconDate } from "../../Shared/IconDate/IconDate";
 import { IconText } from "../../Shared/IconText/IconText";
 import { MassScheduleItemRow } from "./MassSheduleItemRow";

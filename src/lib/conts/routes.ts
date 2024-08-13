@@ -120,6 +120,10 @@ export const routes = {
       // })
     ]
   }),
+  confirmees: asRoute({
+    label: "Birmovanci",
+    to: "/birmovanci"
+  }),
   contact: asRoute({
     label: "Kontakt",
     to: "/kontakt"

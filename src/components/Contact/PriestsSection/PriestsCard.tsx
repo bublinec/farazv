@@ -15,7 +15,7 @@ interface PriestCardProps {
 
 export const PriestCard = (props: PriestCardProps) => {
   const { title, photo, role } = props;
-  const extractedImage = getImage(photo.localFile);
+  // const extractedImage = getImage(photo.localFile);
 
   return (
     <Box
@@ -24,9 +24,9 @@ export const PriestCard = (props: PriestCardProps) => {
       border="0.5px solid"
       borderColor="borderGray"
     >
-      {extractedImage && (
+      {/* {extractedImage && (
         <GatsbyImage image={extractedImage} alt="priest photo" />
-      )}
+      )} */}
       <Box py={4} px={2}>
         {role && (
           <Superscript fontSize={{ base: "xs", md: "sm" }}>{role}</Superscript>

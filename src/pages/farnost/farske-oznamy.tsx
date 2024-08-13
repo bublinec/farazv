@@ -61,7 +61,10 @@ const WeeklyAnnouncementsPage = (props: any) => {
           </GridItem>
         </SimpleGrid>
       </Container>
-      <DynamicZoneRenderer contentSections={page.contentSections} />
+      <DynamicZoneRenderer
+        pb={{ base: 10, md: 16 }}
+        contentSections={page.contentSections}
+      />
     </Layout>
   );
 };
