@@ -22,6 +22,9 @@ export const capitalize = (s: string) => {
 };
 
 export const formatTime = (t: string) => {
+  if (!t) {
+    return "";
+  }
   let timeFormatted = t.slice(0, 5);
   if (timeFormatted[0] === "0") {
     timeFormatted = timeFormatted.slice(1);
