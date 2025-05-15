@@ -21,7 +21,7 @@ const DFRPage = (props: any) => {
     <Layout page={page}>
       <Center w="full" py={20} pb={{ xs: 10, md: -40 }}>
         <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLSeN1zMMwjp661ni4f0gwnNr6x4IxBQgmNsWB9bSxWqFCd1HQA/viewform?embedded=true?hl=sk"
+          src="https://docs.google.com/forms/d/e/1FAIpQLSdDELp7_AQPXZ_InnR-vcTHLMVvDcOlCRWiyJg3lFMkfLA3cg/viewform?usp=header"
           width="640"
           height="1300"
           style={{ marginBottom: "-20px", overflowY: "hidden" }}
