@@ -33,39 +33,51 @@ export const PostsHomeSection = (props: PostsHomeSectionProps) => {
       {/* {bgImage && (
         <BackgroundImage {...bgImage} preserveStackingContext>
           <Overlay zIndex={0} opacity={80} /> */}
-          <Container py={4} position="relative">
-            <Text
-              {...heading}
-              alignItems="center"
-              mb={{ base: 8, md: 8 }}
-              // light
-              maxW={560}
-              mx={"auto"}
-            />
+      <Container py={4} position="relative">
+        <Text
+          {...heading}
+          alignItems="center"
+          mb={{ base: 8, md: 8 }}
+          // light
+          maxW={560}
+          mx={"auto"}
+        />
 
-            <Stack mb={-BOTTOM_MARGIN} alignItems="center" spacing={10}>
-              <SimpleGrid
-                spacing={{ base: 10, md: 12 }}
-                columns={{ base: 1, md: 3 }}
-              >
-                {posts.map((post: any) => {
-                  return (
-                    <PostItemColumn
-                      img={post.image}
-                      title={post.title}
-                      date={post.published_at}
-                      content={post.description}
-                      href={`/prispevky/${post.slug}`}
-                    />
-                  );
-                })}
-              </SimpleGrid>
-              {/* <LinkButton to={"/farnost/nase-spolocenstvo"}>
+        <Stack mb={-BOTTOM_MARGIN} alignItems="center" spacing={10}>
+          <SimpleGrid
+            spacing={{ base: 10, md: 12 }}
+            columns={{ base: 1, md: 3 }}
+          >
+            {posts.map((post: any) => {
+              if (post.slug === "den-farskej-rodiny") {
+                return (
+                  <PostItemColumn
+                    img={post.image}
+                    title={post.title}
+                    date={post.published_at}
+                    content={post.description}
+                    href={`/${post.slug}`}
+                  />
+                );
+              }
+
+              return (
+                <PostItemColumn
+                  img={post.image}
+                  title={post.title}
+                  date={post.published_at}
+                  content={post.description}
+                  href={`/prispevky/${post.slug}`}
+                />
+              );
+            })}
+          </SimpleGrid>
+          {/* <LinkButton to={"/farnost/nase-spolocenstvo"}>
                 Zobraziť viac článkov
               </LinkButton> */}
-            </Stack>
-          </Container>
-        {/* </BackgroundImage>
+        </Stack>
+      </Container>
+      {/* </BackgroundImage>
       )} */}
     </Box>
   );
