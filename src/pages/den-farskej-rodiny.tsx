@@ -1,8 +1,10 @@
-import { Center } from "@chakra-ui/react";
+import { Center, Container } from "@chakra-ui/react";
 import { graphql } from "gatsby";
 import React from "react";
 
 import Layout from "../components/Shared/Layout/Layout";
+import { Iframe } from "../components/Shared/Iframe/Iframe";
+import { SectionHeading } from "../components/Shared/SectionHeading/SectionHeading";
 
 export const query = graphql`
   query useDFRPage {
@@ -19,12 +21,27 @@ const DFRPage = (props: any) => {
 
   return (
     <Layout page={page}>
-      <Center w="full" py={20} pb={{ xs: 10, md: -40 }}>
+      <Container maxW={930} pt={{ base: 8, md: 20 }}>
+        <SectionHeading heading={"Promo video"} superscript="Deň farnosti" />
+
+        <Iframe
+          url={
+            "https://drive.google.com/file/d/1LwDaSBdhltoPHNigqxt9JDbKgcQvEd_0/preview"
+          }
+        />
+        <SectionHeading
+          heading={"Prihlasovanie"}
+          superscript="Deň farnosti"
+          pt={20}
+        />
+      </Container>
+
+      <Center w="full" pb={40}>
         <iframe
           src="https://docs.google.com/forms/d/e/1FAIpQLSdDELp7_AQPXZ_InnR-vcTHLMVvDcOlCRWiyJg3lFMkfLA3cg/viewform?usp=header"
-          width="640"
+          width="900"
           height="1300"
-          style={{ marginBottom: "-20px", overflowY: "hidden" }}
+          style={{ overflowY: "hidden" }}
         >
           Loading…
         </iframe>

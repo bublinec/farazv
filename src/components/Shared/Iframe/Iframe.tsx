@@ -17,6 +17,7 @@ export const Iframe = (props: IframeProps) => {
           height="100%"
           loading="lazy"
           allowFullScreen
+          allow="autoplay"
         ></iframe>
       </AspectRatio>
     </Box>
