@@ -28,7 +28,7 @@ const DFRPage = (props: any) => {
           as="iframe"
           src="https://drive.google.com/embeddedfolderview?id=1sdpvUTWFI8g7Eu_mcK8aJBiE_SM4cIbo#grid"
           width="100%"
-          height="6000px"
+          height="1000px"
           border="0"
           loading="lazy"
         />
