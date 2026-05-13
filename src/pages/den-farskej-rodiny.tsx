@@ -21,7 +21,7 @@ const DFRPage = (props: any) => {
 
   return (
     <Layout page={page}>
-      <Container maxW={930} pt={{ base: 8, md: 20 }}>
+      {/* <Container maxW={930} pt={{ base: 8, md: 20 }}>
         <SectionHeading heading={"Fotky"} superscript="Deň farnosti" />
 
         <Box
@@ -32,7 +32,7 @@ const DFRPage = (props: any) => {
           border="0"
           loading="lazy"
         />
-        {/* <Iframe url="https://drive.google.com/embeddedfolderview?id=1sdpvUTWFI8g7Eu_mcK8aJBiE_SM4cIbo#grid" /> */}
+     <Iframe url="https://drive.google.com/embeddedfolderview?id=1sdpvUTWFI8g7Eu_mcK8aJBiE_SM4cIbo#grid" /> 
 
         <Button
           mt={28}
@@ -48,27 +48,29 @@ const DFRPage = (props: any) => {
           Otvoriť v Google Drive
         </Button>
 
-        {/* <Iframe
+      <Iframe
           url={
             "https://drive.google.com/drive/folders/1sdpvUTWFI8g7Eu_mcK8aJBiE_SM4cIbo"
           }
-        /> */}
-        {/* <SectionHeading
+        /> 
+        </Container> */}
+
+      <Container maxW={930} pt={{ base: 8, md: 20 }}>
+        <SectionHeading
           heading={"Prihlasovanie"}
           superscript="Deň farnosti"
-          pt={20}
-        /> */}
+        /> 
       </Container>
 
       <Center w="full" pb={40}>
-        {/* <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLSdDELp7_AQPXZ_InnR-vcTHLMVvDcOlCRWiyJg3lFMkfLA3cg/viewform?usp=header"
+       <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLSepC7a9dcWiBJcRnI6V57_-WygAbw5-sevoIx7m0q4FkIrQNA/viewform?usp=publish-editor"
           width="900"
-          height="1300"
+          height="1400"
           style={{ overflowY: "hidden" }}
         >
           Loading…
-        </iframe> */}
+        </iframe> 
       </Center>
     </Layout>
   );
