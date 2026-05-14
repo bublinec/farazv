@@ -5,6 +5,7 @@ import Layout from "../components/Shared/Layout/Layout";
 import { Iframe } from "../components/Shared/Iframe/Iframe";
 import { SectionHeading } from "../components/Shared/SectionHeading/SectionHeading";
 import { Button } from "../components/Shared/Button/Button";
+import { DynamicZoneRenderer } from "../components/Shared/DynamicZoneRenderer/DynamicZoneRenderer";
 
 export const query = graphql`
   query useDFRPage {
@@ -18,6 +19,8 @@ export const query = graphql`
 
 const DFRPage = (props: any) => {
   const page = props.data.STRAPI.adminPages[0];
+
+  console.log("page", page);
 
   return (
     <Layout page={page}>
@@ -55,22 +58,20 @@ const DFRPage = (props: any) => {
         /> 
         </Container> */}
 
+      <DynamicZoneRenderer contentSections={page.contentSections} pt={10} />
       <Container maxW={930} pt={{ base: 8, md: 20 }}>
-        <SectionHeading
-          heading={"Prihlasovanie"}
-          superscript="Deň farnosti"
-        /> 
+        <SectionHeading heading={"Prihlasovanie"} superscript="Deň farnosti" />
       </Container>
 
       <Center w="full" pb={40}>
-       <iframe
+        <iframe
           src="https://docs.google.com/forms/d/e/1FAIpQLSepC7a9dcWiBJcRnI6V57_-WygAbw5-sevoIx7m0q4FkIrQNA/viewform?usp=publish-editor"
           width="900"
           height="1400"
           style={{ overflowY: "hidden" }}
         >
           Loading…
-        </iframe> 
+        </iframe>
       </Center>
     </Layout>
   );
