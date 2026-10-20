@@ -32,12 +32,11 @@ jobs:
         with:
           persist-credentials: false
 
-      # Reproduce the known local environment for diagnosis. These versions do
-      # not change the runtime or package-manager selection used by Netlify.
-      - name: Set up diagnostic Node version
+      # Use the same pinned Node version as Netlify.
+      - name: Set up Node version
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: "20.19.6"
+          node-version-file: ".nvmrc"
           package-manager-cache: false
 
       - name: Set up diagnostic Yarn version
