@@ -2,10 +2,13 @@
 
 Status: recovery continues autonomously on `fix/netlify-recovery-01` in
 [draft PR #4](https://github.com/bublinec/farazv-client/pull/4), following the
-user's authorization to restore current content. Attempts 1–3 failed Netlify
-preview. Clean Linux builds are being compared with those results. Nothing has
-been merged to `main`; further work uses `/tmp/farazv-recovery-live` to avoid
-interfering with concurrent changes in the original checkout.
+user's authorization to restore current content. Netlify previews failed even
+with no application dependencies or Gatsby compilation. The full application
+passes clean Linux builds with both Node 20.19.6 and Node 22.23.3. Temporary
+preview diagnostics have been removed; one production-context trial of the
+validated configuration is being prepared. Further work uses
+`/tmp/farazv-recovery-live` to avoid interfering with concurrent changes in the
+original checkout.
 
 Goal: publish a fresh, working build at `https://farazv.sk/` while preserving the
 current site. Each attempt should be a separate, reversible commit.
@@ -211,7 +214,7 @@ overrides without matching evidence.
 - Netlify preview failed after approximately 1m44s, still without a specific
   error exposed in GitHub.
   [Deployment](https://app.netlify.com/projects/farazv/deploys/6ad71944b08ba5290724f9a1).
-- Clean Linux installation passed; production build result is tracked in
+- Clean Linux installation and production build passed in
   [this run](https://github.com/bublinec/farazv-client/actions/runs/39387285624).
 
 ### Attempt 3 — Pin Node
@@ -222,8 +225,10 @@ overrides without matching evidence.
 - Netlify preview failed. A later documentation-only commit (`921b92d`) also
   triggered a failed preview.
   [Deployment](https://app.netlify.com/projects/farazv/deploys/6ad71a6e0afe13007159147a).
-- Clean Linux installation passed on Node 22; production build result is
-  tracked in [this run](https://github.com/bublinec/farazv-client/actions/runs/39387835763).
+- Clean Linux installation and production build passed on Node 22: 66 pages,
+  exact marker match, unchanged manifest/lockfile, and no new diagnostics
+  compared with Node 20.
+  [Run](https://github.com/bublinec/farazv-client/actions/runs/39387835763).
 
 ### Additional isolation — Netlify's Gatsby build plugin
 
@@ -236,6 +241,33 @@ from Netlify's additional Gatsby hooks; it does not skip dependency setup or
 the plugin package's own installation/loading.
 
 [Official plugin implementation](https://github.com/netlify/netlify-plugin-gatsby/blob/main/plugin/src/helpers/config.ts).
+
+Result: commit `0bf21dd` failed Netlify preview.
+[Deployment](https://app.netlify.com/projects/farazv/deploys/6ad71b641a858095b3db885f).
+
+### Additional isolation — Dependency setup and publishing
+
+- Commit `120e192` replaced only the preview build command with a small Node
+  diagnostic page, retaining dependency installation and disabling extra
+  Gatsby build hooks. It also failed.
+  [Deployment](https://app.netlify.com/projects/farazv/deploys/6ad71be7d72d53c4e7136d9e).
+- Commit `c5b22f4` selected a separate preview base directory with no application
+  dependency manifest, retained Node 22.23.3, and published a small static page
+  using a shell command. It also failed.
+  [Deployment](https://app.netlify.com/projects/farazv/deploys/6ad71c5bd72d53c4e7138ed8).
+- Neither diagnostic was merged or published to production. The preview
+  overrides, helper files and plugin skip flag are now removed.
+- The exact failing stage remains unknown because Netlify exposes no detailed
+  error through GitHub and its dashboard reports Access Denied. These outcomes
+  do not justify changing otherwise buildable application dependencies.
+
+### Production-context trial
+
+The final configuration uses `yarn build`, publishes `public`, and pins Yarn
+4.9.2 / Node 22.23.3, with marker `farazv-recovery-07-production`. The full site
+has passed a clean install/build with that toolchain. Test production once
+because its settings and permissions may differ from deploy previews. Preserve
+the existing production deployment if Netlify cannot publish this revision.
 
 For each attempt, record the commit SHA, single hypothesis, exact change,
 clean-install result, build result, expected/live marker, content check and
