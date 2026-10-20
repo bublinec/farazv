@@ -3,5 +3,9 @@
   publish = "public"
 
 # Isolate Netlify's additional Gatsby build hooks in deploy previews.
+[context.deploy-preview]
+  command = "node scripts/netlify-diagnostic.cjs"
+  publish = "diagnostic-public"
+
 [context.deploy-preview.environment]
   NETLIFY_SKIP_GATSBY_BUILD_PLUGIN = "true"

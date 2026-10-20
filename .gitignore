@@ -5,6 +5,7 @@ yarn-error.log
 
 # build directory
 public/
+diagnostic-public/
 
 # generated folders
 coverage
