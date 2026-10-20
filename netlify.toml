@@ -1,3 +1,11 @@
 [build]
   command = "yarn build"
   publish = "public"
+
+[context.deploy-preview]
+  base = "netlify-diagnostic"
+  command = 'test "$CONTEXT" = "deploy-preview" && mkdir -p public && cp index.html public/index.html && cp ../static/deploy-check.txt public/deploy-check.txt'
+  publish = "public"
+
+[context.deploy-preview.environment]
+  NETLIFY_SKIP_GATSBY_BUILD_PLUGIN = "true"
