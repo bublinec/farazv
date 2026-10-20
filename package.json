@@ -1,6 +1,7 @@
 {
   "name": "farazv",
   "version": "2.0.0",
+  "packageManager": "yarn@4.9.2",
   "description": "A presence web page for the parish community in Zvolen",
   "keywords": [
     "gatsby",
