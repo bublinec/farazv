@@ -13,9 +13,9 @@ export YARN_ENABLE_TELEMETRY=0
 node --version
 corepack enable
 corepack prepare "$(node -p 'require("./package.json").packageManager')" --activate
-yarn --version
-yarn install --immutable --inline-builds
-NODE_ENV=production yarn build
+corepack yarn --version
+corepack yarn install --immutable --inline-builds
+NODE_ENV=production corepack yarn build
 
 test -s public/index.html
 cmp static/deploy-check.txt public/deploy-check.txt

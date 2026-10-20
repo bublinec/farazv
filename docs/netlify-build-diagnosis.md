@@ -1,9 +1,17 @@
 # Netlify build diagnosis — 20 October 2026
 
-The production Gatsby build succeeds locally. The exact reason for the reported
-Netlify failure remains unknown because its build logs and configuration are
-not available. Repository access is available; Netlify and domain/DNS access
-are not.
+The Gatsby application builds successfully locally and on clean Linux.
+**A full Netlify preview now also succeeds**, using a separate base directory
+without application dependencies and an explicit Corepack/Yarn installation
+and build script. It serves the current 19–25 October schedule, matches Railway,
+and selects 20 October in the browser.
+
+This narrows the original failure to differences in Netlify's automatic
+application setup/build context. Its precise internal error remains unknown
+because account-protected logs are unavailable. Repository access is available;
+Netlify and domain/DNS access are not. The permanent configuration is undergoing
+verification before production promotion.
+[Successful full preview deployment](https://app.netlify.com/projects/farazv/deploys/6ad71e314cf8202580e1a791).
 
 ## Reproduction
 

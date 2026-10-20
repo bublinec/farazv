@@ -2,10 +2,10 @@
 
 Status: recovery continues autonomously on `fix/netlify-recovery-01` in
 [draft PR #4](https://github.com/bublinec/farazv-client/pull/4), following the
-user's authorization to restore current content. A corrected dependency-free
-Netlify preview succeeded and its marker was verified. The full application
-passes clean Linux builds with both Node 20.19.6 and Node 22.23.3. Next, run the
-same immutable install/build explicitly from the working Netlify base directory.
+user's authorization to restore current content. **The full Netlify preview now
+works and shows the current 19–25 October schedule.** It uses an explicit
+immutable install/build from a base directory without application dependencies.
+The permanent configuration is being verified before production promotion.
 Further work uses `/tmp/farazv-recovery-live` to avoid interfering with concurrent
 changes in the original checkout.
 
@@ -275,6 +275,36 @@ test. Marker: `farazv-recovery-09-bootstrap`.
 This tests whether Netlify's automatic dependency-installation phase differs
 from the successful CI commands. Only promote after the full preview and
 current-week content pass verification.
+
+Result: commit `2b34a04` succeeded on Netlify at 09:59:23 Bratislava, approximately
+four minutes after starting.
+[Deployment](https://app.netlify.com/projects/farazv/deploys/6ad71e314cf8202580e1a791).
+
+Verified on the full preview:
+
+- Exact marker `farazv-recovery-09-bootstrap`.
+- Week 19–25 October; complete schedule fields match Railway's latest published
+  record, including dates, liturgy, times, intentions and priest names.
+- Hydrated homepage selects Tuesday, 20 October 2026.
+- Mobile menu opens and navigates to the current weekly notices.
+- Homepage, notices and representative dynamic article return HTTP 200.
+- Referenced CSS/JavaScript and sampled images load; no broken images observed.
+- Existing React hydration console errors also occur on the old production
+  site. They do not prevent these tested interactions and are unchanged by this
+  deployment-only repair.
+
+### Permanent configuration
+
+Use `netlify-build` as the base directory for all deployment contexts. Its
+`.nvmrc` symlink shares the root Node version. `scripts/netlify-build.sh` invokes
+Yarn through Corepack explicitly, installs immutably and builds the application
+at repository root; Netlify publishes `../public`. Extra Gatsby hooks remain
+disabled because this site uses no Gatsby API/SSR/DSG functions.
+
+GitHub Actions runs that same script, retains its logs, and verifies that the
+manifest/lockfile are unchanged. Temporary diagnostic pages have been removed.
+Final marker: `farazv-recovery-10`. Production promotion and live verification
+remain pending.
 
 For each attempt, record the commit SHA, single hypothesis, exact change,
 clean-install result, build result, expected/live marker, content check and

@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-24.04
@@ -39,28 +43,15 @@ jobs:
           node-version-file: ".nvmrc"
           package-manager-cache: false
 
-      - name: Set up diagnostic Yarn version
+      - name: Record source revision
         run: |
-          node --version | tee "$RUNNER_TEMP/farazv-build-logs/environment.log"
-          corepack --version | tee -a "$RUNNER_TEMP/farazv-build-logs/environment.log"
-          corepack enable
-          corepack prepare yarn@4.9.2 --activate
-          yarn --version | tee -a "$RUNNER_TEMP/farazv-build-logs/environment.log"
-          git rev-parse HEAD | tee -a "$RUNNER_TEMP/farazv-build-logs/environment.log"
+          git rev-parse HEAD | tee "$RUNNER_TEMP/farazv-build-logs/environment.log"
 
-      - name: Install from the committed lockfile
-        run: yarn install --immutable --inline-builds 2>&1 | tee "$RUNNER_TEMP/farazv-build-logs/install.log"
+      - name: Install and build using the Netlify script
+        run: bash scripts/netlify-build.sh 2>&1 | tee "$RUNNER_TEMP/farazv-build-logs/build.log"
 
-      - name: Build production site
-        env:
-          NODE_ENV: production
-        run: yarn build 2>&1 | tee "$RUNNER_TEMP/farazv-build-logs/build.log"
-
-      - name: Verify generated site and deployment marker
+      - name: Verify dependency files remain unchanged
         run: |
-          test -s public/index.html
-          test -s public/deploy-check.txt
-          cmp static/deploy-check.txt public/deploy-check.txt
           cat public/deploy-check.txt | tee "$RUNNER_TEMP/farazv-build-logs/deploy-check.txt"
           git diff --exit-code -- package.json yarn.lock
 
