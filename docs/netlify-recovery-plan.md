@@ -2,13 +2,12 @@
 
 Status: recovery continues autonomously on `fix/netlify-recovery-01` in
 [draft PR #4](https://github.com/bublinec/farazv-client/pull/4), following the
-user's authorization to restore current content. Netlify previews failed even
-with no application dependencies or Gatsby compilation. The full application
-passes clean Linux builds with both Node 20.19.6 and Node 22.23.3. Temporary
-preview diagnostics have been removed; one production-context trial of the
-validated configuration is being prepared. Further work uses
-`/tmp/farazv-recovery-live` to avoid interfering with concurrent changes in the
-original checkout.
+user's authorization to restore current content. A corrected dependency-free
+Netlify preview succeeded and its marker was verified. The full application
+passes clean Linux builds with both Node 20.19.6 and Node 22.23.3. Next, run the
+same immutable install/build explicitly from the working Netlify base directory.
+Further work uses `/tmp/farazv-recovery-live` to avoid interfering with concurrent
+changes in the original checkout.
 
 Goal: publish a fresh, working build at `https://farazv.sk/` while preserving the
 current site. Each attempt should be a separate, reversible commit.
@@ -255,19 +254,27 @@ Result: commit `0bf21dd` failed Netlify preview.
   dependency manifest, retained Node 22.23.3, and published a small static page
   using a shell command. It also failed.
   [Deployment](https://app.netlify.com/projects/farazv/deploys/6ad71c5bd72d53c4e7138ed8).
-- Neither diagnostic was merged or published to production. The preview
-  overrides, helper files and plugin skip flag are now removed.
-- The exact failing stage remains unknown because Netlify exposes no detailed
-  error through GitHub and its dashboard reports Access Denied. These outcomes
-  do not justify changing otherwise buildable application dependencies.
+- That failure was inconclusive: publishing `"."` can trigger the Gatsby
+  plugin's publish-root rejection before its skip flag is checked.
+- Commit `af53626` corrected the diagnostic to publish a child `public`
+  directory. **It succeeded.** HTTP verification returned exactly
+  `farazv-recovery-08-isolated`.
+  [Deployment](https://app.netlify.com/projects/farazv/deploys/6ad71d7e7c827fac2be8e234).
+- No diagnostic has been merged or published to production. Netlify can build
+  and publish from this repository; investigate the original application setup
+  instead of assuming an account-level publishing block.
 
-### Production-context trial
+### Explicit application installation from the working base directory
 
-The final configuration uses `yarn build`, publishes `public`, and pins Yarn
-4.9.2 / Node 22.23.3, with marker `farazv-recovery-07-production`. The full site
-has passed a clean install/build with that toolchain. Test production once
-because its settings and permissions may differ from deploy previews. Preserve
-the existing production deployment if Netlify cannot publish this revision.
+Keep the working preview base directory, then run `scripts/netlify-build.sh`
+from the repository root to select the declared Yarn version, install
+immutably, build Gatsby, and verify its marker. Publish `../public`, containing
+the actual application. Keep extra Gatsby hooks disabled for this isolated
+test. Marker: `farazv-recovery-09-bootstrap`.
+
+This tests whether Netlify's automatic dependency-installation phase differs
+from the successful CI commands. Only promote after the full preview and
+current-week content pass verification.
 
 For each attempt, record the commit SHA, single hypothesis, exact change,
 clean-install result, build result, expected/live marker, content check and
