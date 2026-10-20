@@ -1,9 +1,11 @@
 # Netlify recovery plan
 
-Status: attempt 1 implemented on `fix/netlify-recovery-01` and submitted as
-[draft PR #4](https://github.com/bublinec/farazv-client/pull/4). Netlify's deploy
-preview failed; the clean Linux installation and production build passed.
-Nothing has been merged to `main`.
+Status: recovery continues autonomously on `fix/netlify-recovery-01` in
+[draft PR #4](https://github.com/bublinec/farazv-client/pull/4), following the
+user's authorization to restore current content. Attempts 1–3 failed Netlify
+preview. Clean Linux builds are being compared with those results. Nothing has
+been merged to `main`; further work uses `/tmp/farazv-recovery-live` to avoid
+interfering with concurrent changes in the original checkout.
 
 Goal: publish a fresh, working build at `https://farazv.sk/` while preserving the
 current site. Each attempt should be a separate, reversible commit.
@@ -201,6 +203,39 @@ overrides without matching evidence.
 - Next isolated attempt: declare `packageManager: "yarn@4.9.2"` as described
   above. This is now backed by a successful fresh Linux install/build, but
   remains a hypothesis about Netlify's unknown package-manager selection.
+
+### Attempt 2 — Pin Yarn
+
+- Commit: `5ca9505bb2f2596a0f291c36b1a39cbe7eddeabd`.
+- Change: `packageManager: "yarn@4.9.2"` and marker `farazv-recovery-02`.
+- Netlify preview failed after approximately 1m44s, still without a specific
+  error exposed in GitHub.
+  [Deployment](https://app.netlify.com/projects/farazv/deploys/6ad71944b08ba5290724f9a1).
+- Clean Linux installation passed; production build result is tracked in
+  [this run](https://github.com/bublinec/farazv-client/actions/runs/39387285624).
+
+### Attempt 3 — Pin Node
+
+- Commit: `706cb976e3f548720a450d9ab6de3fac30c2d23c`.
+- Change: `.nvmrc` selects Node 22.23.3, GitHub reads that same file, and marker
+  becomes `farazv-recovery-03`.
+- Netlify preview failed. A later documentation-only commit (`921b92d`) also
+  triggered a failed preview.
+  [Deployment](https://app.netlify.com/projects/farazv/deploys/6ad71a6e0afe13007159147a).
+- Clean Linux installation passed on Node 22; production build result is
+  tracked in [this run](https://github.com/bublinec/farazv-client/actions/runs/39387835763).
+
+### Additional isolation — Netlify's Gatsby build plugin
+
+Before changing application dependencies that already build on Linux, test
+`NETLIFY_SKIP_GATSBY_BUILD_PLUGIN = "true"` in deploy previews only, with marker
+`farazv-recovery-04-plugin`. The ordinary Gatsby build command still runs.
+Current official plugin source recognizes this flag. The project does not use
+Gatsby SSR/DSG or API functions. This test separates the application's build
+from Netlify's additional Gatsby hooks; it does not skip dependency setup or
+the plugin package's own installation/loading.
+
+[Official plugin implementation](https://github.com/netlify/netlify-plugin-gatsby/blob/main/plugin/src/helpers/config.ts).
 
 For each attempt, record the commit SHA, single hypothesis, exact change,
 clean-install result, build result, expected/live marker, content check and

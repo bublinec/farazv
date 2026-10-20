@@ -1,3 +1,7 @@
 [build]
   command = "yarn build"
   publish = "public"
+
+# Isolate Netlify's additional Gatsby build hooks in deploy previews.
+[context.deploy-preview.environment]
+  NETLIFY_SKIP_GATSBY_BUILD_PLUGIN = "true"
