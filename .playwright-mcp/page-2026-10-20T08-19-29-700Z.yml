@@ -1,0 +1,322 @@
+- generic [ref=f4e2]:
+  - generic [ref=f4e1139]:
+    - generic [ref=f4e1141]:
+      - navigation [ref=f4e1144]:
+        - generic [ref=f4e1145]:
+          - link "Farnosť sv. Alžbety Zvolen - mesto" [ref=f4e1147] [cursor=pointer]:
+            - /url: /
+            - generic [ref=f4e1148]:
+              - generic [ref=f4e1149]: Farnosť sv. Alžbety
+              - generic [ref=f4e1150]: Zvolen - mesto
+          - generic [ref=f4e1158]:
+            - generic [ref=f4e1159]:
+              - link "Farnosť sv. Alžbety Zvolen - mesto" [ref=f4e1161] [cursor=pointer]:
+                - /url: /
+                - generic [ref=f4e1162]:
+                  - generic [ref=f4e1163]: Farnosť sv. Alžbety
+                  - generic [ref=f4e1164]: Zvolen - mesto
+              - generic [ref=f4e1165]:
+                - link "Domov" [ref=f4e1166] [cursor=pointer]:
+                  - /url: /
+                - button "Farnosť" [ref=f4e1172] [cursor=pointer]
+                - button "Sviatosti" [ref=f4e1181] [cursor=pointer]
+                - button "Spoločenstvá" [ref=f4e1190] [cursor=pointer]
+                - link "Birmovanci" [ref=f4e1195] [cursor=pointer]:
+                  - /url: /birmovanci
+                - link "Kontakt" [ref=f4e1197] [cursor=pointer]:
+                  - /url: /kontakt
+            - img "church watermark" [ref=f4e1204]
+      - heading "Farské oznamy" [level=1] [ref=f4e1207]
+    - main [ref=f4e1208]:
+      - generic [ref=f4e1210]:
+        - generic [ref=f4e1212]:
+          - generic [ref=f4e1214]:
+            - generic [ref=f4e1215]: Farské oznamy
+            - heading "Rozpis svätých omší" [level=2] [ref=f4e1216]
+          - generic [ref=f4e1221]:
+            - generic [ref=f4e1223]:
+              - generic [ref=f4e1224]:
+                - generic [ref=f4e1225]:
+                  - generic [ref=f4e1226]: Nedeľa
+                  - generic [ref=f4e1227]: 18. októbra 2026
+                - generic [ref=f4e1234]: 29. NEDEĽA V CEZROČNOM OBDOBÍ SLÁVNOSŤ MISIJNÁ NEDEĽA
+              - generic [ref=f4e1240]:
+                - generic [ref=f4e1242]:
+                  - paragraph [ref=f4e1243]: 7:00
+                  - paragraph [ref=f4e1244]: Kraus
+                  - paragraph [ref=f4e1245]: + rodičia Adam a Anna
+                - generic [ref=f4e1247]:
+                  - paragraph [ref=f4e1248]: 8:45
+                  - paragraph [ref=f4e1249]: Kraus
+                  - paragraph [ref=f4e1250]: Lieskovec + Ján, Ondrej, Mária, Jozef a Amália
+                - generic [ref=f4e1252]:
+                  - paragraph [ref=f4e1253]: 9:00
+                  - paragraph [ref=f4e1254]: Kaniansky
+                  - paragraph [ref=f4e1255]: Farská Za farnosť
+                - generic [ref=f4e1257]:
+                  - paragraph [ref=f4e1258]: 10:30
+                  - paragraph [ref=f4e1259]: Líška
+                  - paragraph [ref=f4e1260]: Deti + Anna Vištiaková, rodičia a starí rodičia
+                - generic [ref=f4e1262]:
+                  - paragraph [ref=f4e1263]: 19:00
+                  - paragraph [ref=f4e1264]: dominikán
+                  - paragraph [ref=f4e1265]: Mládež Za + manželov Jozefa a Annu
+            - generic [ref=f4e1267]:
+              - generic [ref=f4e1268]:
+                - generic [ref=f4e1269]:
+                  - generic [ref=f4e1270]: Pondelok
+                  - generic [ref=f4e1271]: 19. októbra 2026
+                - generic [ref=f4e1278]: SV. PAVLA OD KRÍŽA, KŇAZA ĽUBOVOĽNÁ SPOMIENKA
+              - generic [ref=f4e1284]:
+                - generic [ref=f4e1286]:
+                  - paragraph [ref=f4e1287]: 6:30
+                  - paragraph [ref=f4e1288]: Líška
+                  - paragraph [ref=f4e1289]: + Hedviga a František
+                - generic [ref=f4e1291]:
+                  - paragraph [ref=f4e1292]: 12:00
+                  - paragraph [ref=f4e1293]: Kaniansky
+                  - paragraph [ref=f4e1294]: + Jozef Babiak
+                - generic [ref=f4e1296]:
+                  - paragraph [ref=f4e1297]: 18:00
+                  - paragraph [ref=f4e1298]: Kraus
+                  - paragraph [ref=f4e1299]: Za + Jozef, rodičia a súrodenci z oboch strán
+            - generic [ref=f4e1301]:
+              - generic [ref=f4e1302]:
+                - generic [ref=f4e1303]:
+                  - generic [ref=f4e1304]: Utorok
+                  - generic [ref=f4e1305]: 20. októbra 2026
+                - generic [ref=f4e1312]: UTOROK 29. TÝŽDŇA V CEZROČNOM OBDOBÍ
+              - generic [ref=f4e1318]:
+                - generic [ref=f4e1320]:
+                  - paragraph [ref=f4e1321]: 6:30
+                  - paragraph [ref=f4e1322]: Líška
+                  - paragraph [ref=f4e1323]: + Rozália, Jozef, Ján, Milan a Jozef
+                - generic [ref=f4e1325]:
+                  - paragraph [ref=f4e1326]: 12:00
+                  - paragraph [ref=f4e1327]: Kaniansky
+                  - paragraph [ref=f4e1328]: Za uzdravenie rodinných vzťahov
+                - generic [ref=f4e1330]:
+                  - paragraph [ref=f4e1331]: 18:00
+                  - paragraph [ref=f4e1332]: Kraus
+                  - paragraph [ref=f4e1333]: + Pavel Chamula – 15. výr. úmrtia
+            - generic [ref=f4e1335]:
+              - generic [ref=f4e1336]:
+                - generic [ref=f4e1337]:
+                  - generic [ref=f4e1338]: Streda
+                  - generic [ref=f4e1339]: 21. októbra 2026
+                - generic [ref=f4e1346]: STREDA 29. TÝŽDŇA V CEZROČNOM OBDOBÍ
+              - generic [ref=f4e1352]:
+                - generic [ref=f4e1354]:
+                  - paragraph [ref=f4e1355]: 6:30
+                  - paragraph [ref=f4e1356]: Líška
+                  - paragraph [ref=f4e1357]: Za zdravie a BP, dar živej viery pre syna a dcéry s rodinami
+                - generic [ref=f4e1359]:
+                  - paragraph [ref=f4e1360]: 12:00
+                  - paragraph [ref=f4e1361]: Kaniansky
+                  - paragraph [ref=f4e1362]: Za zdravie a BP pre Moniku, Barborku, Moniku, Branka a Tomáša
+                - generic [ref=f4e1364]:
+                  - paragraph [ref=f4e1365]: 18:00
+                  - paragraph [ref=f4e1366]: Kraus
+                  - paragraph [ref=f4e1367]: + Jozef Jenčík
+            - generic [ref=f4e1369]:
+              - generic [ref=f4e1370]:
+                - generic [ref=f4e1371]:
+                  - generic [ref=f4e1372]: Štvrtok
+                  - generic [ref=f4e1373]: 22. októbra 2026
+                - generic [ref=f4e1380]: SV. JÁNA PAVLA II., PÁPEŽA ĽUBOVOĽNÁ SPOMIENKA V LIESKOVCI SLÁVNOSŤ
+              - generic [ref=f4e1386]:
+                - generic [ref=f4e1388]:
+                  - paragraph [ref=f4e1389]: 6:30
+                  - paragraph [ref=f4e1390]: Líška
+                  - paragraph [ref=f4e1391]: + Emil a Anna, Ján a Anna
+                - generic [ref=f4e1393]:
+                  - paragraph [ref=f4e1394]: 12:00
+                  - paragraph [ref=f4e1395]: Kaniansky
+                  - paragraph [ref=f4e1396]: + manžel Jozef, svokrovci, rodičia, starí rodičia a krstní rodičia
+                - generic [ref=f4e1398]:
+                  - paragraph [ref=f4e1399]: 18:00
+                  - paragraph [ref=f4e1400]: Kraus
+                  - paragraph [ref=f4e1401]: Za úmysly prosieb ku sv. Šarbelovi
+                - generic [ref=f4e1403]:
+                  - paragraph [ref=f4e1404]: 18:00
+                  - paragraph [ref=f4e1405]: Jáger
+                  - paragraph [ref=f4e1406]: Lieskovec + Veronika, Jozef, Milan, Pavlína, Vilma, František, Peťko, Jolana
+            - generic [ref=f4e1408]:
+              - generic [ref=f4e1409]:
+                - generic [ref=f4e1410]:
+                  - generic [ref=f4e1411]: Piatok
+                  - generic [ref=f4e1412]: 23. októbra 2026
+                - generic [ref=f4e1419]: SV. JÁNA KAPISTRÁNSKEHO, KŇAZA ĽUBOVOĽNÁ SPOMIENKA
+              - generic [ref=f4e1425]:
+                - generic [ref=f4e1427]:
+                  - paragraph [ref=f4e1428]: 6:30
+                  - paragraph [ref=f4e1429]: Kraus
+                  - paragraph [ref=f4e1430]: + Ondrej a Emília
+                - generic [ref=f4e1432]:
+                  - paragraph [ref=f4e1433]: 12:00
+                  - paragraph [ref=f4e1434]: Kaniansky
+                  - paragraph [ref=f4e1435]: + manželka Antónia Miškovová
+                - generic [ref=f4e1437]:
+                  - paragraph [ref=f4e1438]: 18:00
+                  - paragraph [ref=f4e1439]: Kraus
+                  - paragraph [ref=f4e1440]: + rodičov Ondrej, Anna, brat Tonko, a starí rodičia z oboch strán
+            - generic [ref=f4e1442]:
+              - generic [ref=f4e1443]:
+                - generic [ref=f4e1444]:
+                  - generic [ref=f4e1445]: Sobota
+                  - generic [ref=f4e1446]: 24. októbra 2026
+                - generic [ref=f4e1453]: PREBLAHOSLAVENEJ PANNY MÁRIE V SOBOTU ĽUBOVOĽNÁ SPOMIENKA
+              - generic [ref=f4e1459]:
+                - generic [ref=f4e1461]:
+                  - paragraph [ref=f4e1462]: 6:30
+                  - paragraph [ref=f4e1463]: Kraus
+                  - paragraph [ref=f4e1464]: + Ladislav Beňo a rodičia z oboch strán
+                - generic [ref=f4e1466]:
+                  - paragraph [ref=f4e1467]: 15:00
+                  - paragraph [ref=f4e1468]: Moravčík
+                  - paragraph [ref=f4e1469]: Nemocnica - vlastný úmysel
+                - generic [ref=f4e1471]:
+                  - paragraph [ref=f4e1472]: 18:00
+                  - paragraph [ref=f4e1473]: Kaniansky
+                  - paragraph [ref=f4e1474]: Zomrelí
+            - generic [ref=f4e1476]:
+              - generic [ref=f4e1477]:
+                - generic [ref=f4e1478]:
+                  - generic [ref=f4e1479]: Nedeľa
+                  - generic [ref=f4e1480]: 25. októbra 2026
+                - generic [ref=f4e1487]: 30. NEDEĽA V CEZROČNOM OBDOBÍ SLÁVNOSŤ HODOVÁ SLÁVNOSŤ V LIESKOVCI
+              - generic [ref=f4e1493]:
+                - generic [ref=f4e1495]:
+                  - paragraph [ref=f4e1496]: 7:00
+                  - paragraph [ref=f4e1497]: Kraus
+                  - paragraph [ref=f4e1498]: + členovia ružencového bratstva
+                - generic [ref=f4e1500]:
+                  - paragraph [ref=f4e1501]: 8:45
+                  - paragraph [ref=f4e1502]: Kraus
+                  - paragraph [ref=f4e1503]: Lieskovec + Jolana, Marián
+                - generic [ref=f4e1505]:
+                  - paragraph [ref=f4e1506]: 9:00
+                  - paragraph [ref=f4e1507]: Kaniansky
+                  - paragraph [ref=f4e1508]: Farská Za farnosť
+                - generic [ref=f4e1510]:
+                  - paragraph [ref=f4e1511]: 10:30
+                  - paragraph [ref=f4e1512]: kňaz
+                  - paragraph [ref=f4e1513]: Deti Poďakovanie za 25 výr. manželstva manželov Vicianovcov
+                - generic [ref=f4e1515]:
+                  - paragraph [ref=f4e1516]: 19:00
+                  - paragraph [ref=f4e1517]: dominikán
+                  - paragraph [ref=f4e1518]: Mládež + rodina Tomášková, Banghová a Zuzana Sisková
+        - generic [ref=f4e1522]:
+          - generic [ref=f4e1524]:
+            - generic [ref=f4e1525]: Farské oznamy
+            - heading "Oznamy" [level=2] [ref=f4e1526]
+          - generic [ref=f4e1531]:
+            - generic [ref=f4e1532]: ✓
+            - list [ref=f4e1534]:
+              - listitem [ref=f4e1535]: Dnes, v nedeľu – 18. októbra, slávime Misijnú nedeľu. Po svätých omšiach sa bude konať zbierka na misie. Tento rok je určená pre farnosti a diecézy v africkej krajine Burundi. Svojím príspevkom dávame chudobným nádej a pomáhame im žiť lepší život. Za všetky milodary vyslovujeme srdečné Pán Boh zaplať. Milodar budete môcť vložiť do označených pokladničiek vzadu za lavicami v kostole i v kaplnke.
+              - listitem [ref=f4e1536]: "Pri príležitosti stého výročia Svetového dňa misií Apoštolská penitenciária rozhodla o udelení úplných odpustkov, ktoré možno privlastniť aj dušiam zosnulých veriacich, všetkým veriacim, ktorí pri príležitosti tohto slávenia pristúpia k svätému prijímaniu a obetujú modlitby za šírenie evanjelia po celom svete. Na získanie úplných odpustkov je okrem vykonania predpísaného skutku potrebné splniť tieto podmienky: Sviatostná spoveď, sväté prijímanie, modlitba na úmysel Svätého Otca a vnútorné odpútanie sa od každého hriechu. Sviatostnú spoveď možno vykonať niekoľko dní pred vykonaním predpísaného skutku alebo po ňom. Je však vhodné pristúpiť k svätému prijímaniu a pomodliť sa na úmysel Svätého Otca v ten istý deň, v ktorom sa vykonáva skutok spojený s možnosťou získať odpustky."
+          - generic [ref=f4e1537]:
+            - generic [ref=f4e1538]: ✓
+            - list [ref=f4e1540]:
+              - listitem [ref=f4e1541]: Vo štvrtok 22. októbra si v Lieskovci pripomenieme sv. omšou o 18.00hod. patróna chrámu sv. Jána Pavla II., pápeža, preto v piatok už sv. omša v Lieskovci nebude. Túto slávnosť si však ešte v Lieskovci prenesieme na nedeľu. Všetkých pozývame na slávnostnú sv. omšu i spoločné agapé po nej pred kostolom.
+          - generic [ref=f4e1542]:
+            - generic [ref=f4e1543]: ✓
+            - list [ref=f4e1545]:
+              - listitem [ref=f4e1546]: Vo štvrtok 22. októbra po večernej svätej omši bude pobožnosť ku cti sv. Šarbela. Svoje krátke modlitebné úmysly za uzdravenie môžete napísať do knihy prosieb v kostole pri obraze sv. Šarbela alebo napísať do on-line formuláru, ktorý nájdete na farskej stránke.
+          - generic [ref=f4e1547]:
+            - generic [ref=f4e1548]: ✓
+            - list [ref=f4e1550]:
+              - listitem [ref=f4e1551]: V piatok 23. októbra po večernej svätej omši, ktorá bude pre birmovancov, bude stretnutie rodičov prvoprijímajúcich detí v kostole svätej Alžbety vo Zvolene. Účasť aspoň jedného rodiča je nutná.
+          - generic [ref=f4e1552]:
+            - generic [ref=f4e1553]: ✓
+            - list [ref=f4e1555]:
+              - listitem [ref=f4e1556]: O týždeň, v noci z 24. na 25. októbra, sa mení čas. O 3.00 hodine letného času posúvame hodiny na 02.00 hodinu stredoeurópskeho času.
+          - generic [ref=f4e1557]:
+            - generic [ref=f4e1558]: ✓
+            - list [ref=f4e1560]:
+              - listitem [ref=f4e1561]: Občianske združenie Fórum života organizuje kampaň Sviečka za nenarodené deti. Pozýva spomenúť si na nenarodené deti a zapáliť sviečku ako tichú spomienku v nežnom plameni. Sviečka scitlivuje spoločnosť, aby sme vnímali bolesť a smútok tých, ktorí o svoje bábätká prišli pred ich narodením, dodávali im nádej a pomáhali liečiť ubolené srdcia. V našom kostole si môžete zakúpiť sviečku za nenarodené deti v cene 2€ za malú sviečku a 5€ za veľkú v skle. Peniaze môžete vhodiť do pokladničky pri platobnom termináli v hl. lodi.
+          - generic [ref=f4e1562]:
+            - generic [ref=f4e1563]: ✓
+            - list [ref=f4e1565]:
+              - listitem [ref=f4e1566]: "Kňazský seminár sv. Františka Xaverského vydal knihu: Archívna história banskobystrického kňazského seminára ktorej autorom je Mons. Vojtech Nepšinský. Zakúpiť si ju môžete v našom kostole za 10€"
+      - generic [ref=f4e1574]:
+        - generic [ref=f4e1576] [cursor=pointer]
+        - generic [ref=f4e1582] [cursor=pointer]
+    - contentinfo [ref=f4e1587]:
+      - link "Farnosť sv. Alžbety Zvolen - mesto" [ref=f4e1589] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f4e1590]:
+          - generic [ref=f4e1591]: Farnosť sv. Alžbety
+          - generic [ref=f4e1592]: Zvolen - mesto
+      - generic [ref=f4e1595]:
+        - generic [ref=f4e1596]:
+          - heading "Farnosť" [level=3] [ref=f4e1598]
+          - generic [ref=f4e1603]:
+            - link "Farské oznamy" [ref=f4e1605] [cursor=pointer]:
+              - /url: /farnost/farske-oznamy
+            - link "Naše Spoločenstvo" [ref=f4e1610] [cursor=pointer]:
+              - /url: /farnost/nase-spolocenstvo
+            - link "Galéria kostola" [ref=f4e1615] [cursor=pointer]:
+              - /url: /farnost/galeria
+            - link "Kostol sv. Alžbety" [ref=f4e1620] [cursor=pointer]:
+              - /url: /farnost/kostol-sv-alzbety
+            - link "Kostol v Lieskovci" [ref=f4e1625] [cursor=pointer]:
+              - /url: /farnost/kostol-sv-jana-pavla-v-lieskovci
+            - link "Kostol v Zolnej" [ref=f4e1630] [cursor=pointer]:
+              - /url: /farnost/kostol-sv-matusa-v-zolnej
+            - link "Cirkevná škola" [ref=f4e1635] [cursor=pointer]:
+              - /url: /farnost/cirkevna-skola
+            - link "Charita" [ref=f4e1640] [cursor=pointer]:
+              - /url: https://www.charitazvolen.sk/
+        - generic [ref=f4e1644]:
+          - heading "Sviatosti" [level=3] [ref=f4e1646]
+          - generic [ref=f4e1651]:
+            - link "Sviatost krstu" [ref=f4e1653] [cursor=pointer]:
+              - /url: /sviatosti/sviatost-krstu
+            - link "Sviatosť Eucharistie" [ref=f4e1658] [cursor=pointer]:
+              - /url: /sviatosti/sviatost-eucharistie
+            - link "Sviatost birmovania" [ref=f4e1663] [cursor=pointer]:
+              - /url: /sviatosti/sviatost-birmovania
+            - link "Sviatosť manželstva" [ref=f4e1668] [cursor=pointer]:
+              - /url: /sviatosti/sviatost-manzelstva
+            - link "Sviatost zmierenia" [ref=f4e1673] [cursor=pointer]:
+              - /url: /sviatosti/sviatost-zmierenia
+            - link "Pomazanie chorých" [ref=f4e1678] [cursor=pointer]:
+              - /url: /sviatosti/sviatost-pomazania-chorych
+        - generic [ref=f4e1682]:
+          - heading "Spoločenstvá" [level=3] [ref=f4e1684]
+          - generic [ref=f4e1689]:
+            - link "Detský spevokol" [ref=f4e1691] [cursor=pointer]:
+              - /url: /spolocenstva/detsky-spevokol
+            - link "Mládežnícky zbor" [ref=f4e1696] [cursor=pointer]:
+              - /url: /spolocenstva/mladeznicky-zbor
+            - link "Miništranti" [ref=f4e1701] [cursor=pointer]:
+              - /url: /spolocenstva/ministranti
+            - link "Rehoľné sestry" [ref=f4e1706] [cursor=pointer]:
+              - /url: /spolocenstva/reholne-sestry
+        - generic [ref=f4e1710]:
+          - heading "Úradné hodiny" [level=3] [ref=f4e1712]
+          - generic [ref=f4e1717]:
+            - generic [ref=f4e1718]: "Pondelok: 8:30 - 10:30"
+            - generic [ref=f4e1721]: "Streda: 8:30 - 10:30 a 14:00 - 16:30"
+            - generic [ref=f4e1724]: "Piatok: 8:30 - 10:30"
+        - generic [ref=f4e1727]:
+          - heading "Kontakt" [level=3] [ref=f4e1729]
+          - generic [ref=f4e1734]:
+            - link "0911 588 977" [ref=f4e1736] [cursor=pointer]:
+              - /url: tel:0911 588 977
+            - link "fara.zv.mesto@gmail.com" [ref=f4e1744] [cursor=pointer]:
+              - /url: mailto:fara.zv.mesto@gmail.com
+            - link "Rímskokatolícka cirkev, Námestie SNP 68/40, 960 01 Zvolen" [ref=f4e1753] [cursor=pointer]:
+              - /url: https://www.google.com/maps/place/Parish+Office+Zvolen/@48.5781257,19.1244094,17z/data=!3m1!4b1!4m5!3m4!1s0x47153827f33db955:0xb1a6b4587b553c81!8m2!3d48.5781222!4d19.1265981
+            - link "Všetky kontakty" [ref=f4e1761] [cursor=pointer]:
+              - /url: /kontakt
+      - generic [ref=f4e1770]:
+        - link "Ochrana osobných údajov GDPR" [ref=f4e1772] [cursor=pointer]:
+          - /url: https://gdpr.kbs.sk/
+        - generic [ref=f4e1773]:
+          - text: Stránka vytvorená spoločnosťou
+          - link "Momentum Digital" [ref=f4e1774] [cursor=pointer]:
+            - /url: https://mmntm.digital
+          - generic [ref=f4e1775]: © 2026
+  - generic [ref=f4e1109]: Navigated to Farské oznamy
