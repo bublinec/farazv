@@ -1,0 +1,525 @@
+- generic [ref=e4]:
+  - generic [ref=e7]:
+    - banner [ref=e8]:
+      - navigation [ref=e9]:
+        - generic [ref=e10]:
+          - link "Farnosť sv. Alžbety Zvolen - mesto" [ref=e12] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e13]:
+              - generic [ref=e14]: Farnosť sv. Alžbety
+              - generic [ref=e15]: Zvolen - mesto
+          - generic [ref=e16]:
+            - link "Domov" [ref=e18] [cursor=pointer]:
+              - /url: /
+            - generic [ref=e20]: Farnosť
+            - generic [ref=e22]: Sviatosti
+            - generic [ref=e24]: Spoločenstvá
+            - link "Birmovanci" [ref=e27] [cursor=pointer]:
+              - /url: /birmovanci
+            - link "Kontakt" [ref=e30] [cursor=pointer]:
+              - /url: /kontakt
+    - generic [ref=e35]:
+      - generic [ref=e38]:
+        - generic [ref=e42]:
+          - generic [ref=e43]:
+            - generic [ref=e44]: Dnešná liturgia
+            - generic [ref=e45]: 28. NEDEĽA V CEZROČNOM OBDOBÍ SLÁVNOSŤ
+            - generic [ref=e47]: ☩
+            - generic [ref=e52]: nedeľa 11. októbra 2026
+          - generic [ref=e53]:
+            - generic [ref=e55]:
+              - generic [ref=e56]: Kaniansky
+              - generic [ref=e59]: 7:00
+            - generic [ref=e61]:
+              - generic [ref=e62]:
+                - generic [ref=e63]: LIESKOVEC
+                - generic [ref=e64]: Líška
+              - generic [ref=e65]: 8:45
+            - generic [ref=e67]:
+              - generic [ref=e68]: Kraus
+              - generic [ref=e71]: 9:00
+            - generic [ref=e73]:
+              - generic [ref=e74]: Líška
+              - generic [ref=e77]: 10:30
+            - generic [ref=e79]:
+              - generic [ref=e80]: dominikán
+              - generic [ref=e83]: 19:00
+        - generic [ref=e87]:
+          - generic [ref=e88]:
+            - generic [ref=e89]: Dnešná liturgia
+            - generic [ref=e90]: PONDELOK 28. TÝŽDŇA V CEZROČNOM OBDOBÍ
+            - generic [ref=e92]: ☩
+            - generic [ref=e97]: pondelok 12. októbra 2026
+          - generic [ref=e98]:
+            - generic [ref=e100]:
+              - generic [ref=e101]: Líška
+              - generic [ref=e104]: 6:30
+            - generic [ref=e106]:
+              - generic [ref=e107]: Kaniansky
+              - generic [ref=e110]: 12:00
+            - generic [ref=e112]:
+              - generic [ref=e113]: Jombík
+              - generic [ref=e116]: 18:00
+        - generic [ref=e120]:
+          - generic [ref=e121]:
+            - generic [ref=e122]: Dnešná liturgia
+            - generic [ref=e123]: UTOROK 28. TÝŽDŇA V CEZROČNOM OBDOBÍ
+            - generic [ref=e125]: ☩
+            - generic [ref=e130]: utorok 13. októbra 2026
+          - generic [ref=e131]:
+            - generic [ref=e133]:
+              - generic [ref=e134]: Jombík
+              - generic [ref=e137]: 6:30
+            - generic [ref=e139]:
+              - generic [ref=e140]: Kaniansky
+              - generic [ref=e143]: 12:00
+            - generic [ref=e145]:
+              - generic [ref=e146]: Líška
+              - generic [ref=e149]: 18:00
+        - generic [ref=e153]:
+          - generic [ref=e154]:
+            - generic [ref=e155]: Dnešná liturgia
+            - generic [ref=e156]: SV. KALIXTA I., PÁPEŽA, MUČENÍKA ĽUBOVOĽNÁ SPOMIENKA
+            - generic [ref=e158]: ☩
+            - generic [ref=e163]: streda 14. októbra 2026
+          - generic [ref=e164]:
+            - generic [ref=e166]:
+              - generic [ref=e167]: Líška
+              - generic [ref=e170]: 6:30
+            - generic [ref=e172]:
+              - generic [ref=e173]: Kaniansky
+              - generic [ref=e176]: 12:00
+            - generic [ref=e178]:
+              - generic [ref=e179]: Jombík
+              - generic [ref=e182]: 18:00
+        - generic [ref=e186]:
+          - generic [ref=e187]:
+            - generic [ref=e188]: Dnešná liturgia
+            - generic [ref=e189]:
+              - generic [ref=e190]: SV. TERÉZIE OD JEŽIŠA
+              - generic [ref=e191]: Z AVILY, PANNY A UČ. C. SPOMIENKA
+            - generic [ref=e192]: ☩
+            - generic [ref=e197]: štvrtok 15. októbra 2026
+          - generic [ref=e198]:
+            - generic [ref=e200]:
+              - generic [ref=e201]: Kraus
+              - generic [ref=e204]: 6:30
+            - generic [ref=e206]:
+              - generic [ref=e207]: Kaniansky
+              - generic [ref=e210]: 12:00
+            - generic [ref=e212]:
+              - generic [ref=e213]: Líška
+              - generic [ref=e216]: 18:00
+        - generic [ref=e220]:
+          - generic [ref=e221]:
+            - generic [ref=e222]: Dnešná liturgia
+            - generic [ref=e223]: SVÄTEJ MARGITY MÁRIE ALACOQUE, PANNY ĽUBOVOĽNÁ SPOMIENKA
+            - generic [ref=e225]: ☩
+            - generic [ref=e230]: piatok 16. októbra 2026
+          - generic [ref=e231]:
+            - generic [ref=e233]:
+              - generic [ref=e234]: Kraus
+              - generic [ref=e237]: 6:30
+            - generic [ref=e239]:
+              - generic [ref=e240]: Kaniansky
+              - generic [ref=e243]: 12:00
+            - generic [ref=e245]:
+              - generic [ref=e246]: Kraus
+              - generic [ref=e249]: 18:00
+            - generic [ref=e251]:
+              - generic [ref=e252]:
+                - generic [ref=e253]: LIESKOVEC
+                - generic [ref=e254]: Líška
+              - generic [ref=e255]: 18:00
+        - generic [ref=e259]:
+          - generic [ref=e260]:
+            - generic [ref=e261]: Dnešná liturgia
+            - generic [ref=e262]: SV. IGNÁCA ANTIOCHIJ., BISKUPA A MUČENÍKA SPOMIENKA
+            - generic [ref=e264]: ☩
+            - generic [ref=e269]: sobota 17. októbra 2026
+          - generic [ref=e270]:
+            - generic [ref=e272]:
+              - generic [ref=e273]: Kraus
+              - generic [ref=e276]: 6:30
+            - generic [ref=e278]:
+              - generic [ref=e279]:
+                - generic [ref=e280]: NEMOCNICA
+                - generic [ref=e281]: Mikuláš
+              - generic [ref=e282]: 15:00
+            - generic [ref=e284]:
+              - generic [ref=e285]: Kaniansky
+              - generic [ref=e288]: 18:00
+        - generic [ref=e292]:
+          - generic [ref=e293]:
+            - generic [ref=e294]: Dnešná liturgia
+            - generic [ref=e295]: 29. NEDEĽA V CEZROČNOM OBDOBÍ SLÁVNOSŤ MISIJNÁ NEDEĽA
+            - generic [ref=e297]: ☩
+            - generic [ref=e302]: nedeľa 18. októbra 2026
+          - generic [ref=e303]:
+            - generic [ref=e305]:
+              - generic [ref=e306]: Kraus
+              - generic [ref=e309]: 7:00
+            - generic [ref=e311]:
+              - generic [ref=e312]:
+                - generic [ref=e313]: LIESKOVEC
+                - generic [ref=e314]: Kraus
+              - generic [ref=e315]: 8:45
+            - generic [ref=e317]:
+              - generic [ref=e318]: Kaniansky
+              - generic [ref=e321]: 9:00
+            - generic [ref=e323]:
+              - generic [ref=e324]: Líška
+              - generic [ref=e327]: 10:30
+            - generic [ref=e329]:
+              - generic [ref=e330]: dominikán
+              - generic [ref=e333]: 19:00
+      - generic [ref=e334]: Zajtra
+  - main [ref=e343]:
+    - generic [ref=e344]:
+      - generic [ref=e346]:
+        - generic [ref=e350]:
+          - generic [ref=e351]: Farnosť
+          - heading "Najnovšie príspevky" [level=2] [ref=e352]
+        - generic [ref=e358]:
+          - link "Aktuality Môj syn, František 10. októbra 2026 Srdečne vás pozývame na hodovú slávnosť Farnosti Zvolen-mesto 22. novembra 2026. Pripravený je deviatnik s benediktínmi zo Sampora, celonočná adorácia, slávnostná svätá omša, premiéra divadla Môj syn, František a spoločné agapé" [ref=e359] [cursor=pointer]:
+            - /url: /prispevky/moj-syn-frantisek
+            - generic [ref=e360]:
+              - generic [ref=e361]: Aktuality
+              - generic [ref=e366]:
+                - generic [ref=e367]:
+                  - heading "Môj syn, František" [level=3] [ref=e368]
+                  - generic [ref=e369]: 10. októbra 2026
+                - paragraph [ref=e378]: Srdečne vás pozývame na hodovú slávnosť Farnosti Zvolen-mesto 22. novembra 2026. Pripravený je deviatnik s benediktínmi zo Sampora, celonočná adorácia, slávnostná svätá omša, premiéra divadla Môj syn, František a spoločné agapé
+          - link "Aktuality Pobožnosť ku cti sv. Šarbela v štvrtok 22. októbra 8. októbra 2026 Pobožnosť ku cti sv. Šarbela bude v štvrtok 22. októbra (štvrtok) a aj potom každého 22. v mesiaci po celý rok 2026 v Kostole sv. Alžbety vo Zvolene po večernej sv. omši (o 18:00 hod.) Pobožnosť bude spojená s pomazaním olejom a prosbami za uzdravenie. Svoje krátke modlitbové úmysly za uzdravenie môžete napísať aj prostredníctvom online formuláru." [ref=e379] [cursor=pointer]:
+            - /url: /prispevky/poboznost-ku-cti-sv-sarbela
+            - generic [ref=e380]:
+              - generic [ref=e381]: Aktuality
+              - generic [ref=e386]:
+                - generic [ref=e387]:
+                  - heading "Pobožnosť ku cti sv. Šarbela v štvrtok 22. októbra" [level=3] [ref=e388]
+                  - generic [ref=e389]: 8. októbra 2026
+                - paragraph [ref=e398]: Pobožnosť ku cti sv. Šarbela bude v štvrtok 22. októbra (štvrtok) a aj potom každého 22. v mesiaci po celý rok 2026 v Kostole sv. Alžbety vo Zvolene po večernej sv. omši (o 18:00 hod.) Pobožnosť bude spojená s pomazaním olejom a prosbami za uzdravenie. Svoje krátke modlitbové úmysly za uzdravenie môžete napísať aj prostredníctvom online formuláru.
+          - link "Aktuality Koncert speváckych zborov 2. októbra 2026" [ref=e399] [cursor=pointer]:
+            - /url: /prispevky/koncert-spevackych-zborov
+            - generic [ref=e400]:
+              - generic [ref=e401]: Aktuality
+              - generic [ref=e406]:
+                - generic [ref=e407]:
+                  - heading "Koncert speváckych zborov" [level=3] [ref=e408]
+                  - generic [ref=e409]: 2. októbra 2026
+                - generic:
+                  - paragraph
+          - link "Aktuality Opevnenie kostola sv. Matúša - Zolná 10. septembra 2026" [ref=e417] [cursor=pointer]:
+            - /url: /prispevky/opevnenie-kostola-sv-matusa-zolna-1
+            - generic [ref=e418]:
+              - generic [ref=e419]: Aktuality
+              - generic [ref=e424]:
+                - generic [ref=e425]:
+                  - heading "Opevnenie kostola sv. Matúša - Zolná" [level=3] [ref=e426]
+                  - generic [ref=e427]: 10. septembra 2026
+                - generic:
+                  - paragraph
+          - link "Aktuality Sviatosť pomazania chorých - Nemocnica Zvolen 23. júna 2025 Sviatosť pomazania chorých prináša posilu, úľavu a nádej pacientom v ťažkých chvíľach choroby. Duchovná starostlivosť, ktorá prináša pokoj a Božiu blízkosť." [ref=e435] [cursor=pointer]:
+            - /url: /prispevky/sluzba-pomazania-chorych-nemocnica-zvolen
+            - generic [ref=e436]:
+              - generic [ref=e437]: Aktuality
+              - generic [ref=e442]:
+                - generic [ref=e443]:
+                  - heading "Sviatosť pomazania chorých - Nemocnica Zvolen" [level=3] [ref=e444]
+                  - generic [ref=e445]: 23. júna 2025
+                - paragraph [ref=e454]: Sviatosť pomazania chorých prináša posilu, úľavu a nádej pacientom v ťažkých chvíľach choroby. Duchovná starostlivosť, ktorá prináša pokoj a Božiu blízkosť.
+          - link "Aktuality POMÔŽME SPOLU ZREŠTAUROVAŤ OLTÁRE 30. januára 2024 Drahí bratia, sestry a všetci dobrodinci, touto cestou Vám chcem vyjadriť svoju vďačnosť za Vašu pomoc. Vaša štedrosť je pre celé naše farské spoločenstvo prejavom Božej dobroty, lebo Vaše milodary sú nádejou, že sa nám podarí zreštaurovať aj posledný z trojice oltárov, oltár sv. Jozefa. Všetky tri oltáre sú jedinečným skvostom nášho farského kostola." [ref=e455] [cursor=pointer]:
+            - /url: /prispevky/pomozme-spolu-zrestaurovat-oltar-1
+            - generic [ref=e456]:
+              - generic [ref=e457]: Aktuality
+              - generic [ref=e462]:
+                - generic [ref=e463]:
+                  - heading "POMÔŽME SPOLU ZREŠTAUROVAŤ OLTÁRE" [level=3] [ref=e464]
+                  - generic [ref=e465]: 30. januára 2024
+                - paragraph [ref=e474]: Drahí bratia, sestry a všetci dobrodinci, touto cestou Vám chcem vyjadriť svoju vďačnosť za Vašu pomoc. Vaša štedrosť je pre celé naše farské spoločenstvo prejavom Božej dobroty, lebo Vaše milodary sú nádejou, že sa nám podarí zreštaurovať aj posledný z trojice oltárov, oltár sv. Jozefa. Všetky tri oltáre sú jedinečným skvostom nášho farského kostola.
+      - generic [ref=e476]:
+        - generic [ref=e478]:
+          - generic [ref=e480]:
+            - generic [ref=e487]:
+              - generic [ref=e488] [cursor=pointer]
+              - generic [ref=e493]:
+                - generic [ref=e495]:
+                  - generic [ref=e496]: Sväté omše - sobota o 15:00
+                  - heading [level=2] [ref=e497]: Nemocnica vo Zvolene - duchovná služba
+                - generic [ref=e502]:
+                  - paragraph [ref=e503]:
+                    - strong [ref=e504]: "Vďaka ochote kňazov a laikov sa v Nemocnici Agel vo Zvolene ponúka duchovná služba:"
+                  - paragraph [ref=e505]:
+                    - strong [ref=e506]: "Sväté prijímanie na izbách: v nedeľu doobeda; Pacienti, ktorí majú záujem o sväté prijímanie v nedeľu sa môžu nahlásiť zdravotníckemu personálu do 10:00. V doobedňajších hodinách im akolyta donesie sväté prijímanie."
+                  - paragraph [ref=e507]:
+                    - strong [ref=e508]: Sväté omše v nemocnici sú vždy v sobotu o 15.00h. v priestoroch jedálne, na 2. poschodí spoločného pavilónu.
+                  - paragraph [ref=e509]:
+                    - link [ref=e510] [cursor=pointer]:
+                      - /url: https://farazv.sk/kontakt/
+                      - strong [ref=e511]: Sviatosť zmierenia a pomazania chorých v ktorýkoľvek deň na vyžiadanie.
+                  - paragraph [ref=e512]:
+                    - link [ref=e513] [cursor=pointer]:
+                      - /url: https://farazv.sk/kontakt/
+                      - strong [ref=e514]: Využite túto službu a pomôžte aj svojim hospitalizovaným príbuzným v stálej pripravenosti duše pre večnosť. Ďakujeme.
+              - generic [ref=e515] [cursor=pointer]
+            - generic [ref=e524]:
+              - generic [ref=e525] [cursor=pointer]
+              - generic [ref=e530]:
+                - generic [ref=e532]:
+                  - generic [ref=e533]: Farnosť
+                  - heading "Svätý Šarbel" [level=2] [ref=e534]
+                - generic [ref=e539]:
+                  - paragraph [ref=e540]:
+                    - link [ref=e541] [cursor=pointer]:
+                      - /url: https://docs.google.com/forms/d/e/1FAIpQLSfTrjXSd2F8m2AWZ4AAKXXMDTqGtQ5FHVptyT_AlgfS0i4UBg/viewform
+                      - strong [ref=e542]:
+                        - strong [ref=e543]: "Vždy 22. v mesiaci po večernej svätej omši sa koná pobožnosť ku cti sv. Šarbela. Svoje modlitebné úmysly môžete poslať prostredníctvom formuláru: (link)"
+                  - paragraph [ref=e544]:
+                    - emphasis [ref=e545]: "Poznámka: Ak 22. deň pripadne na nedeľu, pobožnosť sa koná v predvečer - v sobotu."
+              - generic [ref=e546] [cursor=pointer]
+            - generic [ref=e555]:
+              - generic [ref=e556] [cursor=pointer]
+              - generic [ref=e561]:
+                - generic [ref=e563]:
+                  - generic [ref=e564]: Sväté omše - sobota o 15:00
+                  - heading [level=2] [ref=e565]: Nemocnica vo Zvolene - duchovná služba
+                - generic [ref=e570]:
+                  - paragraph [ref=e571]:
+                    - strong [ref=e572]: "Vďaka ochote kňazov a laikov sa v Nemocnici Agel vo Zvolene ponúka duchovná služba:"
+                  - paragraph [ref=e573]:
+                    - strong [ref=e574]: "Sväté prijímanie na izbách: v nedeľu doobeda; Pacienti, ktorí majú záujem o sväté prijímanie v nedeľu sa môžu nahlásiť zdravotníckemu personálu do 10:00. V doobedňajších hodinách im akolyta donesie sväté prijímanie."
+                  - paragraph [ref=e575]:
+                    - strong [ref=e576]: Sväté omše v nemocnici sú vždy v sobotu o 15.00h. v priestoroch jedálne, na 2. poschodí spoločného pavilónu.
+                  - paragraph [ref=e577]:
+                    - link [ref=e578] [cursor=pointer]:
+                      - /url: https://farazv.sk/kontakt/
+                      - strong [ref=e579]: Sviatosť zmierenia a pomazania chorých v ktorýkoľvek deň na vyžiadanie.
+                  - paragraph [ref=e580]:
+                    - link [ref=e581] [cursor=pointer]:
+                      - /url: https://farazv.sk/kontakt/
+                      - strong [ref=e582]: Využite túto službu a pomôžte aj svojim hospitalizovaným príbuzným v stálej pripravenosti duše pre večnosť. Ďakujeme.
+              - generic [ref=e583] [cursor=pointer]
+            - generic [ref=e592]:
+              - generic [ref=e593] [cursor=pointer]
+              - generic [ref=e598]:
+                - generic [ref=e600]:
+                  - generic [ref=e601]: Farnosť
+                  - heading [level=2] [ref=e602]: Svätý Šarbel
+                - generic [ref=e607]:
+                  - paragraph [ref=e608]:
+                    - link [ref=e609] [cursor=pointer]:
+                      - /url: https://docs.google.com/forms/d/e/1FAIpQLSfTrjXSd2F8m2AWZ4AAKXXMDTqGtQ5FHVptyT_AlgfS0i4UBg/viewform
+                      - strong [ref=e610]:
+                        - strong [ref=e611]: "Vždy 22. v mesiaci po večernej svätej omši sa koná pobožnosť ku cti sv. Šarbela. Svoje modlitebné úmysly môžete poslať prostredníctvom formuláru: (link)"
+                  - paragraph [ref=e612]:
+                    - emphasis [ref=e613]: "Poznámka: Ak 22. deň pripadne na nedeľu, pobožnosť sa koná v predvečer - v sobotu."
+              - generic [ref=e614] [cursor=pointer]
+            - generic [ref=e623]:
+              - generic [ref=e624] [cursor=pointer]
+              - generic [ref=e629]:
+                - generic [ref=e631]:
+                  - generic [ref=e632]: Sväté omše - sobota o 15:00
+                  - heading [level=2] [ref=e633]: Nemocnica vo Zvolene - duchovná služba
+                - generic [ref=e638]:
+                  - paragraph [ref=e639]:
+                    - strong [ref=e640]: "Vďaka ochote kňazov a laikov sa v Nemocnici Agel vo Zvolene ponúka duchovná služba:"
+                  - paragraph [ref=e641]:
+                    - strong [ref=e642]: "Sväté prijímanie na izbách: v nedeľu doobeda; Pacienti, ktorí majú záujem o sväté prijímanie v nedeľu sa môžu nahlásiť zdravotníckemu personálu do 10:00. V doobedňajších hodinách im akolyta donesie sväté prijímanie."
+                  - paragraph [ref=e643]:
+                    - strong [ref=e644]: Sväté omše v nemocnici sú vždy v sobotu o 15.00h. v priestoroch jedálne, na 2. poschodí spoločného pavilónu.
+                  - paragraph [ref=e645]:
+                    - link [ref=e646] [cursor=pointer]:
+                      - /url: https://farazv.sk/kontakt/
+                      - strong [ref=e647]: Sviatosť zmierenia a pomazania chorých v ktorýkoľvek deň na vyžiadanie.
+                  - paragraph [ref=e648]:
+                    - link [ref=e649] [cursor=pointer]:
+                      - /url: https://farazv.sk/kontakt/
+                      - strong [ref=e650]: Využite túto službu a pomôžte aj svojim hospitalizovaným príbuzným v stálej pripravenosti duše pre večnosť. Ďakujeme.
+              - generic [ref=e651] [cursor=pointer]
+          - list [ref=e654]:
+            - listitem [ref=e655] [cursor=pointer]:
+              - button "1" [ref=e656]
+            - listitem [ref=e657] [cursor=pointer]:
+              - button "2" [ref=e658]
+        - generic [ref=e661]:
+          - generic [ref=e662]:
+            - generic [ref=e666]:
+              - generic [ref=e667]: Farský kostol
+              - heading "Galéria kostola" [level=2] [ref=e668]
+            - generic [ref=e674]:
+              - generic [ref=e676] [cursor=pointer]
+              - generic [ref=e682] [cursor=pointer]
+              - generic [ref=e688] [cursor=pointer]
+              - generic [ref=e694] [cursor=pointer]
+              - generic [ref=e700] [cursor=pointer]
+              - generic [ref=e706] [cursor=pointer]
+              - generic [ref=e712] [cursor=pointer]
+              - generic [ref=e718] [cursor=pointer]
+          - link [ref=e724] [cursor=pointer]:
+            - /url: /farnost/galeria
+            - button "Zobraziť celú galériu" [ref=e725]
+      - generic [ref=e729]:
+        - generic [ref=e733]:
+          - generic [ref=e734]: Farnosť
+          - heading "Naše spoločenstvo" [level=2] [ref=e735]
+        - generic [ref=e740]:
+          - generic [ref=e741]:
+            - link "Naše spoločenstvo Archív Naše Spoločenstvo 17. januára 2026 Sprístupňujeme vám archív časopisu Naše spoločenstvo." [ref=e743] [cursor=pointer]:
+              - /url: /farnost/nase-spolocenstvo/archiv-nase-spolocenstvo
+              - generic [ref=e744]: Naše spoločenstvo
+              - generic [ref=e749]:
+                - generic [ref=e750]:
+                  - heading "Archív Naše Spoločenstvo" [level=3] [ref=e751]
+                  - generic [ref=e752]: 17. januára 2026
+                - paragraph [ref=e761]: Sprístupňujeme vám archív časopisu Naše spoločenstvo.
+            - link "Naše spoločenstvo Kolégium Antona Neuwirtha Juraj Bublinec 2. novembra 2024 Inšpirované odkazom Antona Neuwirtha, kolégium prináša klasické vzdelanie v duchu kresťanských hodnôt a kultúrneho dedičstva západnej civilizácie. Spoznajte, ako jeho odkaz žije v mladých študentoch aj 20 rokov po jeho odchode." [ref=e763] [cursor=pointer]:
+              - /url: /farnost/nase-spolocenstvo/kolegium-antona-neuwirtha
+              - generic [ref=e764]: Naše spoločenstvo
+              - generic [ref=e769]:
+                - generic [ref=e770]:
+                  - heading "Kolégium Antona Neuwirtha" [level=3] [ref=e771]
+                  - generic [ref=e772]:
+                    - generic [ref=e773]: Juraj Bublinec
+                    - generic [ref=e779]: 2. novembra 2024
+                - paragraph [ref=e787]: Inšpirované odkazom Antona Neuwirtha, kolégium prináša klasické vzdelanie v duchu kresťanských hodnôt a kultúrneho dedičstva západnej civilizácie. Spoznajte, ako jeho odkaz žije v mladých študentoch aj 20 rokov po jeho odchode.
+            - link "Naše spoločenstvo Nový farský vikár Redakcia 9. októbra 2024 Milí čitatelia časopisu Naše spoločenstvo, všetkých vás srdečne pozdravujem. Som veľmi rád, že po roku môžem opäť do tohto časopisu napísať už nie ako diakon, ale ako zvolenský kaplán, čo ma napĺňa veľkou radosťou, pretože zvolenská farnosť sa mi za rok diakonskej služby stala druhým domov. Nie darmo sa zvykne hovoriť o prvom pôsobisku ako o „prvej pastoračnej láske“ – a v tomto prípade to platí dvojnásobne, prvýkrát ako diakon a teraz ako váš kaplán. Od redaktorky mesta som dostal pár otázok, na ktoré rád odpovedám." [ref=e789] [cursor=pointer]:
+              - /url: /farnost/nase-spolocenstvo/novy-farsky-vikar
+              - generic [ref=e790]: Naše spoločenstvo
+              - generic [ref=e795]:
+                - generic [ref=e796]:
+                  - heading "Nový farský vikár" [level=3] [ref=e797]
+                  - generic [ref=e798]:
+                    - generic [ref=e799]: Redakcia
+                    - generic [ref=e805]: 9. októbra 2024
+                - paragraph [ref=e813]: Milí čitatelia časopisu Naše spoločenstvo, všetkých vás srdečne pozdravujem. Som veľmi rád, že po roku môžem opäť do tohto časopisu napísať už nie ako diakon, ale ako zvolenský kaplán, čo ma napĺňa veľkou radosťou, pretože zvolenská farnosť sa mi za rok diakonskej služby stala druhým domov. Nie darmo sa zvykne hovoriť o prvom pôsobisku ako o „prvej pastoračnej láske“ – a v tomto prípade to platí dvojnásobne, prvýkrát ako diakon a teraz ako váš kaplán. Od redaktorky mesta som dostal pár otázok, na ktoré rád odpovedám.
+          - link [ref=e815] [cursor=pointer]:
+            - /url: /farnost/nase-spolocenstvo
+            - button "Zobraziť viac článkov" [ref=e816]
+      - generic [ref=e818]:
+        - generic [ref=e823]:
+          - generic [ref=e825]:
+            - generic [ref=e826]: Farnosť
+            - heading "Služby a spoločenstvá našej farnosti" [level=2] [ref=e827]
+          - generic [ref=e832]:
+            - generic [ref=e834]:
+              - generic [ref=e835]: Detský spevokol
+              - generic [ref=e836]: Spev detí vo veku 4 – 18 rokov okrášľuje najmä detské sv. omše v nedeľu o 10:30 hod. Spoločné nácviky začínajú v nedeľu o 9:00 hod. Všetky deti sú srdečne pozvané.
+              - link "ZISTIŤ VIAC" [ref=e837] [cursor=pointer]:
+                - /url: /spolocenstva/detsky-spevokol
+            - generic [ref=e845]:
+              - generic [ref=e846]: Mládežnícky zbor
+              - generic [ref=e847]: Mladí majú možnosť svojim spevom doprevádzať mládežnícke sv. omše v nedeľu o 19:00 hod. Mládežnícky zbor tiež dáva priestor zažiť spoločenstvo mladých, ktorí žijú svoju vieru naplno
+              - link "ZISTIŤ VIAC" [ref=e848] [cursor=pointer]:
+                - /url: /spolocenstva/mladeznicky-zbor
+            - generic [ref=e856]:
+              - generic [ref=e857]: Miništranti
+              - generic [ref=e858]: Miništrovanie je liturgickou službou pri oltári, ku ktorej sú pozvaní všetci chlapci. Priestorom pre hru, priateľstvá aj zlepšovanie sa v službe sú miništrantské stretnutia v piatok po sv. omši.
+              - link "ZISTIŤ VIAC" [ref=e859] [cursor=pointer]:
+                - /url: /spolocenstva/ministranti
+            - generic [ref=e867]:
+              - generic [ref=e868]: Akolyti
+              - generic [ref=e869]: Služba akolytu sa vykonáva na základe určenia miestneho kňaza a poverenia diecézneho biskupa. Okrem mnohorakej pomoci pri sv. omšiach akolyti slúžia prinášaním eucharistie starým a chorým
+            - generic [ref=e871]:
+              - generic [ref=e872]: Lektori
+              - generic [ref=e873]: Čítanie Božieho slova je dôležitým prvkom liturgie, a preto ho majú všetci počúvať s úctou. Lektori sú ustanovení na prednes čítaní zo Svätého písma okrem evanjelia.
+            - generic [ref=e875]:
+              - generic [ref=e876]: Spoločenstvá
+              - generic [ref=e877]: "Vo farnosti aktívne pôsobia rôzne spoločenstvá: ružencové bratstvo, modlitby otcov, modlitby matiek a iné."
+        - generic [ref=e882]:
+          - link [ref=e883] [cursor=pointer]:
+            - /url: https://youtube.com/c/FarnosťZvolenMesto
+          - link [ref=e888] [cursor=pointer]:
+            - /url: https://zsdomzv.edupage.org/
+          - link [ref=e893] [cursor=pointer]:
+            - /url: https://docs.google.com/forms/d/e/1FAIpQLSfTrjXSd2F8m2AWZ4AAKXXMDTqGtQ5FHVptyT_AlgfS0i4UBg/viewform
+          - link [ref=e898] [cursor=pointer]:
+            - /url: https://charitazvolen.sk/
+          - link [ref=e903] [cursor=pointer]:
+            - /url: https://bbdieceza.sk/
+          - link [ref=e908] [cursor=pointer]:
+            - /url: https://grkatzv.sk/
+        - generic [ref=e925]:
+          - heading [level=1] [ref=e926]:
+            - heading "Elektronický zvonček" [level=2] [ref=e928]
+          - paragraph [ref=e933]: "Ďakujeme všetkým, ktorí svoju účasť na živote farnosti prejavujú aj poukázaním finančného milodaru. Pre jednoduchšie prispievanie na údržbu kostolov, fary a celkový chod farnosti môžete využiť elektronický zvonček:"
+          - list [ref=e934]:
+            - listitem [ref=e935]: "farský IBAN: SK72 1111 0000 0066 1528 6006"
+            - listitem [ref=e936]: "QR kód: obrázok vľavo možno jednoducho načítať pomocou mobilnej aplikácie vašej banky."
+          - paragraph [ref=e937]: Za vašu štedrosť vyslovujeme úprimné Pán Boh zaplať!
+  - contentinfo [ref=e938]:
+    - link "Farnosť sv. Alžbety Zvolen - mesto" [ref=e940] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e941]:
+        - generic [ref=e942]: Farnosť sv. Alžbety
+        - generic [ref=e943]: Zvolen - mesto
+    - generic [ref=e946]:
+      - generic [ref=e947]:
+        - heading "Farnosť" [level=3] [ref=e949]
+        - generic [ref=e954]:
+          - link "Farské oznamy" [ref=e956] [cursor=pointer]:
+            - /url: /farnost/farske-oznamy
+          - link "Naše Spoločenstvo" [ref=e961] [cursor=pointer]:
+            - /url: /farnost/nase-spolocenstvo
+          - link "Galéria kostola" [ref=e966] [cursor=pointer]:
+            - /url: /farnost/galeria
+          - link "Kostol sv. Alžbety" [ref=e971] [cursor=pointer]:
+            - /url: /farnost/kostol-sv-alzbety
+          - link "Kostol v Lieskovci" [ref=e976] [cursor=pointer]:
+            - /url: /farnost/kostol-sv-jana-pavla-v-lieskovci
+          - link "Kostol v Zolnej" [ref=e981] [cursor=pointer]:
+            - /url: /farnost/kostol-sv-matusa-v-zolnej
+          - link "Cirkevná škola" [ref=e986] [cursor=pointer]:
+            - /url: /farnost/cirkevna-skola
+          - link "Charita" [ref=e991] [cursor=pointer]:
+            - /url: https://www.charitazvolen.sk/
+      - generic [ref=e995]:
+        - heading "Sviatosti" [level=3] [ref=e997]
+        - generic [ref=e1002]:
+          - link "Sviatost krstu" [ref=e1004] [cursor=pointer]:
+            - /url: /sviatosti/sviatost-krstu
+          - link "Sviatosť Eucharistie" [ref=e1009] [cursor=pointer]:
+            - /url: /sviatosti/sviatost-eucharistie
+          - link "Sviatost birmovania" [ref=e1014] [cursor=pointer]:
+            - /url: /sviatosti/sviatost-birmovania
+          - link "Sviatosť manželstva" [ref=e1019] [cursor=pointer]:
+            - /url: /sviatosti/sviatost-manzelstva
+          - link "Sviatost zmierenia" [ref=e1024] [cursor=pointer]:
+            - /url: /sviatosti/sviatost-zmierenia
+          - link "Pomazanie chorých" [ref=e1029] [cursor=pointer]:
+            - /url: /sviatosti/sviatost-pomazania-chorych
+      - generic [ref=e1033]:
+        - heading "Spoločenstvá" [level=3] [ref=e1035]
+        - generic [ref=e1040]:
+          - link "Detský spevokol" [ref=e1042] [cursor=pointer]:
+            - /url: /spolocenstva/detsky-spevokol
+          - link "Mládežnícky zbor" [ref=e1047] [cursor=pointer]:
+            - /url: /spolocenstva/mladeznicky-zbor
+          - link "Miništranti" [ref=e1052] [cursor=pointer]:
+            - /url: /spolocenstva/ministranti
+          - link "Rehoľné sestry" [ref=e1057] [cursor=pointer]:
+            - /url: /spolocenstva/reholne-sestry
+      - generic [ref=e1061]:
+        - heading "Úradné hodiny" [level=3] [ref=e1063]
+        - generic [ref=e1068]:
+          - generic [ref=e1069]: "Pondelok: 8:30 - 10:30"
+          - generic [ref=e1072]: "Streda: 8:30 - 10:30 a 14:00 - 16:30"
+          - generic [ref=e1075]: "Piatok: 8:30 - 10:30"
+      - generic [ref=e1078]:
+        - heading "Kontakt" [level=3] [ref=e1080]
+        - generic [ref=e1085]:
+          - link "0911 588 977" [ref=e1087] [cursor=pointer]:
+            - /url: tel:0911 588 977
+          - link "fara.zv.mesto@gmail.com" [ref=e1095] [cursor=pointer]:
+            - /url: mailto:fara.zv.mesto@gmail.com
+          - link "Rímskokatolícka cirkev, Námestie SNP 68/40, 960 01 Zvolen" [ref=e1104] [cursor=pointer]:
+            - /url: https://www.google.com/maps/place/Parish+Office+Zvolen/@48.5781257,19.1244094,17z/data=!3m1!4b1!4m5!3m4!1s0x47153827f33db955:0xb1a6b4587b553c81!8m2!3d48.5781222!4d19.1265981
+          - link "Všetky kontakty" [ref=e1112] [cursor=pointer]:
+            - /url: /kontakt
+    - generic [ref=e1121]:
+      - link "Ochrana osobných údajov GDPR" [ref=e1123] [cursor=pointer]:
+        - /url: https://gdpr.kbs.sk/
+      - generic [ref=e1124]:
+        - text: Stránka vytvorená spoločnosťou
+        - link "Momentum Digital" [ref=e1125] [cursor=pointer]:
+          - /url: https://mmntm.digital
+        - generic [ref=e1126]: © 2026
