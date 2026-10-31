@@ -1,10 +1,20 @@
 # Farazv
+
 - client application
 
 ## Technology stack
 
 - React + GatsbyJS
 - Tailwind + ChakraUI
+
+## Website remake
+
+The integrated [Next.js application and setup](remake/README.md) live under
+`remake/`, with a custom admin, database migration and publishing. The
+[remake records](docs/remake/README.md) describe architecture, decisions, checks
+and remaining launch requirements. A protected [Vercel preview](https://farazv-preview-bublinecs-projects.vercel.app) uses the imported Neon
+database; production and DNS have not switched. This repository root remains the
+Gatsby application.
 
 ## Design reference
 

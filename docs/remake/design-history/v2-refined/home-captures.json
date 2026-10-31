@@ -1,0 +1,24 @@
+{
+  "design": "parish",
+  "captures": [
+    {
+      "filename": "home-mobile.jpg",
+      "route": "/",
+      "width": 390,
+      "fixtureDate": "2026-10-31",
+      "loadedImages": 21,
+      "failedImages": [],
+      "sha256": "c3ef8d3486b9dba3a2186552e67b6e77a2b01fdcc97ba1245677fe2117e9560c"
+    },
+    {
+      "filename": "home-desktop.jpg",
+      "route": "/",
+      "width": 1440,
+      "fixtureDate": "2026-10-31",
+      "loadedImages": 21,
+      "failedImages": [],
+      "sha256": "ec2276802c972ffb37feade8b30e5c1af82f9b0e552dd2a81e7aa258316eeb72"
+    }
+  ],
+  "runtimeErrors": []
+}
