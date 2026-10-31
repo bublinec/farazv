@@ -1,0 +1,150 @@
+.period {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  padding-bottom: 25px;
+  margin-bottom: 35px;
+  border-bottom: 1px solid var(--line);
+}
+.period > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--blue);
+  font-size: 0.9rem;
+}
+.period svg {
+  color: var(--gold-dark);
+  flex-shrink: 0;
+}
+.preview {
+  font-size: 0.63rem;
+  color: var(--gold-dark);
+  background: var(--paper);
+  padding: 6px 11px;
+  white-space: nowrap;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 55px;
+  align-items: start;
+}
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+}
+.announcements {
+  padding: 32px;
+  background: var(--paper);
+  border-top: 2px solid var(--gold);
+}
+.announcements h2 {
+  font-size: 1.6rem;
+  margin-bottom: 25px;
+}
+.announcements ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.announcements li {
+  display: flex;
+  align-items: start;
+  gap: 15px;
+  margin-bottom: 24px;
+}
+.announcements li > span {
+  color: var(--gold-dark);
+  font-size: 0.68rem;
+  padding-top: 3px;
+}
+.announcements li p {
+  font-size: 0.84rem;
+  line-height: 1.85;
+}
+.thanks {
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  font-size: 0.8rem;
+  color: var(--blue);
+}
+.contact {
+  padding: 30px 32px;
+  border: 1px solid var(--line);
+}
+.contact > svg {
+  color: var(--gold-dark);
+  margin-bottom: 17px;
+}
+.contact h3 {
+  font-size: 1.07rem;
+  margin-bottom: 12px;
+}
+.contact p {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.contact > a:not(:last-child) {
+  display: block;
+  text-decoration: none;
+  font-size: 1.15rem;
+  margin-bottom: 20px;
+}
+@media (max-width: 1000px) {
+  .layout {
+    gap: 30px;
+    grid-template-columns: 1.4fr 1fr;
+  }
+  .announcements {
+    padding: 24px;
+  }
+}
+@media (max-width: 800px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .aside {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    align-items: start;
+  }
+}
+@media (max-width: 550px) {
+  .period {
+    align-items: start;
+    gap: 15px;
+    margin-bottom: 28px;
+  }
+  .period > div {
+    font-size: 0.78rem;
+    gap: 8px;
+  }
+  .preview {
+    font-size: 0.55rem;
+    padding: 5px 8px;
+  }
+  .aside {
+    display: flex;
+  }
+  .contact {
+    padding: 25px;
+  }
+}
+
+.donations {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.donations p {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.donations small {
+  display: block;
+  color: var(--muted);
+}

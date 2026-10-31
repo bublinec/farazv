@@ -1,0 +1,673 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  background: #29362e;
+  color: white;
+}
+.background {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-position: center 47%;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, #142e38b5, #29241b99 55%, #302416a8),
+    linear-gradient(0deg, #172e39c9, transparent 60%);
+}
+.inner {
+  padding-top: 60px;
+  padding-bottom: 22px;
+  position: relative;
+}
+.content {
+  min-height: 374px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.eyebrow {
+  text-transform: uppercase;
+  color: var(--gold-light);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  margin-bottom: 15px;
+}
+.content h1 {
+  max-width: 850px;
+  text-wrap: balance;
+  margin: 0 0 20px;
+  font-size: clamp(1.9rem, 3.3vw, 2.85rem);
+  line-height: 1.25;
+  font-weight: 400;
+}
+.divider {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  color: var(--gold-light);
+  margin-bottom: 15px;
+}
+.divider span {
+  width: 37px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.85;
+}
+.date {
+  font-size: 0.95rem;
+  margin-bottom: 27px;
+  text-transform: capitalize;
+}
+.masses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+  justify-content: center;
+  width: 100%;
+}
+.mass {
+  border: 1px solid #e4ddc958;
+  background: #f9f8f20a;
+  backdrop-filter: blur(2px);
+  min-width: 150px;
+  padding: 12px 22px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.location {
+  text-transform: uppercase;
+  font-size: 0.56rem;
+  letter-spacing: 0.12em;
+  color: #e3e1d7;
+  min-height: 15px;
+}
+.mass strong {
+  font-size: 1.9rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.celebrant {
+  color: var(--gold-light);
+  font-size: 0.83rem;
+  min-height: 22px;
+}
+.bulletinLink {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: white;
+  font-size: 0.73rem;
+  margin-top: 21px;
+  text-decoration: none;
+}
+.bulletinLink:hover {
+  color: var(--gold-light);
+}
+.controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  border-top: 1px solid #ffffff26;
+  margin-top: 30px;
+  padding-top: 15px;
+}
+.direction {
+  border: 0;
+  background: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  font-size: 0.68rem;
+  min-width: 118px;
+}
+.direction:last-child {
+  justify-content: flex-end;
+}
+.direction:disabled {
+  opacity: 0.3;
+}
+.days {
+  display: flex;
+  gap: 6px;
+}
+.dayButton {
+  border: 1px solid transparent;
+  background: none;
+  color: #e7e8e1;
+  min-width: 46px;
+  min-height: 55px;
+  padding: 4px 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.dayButton span {
+  font-size: 0.59rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.dayButton strong {
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+.selected {
+  border-color: var(--gold);
+  background: #d3b37617;
+  color: #fff;
+}
+.dayButton:hover {
+  background: #ffffff12;
+}
+.backToday {
+  display: block;
+  margin: 9px auto 0;
+  background: transparent;
+  color: var(--gold-light);
+  border: 0;
+  padding: 7px 10px;
+  font-size: 0.7rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.notice {
+  max-width: 530px;
+  color: #f4e6c6;
+  font-size: 0.8rem;
+  margin-top: -12px;
+  margin-bottom: 20px;
+}
+.noMass {
+  font-size: 1.05rem;
+  border: 1px solid #ffffff45;
+  padding: 20px 30px;
+}
+@media (max-width: 900px) {
+  .inner {
+    padding-top: 48px;
+  }
+  .direction {
+    min-width: auto;
+  }
+  .direction span {
+    display: none;
+  }
+  .mass {
+    min-width: 125px;
+    padding-inline: 17px;
+  }
+  .days {
+    gap: 2px;
+  }
+}
+@media (max-width: 550px) {
+  .inner {
+    padding-top: 39px;
+    padding-bottom: 17px;
+  }
+  .content {
+    min-height: 390px;
+  }
+  .content h1 {
+    font-size: 1.9rem;
+  }
+  .date {
+    font-size: 0.86rem;
+    margin-bottom: 23px;
+  }
+  .eyebrow {
+    font-size: 0.62rem;
+  }
+  .masses {
+    gap: 9px;
+  }
+  .mass {
+    min-width: 0;
+    width: calc(33.333% - 6px);
+    padding: 10px 4px;
+  }
+  .mass strong {
+    font-size: 1.5rem;
+  }
+  .location {
+    font-size: 0.49rem;
+    letter-spacing: 0.03em;
+  }
+  .celebrant {
+    font-size: 0.72rem;
+  }
+  .controls {
+    margin-top: 24px;
+    gap: 5px;
+  }
+  .days {
+    width: 100%;
+    justify-content: center;
+    gap: 0;
+  }
+  .dayButton {
+    min-width: 0;
+    flex: 1;
+    padding-inline: 3px;
+    min-height: 50px;
+  }
+  .dayButton span {
+    font-size: 0.48rem;
+  }
+  .dayButton strong {
+    font-size: 0.8rem;
+  }
+  .direction {
+    padding: 10px 0;
+    flex-shrink: 0;
+  }
+  .direction svg {
+    width: 16px;
+  }
+  .bulletinLink {
+    font-size: 0.69rem;
+    margin-top: 20px;
+  }
+}
+
+/* The parish direction keeps the photograph in its own light. */
+.parish {
+  --photo-floor: 86px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.parish:has(.backToday) {
+  --photo-floor: 130px;
+}
+
+.parish::after {
+  display: none;
+}
+
+.parish .background {
+  inset: 0 0 auto auto;
+  width: 47%;
+  height: calc(100% - var(--photo-floor));
+  object-position: center 52%;
+  border-left: 8px solid #fffcf5;
+}
+
+.parish .inner {
+  padding-top: 52px;
+  padding-bottom: 0;
+}
+
+.parish .content {
+  width: 52%;
+  min-height: 452px;
+  align-items: flex-start;
+  text-align: left;
+  padding-right: 52px;
+  padding-bottom: 42px;
+}
+
+.parish .eyebrow {
+  color: var(--gold-dark);
+  letter-spacing: 0.12em;
+}
+
+.parish .content h1 {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(2.5rem, 3.7vw, 3.35rem);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  font-weight: 400;
+  text-wrap: balance;
+  margin-bottom: 20px;
+}
+
+.parish .divider {
+  color: var(--gold-dark);
+}
+
+.parish .date {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+
+.dayStatus {
+  padding: 3px 8px;
+  color: var(--white);
+  background: var(--blue);
+  font-size: 0.67rem;
+  line-height: 1.6;
+  letter-spacing: 0.025em;
+  text-transform: none;
+}
+
+.parish .masses {
+  justify-content: flex-start;
+  gap: 0;
+  border-block: 1px solid var(--line);
+}
+
+.parish .mass {
+  min-width: 0;
+  flex: 1;
+  align-items: flex-start;
+  padding: 13px 16px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.parish .mass:first-child {
+  padding-left: 0;
+}
+
+.parish .mass:last-child {
+  border-right: 0;
+}
+
+.parish .location {
+  color: var(--muted);
+  font-size: 0.59rem;
+  letter-spacing: 0.07em;
+}
+
+.parish .mass strong {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 2rem;
+  line-height: 1.4;
+  font-variant-numeric: lining-nums;
+}
+
+.parish .celebrant {
+  color: var(--gold-dark);
+  font-size: 0.76rem;
+}
+
+.parish .bulletinLink {
+  color: var(--blue);
+  font-size: 0.77rem;
+  margin-top: 21px;
+}
+
+.parish .bulletinLink:hover {
+  color: var(--gold-dark);
+  text-decoration: underline;
+}
+
+.parish .notice {
+  color: var(--muted);
+  margin-top: -10px;
+}
+
+.parish .noMass {
+  border-color: var(--line);
+  font-size: 0.95rem;
+  padding: 18px 22px;
+}
+
+.parish .controls {
+  height: 86px;
+  margin-top: 0;
+  padding-block: 12px;
+  border-top-color: var(--line);
+  background: var(--paper);
+}
+
+.parish .direction,
+.parish .dayButton {
+  color: var(--ink);
+}
+
+.parish .direction {
+  min-height: 44px;
+}
+
+.parish .days {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(44px, 1fr));
+  gap: 2px;
+}
+
+.parish .dayButton {
+  min-height: 55px;
+}
+
+.parish .today span {
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.parish .dayButton strong {
+  font-variant-numeric: lining-nums;
+}
+
+.parish .selected {
+  color: var(--blue);
+  border-color: var(--blue);
+  background: #2e52680d;
+  box-shadow: inset 0 -2px var(--blue);
+}
+
+.parish .dayButton:hover {
+  background: #bfa16920;
+}
+
+.parish .backToday {
+  color: var(--blue);
+  height: 44px;
+  margin: 0 auto;
+  padding-block: 7px;
+}
+
+.photoCaption {
+  position: absolute;
+  right: max(24px, calc((100vw - var(--content-width)) / 2));
+  bottom: calc(var(--photo-floor) + 22px);
+  padding: 9px 15px;
+  color: #42362a;
+  background: #fffaf0f2;
+  border-left: 2px solid var(--gold);
+  text-decoration: none;
+}
+
+.photoCaption strong {
+  display: block;
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.photoCaption span {
+  display: block;
+  font-size: 0.62rem;
+  line-height: 1.5;
+}
+
+.photoCaption:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1050px) {
+  .parish .content {
+    padding-right: 34px;
+  }
+
+  .parish .content h1 {
+    font-size: 2.7rem;
+  }
+
+  .parish .mass {
+    padding-inline: 10px;
+  }
+
+  .parish .mass strong {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .parish .direction {
+    min-width: 44px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 750px) {
+  .parish .background {
+    inset: 0 0 auto;
+    width: 100%;
+    height: 220px;
+    border: 0;
+    border-bottom: 5px solid #fffcf5;
+    object-position: center 48%;
+  }
+
+  .parish .inner {
+    padding-top: 250px;
+  }
+
+  .parish .content {
+    width: 100%;
+    min-height: 0;
+    padding-right: 0;
+    padding-bottom: 27px;
+  }
+
+  .parish .content h1 {
+    max-width: 580px;
+    font-size: clamp(2.05rem, 5.5vw, 2.7rem);
+    margin-bottom: 14px;
+  }
+
+  .parish .eyebrow {
+    margin-bottom: 11px;
+  }
+
+  .parish .divider {
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .parish .divider svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .parish .divider span {
+    width: 26px;
+  }
+
+  .parish .date {
+    margin-bottom: 19px;
+  }
+
+  .parish .mass {
+    width: auto;
+    padding: 11px 14px;
+  }
+
+  .parish .mass strong {
+    font-size: 1.9rem;
+  }
+
+  .parish .celebrant {
+    font-size: 0.75rem;
+  }
+
+  .parish .controls {
+    height: 74px;
+    padding-block: 10px;
+    gap: 4px;
+  }
+
+  .parish .dayButton {
+    min-height: 48px;
+  }
+
+  .parish .backToday {
+    height: 44px;
+  }
+
+  .photoCaption {
+    top: 157px;
+    right: 18px;
+    bottom: auto;
+    padding: 7px 11px;
+  }
+
+  .photoCaption strong {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .parish .controls {
+    height: auto;
+    padding-block: 12px;
+  }
+
+  .parish .days {
+    grid-template-columns: repeat(4, minmax(44px, 1fr));
+  }
+
+  .parish .dayButton {
+    min-height: 45px;
+  }
+
+  .parish .dayButton span {
+    font-size: 0.62rem;
+  }
+
+  .parish .dayButton strong {
+    font-size: 0.93rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .parish .background {
+    height: 190px;
+  }
+
+  .parish .inner {
+    padding-top: 220px;
+  }
+
+  .photoCaption {
+    top: 127px;
+  }
+
+  .parish .mass {
+    padding-inline: 9px;
+  }
+
+  .parish .mass strong {
+    font-size: 1.7rem;
+  }
+
+  .parish .location {
+    font-size: 0.52rem;
+  }
+
+  .parish .celebrant {
+    font-size: 0.69rem;
+  }
+}

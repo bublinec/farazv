@@ -1,0 +1,74 @@
+.page {
+  min-height: 72vh;
+  display: grid;
+  place-items: center;
+  padding: 70px 20px;
+  background: var(--paper);
+}
+.card {
+  width: min(100%, 520px);
+  background: white;
+  padding: 44px;
+  border-top: 3px solid var(--gold);
+  box-shadow: 0 18px 65px #19394a0c;
+}
+.mark {
+  display: block;
+  color: var(--gold-dark);
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: 30px;
+}
+.card h1 {
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+}
+.description {
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+.google {
+  width: 100%;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--blue);
+  background: var(--blue);
+  color: white;
+  padding: 14px 18px;
+  font-weight: 500;
+}
+.google:hover {
+  background: var(--blue-deep);
+}
+.google:disabled {
+  opacity: 0.65;
+}
+.google span {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.hint {
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  margin: 20px 0 30px;
+}
+.notice {
+  border-left: 3px solid var(--gold);
+  background: var(--paper);
+  padding: 14px 16px;
+  font-size: 0.9rem;
+}
+.back {
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+@media (max-width: 550px) {
+  .page {
+    padding-block: 38px;
+  }
+  .card {
+    padding: 30px 23px;
+  }
+}

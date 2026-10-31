@@ -1,0 +1,98 @@
+.section {
+  padding: 70px 0;
+  background: #eeede5;
+}
+.inner {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: 85px;
+  align-items: center;
+  max-width: 930px;
+}
+.qr {
+  padding: 23px;
+  background: white;
+  width: min(260px, 100%);
+  justify-self: center;
+  box-shadow: 0 10px 35px #263c3f0a;
+}
+.qr img {
+  width: 100%;
+  height: auto;
+}
+.withoutQr {
+  grid-template-columns: 1fr;
+  max-width: 800px;
+}
+.content h2 {
+  margin-bottom: 20px;
+}
+.content > p:not(:first-child) {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.account {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 20px;
+}
+.account > span {
+  text-transform: uppercase;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.account strong {
+  font-size: 0.94rem;
+  letter-spacing: 0.025em;
+  color: var(--blue);
+  overflow-wrap: anywhere;
+}
+.account button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: fit-content;
+  font-size: 0.73rem;
+  color: var(--blue);
+  padding: 5px 0;
+  border: 0;
+  background: none;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.content .status {
+  min-height: 24px;
+  margin-top: 15px;
+  margin-bottom: 0;
+  font-size: 0.72rem;
+}
+@media (max-width: 750px) {
+  .inner {
+    gap: 40px;
+    grid-template-columns: 0.7fr 1.3fr;
+  }
+  .qr {
+    padding: 15px;
+  }
+}
+@media (max-width: 550px) {
+  .section {
+    padding: 45px 0;
+  }
+  .inner {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 25px;
+  }
+  .content {
+    text-align: center;
+  }
+  .account {
+    align-items: center;
+  }
+  .qr {
+    max-width: 190px;
+  }
+}

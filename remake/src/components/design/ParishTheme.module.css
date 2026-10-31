@@ -1,0 +1,137 @@
+/* The opt-in parish study inherits the same routes, copy and practical UI. */
+.parish {
+  --blue: #2e5268;
+  --blue-deep: #203e49;
+  --gold: #af8d52;
+  --gold-dark: #74572e;
+  --gold-light: #e2cd9c;
+  --ink: #383b36;
+  --muted: #62675f;
+  --line: #ddd7c9;
+  --paper: #f0ecdf;
+  --white: #fffdf7;
+  --font-display: "Source Serif 4", Georgia, serif;
+  --font-reading: "Source Serif 4", Georgia, serif;
+
+  background: var(--white);
+  color: var(--ink);
+}
+
+.parish h1,
+.parish h2 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 450;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.parish h1 {
+  font-size: clamp(2.55rem, 4.8vw, 4rem);
+}
+
+.parish :global(.sectionHeading) h2 {
+  font-size: clamp(2rem, 3.4vw, 2.9rem);
+}
+
+.parish :global(.prose) {
+  font-family: var(--font-reading);
+  font-optical-sizing: auto;
+  font-size: 1.13rem;
+  line-height: 1.85;
+  max-width: 68ch;
+}
+
+.parish :global(.prose) p {
+  font-size: inherit;
+}
+
+.parish :global(.prose) h2 {
+  line-height: 1.3;
+}
+
+.parish :global(.prose) h3,
+.parish :global(.prose) h4 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 450;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+
+.parish main :global(.prose) h4 {
+  font-size: 1.2rem;
+}
+
+.parish :global(.eyebrow) {
+  color: var(--gold-dark);
+  letter-spacing: 0.12em;
+}
+
+.parish :global(.headingRule) {
+  width: 42px;
+  height: 2px;
+  background: var(--gold);
+}
+
+.parish :global(.button),
+.parish :global(.buttonOutline) {
+  padding-inline: 24px;
+  min-height: 47px;
+}
+
+.parish :global(.pageHero:not(.pageHeroPhoto)) {
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  padding-bottom: 58px;
+}
+
+/* A real window from our church; decorative, with its credit in the footer. */
+.parish :global(.pageHero:not(.pageHeroPhoto))::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: clamp(190px, 30vw, 460px);
+  background: linear-gradient(90deg, #f0ecdf 0%, #f0ecdf80 28%, #f0ecdf12 75%),
+    url("https://res.cloudinary.com/dmx3wfvko/image/upload/f_auto,q_auto,w_640/v1638551400/IMG_4794_94955124af.jpg")
+      center 43% / cover;
+  opacity: 0.67;
+  pointer-events: none;
+}
+
+.parish :global(.pageHero:not(.pageHeroPhoto)) h1 {
+  max-width: 23ch;
+}
+
+.parish :global(.pageHero:not(.pageHeroPhoto)) :global(.pageHeroDescription) {
+  max-width: min(60ch, 71%);
+}
+
+.parish :global(.pageHeroPhoto) :global(.eyebrow) {
+  color: var(--gold-light);
+}
+
+.parish :global(.pageHeroPhoto)::after {
+  background: linear-gradient(90deg, #18353dcc, #243c426b);
+}
+
+@media (max-width: 700px) {
+  .parish h1 {
+    font-size: clamp(2.4rem, 8.5vw, 3.2rem);
+  }
+
+  .parish :global(.pageHero:not(.pageHeroPhoto))::before {
+    width: 145px;
+    opacity: 0.3;
+  }
+
+  .parish :global(.pageHero:not(.pageHeroPhoto)) :global(.pageHeroDescription) {
+    max-width: 100%;
+  }
+
+  .parish :global(.pageHero:not(.pageHeroPhoto)) {
+    padding-bottom: 40px;
+  }
+}

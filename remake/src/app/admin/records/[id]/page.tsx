@@ -1,0 +1,15 @@
+import { notFound } from "next/navigation";
+import { requireEditorPage } from "@/server/auth";
+import { getRecord } from "@/server/content-store";
+import { RecordEditor } from "@/components/admin/RecordEditor";
+export default async function RecordPage({
+  params
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  await requireEditorPage();
+  const { id } = await params;
+  const record = await getRecord(id);
+  if (!record) notFound();
+  return <RecordEditor initialRecord={record} />;
+}

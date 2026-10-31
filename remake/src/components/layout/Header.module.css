@@ -1,0 +1,365 @@
+.preview {
+  background: var(--blue-deep);
+  color: #e5e8e8;
+  text-align: center;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  padding: 0.5rem 1rem;
+}
+.preview span {
+  margin: 0 0.65rem;
+  color: var(--gold);
+}
+.header {
+  background: var(--white);
+  position: relative;
+  z-index: 20;
+  border-bottom: 1px solid var(--line);
+}
+.inner {
+  height: 92px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  color: var(--blue);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.brandMark {
+  height: 48px;
+  display: grid;
+  place-items: center;
+  color: var(--gold-dark);
+  border-right: 1px solid var(--line);
+  padding-right: 14px;
+}
+.brand strong {
+  font-size: 1.04rem;
+  line-height: 1.3;
+  font-weight: 500;
+  display: block;
+}
+.brand small {
+  display: block;
+  font-size: 0.67rem;
+  text-transform: uppercase;
+  letter-spacing: 0.17em;
+  margin-top: 5px;
+  color: var(--muted);
+}
+.desktop {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-left: auto;
+}
+.desktop > a,
+.dropdown summary {
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.86rem;
+  padding: 16px 0;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.desktop > a:hover,
+.desktop > a.active,
+.dropdown summary:hover {
+  color: var(--blue);
+}
+.desktop > a.active {
+  box-shadow: inset 0 -2px var(--gold);
+}
+.dropdown {
+  position: relative;
+}
+.dropdown summary {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  list-style: none;
+  cursor: pointer;
+}
+.dropdown summary::-webkit-details-marker {
+  display: none;
+}
+.dropdownPanel {
+  position: absolute;
+  top: 100%;
+  left: -22px;
+  padding: 10px;
+  min-width: 235px;
+  background: var(--white);
+  box-shadow: 0 15px 45px #132e3b20;
+  border-top: 2px solid var(--gold);
+}
+.dropdownPanel a {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 13px;
+  font-size: 0.83rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.dropdownPanel a:hover,
+.dropdownPanel a[aria-current] {
+  background: var(--paper);
+  color: var(--blue);
+}
+.quickLink {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 12px 15px;
+  border: 1px solid var(--line);
+  color: var(--blue);
+  font-size: 0.76rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+.quickLink:hover {
+  border-color: var(--gold);
+  background: var(--paper);
+}
+.menuButton {
+  display: none;
+  background: none;
+  border: 0;
+  padding: 10px;
+  color: var(--blue);
+}
+.mobileDialog {
+  margin: 0 0 0 auto;
+  padding: 28px;
+  width: min(430px, 100vw);
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  border: 0;
+  background: var(--white);
+  color: var(--ink);
+}
+.mobileDialog::backdrop {
+  background: #132a39b5;
+  backdrop-filter: blur(3px);
+}
+.mobileTop {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  padding-bottom: 25px;
+  color: var(--blue);
+}
+.mobileTop > span {
+  font-weight: 500;
+}
+.mobileTop small {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.mobileTop button {
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 8px;
+  color: var(--blue);
+}
+.mobileNav {
+  padding-bottom: 30px;
+}
+.mobileNav > a,
+.mobileNav summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  list-style: none;
+  cursor: pointer;
+}
+.mobileNav summary::-webkit-details-marker {
+  display: none;
+}
+.mobileNav details > div {
+  padding: 9px 0 12px 15px;
+}
+.mobileNav details a {
+  display: block;
+  font-size: 0.9rem;
+  padding: 11px 0;
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.parishPreview {
+  background: #e8e1d0;
+  color: #4f594f;
+  border-bottom: 1px solid #d7cdb8;
+  letter-spacing: 0.025em;
+}
+
+.parish {
+  background: var(--white);
+  border-bottom: 4px double #c8b58b;
+}
+
+.parish .inner {
+  height: 105px;
+}
+
+.parish .brandMark {
+  color: var(--gold-dark);
+  border-right-color: #d3c9b5;
+  height: 52px;
+  padding-right: 16px;
+}
+
+.parish .brand strong,
+.parishMobile .mobileTop > span {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-size: 1.28rem;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.parish .brand small {
+  margin-top: 8px;
+  font-size: 0.64rem;
+  letter-spacing: 0.2em;
+}
+
+.parish .desktop > a,
+.parish .dropdown summary {
+  font-weight: 400;
+}
+
+.parish .quickLink {
+  border-color: #c8b58b;
+  background: #f4efe2;
+}
+
+.parish .dropdownPanel {
+  box-shadow: 0 12px 30px #2e38241a;
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--gold);
+}
+
+.parishMobile {
+  border-left: 4px double #c8b58b;
+}
+
+.parishMobile .mobileTop small {
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+@media (max-width: 1170px) {
+  .inner {
+    gap: 18px;
+  }
+  .desktop {
+    gap: 18px;
+  }
+  .quickLink {
+    display: none;
+  }
+}
+@media (max-width: 850px) {
+  .inner {
+    height: 78px;
+  }
+  .desktop {
+    display: none;
+  }
+  .menuButton {
+    display: grid;
+    place-items: center;
+  }
+  .brand strong {
+    font-size: 1rem;
+  }
+
+  .parish .inner {
+    height: 85px;
+  }
+}
+@media (max-width: 440px) {
+  .preview {
+    font-size: 0.6rem;
+  }
+  .preview span {
+    margin: 0 0.35rem;
+  }
+  .inner {
+    height: 73px;
+  }
+  .brand {
+    gap: 10px;
+  }
+  .brandMark {
+    padding-right: 10px;
+  }
+
+  .parish .inner {
+    height: 79px;
+  }
+
+  .parish .brand {
+    gap: 11px;
+  }
+
+  .parish .brandMark {
+    padding-right: 11px;
+  }
+
+  .parish .brand strong {
+    font-size: 1.18rem;
+  }
+}
+
+/* The illustrated tower is the same local church mark used by the old site. */
+.parish .brandMark {
+  height: 64px;
+}
+.parishTower {
+  height: 64px;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+@media (max-width: 850px) {
+  .parish .brandMark,
+  .parishTower {
+    height: 54px;
+  }
+}
+
+/* Slightly larger public labels help regular visitors scan the parish menu. */
+.parish .desktop > a,
+.parish .dropdown summary {
+  font-size: 0.94rem;
+}
+.parish .dropdownPanel a {
+  font-size: 0.9rem;
+  min-height: 44px;
+}
+.parish .quickLink {
+  font-size: 0.82rem;
+  min-height: 46px;
+}

@@ -1,0 +1,186 @@
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+.heading h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0;
+}
+.heading button {
+  border: 0;
+  background: transparent;
+  color: var(--blue);
+  font-size: 0.7rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  padding: 5px 0;
+  flex-shrink: 0;
+}
+.days {
+  border-top: 1px solid var(--line);
+}
+.day {
+  border: 1px solid var(--line);
+  border-top: 0;
+}
+.day h3 {
+  margin: 0;
+  font-weight: 400;
+}
+.dayToggle {
+  display: flex;
+  width: 100%;
+  text-align: left;
+  align-items: center;
+  gap: 18px;
+  padding: 20px;
+  background: var(--white);
+  color: var(--ink);
+  border: 0;
+}
+.dayToggle:hover {
+  background: var(--paper);
+}
+.dayNumber {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: var(--blue);
+  font-size: 1.65rem;
+  min-width: 40px;
+  line-height: 1.1;
+}
+.dayNumber small {
+  font-size: 0.59rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 7px;
+  color: var(--muted);
+}
+.dayName {
+  flex: 1;
+}
+.dayName > span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.91rem;
+  text-transform: capitalize;
+}
+.dayName small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.67rem;
+  line-height: 1.65;
+  margin-top: 6px;
+  max-width: 230px;
+}
+.dayName em {
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  font-style: normal;
+  background: var(--blue);
+  color: white;
+  padding: 4px 6px;
+  letter-spacing: 0.04em;
+}
+.times {
+  font-size: 0.66rem;
+  color: var(--muted);
+  max-width: 125px;
+  line-height: 1.8;
+}
+.dayToggle > svg {
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.rotated {
+  transform: rotate(180deg);
+}
+.today {
+  border-left: 3px solid var(--gold);
+}
+.today .dayToggle {
+  background: #f9f7f0;
+}
+.details {
+  padding: 0 20px 15px 78px;
+  background: var(--white);
+}
+.mass {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: start;
+  gap: 14px;
+  border-top: 1px solid var(--line);
+  padding: 17px 0;
+}
+.time {
+  color: var(--blue);
+  font-weight: 500;
+  font-size: 0.92rem;
+}
+.massName {
+  font-size: 0.76rem;
+  margin: 0;
+  color: var(--blue);
+}
+.massName > span {
+  color: var(--muted);
+}
+.intention {
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.7;
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+.celebrant {
+  font-size: 0.68rem;
+  color: var(--gold-dark);
+  padding-top: 3px;
+}
+.empty {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+@media (max-width: 650px) {
+  .heading {
+    align-items: center;
+  }
+  .heading h2 {
+    font-size: 1.3rem;
+  }
+  .heading button {
+    font-size: 0.65rem;
+  }
+  .dayToggle {
+    padding: 17px 13px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .dayNumber {
+    min-width: 32px;
+    font-size: 1.5rem;
+  }
+  .dayName {
+    min-width: 150px;
+  }
+  .dayName small {
+    max-width: 210px;
+  }
+  .times {
+    display: none;
+  }
+  .details {
+    padding: 0 14px 8px;
+  }
+  .mass {
+    gap: 11px;
+    grid-template-columns: 45px 1fr auto;
+  }
+}

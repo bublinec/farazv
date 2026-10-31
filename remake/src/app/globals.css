@@ -1,0 +1,465 @@
+@font-face {
+  font-family: Ubuntu;
+  src: url("/fonts/ubuntu-regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: Ubuntu;
+  src: url("/fonts/ubuntu-medium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: Ubuntu;
+  src: url("/fonts/ubuntu-bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("/fonts/source-serif-4-variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("/fonts/source-serif-4-variable-italic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 200 900;
+  font-display: swap;
+}
+
+:root {
+  --blue: #2e5268;
+  --blue-deep: #183a4b;
+  --gold: #bfa169;
+  --gold-dark: #806333;
+  --gold-light: #e0c994;
+  --ink: #303638;
+  --muted: #5f686e;
+  --line: #e4e4dc;
+  --paper: #f6f5f0;
+  --white: #fff;
+  --font-body: Ubuntu, system-ui, sans-serif;
+  --content-width: 1200px;
+  color-scheme: light;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+}
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--white);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+button,
+summary,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+a {
+  color: var(--blue);
+  text-underline-offset: 4px;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure {
+  margin-top: 0;
+}
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.25;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+h1 {
+  font-size: clamp(2.15rem, 4vw, 3.25rem);
+}
+h2 {
+  font-size: clamp(1.8rem, 3vw, 2.35rem);
+}
+h3 {
+  font-size: 1.25rem;
+}
+p:last-child {
+  margin-bottom: 0;
+}
+::selection {
+  background: #d9c798;
+  color: #163344;
+}
+:focus-visible {
+  outline: 3px solid #94712e;
+  outline-offset: 5px;
+}
+.container {
+  width: min(var(--content-width), calc(100% - 80px));
+  margin-inline: auto;
+}
+.section {
+  padding-block: 82px;
+}
+.eyebrow {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 14px;
+}
+.sectionHeading {
+  max-width: 720px;
+  margin-bottom: 37px;
+}
+.sectionHeading h2 {
+  margin-bottom: 18px;
+}
+.sectionHeadingCenter {
+  text-align: center;
+  margin-inline: auto;
+}
+.headingRule {
+  display: block;
+  height: 1px;
+  width: 56px;
+  background: var(--gold);
+  margin: 0 0 22px;
+}
+.sectionHeadingCenter .headingRule {
+  margin-inline: auto;
+}
+.sectionDescription {
+  color: var(--muted);
+  max-width: 58ch;
+  font-size: 0.96rem;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+.sectionHeadingCenter .sectionDescription {
+  margin-inline: auto;
+}
+.button,
+.buttonOutline {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  padding: 12px 23px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.4;
+  border: 1px solid var(--blue);
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+.button {
+  background: var(--blue);
+  color: white;
+}
+.button:hover {
+  background: var(--blue-deep);
+  border-color: var(--blue-deep);
+}
+.buttonOutline {
+  background: transparent;
+  color: var(--blue);
+}
+.buttonOutline:hover {
+  background: var(--blue);
+  color: white;
+}
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--blue);
+}
+.textLink:hover {
+  text-decoration: underline;
+}
+.pageHero {
+  background: var(--paper);
+  position: relative;
+  padding: 26px 0 55px;
+  isolation: isolate;
+}
+.pageHeroContent {
+  position: relative;
+  z-index: 1;
+}
+.pageHero h1 {
+  margin: 20px 0 14px;
+}
+.pageHero .eyebrow {
+  margin-top: 35px;
+  margin-bottom: 0;
+}
+.pageHeroDescription {
+  max-width: 62ch;
+  color: var(--muted);
+  margin-bottom: 0;
+  font-size: 1rem;
+}
+.pageHeroPhoto {
+  color: white;
+  background: var(--blue-deep);
+}
+.pageHeroPhoto::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  z-index: -1;
+  background: linear-gradient(90deg, #102f41db, #1735438a);
+}
+.pageHeroImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  object-position: center 45%;
+}
+.pageHeroPhoto .eyebrow {
+  color: var(--gold-light);
+}
+.pageHeroPhoto .pageHeroDescription {
+  color: #e0e4e3;
+}
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  font-size: 0.67rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.breadcrumbs a {
+  color: inherit;
+  text-decoration: none;
+}
+.pageHeroPhoto .breadcrumbs {
+  color: #dce0df;
+}
+.prose {
+  max-width: 72ch;
+  line-height: 1.85;
+}
+.prose p {
+  margin-bottom: 1.5rem;
+}
+.prose h2,
+.prose h3 {
+  margin-top: 2rem;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.3rem;
+}
+.prose li {
+  margin-bottom: 0.65rem;
+}
+.skipLink {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  padding: 10px 16px;
+  background: var(--white);
+  color: var(--blue);
+  z-index: 1000;
+  transform: translateY(-160%);
+}
+.skipLink:focus {
+  transform: translateY(0);
+}
+.imageTrigger {
+  display: block;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  width: 100%;
+  color: inherit;
+  text-align: inherit;
+}
+.imageDialog {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: white;
+  width: min(1100px, 94vw);
+  max-width: 94vw;
+  max-height: 94dvh;
+  overflow: visible;
+}
+.imageDialog::backdrop {
+  background: #081b27ed;
+}
+.imageDialog figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.imageDialog figure img {
+  max-height: 82dvh;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+.imageDialog figcaption {
+  padding: 15px 30px 0;
+  font-size: 0.8rem;
+  text-align: center;
+}
+.imageDialogClose {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  z-index: 2;
+  color: white;
+  background: #173b4e;
+  border: 1px solid #ffffff65;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (max-width: 900px) {
+  .container {
+    width: calc(100% - 48px);
+  }
+  .section {
+    padding-block: 62px;
+  }
+}
+@media (max-width: 550px) {
+  .container {
+    width: calc(100% - 36px);
+  }
+  .section {
+    padding-block: 48px;
+  }
+  .sectionHeading {
+    margin-bottom: 28px;
+  }
+  .pageHero {
+    padding-bottom: 37px;
+  }
+  .pageHero .eyebrow {
+    margin-top: 27px;
+  }
+  .pageHero h1 {
+    margin-top: 15px;
+  }
+  .pageHeroDescription {
+    font-size: 0.9rem;
+  }
+  .imageDialogClose {
+    top: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.unavailable {
+  padding: 2rem;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+}
+.unavailable h2 {
+  font-size: 1.4rem;
+}
+.unavailable p {
+  color: var(--muted);
+}
+.compactUnavailable {
+  margin-block: 1rem;
+}
+.mediaMissing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  min-height: 140px;
+  max-height: 480px;
+  padding: 1.5rem;
+  background: var(--paper);
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.8rem;
+  border: 1px solid var(--line);
+}
+.mediaMissing > span:first-child {
+  font-size: 2rem;
+  color: var(--gold-dark);
+}

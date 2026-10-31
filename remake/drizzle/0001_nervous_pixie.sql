@@ -1,0 +1,2 @@
+DROP INDEX "content_public_path_unique";--> statement-breakpoint
+CREATE UNIQUE INDEX "content_public_path_unique" ON "content_records" USING btree ((case when "kind" in ('news', 'event') then 'news' else "kind" end),"public_slug") WHERE "content_records"."public_slug" is not null;

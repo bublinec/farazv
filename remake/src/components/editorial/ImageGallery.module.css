@@ -1,0 +1,138 @@
+.gallery {
+  margin: 2.5rem 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.single {
+  grid-template-columns: minmax(0, 1fr);
+}
+.grid figure {
+  margin: 0;
+  min-width: 0;
+}
+.grid button {
+  display: block;
+  width: 100%;
+  position: relative;
+  padding: 0;
+  background: var(--paper);
+  border: 0;
+  cursor: zoom-in;
+  overflow: hidden;
+}
+.grid button img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.4;
+  object-fit: cover;
+}
+.single button img {
+  aspect-ratio: auto;
+  max-height: 48rem;
+  object-fit: contain;
+}
+.grid figcaption {
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin-top: 0.65rem;
+  line-height: 1.5;
+}
+.zoom {
+  position: absolute;
+  bottom: 0.7rem;
+  right: 0.7rem;
+  display: grid;
+  place-items: center;
+  background: rgb(255 255 255 / 92%);
+  color: var(--blue);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font-size: 1.3rem;
+}
+.dialog {
+  max-width: none;
+  width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  padding: 1.5rem;
+  border: 0;
+  background: #111b22;
+  color: white;
+  overflow: auto;
+}
+.dialog::backdrop {
+  background: rgb(17 27 34 / 95%);
+}
+.viewer {
+  width: min(100%, 100rem);
+  margin: auto;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+}
+.viewer button {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / 38%);
+  padding: 0.65rem 1rem;
+  color: white;
+  cursor: pointer;
+  border-radius: 2px;
+  font: inherit;
+  font-size: 0.88rem;
+}
+.viewer button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.toolbar button > span {
+  font-size: 1.35rem;
+  line-height: 0.7;
+}
+.fullImage {
+  display: block;
+  width: 100%;
+  height: min(72dvh, 65rem);
+  object-fit: contain;
+}
+.caption {
+  text-align: center;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #e5e4e0;
+  margin: 1rem auto;
+  max-width: 50rem;
+}
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+@media (max-width: 600px) {
+  .dialog {
+    padding: 0.8rem;
+  }
+  .toolbar {
+    font-size: 0.75rem;
+  }
+  .viewer button {
+    font-size: 0.8rem;
+    padding: 0.65rem 0.7rem;
+  }
+  .grid {
+    gap: 0.7rem;
+  }
+}

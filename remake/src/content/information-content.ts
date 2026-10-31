@@ -1,0 +1,8760 @@
+import "server-only";
+import type { PublishedInformationContent } from "./information";
+
+/**
+ * Full reading copy/media from the 29 PUBLISHED legacy static pages, reviewed
+ * 31 October 2026. Private pages, auth, configuration and submissions are absent.
+ * Purpose-specific TSX layouts choose presentation; this is not an editable CMS.
+ * Regenerate with scripts/migration/export-information.ts, then review the diff.
+ * Placeholder copy and unverified legacy tour links are deliberately excluded.
+ */
+export const publishedInformationContent: PublishedInformationContent[] = [
+  {
+    route: "/vyveska",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636354841/pews_d58c75c231.png",
+      width: 1440,
+      height: 336,
+      alt: "Výveska"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_shared_slides-8",
+        kind: "slides",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636355180/lennon_caranzo_2_UW_0_Xc_Jwq_EU_unsplash_1_03e15f6534.jpg",
+                alt: "",
+                width: 1920,
+                height: 1280
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_announcements_sections-1",
+        kind: "announcements_sections",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Prečítajte si aj..."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Výveska"
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636887697/railing_0312d25ef8.png",
+                alt: "",
+                width: 1440,
+                height: 515
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    route: "/404",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639589108/794f85c4_0858_4a75_8e7f_72bbddda15c2_rw_1920_e801ba8383.jpg",
+      width: 1920,
+      height: 1280,
+      alt: "Stránka sa nenašla"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_text-119",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Zdá sa že ste zablúdili"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    route: "/sviatosti/sviatost-zmierenia",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639602825/Screenshot_from_2021_12_15_22_12_17_f8180f408d.png",
+      width: 2805,
+      height: 678,
+      alt: "Sviatosť zmierenia"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_quotation_sections-2",
+        kind: "quotation_sections",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "blockquote",
+              content: [
+                {
+                  type: "paragraph",
+                  content: [
+                    {
+                      type: "text",
+                      text: "Hriech je predovšetkým urážkou Boha, prerušením spoločenstva s ním. Zároveň narúša spoločenstvo s Cirkvou. Preto obrátenie prináša súčasne Božie odpustenie a zmierenie s Cirkvou, čo liturgicky vyjadruje a uskutočňuje sviatosť pokánia a zmierenia."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "— Katechizmus Katolíckej cirkvi 1661"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_text-10",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kedy je možnosť vyspovedať sa?"
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 3
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Vo farskom kostole:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "polhodinu pred sv. omšami: "
+                        },
+                        {
+                          type: "text",
+                          text: "pondelok – sobota",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ";"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "v týždni pred prvým piatkom",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " mesiaca – polhodinu pred rannými a hodinu pred poludňajšími a večernými sv. omšami: pondelok – piatok; "
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "vo štvrtok pred prvým piatkom",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " mesiaca: medzi 9:00 – 12:00 hod. a 14:00 – 17:00 hod. V tento deň je od 15:00 do 16:00 hod. vyhradené "
+                        },
+                        {
+                          type: "text",
+                          text: "prednostné spovedanie detí a mládeže",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: "."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 3
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "V kostole filiálky Lieskovec:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "polhodinu pred sv. omšami: "
+                        },
+                        {
+                          type: "text",
+                          text: "piatok, nedeľa a prikázaný sviatok",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ";"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "v týždni pred prvým piatkom",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " mesiaca – hodinu pred sv. omšou."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 3
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "V kostole filiálky Zolná:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "polhodinu pred sv. omšou: "
+                        },
+                        {
+                          type: "text",
+                          text: "prvá nedeľa v mesiaci",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: "."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Pre všetkých veriacich je dostupná služba "
+                },
+                {
+                  type: "text",
+                  text: "individuálnej pastorácie",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", t. j. vyslúženie sviatostí - svätej spovede či svätého prijímania - po osobnom dohovore s kňazom. Svojich starých a chorých príbuzných môžete prihlásiť k pravidelnému i jednorazovému prijatiu sviatostí zmierenia a Eucharistia telefonicky, osobne, e-mailom alebo v sakristii kostola."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-42",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: []
+        }
+      }
+    ]
+  },
+  {
+    route: "/farnost/virtualna-prehliadka",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551421/IMG_4827_deb22b3c98.jpg",
+      width: 1024,
+      height: 683,
+      alt: "Virtuálna prehliadka"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_iframes-2",
+        kind: "iframes",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Virtuálna prehliadka"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Autor: Pavol Albert, ArtSohl"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Zobraziť viac na ArtSohl",
+                  marks: []
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_iframes-4",
+        kind: "iframes",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "3D Modely"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://sketchfab.com/models/ba87a3588d624facabb1bb8ef27a786e/embed?autostart=0&ui_controls=1&ui_infos=1&ui_inspector=1&ui_stop=1&ui_watermark=1&ui_watermark_link=1",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://sketchfab.com/models/ba87a3588d624facabb1bb8ef27a786e/embed?autostart=0&ui_controls=1&ui_infos=1&ui_inspector=1&ui_stop=1&ui_watermark=1&ui_watermark_link=1"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://sketchfab.com/models/e182d079f96641f49d876abdd4735f3d/embed?autostart=0&ui_controls=1&ui_infos=1&ui_inspector=1&ui_stop=1&ui_watermark=1&ui_watermark_link=1",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://sketchfab.com/models/e182d079f96641f49d876abdd4735f3d/embed?autostart=0&ui_controls=1&ui_infos=1&ui_inspector=1&ui_stop=1&ui_watermark=1&ui_watermark_link=1"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_text-112",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: []
+        }
+      }
+    ],
+    unavailableTour: true
+  },
+  {
+    route: "/sviatosti/sviatost-eucharistie",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639603430/Screenshot_from_2021_12_15_22_21_47_79e3dd347c.png",
+      width: 2667,
+      height: 763,
+      alt: "Sviatosť Eucharistie"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_quotation_sections-3",
+        kind: "quotation_sections",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "blockquote",
+              content: [
+                {
+                  type: "paragraph",
+                  content: [
+                    {
+                      type: "text",
+                      text: "Eucharistia je prameň a vrchol celého kresťanského života. Ostatné sviatosti, ako aj všetky ekleziálne služby a apoštolské diela úzko súvisia so svätou Eucharistiou a sú na ňu zamerané. Veď najsvätejšia Eucharistia obsahuje celé duchovné dobro Cirkvi, totiž samého Krista, nášho veľkonočného Baránka."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "— Katechizmus Katolíckej cirkvi 1324"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_text-8",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Ako prihlásiť dieťa na prvé sväté prijímanie?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Blízkou prípravou",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " na pristúpenie dieťaťa k prvému svätému prijímaniu je "
+                },
+                {
+                  type: "text",
+                  text: "navštevovanie náboženstva/náboženskej výchovy v škole",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", zvlášť počas tretieho ročníka ZŠ. Túto prípravu vykonávajú katechéti. Preto sa "
+                },
+                {
+                  type: "text",
+                  text: "s úmyslom prihlásiť dieťa na prijatie prvého svätého prijímania obracajte priamo na katechétov",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " v škole, ktorú dieťa navštevuje."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Bezprostredná príprava",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " prebieha formou niekoľkých stretnutí vo farských priestoroch a osobným rozhovorom dieťaťa s kňazom a katechétmi, kde následne "
+                },
+                {
+                  type: "text",
+                  text: "dieťa preukáže schopnosť a pripravenosť",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " na prijatie sviatosti Eucharistie."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "V prípade, že bolo dieťa krstené mimo farnosti Zvolen-mesto, prosíme rodičov, aby priniesli "
+                },
+                {
+                  type: "text",
+                  text: "krstný list dieťaťa",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " – najneskôr dva týždne pred konaním prvého svätého prijímania."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Ako je to s prvým prijatím Eucharistie v dospelosti?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Pod pojmom dospelý sa rozumie človek "
+                },
+                {
+                  type: "text",
+                  text: "starší ako 14 rokov",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ". Takýto dospelý sa môže prihlásiť v čase úradných hodín v kancelárii farského úradu. Podobne ako v prípade katechumenov (ktorí chcú prijať iniciačné sviatosti – krst, Eucharistia, birmovanie), "
+                },
+                {
+                  type: "text",
+                  text: "príprava",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " sa koná formou nábožensko-teologického kurzu, ktorý sa začína každý rok v mesiaci október."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-38",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: []
+        }
+      }
+    ]
+  },
+  {
+    route: "/farnost/kalendar-akcii",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636354841/pews_d58c75c231.png",
+      width: 1440,
+      height: 336,
+      alt: "Kalendár akcií"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_shared_slides-14",
+        kind: "slides",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636355180/lennon_caranzo_2_UW_0_Xc_Jwq_EU_unsplash_1_03e15f6534.jpg",
+                alt: "",
+                width: 1920,
+                height: 1280
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    route: "/farnost/kostol-sv-alzbety",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639858475/Screenshot_from_2021_12_18_21_11_20_e581edd210.png",
+      width: 2200,
+      height: 461,
+      alt: "Kostol sv. Alžbety"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_text-101",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "História farnosti"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "O farnosti"
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Benediktínske misie v 7. storočí"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť Zvolen-mesto, zasvätená sv. Alžbete, je veľmi starobylá. Už v Predveľkomoravskom období prichádzali na územie dnešného Slovenska iroškótski mnísi ako misionári. Posielal ich "
+                },
+                {
+                  type: "text",
+                  text: "sv. Gál",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://www.zivotopisysvatych.sk/gal/"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", pôvodom Ír, ktorý účinkoval pri Bodamskom jazere a zomrel v r. 640. Prvý jeho životopis vznikol v r. 670 a posledný v r. 833. Títo benediktíni k nám prichádzali po Dunaji a potom proti prúdu riek Váh a Hron do vnútrozemia. Robili si pastoračné centrá a odtiaľ potom vychádzali do okolia. Také centrá mali v Ostrihome, v dnešnom Štúrove, v Hronskom Beňadiku, v dnešnom Žiari nad Hronom a v Kremnici. Preto môžeme predpokladať, že svojou misiou zasiahli aj Zvolen a jeho okolie. Aj pomenovanie fara, farár má pôvod v tejto misii. V Cirkvi sa používa slovo parochia a parochus, čo má pôvod v Rímskej ríši. Na východnom Slovensku sa používa slovo plebánia a plebanus od latinského slova plebs = ľud."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Autor: Jozef Kaniansky"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_images_text_grids-2",
+        kind: "images_text_grids",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Veľkomoravské osídlenie a prvý kostol"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "V čase Veľkej Moravy v 9. storočí bolo v lokalite Zvolen a okolí silné veľkomoravské osídlenie. V 70. rokoch 20. storočia sa potvrdilo veľkomoravské osídlenie na poliach medzi Sliačom a Veľkou Lúkou. V čase Veľkej Moravy stál "
+                },
+                {
+                  type: "text",
+                  text: "Zvolenský hrad",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://www.cas.sk/clanok/513306/tajomstvo-zahradkarskej-osady-vo-zvolene-odhalene-to-budete-pozerat-co-sa-pod-nou-ukryva/"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " na kopčeku dnešnej záhradkárskej osady po pravej strane cesty od Krupiny a rieky Neresnica pri vstupe do Zvolena. Jestvovanie hradu potvrdil archeologický prieskum (Beliaková). Prvý kostol vo Zvolene stál na mieste dnešného Zvolenského zámku, tam sú na nádvorí priznané jeho základy. "
+                },
+                {
+                  type: "text",
+                  text: "Kostol sv. Mikuláša",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://digilib.phil.muni.cz/bitstream/handle/11222.digilib/140766/2_ArchaeologiaHistorica_33-2008-1_26.pdf?sequence=1"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " spolu s mestom zničili Tatari v r. 1241. Mesto sa tiahlo na povodí rieky Slatina. V čase Uhorska (vzniklo v r. 1000) bol v 11. storočí postavený dnešný "
+                },
+                {
+                  type: "text",
+                  text: "Pustý hrad",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://sk.wikipedia.org/wiki/Pust%C3%BD_hrad_(Zvolen)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: "."
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639830328/Screenshot_from_2021_12_15_12_53_24_6cdb9d1351.png",
+                alt: "",
+                width: 1298,
+                height: 1026
+              }
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Sv. Alžbeta a jej vzťah k mestu Zvolen"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Sv. Alžbeta, patrónka rímskokatolíckeho kostola na námestí, má vzťah k mestu Zvolen. Jej otec, uhorský kráľ "
+                },
+                {
+                  type: "text",
+                  text: "Ondrej II.",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://sk.wikipedia.org/wiki/Ondrej_II._(Uhorsko)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", sa často a rád zdržiaval vo Zvolene aj so svojou rodinou. Dolný hrad na Pustom hrade bol jeho sídlom. Okolité lesy, kde kráľ konal poľovačky, volali „kráľovská obora“. Obyvatelia Hájnik, Rybár (dnešný Sliač) a Kováčovej zabezpečovali kráľovi potrebné služby. Preto historici pripúšťajú možnosť, že sv. Alžbeta sa mohla narodiť na hrade vo Zvolene. Sv. Alžbeta patrí medzi veľké charitatívne postavy v Cirkvi. Ako grófka vo Wartburgu stavala sirotince, chudobince a nemocnice, v ktorých aj sama pracovala. Kvôli povesti jej svätosti ju už štyri roky po smrti pápež "
+                },
+                {
+                  type: "text",
+                  text: "Gregor IX",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://sk.wikipedia.org/wiki/Gregor_IX._(p%C3%A1pe%C5%BE)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ". v r. 1235 svätorečil. "
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639569677/the_charity_of_st_elizabeth_of_hungary_50720_01878abc89.jpg",
+                alt: "",
+                width: 654,
+                height: 532
+              }
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Alžbety"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Deväť rokov po svätorečení sv. Alžbety jej zasvätili kostol vo Zvolene – ako prvý v Uhorsku. Je to terajší Kostol sv. Alžbety vo Zvolene z roku 1244 – 45 (Mikuláš Mišík). Expertíza Drevárskej fakulty vo Zvolene omylom kladie vznik Kostola sv. Alžbety do rokov 1381 – 90 v súvise so vznikom Zvolenského zámku. Kostol sv. Mikuláša aj mesto zničili Tatari v r. 1241. Iste preto sa mesto začalo stavať v priestoroch dnešného námestia. Pri Kostole sv. Alžbety postavili nemocnicu podľa príkladu sv. Alžbety, základy tej stavby sú tam priznané. Kostol bol spojený s nemocnicou chodbou, v ktorej sú dnes spovednice. Z pôvodného kostola je len terajšia sakristia, ostatné časti vznikli neskôr. Okolo kostola, ako to bolo vtedy zvykom, bol cintorín, a to aj v priestoroch dnešného Parku Ľudovíta Štúra. Mária Terézia v 18. storočí nariadila zriaďovať cintoríny mimo miest a obcí. Veža Kostola sv. Alžbety stála pred kostolom na mieste dnešného kríža. Terajšia veža bola postavená v 17. storočí v čase tureckých nájazdov aj na pozorovanie približujúcich sa Turkov. Dnešnú podobu dostala veža po r. 1708, keď Rákociho vojská mesto zničili (Kuruci). Pod vežou bol podchod, ktorého oblúky boli zamurované v roku 1914."
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639859883/kostol_663bba086b.jpg",
+                alt: "",
+                width: 470,
+                height: 620
+              }
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Protestantská reformácia"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "V 16. storočí sa stal Kostol sv. Alžbety protestantským kostolom na 100 rokov. V neďalekej Banskej Bystrici bolo mnoho nemeckého obyvateľstva, ktoré malo kontakt s Nemeckom.\nProtestantské hnutie sa  ako náboženská novota šírilo v Európe. Zvolenský farár Klein v r. 1573 sa pridal k tomuto hnutiu a oženil sa. Svoju farnosť viedol v duchu nového hnutia, a tak sa stal Kostol sv. Alžbety protestantským. Pamiatkou na to sú bočné časti chóru. O sto rokov v r. 1673 bol kostol prinavrátený katolíkom v rámci rekatolizácie. Vtedy z vďačnosti postavili bočnú kaplnku kostola a zasvätili ju Sedembolestnej Panne Márii a stavebný materiál použili z nefunkčného špitála pri kostole."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_galleries-10",
+        kind: "galleries",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "imageGallery",
+              attrs: {
+                images: [
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639569896/Screenshot_from_2021_12_15_12_25_47_138396101a.png",
+                    alt: "",
+                    width: 1266,
+                    height: 576
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639568071/Screenshot_from_2021_12_15_12_28_41_db4dd1e274.png",
+                    alt: "",
+                    width: 1013,
+                    height: 633
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639568070/Screenshot_from_2021_12_15_12_28_21_17bb3af8b0.png",
+                    alt: "",
+                    width: 503,
+                    height: 709
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639568066/Screenshot_from_2021_12_15_12_27_52_9d8235a09e.png",
+                    alt: "",
+                    width: 508,
+                    height: 666
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639568068/Screenshot_from_2021_12_15_12_28_06_0e23297d4b.png",
+                    alt: "",
+                    width: 503,
+                    height: 716
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639568066/30_0_a931beeb44.png",
+                    alt: "",
+                    width: 732,
+                    height: 480
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639568068/kostol_asi_pred_70_rokmi_15702c3091.jpg",
+                    alt: "",
+                    width: 1200,
+                    height: 850
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639568064/14770d6dd274027aadf8ce9d189975e5_eba341b58b.jpg",
+                    alt: "",
+                    width: 800,
+                    height: 527
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1642240133/kostolol_minulost_6_jpeg_c07712e56c.jpg",
+                    alt: "",
+                    width: 2332,
+                    height: 4967
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1642240150/kostolol_minulost_1_f034890ce6.jpg",
+                    alt: "",
+                    width: 4455,
+                    height: 4509
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1642240155/kostolol_minulost_2_jpeg_038376ff9d.jpg",
+                    alt: "",
+                    width: 4782,
+                    height: 6140
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1642240163/kostolol_minulost_4_jpeg_152675c21e.jpg",
+                    alt: "",
+                    width: 4784,
+                    height: 6199
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1642240164/kostolol_minulost_3_jpeg_c28c14ca94.jpg",
+                    alt: "",
+                    width: 4560,
+                    height: 6365
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1642240180/kostolol_minulost_5_jpeg_c415d6da11.jpg",
+                    alt: "",
+                    width: 6477,
+                    height: 5921
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_text-100",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Duchovný život"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "O farnosti"
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Duchovný život v minulosti"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Zvolen bol kráľovským mestom – patril kráľovi. Bolo to poľnohospodárske mesto. Väčšina obyvateľov boli roľníci, ďalší remeselníci. Roľník vstával ráno o 4.00 hod. a najneskôr o 5.00 hod. dal pokrm zvieratám. Potom išiel do kostola o 6.00 hod. Od 8.00 alebo 9.00 hod. pracoval na poli. Večer sa unavený pomodlil a išiel odpočívať. Pred Vianocami a Veľkou nocou išiel k sv. spovedi a na sv. prijímanie. Remeselníci nevstávali zavčasu a pracovali vo svojich dielňach a predávali svoje výrobky. Roľník občas predal vykŕmené zviera, alebo častejšie menšie produkty – vajíčka, mlieko, maslo, tvaroh, syr, zeleninu, ovocie, plátno. V 20. storočí sa Zvolen stal železničným uzlom a viacerí sa Sali železničiarmi. Žili z platu. Tiež vo Zvolene v 20. storočí vznikla v lokalite Balkán fabrika Union, v ktorej sa viacerí zamestnali. Po rieke Hron plťami dopravovali drevo, odkôrnené kmene alebo kresané hrady do Maďarska, alebo južné kraje Slovenska. Niektorí pracovali v tejto oblasti. Po zániku Uhorska, na konci 1. svetovej vojny – 1918 – a vzniku Československa sa kňazi snažili pozdvihnúť duchovný život vo farnostiach. Tak to bolo aj vo Zvolene. Rozvíjala sa spolková činnosť, charita, divadlá. Nacvičovali sa divadlá od slovenských klasikov, ktorí poukazovali na dobré a zlé vlastnosti nášho ľudu, a tak ľud vychovávali. Tiež propagovali úctu k Božskému Srdcu Ježišovmu a mariánsku úctu. Preto ľudia začali mesačne chodiť ku sv. spovedi a na 1. piatok k sv. prijímaniu. Tiež v mesiaci máj a október boli ružencové pobožnosti. Každú nedeľ dopoludnia boli sv. omše a popoludní ruženec. Zvlášť sa rozprúdil duchovný život za Slovenského štátu, keď vo farnostiach rehoľníci konali tzv. ľudové misie. Boli to týždenné akcie s tematickými kázňami, svätými omšami a vysluhovaním sviatostí."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Komunizmus a nežná revolúcia"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Po 2. svetovej vojne nastúpila komunistická moc, ktorá náboženstvo označila za „ópium ľudu“ a začala uskutočňovať ateizáciu. Zrušila rehole a nad Cirkvou ustanovila dozor. V každom okrese bol cirkevný tajomník, ktorý dával súhlas štátu na nejakú náboženskú činnosť. Vykonanie náboženského úkonu bez jeho súhlasu bolo trestným činom s možnosťou troch rokoch odňatia slobody. Mužské rehole boli zrušené a rehoľné sestry koncentrované a boli im pridelené rôzne práce. V tejto situácii vznikla tzv. tajná cirkev – rehoľní kňazi tajne pracovali – zhromažďovali skupinky mladých ľudí a v prírode (na chatách) im dávali duchovné cvičenia a občas robili duchovné obnovy. Títo mladí ľudia sa potom zúčastňovali sv. omší v kostole a zakladali si kresťanské rodiny. Tak to bolo od r. 1950 do Nežnej revolúcie 1989. Vo Zvolene tak pracovali saleziáni Ing. Jozef Štamec, zamestnaný vo výpočtovom stredisku, Ing. Nikodém Vašek, zamestnaný v projektovom ústave, Ing. Jozef Krušac, zamestnaný v kafilérii v Lukovom, Ing. Jozef Urban, zamestnaný vo výpočtovom stredisku, a Ing. Václav Kocian, zamestnaný vo Výskumnom ústave lesného hospodárstva. Predtým pracoval vo Zvolene Ján Beňo ako drevorubač. Táto činnosť priniesla tajné vysvätenie ďalších kňazov a celý rad laických spolupracovníkov. Po Nežnej revolúcii prišli do Zvolena rehoľníci dominikáni, farnosť sa rozdelila na farnosť Zvolen-mesto, "
+                },
+                {
+                  type: "text",
+                  text: "Zvolen-Západ",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://farnostzvolenzapad.sk/"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", "
+                },
+                {
+                  type: "text",
+                  text: "Zvolen-Sekier",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "http://sekier.fara.sk/sk/farske-oznamy.html"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", "
+                },
+                {
+                  type: "text",
+                  text: "Zvolen-Podborová",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "http://guardian.fara.sk/oznamy.html"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " a taktiež vznikla "
+                },
+                {
+                  type: "text",
+                  text: "gréckokatolícka farnosť",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "http://grkatzv.fara.sk/"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", ktorá spolu s pravoslávnou farnosťou využíva Kaplnku sv. Štefana na Zvolenskom zámku. Vo filiálke farnosti Zvolen-mesto – Lieskovec – je postavený nový kostol ktorý bol zasvätený sv. Jánovi Pavlovi II., apoštolovi Božieho milosrdenstva."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Účinkovanie rehoľných sestier"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Vo farnosti Zvolen malo svoj vplyv aj účinkovanie rehoľných sestier. Najprv to boli sestry vincentky – sestry sv. Vincenta, zakladateľa lazaristov, ktoré mali Ústav Mariánum v susedstve dnešnej reštaurácie U Alexa, bývalej Modranskej. Venovali sa výchove dievčat počas Československej republiky. Potom to boli v čase Slovenského štátu sestry františkánky, ktoré pracovali ako zdravotné sestry v nemocnici. Bývali na Bernolákovej ulici č. 20. Na zvolenskom cintoríne majú aj pochované svoje sestry. Po r. 1950 boli štátnou mocou vysťahované. V r. 1968 sa do Zvolena vrátili. Boli to štyri sestry: sr. Klaudia – predstavená, sr. Ruperta – organistka, sr. Otília a sr. Cirena, ktoré učili náboženstvo na školách. Kúpili si dom na Sokolskej ulici. V roku 1973 ich mesto Zvolen vypovedalo. Po Nežnej revolúcii sa do Zvolena vrátili a po navrátení farskej budovy Cirkvi bývali na fare. Nepodarilo sa im usídliť sa vo Zvolene, preto v r. 2000 odišli. Po r. 2010 sa vrátili pričinením Mons. Nepšinského a kúpili si byt na Námestí slobody. Teraz pôsobia vo farnosti Zvolen-mesto tri rehoľné sestry – františkánky, sestry sv. Františka z Assisi. Po Nežnej revolúcii prišli zásluhou dekana Mons. Nepšinského rehoľné sestry zo Španielska, ktoré vo Zvolene rozbiehali charitu. "
+                },
+                {
+                  type: "text",
+                  text: "Charita vo Zvolene",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://www.charitazvolen.sk/"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " funguje aj po ich odchode. Účinkovanie rehoľných sestier vo farnosti je požehnaním. Tým, že sa celé obetujú pre prácu na Božom diele, povzbudzujú k viere veriacich vo farnosti. "
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť v súčasnosti"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť sv. Alžbety vo Zvolene patrí medzi živšie farnosti v diecéze. Je tu množstvo ľudí, ktorí často a pravidelne pristupujú k sviatostiam. Je tu viacero rodín, ktoré sa snažia žiť kresťanským životom. Je tu hodne mládeže, ktorá žije duchovným životom. Robia tak aj mnohí študujúci na univerzite vo Zvolene, ktorí sú i z iných krajov Slovenska. Je tu rad vedeckých pracovníkov, osobitne z lesníctva, ktorí ako veriaci navštevujú bohoslužby. V liturgii účinkujú viacerí ako lektori a viacerí ako rozdávatelia sv. prijímania, ktorí nosia sv. prijímanie chorým do domácností. Viacerí pracujú ako katechéti pri vyučovaní náboženstva na školách. Vo farnosti úspešne funguje aj "
+                },
+                {
+                  type: "text",
+                  text: "Cirkevná škola sv. Dominika Savia",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "http://www.zsdomzv.sk/"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ". Je nádej, že Farnosť sv. Alžbety vo Zvolene sa bude rozvíjať."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "AUTOR: Jozef Kaniansky"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-46",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Naša farnosť v premenách času"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "O farnosti"
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552260/MG_8686_b_0516f95c99.jpg",
+                alt: "",
+                width: 1024,
+                height: 683
+              }
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Alžbety"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť sv. Alžbety patrí v rámci Banskobystrickej diecézy k tým živším. Je súčasťou Zvolenského dekanátu. Farnosť má dlhú a bohatú históriu."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Alžbety",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "/farnost/kostol-sv-alzbety"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Matúša v Zolnej"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Matúša v Zolnej, pôvodne zasvätený sv. Štefanovi Prvomučeníkovi, je ranogotický jednoloďový kostol z druhej polovici 13. storočia."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Matúša v Zolnej",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "/farnost/kostol-sv-matusa-v-zolnej"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Jána Pavla II."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Tento filiálny kostol farnosti Zvolen-mesto architektúrou i zariadením zapadá do umeleckého smeru rokov prelomu 20. a 21. storočia."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Jána Pavla II.",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "/farnost/kostol-sv-jana-pavla-v-lieskovci"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    route: "/farnost/kostol-sv-jana-pavla-v-lieskovci",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639592583/Screenshot_from_2021_12_15_18_44_04_d7e7c6c013.png",
+      width: 837,
+      height: 142,
+      alt: "Kostol sv. Jána Pavla II."
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_text-3",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Jána Pavla II. v Lieskovci"
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Filiálka Lieskovec"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Katolíci v obci Lieskovec tvoria živú komunitu veriacich, ktorí sa stretávajú na liturgickom slávení a modlitbách v Kostole sv. Jána Pavla II., apoštola Božieho milosrdenstva. Tento filiálny kostol farnosti Zvolen-mesto architektúrou i zariadením zapadá do umeleckého smeru rokov prelomu 20. a 21. storočia. Stavať sa začal v roku 2009 a slávnostne konsekrovaný bol 19. novembra 2011 biskupom Mons. Tomášom Galisom s patrocíniom vtedy blahoslaveného pápeža. Kostol je možné nájsť na križovatke ťahu Zvolen – Zvolenská Slatina a cesty smerom do Zolnej a Čerína. Príjemný areál kostola disponuje aj malým parkoviskom. Sväté omše tu bývajú v piatok, v nedeľu a v dni slávností cirkevného roka."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "História filiálky"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "V roku 1996 sa v obci Lieskovec začali pravidelne stretávať veriaci pri modlitbe sv. ruženca. Zároveň v srdciach veriacich začala rásť túžba sláviť v tejto obci pravidelne sv. omše a tiež mať svoj vlastný kostol. S prosbou o slúženie sv. omší sa veriaci obrátili na vtedajšieho zvolenského dekana Mons. Vojtecha Nepšinského, ktorý vyzval veriacich k hľadaniu dostatočne veľkej miestnosti, vhodnej na liturgické slávenia. Po dohode s vtedajšou pani starostkou sa dňa 1. februára 1998 konala v kultúrnom dome prvá sv. omša, ktorú celebroval vdp. Václav Kocian a zúčastnilo sa jej približne 120 ľudí."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Pre Lieskovec sa začalo obdobie pravidelného slávenia sv. omší – každú nedeľu a v 1. piatok mesiaca. Zhromaždenia sa však presunuli prevažne do priestorov domu nádeje miestneho cintorína. K histórii filiálky Lieskovec tak patrí aj posvätenie kríža na cintoríne dňa 4. novembra 2001 – počas ekumenickej pobožnosti za účasti predstaviteľov cirkví, obce a miestnych veriacich."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Ešte na začiatku toho roka, konkrétne 24. januára 2001, začali veriaci Lieskovca konkretizovať svoje plány na výstavbu nového kostola. Prisľúbená bola podpora a požehnanie vtedajšieho banskobystrického diecézneho biskupa Mons. Rudolfa Baláža. Počas príprav bol život filiálky sústredený najmä do budovy miestneho domu nádeje."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Základný kameň a miesto pre stavbu kostola požehnal dňa 15. mája 2009 Mons. Marián Bublinec, generálny vikár diecézy. Miesto pre nový kostol bolo vybrané na rázcestí, čo má zároveň symbolický charakter – Božia prítomnosť je vždy tam, kde je potrebné ľuďom ukázať správny smer. S dlho očakávanou stavbou nového kostola sa začalo dňa 30. apríla 2009. Ako titul a patrón kostola bol zvolený vtedy ešte blahoslavený pápež Ján Pavol II., apoštol Božieho milosrdenstva. Liturgické zariadenie pre kostol bolo vyhotovené podľa návrhu architekta Ing. Romana Turčana."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Pamätným dňom pre veriacich z Lieskovca sa stal 19. november 2011, keď nový kostol konsekroval žilinský diecézny biskup Mons. Tomáš Galis. (Banskobystrický biskupský stolec bol uprázdnený úmrtím Mons. Rudolfa Baláža, ktorý odišiel do večnosti 27. júla 2011.) Svätú omšu slávil otec biskup za účasti približne štyridsiatich kňazov a veľkého množstva veriacich. Pre miestnych veriacich to bol deň radosti a naplnenia nespočetného množstva modlitieb, spojených s obetavou prácou príprav a stavby kostola."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Pre liturgickú službu boli ustanovení lektori a akolyti. Voľbou boli určení zástupcovia filiálky aj do farskej rady. Rok od konsekrácie, dňa 20. mája 2012, pristúpili k prvému svätému prijímaniu 4 chlapci a 2 dievčatá. V auguste roku 2012 si tu vyslúžil sviatosť manželstva prvý pár. Na čas bol poverený službou pre filiálku Lieskovec poverený ThDr. Ondrej Šmidriak, PhD. Túžba veriacich po samostatnom farskom zriadení však nebola naplnená."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Aj po desiatich rokoch slúži kostol pomerne veľkému počtu miestnych veriacich, ktorí tvoria živú kresťanskú komunitu. Kostol je i dnes miestom slávenia Eucharistie, modlitieb, stretávania laických spoločenstiev i slávenia liturgie slova."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kňazi pochádzajúci z Lieskovca"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Štefan Čunderlík,"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Dominik Jáger,"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Ján Jáger."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "AUTOR: Jozef Kaniansky"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_galleries-12",
+        kind: "galleries",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "imageGallery",
+              attrs: {
+                images: [
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639590338/Screenshot_from_2021_12_15_18_44_04_25fa44cc22.png",
+                    alt: "",
+                    width: 837,
+                    height: 535
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639590339/Screenshot_from_2021_12_15_18_43_10_206ec52546.png",
+                    alt: "",
+                    width: 1246,
+                    height: 919
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639590339/Screenshot_from_2021_12_15_18_42_50_9b21e15e91.png",
+                    alt: "",
+                    width: 1644,
+                    height: 1157
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639590340/Screenshot_from_2021_12_15_18_43_19_95c2cef58f.png",
+                    alt: "",
+                    width: 1217,
+                    height: 918
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-47",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Naša farnosť v premenách času"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "O farnosti"
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552260/MG_8686_b_0516f95c99.jpg",
+                alt: "",
+                width: 1024,
+                height: 683
+              }
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť Zvolen-mesto"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť sv. Alžbety patrí v rámci Banskobystrickej diecézy k tým živším. Je súčasťou Zvolenského dekanátu. Farnosť má dlhú a bohatú históriu."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť Zvolen-mesto",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "/farnost/kostol-sv-alzbety"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Matúša v Zolnej"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Matúša v Zolnej, pôvodne zasvätený sv. Štefanovi Prvomučeníkovi, je ranogotický jednoloďový kostol z druhej polovici 13. storočia."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Matúša v Zolnej",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "/farnost/kostol-sv-matusa-v-zolnej"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Jána Pavla II."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Tento filiálny kostol farnosti Zvolen-mesto architektúrou i zariadením zapadá do umeleckého smeru rokov prelomu 20. a 21. storočia."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Jána Pavla II.",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "/farnost/kostol-sv-jana-pavla-v-lieskovci"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    route: "/farnost/kostol-sv-matusa-v-zolnej",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639589814/5ee60e26_b5aa_4247_8622_19e5a9664bad_rw_1920_0f11395ec4.jpg",
+      width: 1920,
+      height: 392,
+      alt: "Kostol sv. Matúša v Zolnej"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_text-5",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Zolná"
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Matúša v Zolnej"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Matúša v Zolnej, ktorý bol pôvodne zasvätený sv. Štefanovi Prvomučeníkovi, sa nachádza na miernom návrší uprostred obce. Je to ranogotický jednoloďový kostol s polygonálnym presbytériom, západnou vežou a severnou sakristiou. Postavený bol v druhej polovici 13. storočia. V interiéri sa nachádzajú vzácne nástenné maľby datované do druhej polovice 14. storočia. Kostol, obohnaný obranným múrom, navštívil v roku 2000 aj princ Charles, čo prispelo k zvýšenej pozornosti o túto vzácnu sakrálnu stavbu. Komplexná rekonštrukcia, prebiehajúca medzi rokmi 2011 až 2017, pomohla vrátiť kostolu v Zolnej pôvodnú podobu zo začiatku 14. storočia. Sväté omše sa tu slávia vždy v prvú nedeľu mesiaca a na slávnosť patrocínia kostola – sv. Matúša."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "História a stavebný vývoj kostola"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Rímskokatolícky kostol sv. Matúša pochádza z obdobia 2. pol. 13. storočia (okolo rokov 1260 – 1280). Ide o malý ranogotický vidiecky kostolík, postavený na miernom návrší nad obcou a obohnaný obranným múrom. Vznik zolnianskeho kostola, ktorý bol pôvodne zasvätený sv. Štefanovi, sa spája s menami dvoch šľachticov z rodu Kütös, Bichora a Zubraty. Z historických prameňov sa dozvedáme, že kostol v Zolnej stál už pred rokom 1292. Podobu kostola, ako ho poznáme dnes, mu vtlačili prvé dve najvýznamnejšie stavebné etapy. V prvej stavebnej etape (čiže niekedy v poslednej tretine 13. storočia) vznikla mohutná štvorcová veža, obdĺžniková loď a polygonálna svätyňa."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "V období okolo rokov 1310 – 1320 prešiel kostol druhou významnou stredovekou prestavbou. K severnej stene svätyne sa pristavala štvorcová sakristia, zvýšil sa priestor hlavnej lode a svätyňa sa zaklenula novou rebrovou klenbou. Zmenil sa aj exteriérový výraz kostola, ktorý bol celý omietnutý bielou omietkou, na ktorú bolo namaľované pravouhlé kvádrovanie, prevedené červenou linkou."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "V druhej polovici 14. storočia (1360 – 1390) vyzdobili interiér kostola nástennými maľbami, ktoré boli vytvorené technikou fresco-secco. Nástenné maľby, ktoré môžeme teraz obdivovať v interiéri kostola, boli vytvorené v rôznych časových horizontoch. Za najstaršiu nástennú maľbu sa dá pokladať malý obraz sv. Juraja, ktorý je namaľovaný na omietke pod Kristologickým cyklom. Potom nasledoval Kristologický cyklus na severnej stene lode kostola s dvomi výjavmi svätcov v juhovýchodnom rohu lode kostola (sv. Mikuláš a sv. Katarína). Obraz sv. Valentína, ktorý je na ľavej strane od víťazného oblúku, patrí k najmladším maliarskym prejavom stredovekej nástennej maľby v lodi kostola. Výjav sv. Valentína môžeme datovať do obdobia okolo roku 1510. Za rovnako staré alebo o čosi mladšie sa dajú pokladať nástenné maľby dvoch hláv neznámych kráľovských svätcov, zachované v torzálnom stave na vnútornej stene víťazného oblúka."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "V 16. storočí, keď kostol prešiel do rúk evanjelikom, pribudli na rohoch svätyne mohutné oporné piliere a okolo kostola postavili obranný múr."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Obdobie baroka prinieslo do vývoja len malé zmeny, a to najmä v interiéri kostola. Niekedy koncom 17. storočia bola v západnej časti lode kostola postavená drevená empora, vo svätyni pribudol barokový oltár a krstiteľnica."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Druhá svetová vojna kostolík v dosť veľkej miere poškodila a hrozil mu jeho zánik. Mínometné granáty poškodili časť južného múru na lodi kostola a zničili celú klenbu sakristie. Kostol chátral až do jeho celkovej obnovy v 70. rokoch 20. storočia, keď sa mu konečne viac dostalo pozornosti."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "AUTOR: Jozef Kaniansky"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_galleries-11",
+        kind: "galleries",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "imageGallery",
+              attrs: {
+                images: [
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639589113/858e366d_e7d5_4bfa_b202_aa399c0526bc_rw_1920_226622e823.jpg",
+                    alt: "",
+                    width: 1920,
+                    height: 2880
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639589111/4979b2a4_737d_46de_bbda_ec7b5fc3c561_rw_1920_130e9f7005.jpg",
+                    alt: "",
+                    width: 1920,
+                    height: 2880
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639589117/c6c23cd2_ccb6_438f_a9d9_f520897a9caa_rw_1920_b064dbe4e8.jpg",
+                    alt: "",
+                    width: 1920,
+                    height: 1280
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639589729/5ee60e26_b5aa_4247_8622_19e5a9664bad_rw_1920_d2702b6703.jpg",
+                    alt: "",
+                    width: 1920,
+                    height: 1280
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639589109/64bbc1f8_6fa5_4323_acad_495423c7a372_rw_1920_a0b3368f05.jpg",
+                    alt: "",
+                    width: 1920,
+                    height: 2880
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639589113/de3188e3_c69e_48ab_9b41_8af7264f5280_rw_1920_8311e4867a.jpg",
+                    alt: "",
+                    width: 1920,
+                    height: 1280
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639589109/378b115b_5071_4976_ac87_2b1a6275ebe3_rw_1920_ca318621aa.jpg",
+                    alt: "",
+                    width: 1920,
+                    height: 2880
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639589115/f018636a_efb1_4d5f_af73_20ab9569fbd4_rw_1920_b2f4225e1d.jpg",
+                    alt: "",
+                    width: 1920,
+                    height: 1280
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_text-108",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Výnimočnosť kostola v Zolnej"
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 3
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Architektúra"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kostolík sv. Matúša predstavuje jedinečný príklad sakrálnej vidieckej stavby z 13. storočia, v ktorej sa prelínajú dve slohové obdobia – končiaci sa románsky sloh a začínajúci gotický sloh. Prezrádzajú to najmä architektonické kamenné články na fasádach kostola. Ich forma je miestami ešte románska, avšak prevedenie je už v gotickom duchu. Kamenné prípory na exteriéri svätyne s oblúčkovým vlysom sú výlučne románske prvky."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Zaujímavé sú aj niektoré kamenárske prvky v interiéri kostola, ktoré pochádzajú už z druhej gotickej stavebnej etapy – pätky klenieb, svorníky, pastofórium, ako aj krásny príklad gotického kamenného umývadla (lavabó), nachádzajúceho sa v sakristii. Vo veži kostola sa nachádza gotický zvon s minuskulovým nápisom a datovaním r. 1514."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 3
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Nástenné maľby"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Stredoveké nástenné maľby v interiéri kostola pochádzajú z niekoľkých časových období. Medzi najvýznamnejšie z týchto malieb patrí Kristologický cyklus, namaľovaný na severnej stene lode kostola, ktorý tvoria výjavy (zľava doprava): snímanie z kríža, oplakávanie, zmŕtvychvstanie a výjav noli me tangere. Pod nimi sa nachádza namaľovaný zriasený záves (lambrekýn), pod ktorým sa v 90. rokoch 20. storočia našiel malý výjav sv. Juraja. V juhovýchodnom rohu lode sa nachádzajú výjavy sv. Mikuláša a sv. Kataríny Alexandrijskej, orámované ozdobnými bordúrami."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Nástenné maľby v Zolnej sú dielom vagantného (potulného) maliara a jeho dielne, ktorý pochádzal najpravdepodobnejšie z oblasti severného Talianska alebo Korutánska. Zolnianske maľby sú výnimočné najmä v tom, že v nich cítiť jasný byzantský vplyv, a to najmä na výjave oplakávania Krista. Sú to skĺbené talianske vzory v byzantskom type kompozície. Obrazy pašiového cyklu v Zolnej, najmä výjav oplakávania Krista, majú v slovenskom stredovekom maliarstve jedinečné postavenie. Pod týmto obrazom sa zachoval aj pôvodný nápis písaný pisárskou gotickou minuskulou, ktorý hovorí pravdepodobne o menách troch najvýznamnejších majstrov z tejto dielne."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Postava sv. Valentína, ktorá je namaľovaná na ľavej strane od víťazného oblúku, nepatrí k dielni toho istého maliara ako ostatné maľby v lodi kostola, ale vznikla približne o 130 rokov neskôr (okolo roku 1510). Svätec je znázornený v biskupskom rúchu s mitrou na hlave a berlou. Pri nohách mu leží postava epileptika, ktorá je jeho osobným atribútom."
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Autor: Jozef Kaniansky"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Foto: "
+                        },
+                        {
+                          type: "text",
+                          text: "Claudia Nemcová",
+                          marks: [
+                            {
+                              type: "link",
+                              attrs: {
+                                href: "https://nemcovaclaudia.myportfolio.com/kostoly-projekt"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Virtuálna prehliadka: "
+                        },
+                        {
+                          type: "text",
+                          text: "Pavol Albert",
+                          marks: []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_iframes-3",
+        kind: "iframes",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Virtuálna prehliadka"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Zolná"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Zobraziť celú prehliadku",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "/farnost/virtualna-prehliadka"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-48",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Naša farnosť v premenách času"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "O farnosti"
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552260/MG_8686_b_0516f95c99.jpg",
+                alt: "",
+                width: 1024,
+                height: 683
+              }
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť Zvolen-mesto"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť sv. Alžbety patrí v rámci Banskobystrickej diecézy k tým živším. Je súčasťou Zvolenského dekanátu. Farnosť má dlhú a bohatú históriu."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť Zvolen-mesto",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "/farnost/kostol-sv-alzbety"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Matúša v Zolnej"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Matúša v Zolnej, pôvodne zasvätený sv. Štefanovi Prvomučeníkovi, je ranogotický jednoloďový kostol z druhej polovici 13. storočia."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Matúša v Zolnej",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "/farnost/kostol-sv-matusa-v-zolnej"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Jána Pavla II."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Tento filiálny kostol farnosti Zvolen-mesto architektúrou i zariadením zapadá do umeleckého smeru rokov prelomu 20. a 21. storočia."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kostol sv. Jána Pavla II.",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "/farnost/kostol-sv-jana-pavla-v-lieskovci"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    unavailableTour: true
+  },
+  {
+    route: "/farnost/nase-spolocenstvo",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639858475/Screenshot_from_2021_12_18_21_09_27_cb7911b311.png",
+      width: 2665,
+      height: 474,
+      alt: "Naše spoločenstvo"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_shared_slides-13",
+        kind: "slides",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636355180/lennon_caranzo_2_UW_0_Xc_Jwq_EU_unsplash_1_03e15f6534.jpg",
+                alt: "",
+                width: 1920,
+                height: 1280
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    route: "/prispevky",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639858475/Screenshot_from_2021_12_18_21_11_20_e581edd210.png",
+      width: 2200,
+      height: 461,
+      alt: "Príspevky"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: []
+  },
+  {
+    route: "/spolocenstva/reholne-sestry",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639589108/794f85c4_0858_4a75_8e7f_72bbddda15c2_rw_1920_e801ba8383.jpg",
+      width: 1920,
+      height: 1280,
+      alt: "Rehoľné sestry"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_text-117",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kongregácia Dcér sv. Františka Assiského (CFSF)"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Spoločenstvo"
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Pôsobenie sestier vo Zvolene"
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 3
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "začiatok r. 1939 – 9. 8. 1957"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Začiatkom roku 1939 požiadalo riaditeľstvo nemocnice vo Zvolene Kongregáciu, aby sestry prevzali\nzdravotnícke práce v nemocnici.\nNajprv odišli do Zvolena štyri sestry, ich počet sa stále zvyšoval, až v roku 1942 tam bolo už\nštyridsaťpäť sestier. Boli zamestnané na oddeleniach, mali dobré odborné znalosti. Ich spolupráca\ns lekármi bola dobrá, aj pacienti boli spokojní s ich starostlivosťou.\n9. augusta 1957 mali byť sestry štátnym nariadením odsunuté do centralizačných domovov. Keďže\nsestry s tým nesúhlasili, boli rozdelené na skupiny a odvezené do práce v Ústavoch sociálnej\nstarostlivosti v Žiline, Uhrovci a Zemianskom Podhradí, ďalšie do Domova dôchodcov v Lučenci a do\nCharitného domova v Pezinku."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 3
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "august 1968 – september 1971"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "V roku 1968 nastalo uvoľnenie náboženského života a sestry boli pozvané do Zvolena, aby vyučovali\nnáboženstvo.\nTri sestry si prenajali byt a v roku 1969 začali s vyučovaním náboženstva. Zároveň sa starali aj o kostol\na jedna z nich pracovala ako kantorka.\nUž vo roku 1970 podľa nariadenia štátnych orgánov museli prestať s vyučovaním. Vo Zvolene zostali\ndo roku 1971, v septembri sa presťahovali do Charitného domova v Slovenskej Ľupči."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 3
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "1. 1. 4. 1991 – 27. 6. 2000"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Sestry po páde totalitného režimu znova prišli do Zvolena, ubytované boli vo farskej budove.\nTri sestry pracovali v nemocnici, dôchodkyne vypomáhali pri prácach vo farskej domácnosti."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 3
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "rok 2016"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Na požiadanie vdp. Mons. Vojtecha Nepšinského sa sestry vrátili do Zvolena, aby vypomáhali vo\nfarskej práci. Ubytovanie mali vo farskej budove.\nV roku 2021 sa sestry presťahovali do bytu na Námestí slobody, kde je teraz trojčlenná komunita.\nJedna zo sestier pokračuje vo svojej práci kostolníčky, jedna pracuje ako katechétka.\nSestry sa snažia zamerať na potreby farnosti, ale hlavne svojím zasväteným životom viesť apoštolát\nmodlitby za potreby Cirkvi."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_galleries-14",
+        kind: "galleries",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "imageGallery",
+              attrs: {
+                images: [
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1768747181/Whats_App_Image_2026_01_18_at_15_09_41_afef188cdb.jpg",
+                    alt: "",
+                    width: 2000,
+                    height: 1500
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1768747181/Whats_App_Image_2026_01_18_at_15_09_42_01deac2590.jpg",
+                    alt: "",
+                    width: 1500,
+                    height: 2000
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639839839/05_foto_6648040145.jpg",
+                    alt: "",
+                    width: 6048,
+                    height: 4024
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639839838/08_foto_e01e8b2dff.jpg",
+                    alt: "",
+                    width: 6048,
+                    height: 4024
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-53",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: []
+        }
+      }
+    ]
+  },
+  {
+    route: "/farnost/farske-oznamy",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636354841/pews_d58c75c231.png",
+      width: 1440,
+      height: 336,
+      alt: "Farské oznamy"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_shared_slides-11",
+        kind: "slides",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636355180/lennon_caranzo_2_UW_0_Xc_Jwq_EU_unsplash_1_03e15f6534.jpg",
+                alt: "",
+                width: 1920,
+                height: 1280
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_galleries-16",
+        kind: "galleries",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "imageGallery",
+              attrs: {
+                images: [
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639606936/Elektronicky_zvoncek_QR_4c67f36694.jpg",
+                    alt: "",
+                    width: 3508,
+                    height: 3508
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1726829466/NS_oltar_A5_7c82966003.jpg",
+                    alt: "",
+                    width: 1860,
+                    height: 2480
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    route: "/farnost/cirkevna-skola",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638880561/CIRK_SKOLA_brigada_d4328c9845.png",
+      width: 1463,
+      height: 975,
+      alt: "Cirkevná škola"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_images_text_grids-11",
+        kind: "images_text_grids",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Základná škola sv. Dominika Savia"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Naša Základná škola sv. Dominika Savia vo Zvolene je v pôsobnosti Banskobystrickej\ndiecézy už vyše 30 rokov – vznikla totiž 1. 7. 1992 zásluhou otca biskupa Rudolfa Baláža –\nvzdeláva, vychováva a vštepuje kresťanské hodnoty deťom nielen zo Zvolena, ale aj\nz okolitých obcí. Sme školou rodinného typu a všetky radosti aj starosti prežívame tak, ako\nv každej rodine. Aj keď sa počtom žiakov radíme medzi menšie školy (aktuálne máme 234\nžiakov), do povedomia rodičov sa dostávame svojimi úspechmi. Dlhodobo sa\nv celoslovenskom testovaní piatakov a deviatakov zo slovenského jazyka a matematiky\numiestňujeme nad celoslovenským priemerom. Posledné roky obsadzujeme medailové\npriečky v rôznych súťažiach či olympiádach. Sme trojnásobní víťazi celoštátneho kola\nbiblickej olympiády i majstri Slovenska vo florbale. Aj vďaka týmto úspechom sme\nv predminulom školskom roku získali ocenenie tretia najlepšia škola Slovenska do 300\nžiakov."
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639515231/cirkevna_florbal_521e14e2e6.jpg",
+                alt: "",
+                width: 800,
+                height: 533
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Naše triedy sú vybavené tabuľami, ktoré umožňujú interaktívne a projektové\nvyučovanie s použitím modernej didaktickej techniky. Výučba anglického jazyka od 1.\nročníka a informatickej výchovy od 2. ročníka je pre mnohých záujemcov lákadlom.\nKaždoročne organizujeme školu v prírode, plavecký a lyžiarsky výcvik. Už viac ako desaťročie\nsú najobľúbenejšími akciami Rozprávková noc v škole a Prvácka pasovačka. Na Mikuláša už\ntradične pečieme v škole medovníčky. Novinkou je Požehnávanie školských tašiek našich\nprváčikov počas sv. omše na začiatku školského roka. Aktívni sme aj na internete. Naša škola\nmá vlastný "
+                },
+                {
+                  type: "text",
+                  text: "youtubový kanál",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://www.youtube.com/channel/UC-eh3-CqMIcxGtsgBycW_pg"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", na ktorom môžete sledovať\nkaždý mesiac nové správy zo života našej školy."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Pestrý program čaká deti aj v školskom klube Svetielko. Mnohí rodičia s radosťou\nprijímajú možnosť umiestniť dieťa do katolíckej školy. Tu, prostredníctvom rozšírených\nhodín náboženskej výchovy, svätých omší a modlitbových stretnutí, dostávajú plnohodnotnú\nkresťanskú výchovu, ktorá v korešpondencii s rodičovskou výchovou a láskou prináša\nduchovný rast ich detí."
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639515705/cirkevna_omsa_e8d1e7a435.jpg",
+                alt: "",
+                width: 960,
+                height: 540
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "V školskom roku 2022/2023 nám pribudlo 38 malých a šikovných prváčikov (v dvoch triedach),\nktorí sa veľmi rýchlo adaptovali v našom kolektíve. Prajeme im veľa radosti zo školských\núspechov a mnoho dobrých kamarátov."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    route: "/kontakt",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639858469/Screenshot_from_2021_12_18_21_11_00_3fe14e3827.png",
+      width: 1995,
+      height: 418,
+      alt: "Kontakt"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_shared_slides-9",
+        kind: "slides",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636355180/lennon_caranzo_2_UW_0_Xc_Jwq_EU_unsplash_1_03e15f6534.jpg",
+                alt: "",
+                width: 1920,
+                height: 1280
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_partners_sections-4",
+        kind: "partners_sections",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1637823733/charita_934b7b313b.png",
+                alt: "",
+                width: 142,
+                height: 177
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://charitazvolen.sk/",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://charitazvolen.sk/"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639858269/Logo_graphic_cyrcle_29a58e7b32.png",
+                alt: "",
+                width: 1800,
+                height: 1800
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://facebook.com/farnost.zvolen",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://facebook.com/farnost.zvolen"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1769784540/sveti_charbel_e1723224202160_01981a6793.png",
+                alt: "",
+                width: 691,
+                height: 691
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://forms.gle/JMYyo27CbQtedEDn9",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://forms.gle/JMYyo27CbQtedEDn9"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1637823733/cirkevna_2a9b625941.png",
+                alt: "",
+                width: 148,
+                height: 174
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://zsdomzv.edupage.org/",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://zsdomzv.edupage.org/"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1637823987/erb_BB_dieceza_full_234x300_1_421c168101.png",
+                alt: "",
+                width: 234,
+                height: 300
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://bbdieceza.sk/",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://bbdieceza.sk/"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1695932875/Greckokatolicka_farnost_Zvolen_0aed1d5b95.jpg",
+                alt: "",
+                width: 142,
+                height: 177
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://grkatzv.sk/",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://grkatzv.sk/"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    route: "/sviatosti/sviatost-manzelstva",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1643098152/Screenshot_from_2021_12_15_22_22_25_89a605ec11.png",
+      width: 2453,
+      height: 444,
+      alt: "Sviatosť manželstva"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_quotation_sections-4",
+        kind: "quotation_sections",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "blockquote",
+              content: [
+                {
+                  type: "paragraph",
+                  content: [
+                    {
+                      type: "text",
+                      text: "Sviatosť manželstva je znakom spojenia Krista a Cirkvi. Dáva manželom milosť milovať sa láskou, akou Kristus miloval svoju Cirkev; takto milosť sviatosti zdokonaľuje ľudskú lásku manželov, posilňuje ich nerozlučiteľnú jednotu a posväcuje ich na ceste do večného života."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "— Katechizmus Katolíckej cirkvi 1661"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_text-6",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Ako postupovať pri uzatváraní manželstva?"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Snúbenci, ktorí majú záujem o prijatie sviatosti manželstva v našej farnosti, nech navštívia náš farský úrad "
+                        },
+                        {
+                          type: "text",
+                          text: "v čase úradných hodín – pondelok, streda, piatok.",
+                          marks: [
+                            {
+                              type: "link",
+                              attrs: {
+                                href: "https://farazv.sk/kontakt"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "O svojom úmysle uzavrieť sviatosť manželstva treba informujte "
+                        },
+                        {
+                          type: "text",
+                          text: "čím skôr",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ", najneskôr však štyri mesiace pred sobášom aj z dôvodu, že so sobášom sú niekedy spojené ďalšie administratívne úkony, ktoré si na vybavenie vyžadujú dlhší čas."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Pri spisovaní zápisnice musia byť "
+                        },
+                        {
+                          type: "text",
+                          text: "osobne prítomní obaja snúbenci",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " – sobáš nenahlasujú rodičia snúbencov, ale iba snúbenci."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 4
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Potrebné listiny:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Krstné listy",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " snúbencov: kto bol pokrstený v inej farnosti, nech si vyžiada krstný list na danom farskom úrade. Krstný list nesmie byť starší ako 6 mesiacov."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Údaje o svedkoch",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (meno, priezvisko, adresa trvalého bydliska, rodné číslo). Aj keď sa odporúča, aby svedok bol praktizujúcim katolíkom, nevyžaduje sa, aby ním bol."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Štátnu sobášnu zápisnicu",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ": neplatí pre tých, ktorí uzavreli civilné manželstvo."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Licenciu k sobášu",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ": v prípade, ak ani jeden zo snúbencov nepatrí do farnosti Zvolen-mesto (nebývate na území farnosti minimálne tri mesiace – to nesúvisí s trvalým bydliskom podľa OP), je potrebné priniesť aspoň pre jedného zo snúbencov licenciu k sobášu od svojho farára."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Potvrdenie o absolvovaní prípravy",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ": pred samotným sobášom je potrebné absolvovať prípravný kurz pred manželstvom. Absolvovať ho môžete v našej farnosti alebo inde podľa vášho výberu (musí byť garantovaný katolíckym kňazom)."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Úmrtný list predošlého manžela/manželky",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ": ak jeden alebo obaja zo snúbencov sú vdovci."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Okrem spísania zápisnice na farskom úrade je potrebné spísať aj "
+                },
+                {
+                  type: "text",
+                  text: "štátnu sobášnu zápisnicu na Mestskom úrade vo Zvolene",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", ku ktorej budete potrebovať rodné listy a platné občianske preukazy. O ďalších potrebných dokumentoch k sobášu vás bude informovať Matričný úrad na Mestskom úrade vo Zvolene. Táto požiadavka sa netýka tých, ktorí boli predtým civilne sobášení. V týždni po uzavretí sviatosti manželstva štátnu sobášnu zápisnicu doručíme na Mestský úrad vo Zvolene, kde si v priebehu týždňa môžete prevziať sobášny list."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Aké sú termíny prípravných kurzov pred manželstvom v našej farnosti v roku 2026?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Súčasťou prípravy na sviatosť manželstva sú predmanželské náuky, ktoré je možné absolvovať v určených termínoch na farskom úrade, alebo na inom mieste, odkiaľ je potrebné doniesť potvrdenie o absolvovaní predmanželskej náuky (vystavuje ho kňaz zodpovedný za kurz)."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 4
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "1. Turnus:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "13. 03.",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (piatok) o 19.00 hod. (sviatostná príprava)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "14. 03.",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (sobota) od 9.00 do 16.00 hod. (sviatostná príprava a stretnutie s lekárom - s prestávkami a možnosťou spoločného obedu v niektorej z blízkych prevádzok)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "16. 03.",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (pondelok) o 19.00 hod. náuka so psychológom (o komunikácii)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 4
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "2. Turnus:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "08. 05.",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (piatok) o 19.00 hod. (sviatostná príprava)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "09. 05.",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (sobota) od 9.00 do 16.00 hod. (sviatostná príprava a stretnutie s lekárom - s prestávkami a možnosťou spoločného obedu v niektorej z blízkych prevádzok)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "11. 05.",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (pondelok) o 19.00 hod. náuka so psychológom (o komunikácii)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 4
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "3. Turnus:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "28. 08.",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (piatok) o 19.00 hod. (sviatostná príprava)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "29. 08.",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (sobota) od 9.00 do 16.00 hod. (sviatostná príprava a stretnutie s lekárom - s prestávkami a možnosťou spoločného obedu v niektorej z blízkych prevádzok)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "31. 08.",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (pondelok) o 19.00 hod. náuka so psychológom (o komunikácii)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kurz pozostáva zo sviatostnej prípravy, ktorú podáva certifikovaný manželský pár s niekoľkoročnými skúsenosťami z manželského života. "
+                },
+                {
+                  type: "text",
+                  text: "Zahŕňa tiež stretnutie s lekárom,",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " ktorý informuje o "
+                },
+                {
+                  type: "text",
+                  text: "prirodzených metódach plánovaného rodičovstva.",
+                  marks: [
+                    {
+                      type: "italic"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " "
+                },
+                {
+                  type: "text",
+                  text: "Stretnutie so psychológom",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " má za cieľ pomôcť partnerom predchádzať a zvládať náročnejšie situácie manželského života - najmä v oblasti komunikácie."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Samotný "
+                },
+                {
+                  type: "text",
+                  text: "kurz je bezplatný.",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " Snúbenci však "
+                },
+                {
+                  type: "text",
+                  text: "zvyknú prispievať lektorom na pokrytie nákladov",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " spojených s kurzom (dopravné pre lektorujúcu lekárku, obed pre lektorujúci manželský pár, dobrovoľný ďakovný príspevok za obetovaný čas)."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Aké sú ostatné usmernenia na prijatie sviatosti manželstva?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Cirkevné právo uvádza, že katolícki snúbenci, ktorí ešte neprijali "
+                },
+                {
+                  type: "text",
+                  text: "sviatosť birmovania",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", ju majú pred prijatím manželstva prijať, ak je to možné bez veľkej ťažkosti (z toho vyplýva, že katolík žiadajúci o sobáš by mal mať birmovku). Pre viac informácií sa nebojte obrátiť na náš farský úrad."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Pokiaľ je jedna stránka nepokrstená",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", platné uzatvorenie manželstva je podmienené dišpenzom diecézneho biskupa a sobáš je potom bez svätej omše."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Pokiaľ je jedna stránka platne "
+                },
+                {
+                  type: "text",
+                  text: "pokrstená, ale nie v Katolíckej cirkvi",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " (napr. Evanjelickej cirkvi), dovolené uzatvorenie manželstva je podmienené dovolením (licenciou) diecézneho biskupa."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Žiadosti o dišpenz alebo licenciu",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " sa píšu vo farskej kancelárii a na biskupský úrad ju posiela farskú úrad. K žiadostiam je potrebné pripojiť vyhlásenie podpísané oboma snúbencami, v ktorom:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "katolícka stránka",
+                          marks: [
+                            {
+                              type: "italic"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " sľubuje, že urobí všetko, čo bude môcť, aby deti pochádzajúce z tohto manželstva boli pokrstené a vychovávané v katolíckej viere,"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "nekatolícka stránka",
+                          marks: [
+                            {
+                              type: "italic"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " svojím podpisom len potvrdzuje, že je oboznámená so záväzkom katolíckej stránky."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Kvety na výzdobu kostola musíme objednať v dostatočnom časovom predstihu. Preto prosíme snúbencov, ktorí si žiadajú "
+                },
+                {
+                  type: "text",
+                  text: "vyzdobiť kostol kvetmi",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", aby príspevok na tento účel priniesli minimálne týždeň pred sobášom (odporúčaný príspevok na kvetinovú výzdobu je 50 €)."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Vopred ďakujeme snúbencom za ich štedrosť formou milodaru",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", ktorý môžu odovzdať priamo kňazovi po vyslúžení sviatosti manželstva alebo už pri jednom zo stretnutí vo farskej kancelárii."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Aké sú manželské prekážky?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Cirkevné zákony, obsiahnuté v Kódexe cirkevného práva, stanovujú, že existujú určité situácie alebo okolnosti, ktoré spôsobujú, že katolík nemôže uzavrieť sviatosť manželstva. Sú to:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Prekážka veku – minimálny vek na uzavretie manželstva je stanovený u muža na 16 rokov a u ženy na 14 rokov. (Občiansky zákon u nás vyžaduje aspoň 18 rokov)."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Prekážka predchádzajúcej a trvalej neschopnosti – impotencie, teda neschopnosť pohlavného styku pre telesnú chybu zo strany muža, alebo zo strany ženy. (Neplodnosť – „sterilita“ – nie je prekážkou k uzavretiu manželstva a neruší ani jeho platnosť.)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Prekážka manželského zväzku – neplatne uzatvára nové manželstvo ten, kto je viazaný platným manželstvom."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Prekážka rozdielneho náboženstva alebo vierovyznania – neplatné manželstvo je uzatvorené medzi katolíckou stránkou a stránkou nepokrstenou. Po splnení podmienok, ktoré stanoví kánonické právo, môže od tejto prekážky dišpenzovať miestny ordinár (diecézny biskup)."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Prekážka posvätných rádov – platne prijatá diakonská, kňazská alebo biskupská vysviacka je prekážkou k uzavretiu manželstva. Od tejto prekážky môže dišpenzovať iba Apoštolská stolica (pápež)."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Prekážka sľubov čistoty – verejné večné sľuby čistoty sú prekážkou k uzavretiu manželstva. Od tejto prekážky môže dišpenzovať iba Apoštolská stolica (pápež)."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Prekážka únosu – platne uzavrieť manželstvo nemôže ten, kto sa kvôli uzavretiu manželstva podieľa alebo spolupodieľa na únose partnerky, za účelom uzavretia manželstva."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Prekážka zločinu – platne uzavrieť manželstvo nemôže ten, kto za účelom uzavrieť manželstvo s istou osobou sám alebo spoločne s osobou, s ktorou chce uzavrieť nové manželstvo, spôsobí jej manželskému partnerovi fyzickú alebo morálnu smrť. Od tejto prekážky môže oslobodiť iba Apoštolská stolica (pápež)."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Prekážka pokrvenstva – nemôže platne uzavrieť manželstvo napr. brat so sestrou, otec s dcérou, matka so synom. Bratranec so sesternicou môžu platne uzavrieť manželstvo len na základe dišpenzu miestneho ordinára (biskupa)."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Prekážka verejnej mravopočestnosti – vzniká z neplatného manželstva alebo z verejného konkubinátu a zneplatňuje manželstvo v prvom stupni priamej línie medzi mužom a pokrvnými príbuznými ženy a obrátene. Muž by neplatne uzavrel prípadné neskoršie manželstvo s matkou alebo dcérou ženy, s ktorou žil (napr. vo verejne známom konkubináte)."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Prekážka švagrovstva – nemôže sa platne uzavrieť manželstvo v priamej línii (napr. zať so svokrou)."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Prekážka adopcie – nemôže uzavrieť platne manželstvo ten, kto je na základe adopcie v zákonnom príbuzenstve s inou osobou. Zákonné príbuzenstvo, ktoré vzniká adopciou a platí vždy v priamej línii a v druhom stupni bočnej línie. (Adoptovaný muž si napr. nemôže zobrať za manželku nikoho v priamej línii a ani svoju adoptívnu sestru)."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Väčšina týchto prekážok sa môže „odstrániť“ dišpenzom, čiže individuálnym povolením pápeža alebo biskupa. Sprostredkovateľom je miestny správca farnosti."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Uzavrieť manželstvo sú ďalej neschopní tí:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "ktorým chýba dostatočné používanie rozumu,"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "ktorí majú vážny nedostatok rozoznávacieho úsudku, týkajúceho sa podstatných manželských práv a povinností, ktoré treba navzájom odovzdávať a prijímať,"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "ktorí z dôvodov psychickej povahy nedokážu vziať na seba podstatné záväzky manželstva."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "V praxi môže ísť napr. o duševné choroby ako schizofrénia alebo prípady neuróz, psychoneuróz a psychopatologických stavov, alebo o veci ako transsexualita, homosexualita, narcizmus, sadizmus, alkoholizmus, drogová závislosť a pod."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-49",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: []
+        }
+      }
+    ]
+  },
+  {
+    route: "/sviatosti/sviatost-krstu",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639601490/IMG_3270_af6574d3ca.jpg",
+      width: 1024,
+      height: 357,
+      alt: "Sviatosť krstu"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_quotation_sections-1",
+        kind: "quotation_sections",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "blockquote",
+              content: [
+                {
+                  type: "paragraph",
+                  content: [
+                    {
+                      type: "text",
+                      text: "Svätý krst je základom celého kresťanského života, vstupnou bránou do života v Duchu, ako aj bránou, ktorá otvára prístup k ostatným sviatostiam. Krstom sme oslobodení od hriechu a znovuzrodení ako Božie deti, stávame sa Kristovými údmi, sme začlenení do Cirkvi a dostávame účasť na jej poslaní: A tak sa krst správne a vhodne definuje ako sviatosť znovuzrodenia skrze vodu v slove."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "— Katechizmus Katolíckej cirkvi 1213"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_text-109",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Ako postupovať pri nahlásení krstu dieťaťa?"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Požiadať o krst majú "
+                        },
+                        {
+                          type: "text",
+                          text: "rodičia dieťaťa",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (zákonný zástupca) čím skôr po narodení vo farskej kancelárii, najneskôr týždeň pred plánovaným termínom krstu."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "V kancelárii farského úradu sa vypíše žiadosť o krst a dohodne sa termín krstu aj krstnej náuky. Nahlásiť krst treba v čase úradných hodín "
+                        },
+                        {
+                          type: "text",
+                          text: "kancelárie",
+                          marks: [
+                            {
+                              type: "link",
+                              attrs: {
+                                href: "https://farazv.sk/kontakt"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: "."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Vopred dohodnutá "
+                        },
+                        {
+                          type: "text",
+                          text: "krstná náuka prebieha v zasadačke farského úradu vo štvrtok o 19:00 hod.",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " Zúčastňujú sa jej rodičia a krstní rodičia dieťaťa (aspoň jeden rodič a krstný rodič)."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "Krst sa vo farskom kostole udeľuje "
+                        },
+                        {
+                          type: "text",
+                          text: "v sobotu o 11:30 hod.",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Čo priniesť?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Pri nahlásení krstu sa prikladá "
+                },
+                {
+                  type: "text",
+                  text: "kópia rodného listu",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " (nemusí byť notársky overená). Na krst treba priniesť "
+                },
+                {
+                  type: "text",
+                  text: "krstnú sviecu",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " a "
+                },
+                {
+                  type: "text",
+                  text: "bielu košieľku",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ". Na košieľke má byť vyšité alebo napísané meno dieťaťa, dátum jeho narodenia a dátum krstu. Ak má byť dieťa pokrstené v inej farnosti, ako je bydlisko rodičov, treba priniesť "
+                },
+                {
+                  type: "text",
+                  text: "písomný súhlas (licenciu) od miestneho farára",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: "."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Vopred si môžete vytlačiť a čitateľne vypísať tlačivo žiadosti o krst dieťaťa, ktoré prinesiete do farskej kancelárie: "
+                },
+                {
+                  type: "text",
+                  text: "Žiadosť o krst dieťaťa [PDF]",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://drive.google.com/file/d/1FLVZcfDZFi0Fcp9qAX-_5CduaBbMbRO6/view?usp=sharing"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Aké sú ostatné požiadavky na krst?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "S krstom dieťaťa musí súhlasiť aspoň jeden z rodičov alebo zákonný zástupca dieťaťa. Má byť splnená "
+                },
+                {
+                  type: "text",
+                  text: "opodstatnená nádej",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", že dieťa bude vychovávané v katolíckej viere. Ak taká nádej úplne chýba, má sa krst odložiť, pričom sa rodičom vysvetlí dôvod."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Je vhodné, aby rodičia vyberali "
+                },
+                {
+                  type: "text",
+                  text: "meno pre svoje dieťa zo zoznamu svätých",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " alebo blahoslavených, aby dieťa malo v nich vzor, svojho nebeského patróna, a tak malo možnosť prosiť o jeho príhovor. Meno dieťaťa by nemalo byť v rozpore s katolíckou morálkou a zmýšľaním veriacich ľudí."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Ak je dieťa "
+                },
+                {
+                  type: "text",
+                  text: "v nebezpečenstve smrti, má sa bezodkladne pokrstiť",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " – liať vodu na telo dieťatka a hovoriť: M., ja ťa krstím v mene Otca i Syna i Ducha Svätého. Takýto krst treba nahlásiť v čo najkratšom čase na príslušný farský úrad. V nebezpečenstve smrti sa dieťa dovolene krstí aj proti vôli rodičov."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Vopred "
+                },
+                {
+                  type: "text",
+                  text: "ďakujeme rodičom dieťaťa za ich štedrosť",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " formou milodaru, ktorý môžu odovzdať priamo kňazovi po vyslúžení sviatosti krstu alebo už pri nahlásení krstu vo farskej kancelárii."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kto sú krstní rodičia a aké sú požiadavky na nich?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Medzi krstným rodičom a dieťaťom krstom vzniká duchovné príbuzenstvo a "
+                },
+                {
+                  type: "text",
+                  text: "krstný rodič/krstní rodičia majú byť pre dieťa príkladom vo viere",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ". Preto je potrebné vybrať takých krstných rodičov, ktorí budú svojmu krstnému dieťaťu dobrým príkladom v duchovnom živote. V prípade zlyhania rodičov vo výchove majú byť krstní rodičia prví, ktorí ponúknu pomocnú ruku krstencovi. "
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 3
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Krstný rodič má spĺňať nasledovné podmienky:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "stačí jeden krstný rodič;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "musí mať najmenej 16 rokov;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "musí mať prijaté všetky iniciačné sviatosti – krst, sv. prijímanie, sviatosť birmovania",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ";"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "ak žije v partnerskom spolužití, má to byť platne uzavreté sviatostné manželstvo",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ";"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "nie je rozvedený;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "má viesť riadny náboženský život, aby bol vzorom pre svoje krstné dieťa;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "ako nekatolík môže byť len svedkom krstu spolu s riadnym krstným rodičom",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ";"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "pri krste sa nezastupuje inou osobou."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 3
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Krstným rodičom nemôže byť:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "otec alebo matka dieťaťa;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "nekatolík",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (môže byť len svedkom krstu spolu s riadnym krstným rodičom);"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "civilne rozvedený",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ";"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "kto žije s partnerom, s ktorým neuzavrel sviatostné manželstvo",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ";"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "kto je postihnutý nejakým cirkevným trestom"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "kto žije pohoršlivým spôsobom života (slovami či skutkami);"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "kto je v otvorenej opozícii voči Cirkvi a jej záväznému učeniu."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Ako je to s krstom dospelých?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Pod pojmom dospelý sa rozumie človek starší ako 14 rokov. Príprava na krst, tzv. "
+                },
+                {
+                  type: "text",
+                  text: "katechumenát, prebieha individuálnou formou pod vedením kňaza.",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " Obsahová stránka, časy a dĺžka stretnutí sa dohodnú osobne s kňazom."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Záujemca o krst (v prípade neplnoletej osoby v sprievode aspoň jedného z rodičov) sa môže prihlásiť v čase úradných hodín v kancelárii farského úradu. Príprava sa koná formou nábožensko-teologického kurzu, ktorý sa "
+                },
+                {
+                  type: "text",
+                  text: "začína každý rok v mesiaci október",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: "."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-39",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: []
+        }
+      }
+    ]
+  },
+  {
+    route: "/den-farskej-rodiny",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1722027064/Screenshot_2024_07_26_at_22_50_41_34f09ed240.png",
+      width: 2746,
+      height: 628,
+      alt: "Deň farnosti"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_text-227",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1778694979/plagat_2026_57e80c0f61.png",
+                alt: "plagat-2026.png",
+                width: 2048,
+                height: 1449
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    route: "/sviatosti/sviatost-pomazania-chorych",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1742652328/Screenshot_from_2021_12_15_22_42_03_8ee32d6e5c.png",
+      width: 1020,
+      height: 1649,
+      alt: "Sviatosť pomazania chorých"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_quotation_sections-6",
+        kind: "quotation_sections",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "blockquote",
+              content: [
+                {
+                  type: "paragraph",
+                  content: [
+                    {
+                      type: "text",
+                      text: "Cirkev verí a vyznáva, že medzi siedmimi sviatosťami je jedna sviatosť osobitne určená na to, aby posilňovala tých, čo sú skúšaní chorobou. Je to pomazanie chorých: ‚Toto sväté pomazanie chorých ustanovil náš Pán, Ježiš Kristus, ako skutočnú a pravú sviatosť Nového zákona. Marek ju síce naznačil, ale Jakub, apoštol a Pánov brat, ju veriacim odporučil a urobil známou."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "— Katechizmus Katolíckej cirkvi 1511"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_text-2",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Prijímateľ sviatosti pomazania chorých",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "V Jakubovom liste sa píše, že pomazanie sa má udeliť chorým na úľavu a na spásu.\nPreto sa má udeľovať so všetkou horlivosťou a starostlivosťou veriacim, ktorí sú pre chorobu\nalebo starobu v nebezpečenstve smrti. Na posúdenie vážnosti ochorenia stačí rozumný, čiže\npravdepodobný úsudok, pričom sa treba vyhnúť akejkoľvek úzkostlivosti. Nie v „posledných\nchvíľach života“, ale už vtedy, keď veriaci pre svoju chorobu začína byť v nebezpečenstve\nsmrti. Extrema unctio neznamená časový extrém, ale krajnú účinnosť, čiže situáciu, v ktorej\nčlovek ráta aj so smrťou."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Opakovanie pomazania",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " – táto sviatosť sa môže opakovať, ak chorý po prijatí\npomazania vyzdravel a znovu upadol do ťažkej choroby, alebo ak sa počas trvania tej istej\nchoroby nebezpečenstvo stalo vážnejším."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Operácia",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " – pred operáciou sa sväté pomazanie môže udeliť chorému vždy, keď\ndôvodom samej operácie je nebezpečná choroba."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Starci",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " – sväté pomazanie sa môže udeliť aj starým ľuďom, ktorí značne upadli na sile,\nhoci nevidieť, že by boli nebezpečne chorí. Samotné poberanie starobného, invalidného,\nvdovského, alebo výsluhového dôchodku nie je dôvodom pre prijímanie sviatosti pomazania\nchorých."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Deti",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " – sväté pomazanie sa má udeliť aj deťom, a to vtedy, keď používajú rozum\nnatoľko, že ich táto sviatosť môže posilniť. V pochybnostiach, či dosiahli užívanie rozumu,\nsviatosť sa má udeliť. /KKP, kan. 1005/ V praxi to znamená, že dieťaťu, ktoré má také\npoznanie o sviatostiach, že môže prijať Eucharistiu, možno udeliť sviatosť pomazania, keď\nmá vážnu chorobu. V nebezpečenstve smrti aj mladším, hoci aj v pochybnosti, či dosiahli\nužívanie rozumu."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "V bezvedomí",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: "– túto sviatosť treba udeliť aj tým, čo upadli do bezvedomia alebo prestali\npoužívať rozum, ak možno predpokladať, že keby boli pri vedomí, ako veriaci by ju aspoň\nimplicitne žiadali."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Podmienečné pomazanie",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " – ak volajú kňaza k chorému, ktorý už umrel, tak už\nnemožno udeliť sviatosť pomazania. Treba sa modliť, aby mu Pán Boh odpustil hriechy\na milostivo prijal do svojho kráľovstva."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Ak je pochybnosť, či ešte žije, alebo je už skutočne mŕtvy, kňaz mu má udeliť\npomazanie chorých. V zmysle KKP, kan. 1005, ak nie je istota, či človek je ešte živý alebo\nnie, pomazanie chorých sa udeľuje bez podmienky, tzn. bez slov „ak si živý“ /pozri:\nPomazanie chorých a pastoračná starostlivosť o nich, Spolok sv. Vojtecha Trnava 2010, s.\n115, kapitola: Podmienečné pomazanie/\n"
+                },
+                {
+                  type: "text",
+                  text: "Pomazanie chorých sa nemá udeliť tým, ktorí tvrdošijne zotrvávajú v zjavne ťažkom hriechu",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ". /KKP kan. 1007/"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-50",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: []
+        }
+      }
+    ]
+  },
+  {
+    route: "/farnost/galeria",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639860248/IMG_3104_5c827dad88.jpg",
+      width: 1021,
+      height: 218,
+      alt: "Galéria kostola"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_galleries-4",
+        kind: "galleries",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Farský kostol"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Galéria"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "AUTOR: "
+                },
+                {
+                  type: "text",
+                  text: "Claudia Nemcová",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://nemcovaclaudia.myportfolio.com/work"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Autor: Claudia Nemcová"
+                }
+              ]
+            },
+            {
+              type: "imageGallery",
+              attrs: {
+                images: [
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551446/IMG_4855_e3c7379871.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551444/IMG_4848_17753d153a.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551443/IMG_4863_55b6b4e598.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551444/IMG_4859_0ada083f61.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551443/IMG_4853_6c33e43cbd.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551436/IMG_4843_5a6a6fa9ff.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551435/IMG_4834_be5808aa6e.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551433/IMG_4847_3bf4912e7a.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551432/IMG_4839_494a51725f.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551431/IMG_4830_1e03000c62.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551429/IMG_4845_1d7b870dd1.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551427/IMG_4835_7edebca911.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551421/IMG_4819_8ec33d9741.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551421/IMG_4827_deb22b3c98.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551416/IMG_4816_f212220132.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551415/IMG_4813_ff08cc996e.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551412/IMG_4812_cdd496082b.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551411/IMG_4809_173ca959df.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551409/IMG_4807_b891968975.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551400/IMG_4794_94955124af.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551399/IMG_4803_3684847ad6.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551396/IMG_4789_5c963c3e2a.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551392/IMG_4783_f0380d2850.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551391/IMG_4773_112b4b5add.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551390/IMG_4774_167708ca92.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551394/IMG_4798_cd0c118c83.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551386/IMG_4768_5bb2a6c90a.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551378/IMG_4766_24f6dc89ac.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551375/IMG_4760_577aea5d69.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551376/IMG_4752_ffab17efec.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551378/IMG_4754_d65cc680cd.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551378/IMG_4761_765b3cbeb3.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551374/IMG_4758_755ac34cf7.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551364/IMG_4745_d4a6f8790b.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551364/IMG_4751_e3e95a2896.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551363/IMG_4744_5df9dc5fa5.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551363/IMG_4743_fbbf2b6349.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551361/IMG_4741_6e71e45ec5.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551360/IMG_4747_0cc76e000a.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551356/IMG_4737_0713b8850c.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551417/IMG_4826_2cd1018062.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551419/IMG_4828_f4fe20d867.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551401/IMG_4804_6fd4dbe7b0.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551413/IMG_4817_d4b4be928a.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_galleries-5",
+        kind: "galleries",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Mariánska kaplnka"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Galéria"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "AUTOR: "
+                },
+                {
+                  type: "text",
+                  text: "Claudia Nemcová",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://nemcovaclaudia.myportfolio.com/work"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Claudia Nemcová"
+                }
+              ]
+            },
+            {
+              type: "imageGallery",
+              attrs: {
+                images: [
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551027/IMG_3118_dcdfa8e0b0.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551032/IMG_3126_d2eb9acd43.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639860248/IMG_3104_5c827dad88.jpg",
+                    alt: "",
+                    width: 1021,
+                    height: 218
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551027/IMG_3111_cff61be40b.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551041/IMG_3121_e95fbc4812.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551036/IMG_3108_7afcef6907.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551066/IMG_3182_b78b6a6bb0.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551054/IMG_3173_6f3e72440d.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551051/IMG_3166_3f7fa386e9.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551044/IMG_3163_d880047ec1.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551071/IMG_3168_78eb1d97d5.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551074/IMG_3165_d80ad5563c.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551077/IMG_3184_0433e0e591.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551081/IMG_3188_ba89ad541e.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551095/IMG_3193_ebeb387a9a.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551086/IMG_3189_ec84ceb0cb.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551085/IMG_3179_420c599b9b.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551082/IMG_3183_7dce52ee8b.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551098/IMG_3204_9f372da1ab.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551103/IMG_3199_7e8f7e0e05.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551105/IMG_3191_624d0248de.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551106/IMG_3194_4f88a89b6f.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551120/IMG_3230_30e2df43b3.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551117/IMG_3209_0b52d9039f.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551115/IMG_3196_3863d76145.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551108/IMG_3212_5abdb6a7b1.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551124/IMG_3233_2b46b45f05.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551126/IMG_3215_6f30bb25b4.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551136/IMG_3259_9ac36762ac.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551151/IMG_3248_d4cb5b2458.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551146/IMG_3268_dbf5c9eb53.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551138/IMG_3261_723b18766d.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551136/IMG_3253_b7df00b9dd.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551153/IMG_3270_8e4d68e4e3.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551154/IMG_3264_462010a536.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551167/IMG_3284_949c1e75b4.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551156/IMG_3272_e30d8de5ae.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551154/IMG_3265_e16f1e8112.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551155/IMG_3263_d6752b81a3.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551182/IMG_3301_9edd13ca1c.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551186/IMG_3274_bbe3c56dc0.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551209/IMG_3308_400efe6875.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551206/IMG_3295_c05341a5f3.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551188/IMG_3280_a12cf1c480.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_galleries-6",
+        kind: "galleries",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Farský kostol"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Galéria"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "AUTOR: "
+                },
+                {
+                  type: "text",
+                  text: "ArtSohl",
+                  marks: []
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Pavol Albert"
+                }
+              ]
+            },
+            {
+              type: "imageGallery",
+              attrs: {
+                images: [
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552220/15384624_1324232927635173_4381044408212535994_o_1324232927635173_870740a1fe.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 703
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552224/IMG_2077_235e10613c.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 667
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552234/IMG_4508_18c4cf6fd6.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 957
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552237/IMG_3731_081619dedc.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 646
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552241/IMG_3760_f6f2e44c99.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 851
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552245/Katolicky_kostol_panorama1_d0b03f6468.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1227
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552252/MG_2309_a5687a6c85.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 645
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552258/MG_5400_0011_6b77c2a92e.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 682
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552260/MG_8686_b_0516f95c99.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552266/MG_8829_b_4a91ff9b1f.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 781
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552266/MG_8809_988bae2fd9.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552263/MG_4231_0009_8de34bbb0d.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552260/MG_8647_0006_1a83609c8d.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552267/MG_8734_b_af92c59e2d.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552269/MG_9104_0003_c11aef9615.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552271/tabula_na_kostole_1275_83_fadd9aba04.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1213
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552274/zz3222_2ca26c1c5d.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552278/zz_MG_4061_0009_6c94c5d781.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552278/zzhdr_5574_76_www_67e2744f90.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552276/zz_4113_cce81e9178.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552275/zz3252_472e3b88d1.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552279/zz3216_f391e3373f.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1535
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552284/zz_MG_4083_0003_4726a2c48d.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552285/zz_MG_4061_0009_2_95f890665c.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552287/zz_MG_4101_0006_514306e699.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552293/zz_MG_4128_0003_2_447494a7ab.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552287/zz_MG_4092_0009_545fb22147.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552287/zz_MG_4107_0006_de53a87d66.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552295/zz_MG_4131_0003_18d53f1250.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552296/zz_MG_4155_0003_0fa54fedf4.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552297/zz_MG_4140_0003_35b54fc82a.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638552298/zz_MG_4143_web_c079c09b1b.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_iframes-9",
+        kind: "iframes",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Virtuálna prehliadka"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Galéria"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "AUTOR: "
+                },
+                {
+                  type: "text",
+                  text: "ArtSohl",
+                  marks: []
+                },
+                {
+                  type: "text",
+                  text: "  "
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Pavol Albert"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Viac na Art Sohl",
+                  marks: []
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    unavailableTour: true
+  },
+  {
+    route: "/sviatosti/sviatost-birmovania",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639603429/Screenshot_from_2021_12_15_22_21_09_43935bdbfe.png",
+      width: 2804,
+      height: 723,
+      alt: "Sviatosť birmovania"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_quotation_sections-5",
+        kind: "quotation_sections",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "blockquote",
+              content: [
+                {
+                  type: "paragraph",
+                  content: [
+                    {
+                      type: "text",
+                      text: "Birmovanie zdokonaľuje krstnú milosť. Je to sviatosť, ktorá dáva Ducha Svätého, aby nás hlbšie zakorenil v Božom synovstve, pevnejšie včlenil do Krista, posilnil naše spojenie s Cirkvou, väčšmi nás zapojil do jej poslania a pomáhal nám vydávať svedectvo o kresťanskej viere slovom, ktoré sprevádzajú skutky."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "— Katechizmus Katolíckej cirkvi 1316"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_text-9",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kto môže prijať sviatosť birmovania?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Sviatosť birmovania môže a má prijať "
+                },
+                {
+                  type: "text",
+                  text: "každý pokrstený, ktorý ešte nebol birmovaný",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ". Keďže krst, birmovanie a Eucharistia tvoria jednotu, "
+                },
+                {
+                  type: "text",
+                  text: "„veriaci sú povinní prijať túto sviatosť vo vhodnom čase“",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", lebo sviatosť krstu je síce bez birmovania a Eucharistie platná a účinná, ale uvádzanie do kresťanského života ostáva neúplné. Sviatosť birmovania, rovnako ako sviatosť krstu, sa prijíma "
+                },
+                {
+                  type: "text",
+                  text: "len raz za život",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", lebo nám do duše vtláča nezmazateľný znak."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Keďže sa birmovanie nazýva aj sviatosťou kresťanskej dospelosti, podmienkou je "
+                },
+                {
+                  type: "text",
+                  text: "absolvovanie prípravy na prijatie sviatosti birmovania",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", ktorá je v trvaní približne jedného školského roka a pozostáva z pravidelných týždenných stretnutí."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Sviatosť birmovania v našej farnosti bude vyslúžená v nedeľu 16. 10. 2022",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " o 10.30 hod. Príprava sa začala v októbri 2021."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Aké sú podmienky na pripustenie k sviatosti birmovania?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Odovzdaním prihlášky na birmovku sa birmovanec zaväzuje k plneniu nasledovných podmienok:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "pravidelná účasť na "
+                        },
+                        {
+                          type: "text",
+                          text: "svätých omšiach v nedeľu",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " a v prikázaný sviatok;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "pravidelná "
+                        },
+                        {
+                          type: "text",
+                          text: "svätá spoveď",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ";"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "viesť osobný "
+                        },
+                        {
+                          type: "text",
+                          text: "kresťanský život",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ";"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "účasť na birmovaneckých svätých "
+                        },
+                        {
+                          type: "text",
+                          text: "omšiach, katechézach a stretnutiach",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " s animátormi;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "nadobudnúť a preukázať primerané náboženské "
+                        },
+                        {
+                          type: "text",
+                          text: "vedomosti",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: "."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kto môže byť birmovným rodičom?"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "musí byť "
+                        },
+                        {
+                          type: "text",
+                          text: "praktizujúci katolík",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " po prijatí sviatosti birmovania a Eucharistie (kresťan, ktorý nie je katolíkom, nemôže byť birmovným rodičom);"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "musí zavŕšiť aspoň "
+                        },
+                        {
+                          type: "text",
+                          text: "šestnásty rok",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " života;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "má byť "
+                        },
+                        {
+                          type: "text",
+                          text: "určený samotným birmovancom",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (alebo jeho rodičmi, pokiaľ je birmovanec ešte dieťa);"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "má mať úmysel a "
+                        },
+                        {
+                          type: "text",
+                          text: "byť schopný",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " plniť túto úlohu;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "pokiaľ žije v partnerskom spolužití, musí mať uzavreté "
+                        },
+                        {
+                          type: "text",
+                          text: "sviatostné manželstvo",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " pred tvárou Katolíckej cirkvi;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "nesmie byť v cirkevnom treste",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ", alebo vylúčený z účasti na sviatostiach (napríklad rozvedený a znovu civilne zosobášený);"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "nesmie byť otcom alebo matkou birmovanca",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: "."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Musí viesť život primeraný viere a úlohe, ktorú má prijať:",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "pravidelne chodí na sv. omšu v nedeľu a prikázaný sviatok;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "pravidelne sa spovedá (aspoň raz za rok);"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "vedie príkladný život v rodine i v spoločnosti;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "nepohoršuje ostatných slovami ani skutkami a otvorene nevystupuje proti Cirkvi a jej záväznému učeniu."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Ako prebieha birmovná príprava?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Birmovná príprava, ktorá sa začala v októbri 2021 a vyvrcholí slávením sviatosti birmovania (október 2022), "
+                },
+                {
+                  type: "text",
+                  text: "pozostáva zo stretnutí",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", ktoré sa konajú "
+                },
+                {
+                  type: "text",
+                  text: "každý druhý piatok",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ". Stretnutia sa začínajú sv. omšou o 17:00, pokračujú katechézou, po ktorej nasleduje čas v skupinkách vedených animátormi. (Priebeh závisí od aktuálnych protipandemických opatrení.)"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Príprava si vyžaduje aj "
+                },
+                {
+                  type: "text",
+                  text: "aktívne zapojenie sa birmovanca",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " – komunikáciou v skupinkách, čítaním ponúknutej literatúry či písomným vyjadrením názoru/postoja k rôznym témam. Birmovanci sú taktiež pozvaní k aktívnemu zapojeniu sa do života farnosti a priebehu liturgie (napr. čítaním alebo spevom počas sv. omší, miništrovaním, pomocou pri farských aktivitách atď.)."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-51",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: []
+        }
+      }
+    ]
+  },
+  {
+    route: "/birmovanci",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1720723564/amy_bishop_Uu_Mdk_C_Yrck_unsplash_fe00e14d5d.jpg",
+      width: 2400,
+      height: 438,
+      alt: "Birmovanci"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_text-401",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kto môže prijať sviatosť birmovania?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Sviatosť birmovania môže a má prijať "
+                },
+                {
+                  type: "text",
+                  text: "každý pokrstený, ktorý ešte nebol birmovaný",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ". Keďže krst, birmovanie a Eucharistia tvoria jednotu, "
+                },
+                {
+                  type: "text",
+                  text: "„veriaci sú povinní prijať túto sviatosť vo vhodnom čase“",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", lebo sviatosť krstu je síce bez birmovania a Eucharistie platná a účinná, ale uvádzanie do kresťanského života ostáva neúplné. Sviatosť birmovania, rovnako ako sviatosť krstu, sa prijíma "
+                },
+                {
+                  type: "text",
+                  text: "len raz za život",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", lebo nám do duše vtláča nezmazateľný znak."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Keďže sa birmovanie nazýva aj sviatosťou kresťanskej dospelosti, podmienkou je "
+                },
+                {
+                  type: "text",
+                  text: "absolvovanie prípravy na prijatie sviatosti birmovania",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", ktorá je v trvaní približne jedného školského roka a pozostáva z pravidelných týždenných stretnutí."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Aké sú podmienky na pripustenie k sviatosti birmovania?"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Odovzdaním prihlášky na birmovku sa birmovanec zaväzuje k plneniu nasledovných podmienok:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "pravidelná účasť na "
+                        },
+                        {
+                          type: "text",
+                          text: "svätých omšiach v nedeľu",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " a v prikázaný sviatok;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "pravidelná "
+                        },
+                        {
+                          type: "text",
+                          text: "svätá spoveď",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ";"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "viesť osobný "
+                        },
+                        {
+                          type: "text",
+                          text: "kresťanský život",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ";"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "účasť na birmovaneckých svätých "
+                        },
+                        {
+                          type: "text",
+                          text: "omšiach, katechézach a stretnutiach",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " s animátormi;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "nadobudnúť a preukázať primerané náboženské "
+                        },
+                        {
+                          type: "text",
+                          text: "vedomosti",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: "."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Kto môže byť birmovným rodičom?"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "musí byť "
+                        },
+                        {
+                          type: "text",
+                          text: "praktizujúci katolík",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " po prijatí sviatosti birmovania a Eucharistie (kresťan, ktorý nie je katolíkom, nemôže byť birmovným rodičom);"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "musí zavŕšiť aspoň "
+                        },
+                        {
+                          type: "text",
+                          text: "šestnásty rok",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " života;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "má byť "
+                        },
+                        {
+                          type: "text",
+                          text: "určený samotným birmovancom",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " (alebo jeho rodičmi, pokiaľ je birmovanec ešte dieťa);"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "má mať úmysel a "
+                        },
+                        {
+                          type: "text",
+                          text: "byť schopný",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " plniť túto úlohu;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "pokiaľ žije v partnerskom spolužití, musí mať uzavreté "
+                        },
+                        {
+                          type: "text",
+                          text: "sviatostné manželstvo",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: " pred tvárou Katolíckej cirkvi;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "nesmie byť v cirkevnom treste",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: ", alebo vylúčený z účasti na sviatostiach (napríklad rozvedený a znovu civilne zosobášený);"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "nesmie byť otcom alebo matkou birmovanca",
+                          marks: [
+                            {
+                              type: "bold"
+                            }
+                          ]
+                        },
+                        {
+                          type: "text",
+                          text: "."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Musí viesť život primeraný viere a úlohe, ktorú má prijať:",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "pravidelne chodí na sv. omšu v nedeľu a prikázaný sviatok;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "pravidelne sa spovedá (aspoň raz za rok);"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "vedie príkladný život v rodine i v spoločnosti;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "nepohoršuje ostatných slovami ani skutkami a otvorene nevystupuje proti Cirkvi a jej záväznému učeniu."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    route: "/",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551363/IMG_4744_5df9dc5fa5.jpg",
+      width: 1024,
+      height: 1536,
+      alt: "Domov"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_slideshows-4",
+        kind: "slideshows",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Svätý Šarbel"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Farnosť"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Vždy 22. v mesiaci po večernej svätej omši sa koná pobožnosť ku cti sv. Šarbela. Svoje modlitebné úmysly môžete poslať prostredníctvom formuláru: (link)",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://docs.google.com/forms/d/e/1FAIpQLSfTrjXSd2F8m2AWZ4AAKXXMDTqGtQ5FHVptyT_AlgfS0i4UBg/viewform"
+                      }
+                    },
+                    {
+                      type: "bold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Poznámka: Ak 22. deň pripadne na nedeľu, pobožnosť sa koná v predvečer - v sobotu.",
+                  marks: [
+                    {
+                      type: "italic"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1770657431/Charbel_e2287a1eed.jpg",
+                alt: "",
+                width: 419,
+                height: 595
+              }
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Nemocnica vo Zvolene - duchovná služba"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Sväté omše - sobota o 15:00"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Vďaka ochote kňazov a laikov sa v Nemocnici Agel vo Zvolene ponúka duchovná služba:",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Sväté prijímanie na izbách: v nedeľu doobeda; Pacienti, ktorí majú záujem o sväté prijímanie v nedeľu sa môžu nahlásiť zdravotníckemu personálu do 10:00. V doobedňajších hodinách im akolyta donesie sväté prijímanie.",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Sväté omše v nemocnici sú vždy v sobotu o 15.00h. v priestoroch jedálne, na 2. poschodí spoločného pavilónu.",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Sviatosť zmierenia a pomazania chorých v ktorýkoľvek deň na vyžiadanie. ",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://farazv.sk/kontakt/"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Využite túto službu a pomôžte aj svojim hospitalizovaným príbuzným v stálej pripravenosti duše pre večnosť. Ďakujeme.",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://farazv.sk/kontakt/"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1682798720/Nemocnica_omse_8b2ffe1977.png",
+                alt: "",
+                width: 2293,
+                height: 1003
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_galleries-3",
+        kind: "galleries",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Galéria kostola"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Farský kostol"
+                }
+              ]
+            },
+            {
+              type: "imageGallery",
+              attrs: {
+                images: [
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551427/IMG_4835_7edebca911.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551411/IMG_4809_173ca959df.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551432/IMG_4839_494a51725f.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551363/IMG_4744_5df9dc5fa5.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551386/IMG_4768_5bb2a6c90a.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551400/IMG_4794_94955124af.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551399/IMG_4803_3684847ad6.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 683
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551360/IMG_4747_0cc76e000a.jpg",
+                    alt: "",
+                    width: 1024,
+                    height: 1536
+                  }
+                ]
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Zobraziť celú galériu",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "/farnost/galeria"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-4",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: []
+        }
+      },
+      {
+        id: "components_sections_partners_sections-3",
+        kind: "partners_sections",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639858269/Logo_graphic_cyrcle_29a58e7b32.png",
+                alt: "",
+                width: 1800,
+                height: 1800
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://youtube.com/c/FarnosťZvolenMesto",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://youtube.com/c/FarnosťZvolenMesto"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1637823733/cirkevna_2a9b625941.png",
+                alt: "",
+                width: 148,
+                height: 174
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://zsdomzv.edupage.org/",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://zsdomzv.edupage.org/"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1770658050/sveti_charbel_e1723224202160_da8888a8cf.png",
+                alt: "",
+                width: 565,
+                height: 682
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://docs.google.com/forms/d/e/1FAIpQLSfTrjXSd2F8m2AWZ4AAKXXMDTqGtQ5FHVptyT_AlgfS0i4UBg/viewform",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://docs.google.com/forms/d/e/1FAIpQLSfTrjXSd2F8m2AWZ4AAKXXMDTqGtQ5FHVptyT_AlgfS0i4UBg/viewform"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1637823733/charita_934b7b313b.png",
+                alt: "",
+                width: 142,
+                height: 177
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://charitazvolen.sk/",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://charitazvolen.sk/"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1637823987/erb_BB_dieceza_full_234x300_1_421c168101.png",
+                alt: "",
+                width: 234,
+                height: 300
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://bbdieceza.sk/",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://bbdieceza.sk/"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1695932875/Greckokatolicka_farnost_Zvolen_0aed1d5b95.jpg",
+                alt: "",
+                width: 142,
+                height: 177
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "https://grkatzv.sk/",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "https://grkatzv.sk/"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_background_image_contents-3",
+        kind: "background_image_contents",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636898014/candles_32a34c9e2e.png",
+                alt: "",
+                width: 1439,
+                height: 471
+              }
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Elektronický zvonček"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Ďakujeme všetkým, ktorí svoju účasť na živote farnosti prejavujú aj poukázaním finančného milodaru. Pre jednoduchšie prispievanie na údržbu kostolov, fary a celkový chod farnosti môžete využiť elektronický zvonček:"
+                }
+              ]
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "farský IBAN: SK72 1111 0000 0066 1528 6006"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [
+                        {
+                          type: "text",
+                          text: "QR kód: obrázok vľavo možno jednoducho načítať pomocou mobilnej aplikácie vašej banky."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Za vašu štedrosť vyslovujeme úprimné Pán Boh zaplať!"
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639825508/Screenshot_from_2021_12_18_12_04_11_59598751fb.png",
+                alt: "",
+                width: 592,
+                height: 593
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    route: "/spolocenstva/ruzencove-bratstvo",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636354841/pews_d58c75c231.png",
+      width: 1440,
+      height: 336,
+      alt: "Ružencové bratstvo"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [],
+    placeholderSource: true
+  },
+  {
+    route: "/spolocenstva/lektori",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636355180/lennon_caranzo_2_UW_0_Xc_Jwq_EU_unsplash_1_03e15f6534.jpg",
+      width: 1920,
+      height: 1280,
+      alt: "Lektori"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [],
+    placeholderSource: true
+  },
+  {
+    route: "/spolocenstva/akolyti",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636355180/lennon_caranzo_2_UW_0_Xc_Jwq_EU_unsplash_1_03e15f6534.jpg",
+      width: 1920,
+      height: 1280,
+      alt: "Akolyti"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [],
+    placeholderSource: true
+  },
+  {
+    route: "/spolocenstva/mladeznicky-zbor",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1723570739/jefferson_santos_f_CEJG_Bz_Akr_U_unsplash_fd982aaa47.jpg",
+      width: 5184,
+      height: 1104,
+      alt: "Mládežnícky zbor"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_text-64",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Mládežnícky Zbor Alžbeta"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Spoločenstvo"
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "O nás"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Sme spoločenstvo mladých ľudí, ktorým je blízka hudba, a preto spievame a hráme na mládežníckych svätých omšiach v nedeľu večer (o 19:00 hod.) Máme medzi sebou rôznych hudobníkov, ale aj spevákov. Nácvik mávajú hudobníci počas týždňa zvlášť a spolu so spevákmi trénujeme dve hodiny pred svätou omšou vo farskom klube. Stále sú vítaní noví ľudia, ktorí môžu obohatiť zbor svojím talentom a originalitou. Neváhaj a príď, tešíme sa na teba. 🙂"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Ak máš bližšie otázky, môžeš nás kontaktovať - Kristína Považanová  - 0944 389 886 ("
+                },
+                {
+                  type: "text",
+                  text: "0944 389 886",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "tel:0944389886"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ")"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_galleries-9",
+        kind: "galleries",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "imageGallery",
+              attrs: {
+                images: [
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1640604924/269924012_904157393579511_8621953174800699664_n_7c9a8503f0.jpg",
+                    alt: "",
+                    width: 2731,
+                    height: 2048
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638949401/Screenshot_from_2021_12_08_08_40_38_d2f4d2a22e.png",
+                    alt: "",
+                    width: 1075,
+                    height: 889
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638949402/Screenshot_from_2021_12_08_08_41_15_1322a6502c.png",
+                    alt: "",
+                    width: 1196,
+                    height: 796
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638949402/Screenshot_from_2021_12_08_08_40_22_51caba5158.png",
+                    alt: "",
+                    width: 1072,
+                    height: 887
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-45",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: []
+        }
+      }
+    ]
+  },
+  {
+    route: "/spolocenstva/detsky-spevokol",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639858471/Screenshot_from_2021_12_18_21_10_18_65cec95c76.png",
+      width: 2789,
+      height: 417,
+      alt: "Detský spevokol"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_sections_text-123",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Detský spevokol Alžbetka"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Spoločenstvo"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Pridaj sa k nám! Spievame na svätých omšiach o 10.30 vo farskom Kostole sv. Alžbety. Skúšky máme v nedeľu o 9.00 vo farskom klube. "
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "O nás"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Spev detí vo veku 4 – 18 rokov okrášľuje najmä detské sv. omše v nedeľu o 10:30 hod. Spoločné nácviky sa začínajú v "
+                },
+                {
+                  type: "text",
+                  text: "nedeľu o 9:00 hod",
+                  marks: [
+                    {
+                      type: "italic"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " vo farskom klube (vchod zo strany od Divadla J. G. Tajovského). Všetky deti sú srdečne pozvané."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Detský zbor Alžbetka funguje v našej farnosti už desaťročia. Počet členov je rôzny, no zväčša sa pohybuje v rozmedzí 15 – 20 detí či mladých, ktorí sú tiež nápomocní. \nVystriedalo sa pri ňom viacero dirigentiek, posledné roky funguje pod taktovkou Zuzany Vandákovej. "
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Okrem toho, že zbor sprevádza svojím spevom a hrou na hudobné nástroje detské nedeľné sväté omše v nedeľu, spoločne sa zúčastňujú jasličkovej pobožnosti, koledovania Dobrej noviny, krížovej cesty v Pôstnom období, koncoročného poďakovania pri spoločnej opekačke či obľúbenom sústredení detského zboru, ktoré sa uskutočňuje každý rok na konci letných prázdnin. "
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Srdečne vítame aj nových záujemcov, ktorí sa chcú pridať spevom či hrou na nejaký hudobný nástroj! "
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Ak máš bližšie otázky, môžeš nás kontaktovať – Magdaléna Turanská  ("
+                },
+                {
+                  type: "text",
+                  text: "0914 189 867",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "tel:0914189867"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ")."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_galleries-18",
+        kind: "galleries",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "imageGallery",
+              attrs: {
+                images: [
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639931243/210055210_10220294879472648_47443423592921582_n_8ada2bb7a4.jpg",
+                    alt: "",
+                    width: 2048,
+                    height: 1240
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639931246/DSC_09996_5032308853.jpg",
+                    alt: "",
+                    width: 3888,
+                    height: 2592
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639931243/136369168_10219153442897447_9192574696028639957_n_bdbb69e71d.jpg",
+                    alt: "",
+                    width: 1284,
+                    height: 2015
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639931243/65842115_10214769134372474_5776959316401586176_n_f360433a9e.jpg",
+                    alt: "",
+                    width: 1086,
+                    height: 858
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-54",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: []
+        }
+      }
+    ]
+  },
+  {
+    route: "/spolocenstva/ministranti",
+    cover: {
+      src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639606926/Screenshot_from_2021_12_15_23_21_33_e2f6b40d2c.png",
+      width: 3656,
+      height: 523,
+      alt: "Miništranti"
+    },
+    preamble: {
+      type: "doc",
+      content: []
+    },
+    sections: [
+      {
+        id: "components_shared_slides-6",
+        kind: "slides",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Začni miništrovať"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Miništrantiš"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Čakáme ťa!"
+                }
+              ]
+            },
+            {
+              type: "image",
+              attrs: {
+                src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1636355180/lennon_caranzo_2_UW_0_Xc_Jwq_EU_unsplash_1_03e15f6534.jpg",
+                alt: "Začni miništrovať",
+                width: 1920,
+                height: 1280
+              }
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Viac informácií",
+                  marks: [
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "/spolocenstva/ministranti"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_text-63",
+        kind: "text",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Miništranti Zvolen-mesto"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Spoločenstvo"
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "O nás"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Miništrant je pomocníkom kňaza pri slávení svätej omše. Ak máš chuť zapojiť sa, pomáhať pri bohoslužbách a stať sa súčasťou nášho miništrantského spoločenstva, radi ťa medzi nami privítame! Stačí, ak prídeš aspoň "
+                },
+                {
+                  type: "text",
+                  text: "7 minút pred začiatkom svätej omše do sakristie",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: ", kde ti skúsenejší miništranti ochotne poradia a ukážu, čo všetko miništrovanie zahŕňa. Nemusíš sa báť, všetko sa postupne naučíš. Za každú odminištrovanú svätú omšu môžu miništranti získavať body. Po jej skončení sa stačí zapísať do zoznamu v sakristii. Na konci "
+                },
+                {
+                  type: "text",
+                  text: "školského roka",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " sa uskutočňuje vyhodnotenie nazbieraných bodov a odovzdávanie cien ako odmena za pravidelnú a ochotnú službu."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 2
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Stretká"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Miništrovanie však nie je len o službe pri oltári. Sme spoločenstvo, ktoré spolu trávi čas aj mimo kostola. "
+                },
+                {
+                  type: "text",
+                  text: "Každý piatok po večernej svätej omši",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " sa stretávame vo farskom klube, kde sa venujeme rôznym témam súvisiacim s miništrovaním, rozprávame sa a spoločne sa zabávame. Keď je pekné počasie, trávime čas vonku, inokedy si zahráme rôzne hry v klube. Okrem pravidelných piatkových stretiek organizujeme aj príležitostné turistické výlety do okolia a počas zimných a letných prázdnin sa spoločne vydávame na miništrantskú chatu, kde zažívame množstvo zábavy a nezabudnuteľných zážitkov."
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "Tešíme sa na každého nového člena, tak neváhaj a príď medzi nás!",
+                  marks: [
+                    {
+                      type: "bold"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " Ak máš akékoľvek otázky alebo sa chceš dozvedieť viac, môžeš nás kontaktovať na telefónnom čísle "
+                },
+                {
+                  type: "text",
+                  text: "0951 606 212",
+                  marks: [
+                    {
+                      type: "bold"
+                    },
+                    {
+                      type: "link",
+                      attrs: {
+                        href: "tel:+421951606212"
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: "."
+                }
+              ]
+            },
+            {
+              type: "heading",
+              attrs: {
+                level: 3
+              },
+              content: [
+                {
+                  type: "text",
+                  text: "Filip Krahulec"
+                }
+              ]
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "hlavný miništrant"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_galleries-13",
+        kind: "galleries",
+        body: {
+          type: "doc",
+          content: [
+            {
+              type: "imageGallery",
+              attrs: {
+                images: [
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639606797/26685227_2023474574346689_3511059768134435640_o_f5af6ac5df.jpg",
+                    alt: "",
+                    width: 1420,
+                    height: 2048
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639606796/26232976_2023474654346681_7267429768573555593_o_d0bf2a782f.jpg",
+                    alt: "",
+                    width: 426,
+                    height: 640
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639606801/26840793_2023475451013268_2798997432213382230_o_7d07f1616b.jpg",
+                    alt: "",
+                    width: 2500,
+                    height: 964
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639606796/50442209_615809405541315_6869761947563196416_n_605da7302b.jpg",
+                    alt: "",
+                    width: 960,
+                    height: 540
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639606797/26233504_2023475117679968_3278388973115262972_o_8187ac64c6.jpg",
+                    alt: "",
+                    width: 2048,
+                    height: 1537
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639606797/26685924_2023474877679992_7411616572177476014_o_c640be25d1.jpg",
+                    alt: "",
+                    width: 2500,
+                    height: 1080
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639606797/26240420_2023475441013269_3041523534979585045_o_3ba63e450b.jpg",
+                    alt: "",
+                    width: 2375,
+                    height: 1144
+                  },
+                  {
+                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1639606801/26756727_2023475011013312_4459713218427518899_o_6b455012f8.jpg",
+                    alt: "",
+                    width: 2048,
+                    height: 1189
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "components_sections_multi_paragraph_image_banners-52",
+        kind: "multi_paragraph_image_banners",
+        body: {
+          type: "doc",
+          content: []
+        }
+      }
+    ]
+  }
+];
