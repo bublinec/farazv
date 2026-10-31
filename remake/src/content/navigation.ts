@@ -10,6 +10,7 @@ export const navigation: NavigationItem[] = [
     label: "Farnosť",
     children: [
       { label: "Farské oznamy", href: "/farnost/farske-oznamy" },
+      { label: "Príspevky farnosti", href: "/prispevky" },
       { label: "Naše spoločenstvo", href: "/farnost/nase-spolocenstvo" },
       { label: "Galéria kostola", href: "/farnost/galeria" },
       { label: "Kostol sv. Alžbety", href: "/farnost/kostol-sv-alzbety" },

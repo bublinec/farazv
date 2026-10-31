@@ -1,8 +1,17 @@
 import type { EditorialEntry } from "@/content/types";
+import type {
+  EditorialDocument,
+  EditorialRecordKind
+} from "@/content/documents";
 
 export type EditorialKind = "article" | "news";
+export type PublishedEditorialEntry = EditorialDocument & {
+  recordKind: EditorialRecordKind;
+};
 export type EditorialSummary = Omit<EditorialEntry, "blocks"> & {
   href?: string;
+  recordKind?: EditorialRecordKind;
+  isPoster?: boolean;
 };
 
 export interface EditorialPage {
@@ -66,7 +75,10 @@ export function decodeCursor(cursor: string): EditorialCursor {
 }
 
 /** Public summaries deliberately exclude rich-text bodies. */
-export function summarizeEditorial(entry: EditorialEntry): EditorialSummary {
+export function summarizeEditorial(
+  entry: EditorialEntry &
+    Partial<Pick<EditorialSummary, "href" | "recordKind" | "isPoster">>
+): EditorialSummary {
   return {
     id: entry.id,
     slug: entry.slug,
@@ -74,7 +86,10 @@ export function summarizeEditorial(entry: EditorialEntry): EditorialSummary {
     excerpt: entry.excerpt,
     date: entry.date,
     author: entry.author,
-    cover: entry.cover
+    cover: entry.cover,
+    ...(entry.href ? { href: entry.href } : {}),
+    ...(entry.recordKind ? { recordKind: entry.recordKind } : {}),
+    ...(entry.isPoster !== undefined ? { isPoster: entry.isPoster } : {})
   };
 }
 

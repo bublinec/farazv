@@ -1,3 +1,55 @@
+.dropzone {
+  position: relative;
+  border: 1.5px dashed #adc3ca;
+  border-radius: 7px;
+  background: #f6f9f9;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.dropzone:hover,
+.dragging {
+  background: #eaf2f3;
+  border-color: var(--blue);
+}
+
+.dropzone:focus-within {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.dropzone:has(input:disabled) {
+  opacity: 0.65;
+}
+
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.dropLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  padding: clamp(2rem, 5vw, 4rem) 1.2rem;
+  cursor: pointer;
+  text-align: center;
+  color: var(--blue-deep);
+}
+
+.dropLabel strong {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 500;
+}
+
+.dropLabel > span:not(:last-child) {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 .paste,
 .review {
   border-top: 1px solid var(--admin-border);

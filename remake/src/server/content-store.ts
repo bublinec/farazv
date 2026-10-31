@@ -1,6 +1,6 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
-import { and, desc, eq, ilike, lt, or, sql } from "drizzle-orm";
+import { and, desc, eq, ilike, inArray, lt, or, sql } from "drizzle-orm";
 import type {
   AdminRecordSummary,
   ContentDocument,
@@ -8,6 +8,7 @@ import type {
   ContentRecordFor,
   RecordKind
 } from "@/content/documents";
+import { postKinds } from "@/content/posts";
 import { addDays, getMonday, getLocalDate } from "@/lib/calendar";
 import { getPublishedSettings } from "./published-store";
 import { getDb } from "./db";
@@ -16,6 +17,7 @@ import { ContentError } from "./errors";
 import { isCalendarDate, recordKinds, validateDocument } from "./validation";
 
 type DbRow = typeof contentRecords.$inferSelect;
+const ADMIN_PAGE_SIZE = 10;
 function toRecord(row: DbRow): ContentRecord {
   if (!recordKinds.includes(row.kind as RecordKind))
     throw new Error("Stored content has an unknown record kind.");
@@ -55,7 +57,11 @@ export async function listRecords(
     weekStart?: string;
   } = {}
 ) {
-  if (options.kind && !recordKinds.includes(options.kind as RecordKind))
+  if (
+    options.kind &&
+    options.kind !== "posts" &&
+    !recordKinds.includes(options.kind as RecordKind)
+  )
     throw new ContentError(400, "Neplatný typ obsahu.", "INVALID_QUERY");
   if (
     options.weekStart &&
@@ -101,7 +107,11 @@ export async function listRecords(
     .from(contentRecords)
     .where(
       and(
-        options.kind ? eq(contentRecords.kind, options.kind) : undefined,
+        options.kind === "posts"
+          ? inArray(contentRecords.kind, [...postKinds])
+          : options.kind
+          ? eq(contentRecords.kind, options.kind)
+          : undefined,
         options.weekStart
           ? eq(sql`${contentRecords.draft}->>'weekStart'`, options.weekStart)
           : undefined,
@@ -123,8 +133,8 @@ export async function listRecords(
       )
     )
     .orderBy(desc(contentRecords.updatedAt), desc(contentRecords.id))
-    .limit(31);
-  const items = rows.slice(0, 30).map((row) => ({
+    .limit(ADMIN_PAGE_SIZE + 1);
+  const items = rows.slice(0, ADMIN_PAGE_SIZE).map((row) => ({
     ...row,
     kind: row.kind as RecordKind,
     weekStart: row.weekStart ?? undefined
@@ -133,7 +143,7 @@ export async function listRecords(
   return {
     items,
     nextCursor:
-      rows.length > 30 && last
+      rows.length > ADMIN_PAGE_SIZE && last
         ? Buffer.from(
             JSON.stringify({ date: last.updatedAt, id: last.id })
           ).toString("base64url")
@@ -209,7 +219,7 @@ export async function createRecord<K extends RecordKind>(
       date: getLocalDate(),
       blocks: [],
       body: { type: "doc", content: [{ type: "paragraph" }] },
-      showInNews: kind === "news"
+      showInNews: kind !== "article"
     };
   }
   const [row] = await getDb()

@@ -15,6 +15,13 @@
       "when": 1793453125189,
       "tag": "0001_nervous_pixie",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793487439648,
+      "tag": "0002_editor_access",
+      "breakpoints": true
     }
   ]
 }

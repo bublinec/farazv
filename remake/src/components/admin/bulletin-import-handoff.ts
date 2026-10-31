@@ -8,7 +8,8 @@ const lifetime = 60 * 60 * 1000;
 /** A one-use handoff within this tab; it never saves imported content to the server. */
 export function storeBulletinImport(
   weekStart: CalendarDate,
-  result: BulletinImportResult
+  result: BulletinImportResult,
+  fillForm = false
 ) {
   try {
     sessionStorage.setItem(
@@ -17,7 +18,8 @@ export function storeBulletinImport(
         version: 2,
         expiresAt: Date.now() + lifetime,
         weekStart,
-        result
+        result,
+        fillForm
       })
     );
   } catch {
@@ -29,7 +31,7 @@ export function storeBulletinImport(
 
 export function takeBulletinImport(
   weekStart: CalendarDate
-): BulletinImportResult | undefined {
+): { result: BulletinImportResult; fillForm: boolean } | undefined {
   try {
     const stored = sessionStorage.getItem(key);
     if (!stored) return;
@@ -50,7 +52,7 @@ export function takeBulletinImport(
     }
     if (handoff.weekStart !== weekStart) return;
     clearBulletinImport();
-    return handoff.result;
+    return { result: handoff.result, fillForm: handoff.fillForm === true };
   } catch {
     clearBulletinImport();
   }

@@ -8,7 +8,7 @@ export default function AdminError({
 }) {
   return (
     <section className={styles.panel}>
-      <h1>Redakciu sa nepodarilo načítať</h1>
+      <h1>Admin je dočasne nedostupný</h1>
       <p>
         Skontrolujte prihlásenie a pripojenie. Obsah na serveri ostal zachovaný.
       </p>

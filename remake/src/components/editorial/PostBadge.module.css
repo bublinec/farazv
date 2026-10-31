@@ -1,0 +1,32 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.035em;
+  white-space: nowrap;
+}
+
+.news {
+  color: #31596c;
+  background: #edf3f5;
+}
+
+.event {
+  color: #526342;
+  background: #f0f3e9;
+}
+
+.notice {
+  color: #805d2d;
+  background: #faf3e6;
+}
+
+.article {
+  color: #715467;
+  background: #f6eff3;
+}

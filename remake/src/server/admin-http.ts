@@ -1,17 +1,22 @@
 import "server-only";
-import { AccessError, assertEditorRequest } from "./auth";
+import {
+  AccessError,
+  assertEditorRequest,
+  assertAdministrator,
+  type AuthorizedEditor
+} from "./auth";
 import { ContentError } from "./errors";
 
 import { JsonBodyError, PRIVATE_RESPONSE_HEADERS, readJsonBody } from "./http";
 
 export async function adminResponse(
   request: Request,
-  operation: () => Promise<unknown>,
+  operation: (identity: AuthorizedEditor) => Promise<unknown>,
   status = 200
 ) {
   try {
-    await assertEditorRequest(request);
-    return Response.json(await operation(), {
+    const identity = await assertEditorRequest(request);
+    return Response.json(await operation(identity), {
       status,
       headers: PRIVATE_RESPONSE_HEADERS
     });
@@ -33,6 +38,22 @@ export async function adminResponse(
       { status: 503, headers: PRIVATE_RESPONSE_HEADERS }
     );
   }
+}
+
+/** Access management has a stronger boundary than content editing. */
+export function administratorResponse(
+  request: Request,
+  operation: (identity: AuthorizedEditor) => Promise<unknown>,
+  status = 200
+) {
+  return adminResponse(
+    request,
+    async (identity) => {
+      assertAdministrator(identity);
+      return operation(identity);
+    },
+    status
+  );
 }
 export async function readJson(
   request: Request

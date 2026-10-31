@@ -81,13 +81,15 @@ export function BulletinImportPreview({
   weekStart,
   disabled,
   onApply,
-  onTargetWeek
+  onTargetWeek,
+  starting = false
 }: {
   result: BulletinImportResult;
   weekStart: CalendarDate;
   disabled: boolean;
   onApply: (result: BulletinImportResult) => void;
   onTargetWeek?: BulletinImportTargetWeek;
+  starting?: boolean;
 }) {
   const mismatch = Boolean(
     result.suggestedWeekStart && result.suggestedWeekStart !== weekStart
@@ -125,14 +127,14 @@ export function BulletinImportPreview({
   return (
     <div className={styles.preview}>
       <div className={styles.resultHeading}>
-        <h3>Výsledok načítania</h3>
+        <h3>Skontrolujte oznamy</h3>
         <p className={admin.hint}>{result.filename}</p>
       </div>
       <p>
         {result.suggestedWeekStart
-          ? `Týždeň ${formatRecordDate(
-              result.suggestedWeekStart
-            )} – ${formatRecordDate(addDays(result.suggestedWeekStart, 6))}. `
+          ? `Týždeň ${formatRecordDate(weekStart)} – ${formatRecordDate(
+              weekEnd
+            )}. `
           : "Týždeň nebolo možné spoľahlivo určiť. Skontrolujte dátumy. "}
         Rozpoznané dni: <strong>{identifiedDays.length}</strong>, omše:{" "}
         <strong>{massCount}</strong>, oznamy:{" "}
@@ -157,12 +159,11 @@ export function BulletinImportPreview({
       <details className={styles.review} open>
         <summary>Rozpis svätých omší</summary>
         <p className={admin.hint}>
-          Do otvoreného formulára patria rozpoznané dni: {daysInWeek.length}.
+          Do formulára prevezmeme {daysInWeek.length} rozpoznaných dní.
           {outsideDays
             ? ` Mimo tohto týždňa zostane ${outsideDays} dní; nižšie môžete otvoriť ich týždne.`
             : ""}{" "}
-          Rozpoznané údaje nahradia príslušné polia; ostatné dni zostanú
-          zachované.
+          Ostatné dni zostanú zachované.
         </p>
         {result.days.map((day) => (
           <ImportedDay
@@ -243,7 +244,11 @@ export function BulletinImportPreview({
           disabled={disabled || !hasApplicableContent}
           onClick={() => onApply(result)}
         >
-          {mismatch ? "Vyplniť iba dni tohto týždňa" : "Vyplniť formulár"}
+          {starting
+            ? "Pokračovať do formulára"
+            : mismatch
+            ? "Vyplniť iba dni tohto týždňa"
+            : "Vyplniť formulár"}
         </button>
         {onTargetWeek
           ? targetWeeks.map((week) => (
@@ -259,10 +264,9 @@ export function BulletinImportPreview({
             ))
           : null}
         <span className={admin.hint}>
-          Potom údaje upravte a uložte bežným tlačidlom formulára.
-          {targetWeeks.length && onTargetWeek
-            ? " Ak cieľový týždeň ešte neexistuje, vytvorí sa prázdny koncept."
-            : ""}
+          {starting
+            ? "Údaje ešte nebudú uložené ani zverejnené."
+            : "Skontrolujte údaje a uložte formulár."}
         </span>
       </div>
     </div>

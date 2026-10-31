@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { ContentRecord } from "@/content/documents";
-import { recordKindNames } from "@/content/record-labels";
+import { isPostKind, postKindLabels } from "@/content/posts";
 import { publicRecordPath } from "@/lib/record-routing";
 import { RecordForm } from "./RecordForm";
 import {
@@ -64,25 +64,40 @@ export function RecordEditor({
     <>
       <div className={styles.heading}>
         <div>
-          <Link href="/admin" className={styles.hint}>
-            ← Späť na prehľad
-          </Link>
-          <h1 style={{ marginTop: ".8rem" }}>
-            {record.title || "Nový koncept"}
+          {record.kind !== "settings" ? (
+            <Link
+              href={
+                record.kind === "bulletin"
+                  ? "/admin"
+                  : `/admin?section=${
+                      isPostKind(record.kind) ? "posts" : "article"
+                    }`
+              }
+              className={styles.hint}
+            >
+              ←{" "}
+              {record.kind === "bulletin"
+                ? "Oznamy"
+                : isPostKind(record.kind)
+                ? "Príspevky"
+                : "Články"}
+            </Link>
+          ) : null}
+          <h1 style={{ marginTop: record.kind === "settings" ? 0 : ".8rem" }}>
+            {record.kind === "settings"
+              ? "Nastavenia farnosti"
+              : record.title || "Nový koncept"}
           </h1>
-          <p>
-            {recordKindNames[record.kind]} ·{" "}
-            {record.readOnly
-              ? "Zachovaný historický záznam"
-              : "Koncept a verejná verzia sú oddelené"}
-          </p>
+          {isPostKind(record.kind) ? (
+            <p>{postKindLabels[record.kind]}</p>
+          ) : null}
         </div>
         <span
           className={`${styles.badge} ${
             record.published ? styles.published : ""
           }`}
         >
-          {record.published ? "Má zverejnenú verziu" : "Nezverejnené"}
+          {record.published ? "Zverejnené" : "Koncept"}
         </span>
       </div>
       {record.readOnly ? (
@@ -126,7 +141,7 @@ export function RecordEditor({
           </div>
           <aside className={styles.sidebar}>
             <section className={styles.panel}>
-              <h2>{record.readOnly ? "Záznam" : "Uloženie a zverejnenie"}</h2>
+              <h2>{record.readOnly ? "Záznam" : "Uložiť a zverejniť"}</h2>
               {error ? (
                 <div className={styles.error} role="alert">
                   {error}
@@ -162,14 +177,14 @@ export function RecordEditor({
                 {!record.readOnly ? (
                   <>
                     <button
-                      className={styles.button}
+                      className={styles.secondary}
                       type="submit"
                       disabled={editorBusy}
                     >
                       Uložiť koncept
                     </button>
                     <button
-                      className={styles.secondary}
+                      className={styles.quietLink}
                       type="button"
                       disabled={editorBusy}
                       onClick={() => void preview()}
@@ -184,16 +199,6 @@ export function RecordEditor({
                     >
                       {record.published ? "Zverejniť zmeny" : "Zverejniť"}
                     </button>
-                    {record.published && record.kind !== "settings" ? (
-                      <button
-                        className={styles.danger}
-                        type="button"
-                        disabled={editorBusy}
-                        onClick={() => void unpublishRecord()}
-                      >
-                        Stiahnuť z webu
-                      </button>
-                    ) : null}
                   </>
                 ) : (
                   <Link
@@ -227,42 +232,52 @@ export function RecordEditor({
                   </a>
                 </p>
               ) : null}
-              <hr />
-              <p className={styles.hint}>
-                Verzia {record.version}
-                <br />
-                Posledná úprava:{" "}
-                {new Intl.DateTimeFormat("sk-SK", {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                  timeZone: "Europe/Bratislava"
-                }).format(new Date(record.updatedAt))}
-              </p>
-              {record.kind === "bulletin" ? (
+              {!record.readOnly ? (
                 <p className={styles.hint}>
-                  Budúci zverejnený týždeň sa aktivuje podľa dátumu. Neskoršia
-                  úprava starého týždňa z neho neurobí aktuálny.
+                  Uloženie konceptu nemení verejný web.
                 </p>
               ) : null}
-              {record.kind === "settings" ? (
+              <details className={styles.disclosure}>
+                <summary>Viac možností</summary>
+                {record.published &&
+                !record.readOnly &&
+                record.kind !== "settings" ? (
+                  <button
+                    className={styles.danger}
+                    type="button"
+                    disabled={editorBusy}
+                    onClick={() => void unpublishRecord()}
+                  >
+                    Stiahnuť z webu
+                  </button>
+                ) : null}
                 <p className={styles.hint}>
-                  Nastavenia sa nedajú stiahnuť do prázdneho webu. Uložený
-                  koncept je súkromný, kým ho nezverejníte.
+                  Verzia {record.version}
+                  <br />
+                  Posledná úprava:{" "}
+                  {new Intl.DateTimeFormat("sk-SK", {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                    timeZone: "Europe/Bratislava"
+                  }).format(new Date(record.updatedAt))}
                 </p>
-              ) : null}
+                {record.kind === "bulletin" ? (
+                  <p className={styles.hint}>
+                    Budúci zverejnený týždeň sa aktivuje podľa dátumu. Neskoršia
+                    úprava starého týždňa z neho neurobí aktuálny.
+                  </p>
+                ) : null}
+                {record.source ? (
+                  <p>
+                    Zdroj: {record.source.kind} #{record.source.id}
+                    <br />
+                    Import: {record.source.importedVersion}
+                    <br />
+                    Pôvodne zverejnené: {record.source.publishedAt ?? "nie"}
+                  </p>
+                ) : null}
+              </details>
             </section>
-            {record.source ? (
-              <section className={`${styles.panel} ${styles.source}`}>
-                <h2>Pôvod záznamu</h2>
-                <p>
-                  Zdroj: {record.source.kind} #{record.source.id}
-                  <br />
-                  Import: {record.source.importedVersion}
-                  <br />
-                  Pôvodne zverejnené: {record.source.publishedAt ?? "nie"}
-                </p>
-              </section>
-            ) : null}
           </aside>
         </div>
       </form>

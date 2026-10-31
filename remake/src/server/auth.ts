@@ -5,14 +5,16 @@ import { APIError } from "better-auth/api";
 import { headers } from "next/headers";
 import {
   AccessError,
-  assertEditorIdentity,
+  assertGoogleIdentity,
   assertSameOrigin,
-  isEditorEmail,
   parseEditorAllowlist
 } from "@/lib/auth-policy";
+import type { EditorIdentity } from "@/lib/auth-policy";
+import type { EditorRole } from "@/content/editor-access";
+import { getEditorRole } from "./editor-access";
 
 export { AccessError } from "@/lib/auth-policy";
-export type { EditorIdentity } from "@/lib/auth-policy";
+export type AuthorizedEditor = EditorIdentity & { role: EditorRole };
 
 export const SESSION_MAX_AGE = 60 * 60 * 8;
 export const SESSION_COOKIE_VERSION = "parish-editor-v1";
@@ -101,7 +103,10 @@ function createAuth(config: ReturnType<typeof authConfiguration>) {
       user: {
         create: {
           before: async (user) => {
-            if (user.emailVerified !== true || !isEditorEmail(user.email)) {
+            if (
+              user.emailVerified !== true ||
+              !(await getEditorRole(user.email.trim().toLowerCase()))
+            ) {
               throw new APIError("FORBIDDEN", {
                 message: "Tento Google účet nemá prístup do administrácie."
               });
@@ -127,11 +132,38 @@ export function getAuth() {
   return cached.auth;
 }
 
-export async function requireEditorFromHeaders(requestHeaders: Headers) {
+export async function requireEditorFromHeaders(
+  requestHeaders: Headers
+): Promise<AuthorizedEditor> {
   const auth = getAuth();
   const session = await auth.api.getSession({ headers: requestHeaders });
-  // Never memoize the allowlist check: removals also reject existing signed sessions.
-  return assertEditorIdentity(session);
+  const identity = assertGoogleIdentity(session);
+  const role = await getEditorRole(identity.email);
+  if (!role)
+    throw new AccessError(
+      403,
+      "Tento Google účet nemá prístup do administrácie.",
+      "EDITOR_NOT_ALLOWED"
+    );
+  return { ...identity, role };
+}
+
+export function assertAdministrator(identity: AuthorizedEditor) {
+  if (identity.role !== "admin")
+    throw new AccessError(
+      403,
+      "Prístupy môžu spravovať iba správcovia.",
+      "ADMIN_REQUIRED"
+    );
+}
+
+export async function requireAdministratorPage() {
+  const identity = await requireEditorPage();
+  if (identity.role !== "admin") {
+    const { redirect } = await import("next/navigation");
+    redirect("/admin");
+  }
+  return identity;
 }
 
 export async function requireEditor() {

@@ -30,8 +30,7 @@ export function GoogleSignIn() {
         onClick={signIn}
         disabled={busy}
       >
-        <span aria-hidden="true">G</span>
-        {busy ? "Otváram prihlásenie…" : "Pokračovať cez Google"}
+        {busy ? "Prihlasujem…" : "Prihlásiť sa cez Google"}
       </button>
       {error && (
         <p className={styles.notice} role="alert">

@@ -25,17 +25,15 @@
 .brandMark {
   display: grid;
   place-items: center;
-  height: 54px;
-  padding-right: 16px;
-  border-right: 1px solid #d3c9b5;
+  height: 62px;
 }
 
-.churchTower {
+.churchMark {
+  display: block;
   width: auto;
-  height: 54px;
+  height: 62px;
   max-width: none;
-  object-fit: contain;
-  mix-blend-mode: multiply;
+  flex-shrink: 0;
 }
 
 .brand strong,
@@ -265,8 +263,8 @@
   }
 
   .brandMark,
-  .churchTower {
-    height: 48px;
+  .churchMark {
+    height: 54px;
   }
 }
 
@@ -277,10 +275,6 @@
 
   .brand {
     gap: 11px;
-  }
-
-  .brandMark {
-    padding-right: 11px;
   }
 
   .brand strong {

@@ -86,3 +86,14 @@ export const importRuns = pgTable("import_runs", {
     .defaultNow(),
   report: jsonb("report").$type<Record<string, unknown>>().notNull()
 });
+
+/** Admins come from environment configuration; only revocable editor grants live here. */
+export const editorAccess = pgTable("editor_access", {
+  email: text("email").primaryKey(),
+  grantedBy: text("granted_by").notNull(),
+  grantedAt: timestamp("granted_at", { withTimezone: true, mode: "string" })
+    .notNull()
+    .defaultNow(),
+  revokedBy: text("revoked_by"),
+  revokedAt: timestamp("revoked_at", { withTimezone: true, mode: "string" })
+});

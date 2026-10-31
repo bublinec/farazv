@@ -2,26 +2,31 @@ import Link from "next/link";
 import styles from "./Admin.module.css";
 
 import { SignOut } from "./SignOut";
+import { AdminNavigation } from "./AdminNavigation";
 export function AdminShell({
   children,
-  authenticated = false
+  authenticated = false,
+  canManageAccess = false
 }: {
   children: React.ReactNode;
   authenticated?: boolean;
+  canManageAccess?: boolean;
 }) {
   return (
     <div className={styles.shell}>
       <header className={styles.topbar}>
         <Link className={styles.brand} href="/admin">
-          Správa farnosti<small>Farazv · Redakcia</small>
+          Admin farnosti
         </Link>
-        <nav className={styles.topnav} aria-label="Navigácia redakcie">
-          <Link href="/admin">Obsah</Link>
+        {authenticated ? (
+          <AdminNavigation canManageAccess={canManageAccess} />
+        ) : null}
+        <div className={styles.utilities}>
           <a href="/" target="_blank" rel="noopener noreferrer">
-            Otvoriť web ↗
+            Web ↗
           </a>
           {authenticated ? <SignOut /> : null}
-        </nav>
+        </div>
       </header>
       <main id="main" tabIndex={-1} className={styles.content}>
         {children}

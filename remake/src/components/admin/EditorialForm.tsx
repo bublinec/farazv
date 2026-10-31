@@ -1,7 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { EditorialDocument, RichTextDocument } from "@/content/documents";
+import type {
+  EditorialDocument,
+  EditorialRecordKind,
+  RichTextDocument
+} from "@/content/documents";
 import { contentBlocksToRichText } from "@/lib/rich-text";
 import { Field } from "./Fields";
 import { ImageField } from "./MediaPicker";
@@ -22,11 +26,13 @@ function slugify(value: string) {
 }
 
 export function EditorialForm({
+  kind,
   document,
   onChange,
   pathLocked = false,
   disabled = false
 }: {
+  kind: EditorialRecordKind;
   document: EditorialDocument;
   onChange: (doc: EditorialDocument) => void;
   pathLocked?: boolean;
@@ -124,37 +130,44 @@ export function EditorialForm({
         </p>
       </section>
       <section className={styles.panel}>
-        <h2>Umiestnenie a plagát</h2>
-        <label className={styles.checkbox}>
-          <input
-            type="checkbox"
-            checked={document.showInNews ?? false}
-            onChange={(e) => update("showInNews", e.target.checked)}
-          />
-          Zobraziť aj medzi novinkami
-        </label>
+        <h2>Zobrazenie na webe</h2>
+        {kind === "article" ? (
+          <label className={styles.checkbox}>
+            <input
+              type="checkbox"
+              checked={document.showInNews ?? false}
+              onChange={(e) => update("showInNews", e.target.checked)}
+            />
+            Zobraziť článok aj medzi príspevkami
+          </label>
+        ) : (
+          <p className={styles.hint}>
+            Po zverejnení sa príspevok zobrazí v spoločnom zozname s označením
+            svojho typu.
+          </p>
+        )}
         <label className={styles.checkbox}>
           <input
             type="checkbox"
             checked={document.isPoster ?? false}
             onChange={(e) => update("isPoster", e.target.checked)}
           />
-          Zobraziť titulný obrázok na nástenke ako plagát
+          Titulný obrázok je plagát · zobraziť ho celý, bez orezania
         </label>
         {document.isPoster ? (
           <div className={styles.fields}>
             <Field
-              label="Cieľ plagátu (nepovinné)"
+              label="Odkaz na ďalšie informácie (nepovinné)"
               value={document.posterDestination}
               onChange={(value) => update("posterDestination", value)}
-              hint="https://… alebo /miestna-stranka. Bez cieľa sa otvorí detail, prípadne samotný plagát."
+              hint="https://… alebo /miestna-stranka. Odkaz sa zobrazí v detaile príspevku."
             />
             <Field
-              label="Zobrazovať plagát do (vrátane)"
+              label="Zobraziť na úvodnej stránke do (vrátane)"
               type="date"
               value={document.posterExpiresOn}
               onChange={(value) => update("posterExpiresOn", value)}
-              hint="Po tomto dni sa plagát automaticky skryje. Detail zostane dostupný."
+              hint="Po tomto dni sa skryje z úvodnej stránky. V zozname príspevkov a na svojom odkaze zostane dostupný."
             />
           </div>
         ) : null}

@@ -5,11 +5,14 @@ import type {
   BulletinDocument,
   ContentRecord,
   EditorialDocument,
+  EditorialRecordKind,
   SettingsDocument
 } from "@/content/documents";
 
 import { MediaImage } from "@/components/ui/MediaImage";
 import { RichText } from "@/components/editorial/RichText";
+import { PostBadge } from "@/components/editorial/PostBadge";
+import { isSafeEditorialLink } from "@/lib/editorial";
 import { contentBlocksToRichText } from "@/lib/rich-text";
 import styles from "./Admin.module.css";
 
@@ -183,9 +186,16 @@ function PreviewSettings({ document }: { document: SettingsDocument }) {
   );
 }
 
-function PreviewEditorial({ document }: { document: EditorialDocument }) {
+function PreviewEditorial({
+  document,
+  kind
+}: {
+  document: EditorialDocument;
+  kind: EditorialRecordKind;
+}) {
   return (
     <article>
+      <PostBadge kind={kind} />
       <h1>{document.title || "Koncept bez názvu"}</h1>
       <p className={styles.hint}>
         {formatRecordDate(document.date)}
@@ -202,6 +212,12 @@ function PreviewEditorial({ document }: { document: EditorialDocument }) {
       <RichText
         document={document.body ?? contentBlocksToRichText(document.blocks)}
       />
+      {document.posterDestination &&
+      isSafeEditorialLink(document.posterDestination) ? (
+        <p>
+          <a href={document.posterDestination}>Viac informácií ↗</a>
+        </p>
+      ) : null}
     </article>
   );
 }
@@ -216,7 +232,7 @@ function PreviewContent({ record }: { record: ContentRecord }): ReactElement {
     case "news":
     case "notice":
     case "event":
-      return <PreviewEditorial document={record.draft} />;
+      return <PreviewEditorial document={record.draft} kind={record.kind} />;
   }
 }
 

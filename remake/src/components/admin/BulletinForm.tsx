@@ -21,7 +21,7 @@ export function BulletinForm({
   disabled?: boolean;
   onBusyChange?: (busy: boolean) => void;
 }) {
-  const imported = useBulletinImport(document, onChange);
+  const imported = useBulletinImport(document, onChange, !disabled);
 
   useEffect(() => {
     onBusyChange?.(imported.opening);
@@ -42,13 +42,27 @@ export function BulletinForm({
       className={styles.disabled}
       disabled={disabled || imported.opening}
     >
-      <BulletinImport
-        weekStart={document.weekStart}
-        onApply={imported.apply}
-        onTargetWeek={imported.openWeek}
-        initialResult={imported.initialResult}
-        disabled={disabled || imported.opening}
-      />
+      <details
+        className={styles.disclosure}
+        open={
+          !!imported.initialResult &&
+          (imported.initialResult.warnings.length > 0 ||
+            imported.initialResult.unassigned.length > 0)
+        }
+      >
+        <summary>
+          {imported.initialResult
+            ? "Kontrola načítaného dokumentu"
+            : "Načítať dokument"}
+        </summary>
+        <BulletinImport
+          weekStart={document.weekStart}
+          onApply={imported.apply}
+          onTargetWeek={imported.openWeek}
+          initialResult={imported.initialResult}
+          disabled={disabled || imported.opening}
+        />
+      </details>
       {imported.message ? (
         <p role="status" className={styles.notice}>
           {imported.message}
@@ -65,10 +79,7 @@ export function BulletinForm({
           })}
         </h2>
         <p className={styles.hint}>
-          Upravujete pondelok až nedeľu. Nový týždeň preberá iba časy, miesta a
-          označenia z pravidelnej šablóny; úmysly a celebrantov vyplňte
-          osobitne. Prázdny alebo nedostupný deň odlíšte od potvrdeného dňa bez
-          omší.
+          Pondelok až nedeľa. Pred zverejnením skontrolujte časy a úmysly omší.
         </p>
         <PreviousSunday weekStart={document.weekStart} />
         {document.days.map((day, index) => (

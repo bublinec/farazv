@@ -14,12 +14,21 @@ export function parseEditorAllowlist(value: string | undefined): Set<string> {
   return new Set(
     (value ?? "")
       .split(/[,\n]/)
-      .map((email) => email.trim().toLowerCase())
-      .filter((email) => /^[^\s@*,]+@[^\s@*,]+\.[^\s@*,]+$/.test(email))
+      .map(normalizeEditorEmail)
+      .filter((email): email is string => email !== null)
   );
 }
 
-export function isEditorEmail(
+export function normalizeEditorEmail(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const email = value.trim().toLowerCase();
+  return email.length <= 254 &&
+    /^[^\s@*,;<>]+@[^\s@*,;<>]+\.[^\s@*,;<>]+$/.test(email)
+    ? email
+    : null;
+}
+
+export function isAdministratorEmail(
   email: unknown,
   allowlist = process.env.ADMIN_EMAIL_ALLOWLIST
 ): boolean {
@@ -34,21 +43,16 @@ export interface EditorIdentity {
   name?: string;
 }
 
-export function assertEditorIdentity(
-  session: {
-    user?: { email?: unknown; emailVerified?: unknown; name?: unknown };
-    session?: { expiresAt?: Date | string };
-  } | null,
-  allowlist = process.env.ADMIN_EMAIL_ALLOWLIST,
+type GoogleSession = {
+  user?: { email?: unknown; emailVerified?: unknown; name?: unknown };
+  session?: { expiresAt?: Date | string };
+} | null;
+
+/** Validate Google's verified identity before looking up its current access. */
+export function assertGoogleIdentity(
+  session: GoogleSession,
   now = Date.now()
 ): EditorIdentity {
-  if (parseEditorAllowlist(allowlist).size === 0) {
-    throw new AccessError(
-      503,
-      "Prístup do administrácie ešte nie je nastavený.",
-      "AUTH_NOT_CONFIGURED"
-    );
-  }
   if (
     !session?.user ||
     !session.session?.expiresAt ||
@@ -61,10 +65,8 @@ export function assertEditorIdentity(
       "AUTH_REQUIRED"
     );
   }
-  if (
-    session.user.emailVerified !== true ||
-    !isEditorEmail(session.user.email, allowlist)
-  ) {
+  const email = normalizeEditorEmail(session.user.email);
+  if (session.user.emailVerified !== true || !email) {
     throw new AccessError(
       403,
       "Tento Google účet nemá prístup do administrácie.",
@@ -72,11 +74,34 @@ export function assertEditorIdentity(
     );
   }
   return {
-    email: (session.user.email as string).trim().toLowerCase(),
+    email,
     ...(typeof session.user.name === "string"
       ? { name: session.user.name }
       : {})
   };
+}
+
+/** Pure environment-list policy, also used by setup tools and independent guards. */
+export function assertEditorIdentity(
+  session: GoogleSession,
+  allowlist = process.env.ADMIN_EMAIL_ALLOWLIST,
+  now = Date.now()
+): EditorIdentity {
+  if (parseEditorAllowlist(allowlist).size === 0)
+    throw new AccessError(
+      503,
+      "Prístup do administrácie ešte nie je nastavený.",
+      "AUTH_NOT_CONFIGURED"
+    );
+
+  const identity = assertGoogleIdentity(session, now);
+  if (!isAdministratorEmail(identity.email, allowlist))
+    throw new AccessError(
+      403,
+      "Tento Google účet nemá prístup do administrácie.",
+      "EDITOR_NOT_ALLOWED"
+    );
+  return identity;
 }
 
 export function assertSameOrigin(

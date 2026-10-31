@@ -3,23 +3,23 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { AdminRecordSummary, RecordKind } from "@/content/documents";
-import { recordKindNames } from "@/content/record-labels";
-import { getLocalDate, getMonday } from "@/lib/calendar";
+import type { AdminRecordSummary } from "@/content/documents";
+import {
+  isPostKind,
+  postKinds,
+  postKindLabels,
+  type AdminListSection,
+  type PostKind
+} from "@/content/posts";
+import { PostBadge } from "@/components/editorial/PostBadge";
 import styles from "./Admin.module.css";
 
-const kinds: RecordKind[] = [
-  "bulletin",
-  "news",
-  "article",
-  "notice",
-  "event",
-  "settings"
-];
-
-export function RecordList() {
+export function RecordList({ section }: { section: AdminListSection }) {
   const router = useRouter();
-  const [kind, setKind] = useState<RecordKind>("bulletin");
+  const kind = section;
+  const [postFilter, setPostFilter] = useState<PostKind | "all">("all");
+  const [newPostKind, setNewPostKind] = useState<PostKind>("news");
+  const listKind = kind === "posts" && postFilter !== "all" ? postFilter : kind;
   const [query, setQuery] = useState("");
   const [search, setSearch] = useState("");
   const [items, setItems] = useState<AdminRecordSummary[]>([]);
@@ -27,7 +27,6 @@ export function RecordList() {
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState("");
-  const [weekStart, setWeekStart] = useState(getMonday(getLocalDate()));
   const [reload, setReload] = useState(0);
   const requestVersion = useRef(0);
 
@@ -38,7 +37,7 @@ export function RecordList() {
     setError("");
     setItems([]);
     setCursor(null);
-    const params = new URLSearchParams({ kind, query: search });
+    const params = new URLSearchParams({ kind: listKind, query: search });
     fetch(`/api/admin/records?${params}`, {
       cache: "no-store",
       signal: controller.signal
@@ -62,7 +61,7 @@ export function RecordList() {
       controller.abort();
       requestVersion.current++;
     };
-  }, [kind, search, reload]);
+  }, [listKind, search, reload]);
 
   async function more() {
     if (!cursor || loading) return;
@@ -70,7 +69,11 @@ export function RecordList() {
     setLoading(true);
     setError("");
     try {
-      const params = new URLSearchParams({ kind, query: search, cursor });
+      const params = new URLSearchParams({
+        kind: listKind,
+        query: search,
+        cursor
+      });
       const response = await fetch(`/api/admin/records?${params}`, {
         cache: "no-store"
       });
@@ -102,8 +105,7 @@ export function RecordList() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          kind,
-          ...(kind === "bulletin" ? { weekStart } : {})
+          kind: kind === "posts" ? newPostKind : kind
         })
       });
       const data = await response.json();
@@ -120,74 +122,53 @@ export function RecordList() {
     <>
       <div className={styles.heading}>
         <div>
-          <h1>Redakcia farnosti</h1>
-          <p>
-            Pripravte oznamy, články a obrázky. Uloženie konceptu nemení verejný
-            web; až zverejnenie sprístupní novú verziu.
-          </p>
+          <h1>
+            {kind === "bulletin"
+              ? "Archív oznamov"
+              : kind === "posts"
+              ? "Príspevky"
+              : "Články"}
+          </h1>
+        </div>
+        <div className={styles.actions}>
+          {kind === "posts" ? (
+            <select
+              aria-label="Typ nového príspevku"
+              className={styles.compactInput}
+              value={newPostKind}
+              disabled={creating}
+              onChange={(event) => {
+                if (isPostKind(event.target.value))
+                  setNewPostKind(event.target.value);
+              }}
+            >
+              {postKinds.map((value) => (
+                <option key={value} value={value}>
+                  {postKindLabels[value]}
+                </option>
+              ))}
+            </select>
+          ) : null}
+          {kind === "bulletin" ? (
+            <Link href="/admin" className={styles.secondary}>
+              ← Nahrať oznamy
+            </Link>
+          ) : (
+            <button
+              className={styles.button}
+              type="button"
+              disabled={creating}
+              onClick={() => void create()}
+            >
+              {creating
+                ? "Vytváram…"
+                : kind === "posts"
+                ? "+ Nový príspevok"
+                : "+ Nový článok"}
+            </button>
+          )}
         </div>
       </div>
-      <nav className={styles.tabs} aria-label="Druhy obsahu">
-        {kinds.map((value) => (
-          <button
-            key={value}
-            className={styles.tab}
-            type="button"
-            aria-pressed={kind === value}
-            disabled={creating}
-            onClick={() => {
-              setKind(value);
-              setSearch("");
-              setQuery("");
-            }}
-          >
-            {recordKindNames[value]}
-          </button>
-        ))}
-      </nav>
-      <div className={styles.newRow}>
-        {kind === "bulletin" ? (
-          <label className={styles.field}>
-            Pondelok nového týždňa
-            <input
-              type="date"
-              value={weekStart}
-              onChange={(event) =>
-                setWeekStart(event.target.value as typeof weekStart)
-              }
-            />
-            <small>
-              Nový rozpis sa predvyplní overenou pravidelnou šablónou.
-            </small>
-          </label>
-        ) : (
-          <p className={styles.hint}>
-            {kind === "settings"
-              ? "Kontakty, úradné hodiny, Náuky, dary a pravidelné omše."
-              : "Nový záznam začne ako súkromný koncept."}
-          </p>
-        )}
-        <button
-          className={styles.button}
-          type="button"
-          disabled={creating}
-          onClick={() => void create()}
-        >
-          {creating
-            ? "Vytváram…"
-            : kind === "settings"
-            ? "Otvoriť nastavenia"
-            : kind === "bulletin"
-            ? "+ Vytvoriť týždeň"
-            : "+ Nový záznam"}
-        </button>
-      </div>
-      {kind === "bulletin" ? (
-        <p className={styles.hint}>
-          Historické importované oznamy sú dostupné iba tu. Problematické
-          záznamy sa zobrazujú na čítanie so zachovanými dátumami a poznámkami.
-        </p>
-      ) : null}
       <form
         className={styles.search}
         onSubmit={(event) => {
@@ -195,12 +176,29 @@ export function RecordList() {
           setSearch(query);
         }}
       >
+        {kind === "posts" ? (
+          <select
+            aria-label="Filtrovať príspevky podľa typu"
+            value={postFilter}
+            onChange={(event) => {
+              const value = event.target.value;
+              if (value === "all" || isPostKind(value)) setPostFilter(value);
+            }}
+          >
+            <option value="all">Všetky typy príspevkov</option>
+            {postKinds.map((value) => (
+              <option key={value} value={value}>
+                {postKindLabels[value]}
+              </option>
+            ))}
+          </select>
+        ) : null}
         <input
           aria-label="Hľadať obsah"
           placeholder={
             kind === "bulletin"
               ? "Hľadať týždeň, napr. 2026-11-02…"
-              : "Hľadať názov alebo adresu…"
+              : "Hľadať názov…"
           }
           value={query}
           onChange={(event) => setQuery(event.target.value)}
@@ -232,15 +230,15 @@ export function RecordList() {
               <strong>{item.title || "Koncept bez názvu"}</strong>
               <small>
                 {item.weekStart ? `Týždeň od ${item.weekStart} · ` : ""}
-                {item.slug ? `/${item.slug} · ` : ""}Upravené{" "}
+                Upravené{" "}
                 {new Intl.DateTimeFormat("sk-SK", {
                   dateStyle: "medium",
-                  timeStyle: "short",
                   timeZone: "Europe/Bratislava"
                 }).format(new Date(item.updatedAt))}
               </small>
             </div>
             <div className={styles.recordMeta}>
+              {isPostKind(item.kind) ? <PostBadge kind={item.kind} /> : null}
               <span
                 className={`${styles.badge} ${
                   item.isPublished ? styles.published : ""

@@ -55,16 +55,11 @@
 .metadata {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.45rem 1rem;
   color: var(--muted);
   font-size: var(--text-caption);
   line-height: 1.6;
-}
-.metadata > span {
-  color: var(--blue);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
 }
 .metadata time {
   font-variant-numeric: tabular-nums;
@@ -106,12 +101,7 @@
   background: linear-gradient(145deg, #fff 30%, #faf8f2);
 }
 .withoutImage .content {
-  min-height: 20rem;
-  justify-content: center;
-  padding: 2rem;
-}
-.withoutImage .content h3 {
-  font-size: 1.7rem;
+  min-height: 17rem;
 }
 .featured {
   border-color: var(--gold);

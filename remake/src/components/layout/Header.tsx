@@ -68,7 +68,7 @@ export function Header() {
         <div className={`container ${styles.inner}`}>
           <Link href="/" className={styles.brand} onClick={closeDropdowns}>
             <span className={styles.brandMark}>
-              <ChurchMark className={styles.churchTower} eager />
+              <ChurchMark className={styles.churchMark} />
             </span>
             <span>
               <strong>{siteConfig.name}</strong>

@@ -2,18 +2,19 @@ import "server-only";
 import { cache } from "react";
 import { createHash } from "node:crypto";
 import { unstable_cache } from "next/cache";
-import type { CalendarDate, Poster } from "@/content/types";
+import type { CalendarDate } from "@/content/types";
 import type {
-  EditorialDocument,
-  RecordKind,
+  EditorialRecordKind,
   SettingsDocument
 } from "@/content/documents";
 import * as fixtures from "@/content/fixtures";
 import {
   decodeCursor,
   editorialPage,
-  InvalidEditorialCursor
+  InvalidEditorialCursor,
+  type PublishedEditorialEntry
 } from "@/lib/editorial";
+import { editorialRecordPath } from "@/lib/record-routing";
 import * as store from "./published-store";
 import { ContentUnavailableError } from "./errors";
 
@@ -38,25 +39,19 @@ const cachedSettings = unstable_cache(
 
 const cachedPage = unstable_cache(
   store.getPublishedEditorialPage,
-  ["parish-editorial-v1", cacheNamespace],
+  ["parish-editorial-v2", cacheNamespace],
   { tags: ["parish-published"], revalidate: 300 }
 );
 
 const cachedEntry = unstable_cache(
   store.getPublishedEntry,
-  ["parish-entry-v1", cacheNamespace],
+  ["parish-entry-v2", cacheNamespace],
   { tags: ["parish-published"], revalidate: 300 }
 );
 
 const cachedBulletins = unstable_cache(
   store.getPublishedBulletins,
   ["parish-bulletins-v1", cacheNamespace],
-  { tags: ["parish-published"], revalidate: 300 }
-);
-
-const cachedPosters = unstable_cache(
-  store.getPosterCandidates,
-  ["parish-posters-v1", cacheNamespace],
   { tags: ["parish-published"], revalidate: 300 }
 );
 
@@ -88,14 +83,47 @@ export const getPublicSettings = cache(
 
 export async function getPublicEditorialPage(
   kind: "article" | "news",
-  cursor?: string | null
+  cursor?: string | null,
+  activeOn?: CalendarDate
 ) {
-  if (isFixtureMode())
+  if (isFixtureMode()) {
+    const entries =
+      kind === "article"
+        ? fixtures.articles.map((entry) => ({
+            ...entry,
+            recordKind: "article" as const
+          }))
+        : [
+            ...fixtures.news.map((entry) => {
+              const poster = fixtures.posters.find(
+                (item) => item.href === editorialRecordPath("news", entry.slug)
+              );
+              return {
+                ...entry,
+                recordKind: "news" as const,
+                isPoster: !!poster,
+                posterExpiresOn: poster?.expiresOn
+              };
+            }),
+            ...fixtures.notices.map((entry) => ({
+              ...entry,
+              recordKind: "notice" as const,
+              href: editorialRecordPath("notice", entry.slug),
+              posterExpiresOn: undefined
+            }))
+          ];
     return editorialPage(
-      kind === "article" ? fixtures.articles : fixtures.news,
+      entries.filter(
+        (entry) =>
+          !activeOn ||
+          !("posterExpiresOn" in entry) ||
+          !entry.posterExpiresOn ||
+          entry.posterExpiresOn >= activeOn
+      ),
       cursor
     );
-  return read(() => cachedPage(kind, cursor));
+  }
+  return read(() => cachedPage(kind, cursor, activeOn));
 }
 
 export function parsePublicCursor(params: URLSearchParams) {
@@ -109,16 +137,30 @@ export function parsePublicCursor(params: URLSearchParams) {
 }
 
 export const getPublicEntry = cache(
-  async (kind: RecordKind, slug: string): Promise<EditorialDocument | null> => {
-    if (isFixtureMode())
-      return (
+  async (
+    kind: EditorialRecordKind,
+    slug: string
+  ): Promise<PublishedEditorialEntry | null> => {
+    if (isFixtureMode()) {
+      const entry =
         (kind === "article"
           ? fixtures.articles
           : kind === "notice"
           ? fixtures.notices
-          : fixtures.news
-        ).find((entry) => entry.slug === slug) ?? null
+          : kind === "news"
+          ? fixtures.news
+          : []
+        ).find((entry) => entry.slug === slug) ?? null;
+      if (!entry) return null;
+      const poster = fixtures.posters.find(
+        (item) => item.href === editorialRecordPath(kind, slug)
       );
+      return {
+        ...entry,
+        recordKind: kind,
+        ...(poster ? { isPoster: true } : {})
+      };
+    }
     return read(() => cachedEntry(kind, slug));
   }
 );
@@ -126,40 +168,4 @@ export const getPublicEntry = cache(
 export async function getPublicBulletins(today: CalendarDate) {
   if (isFixtureMode()) return fixtures.getFixtureBulletins(today);
   return read(() => cachedBulletins(today));
-}
-
-export async function getPublicPosters(today: CalendarDate): Promise<Poster[]> {
-  if (isFixtureMode())
-    return fixtures.posters
-      .filter((poster) => !poster.expiresOn || poster.expiresOn >= today)
-      .sort((a, b) => b.date.localeCompare(a.date))
-      .slice(0, 6);
-  const entries = await read(cachedPosters);
-
-  return entries
-    .filter(
-      (entry) =>
-        entry.cover &&
-        (!entry.posterExpiresOn || entry.posterExpiresOn >= today)
-    )
-    .slice(0, 6)
-    .map((entry) => ({
-      id: entry.id,
-      title: entry.title,
-      image: entry.cover!,
-      date: entry.date,
-      expiresOn: entry.posterExpiresOn as CalendarDate | undefined,
-      href:
-        entry.posterDestination ||
-        (entry.blocks.length ||
-        entry.body?.content.some(
-          (node) => node.type !== "paragraph" || !!node.content?.length
-        )
-          ? entry.recordKind === "article"
-            ? `/farnost/nase-spolocenstvo/${entry.slug}`
-            : entry.recordKind === "notice"
-            ? `/vyveska/${entry.slug}`
-            : `/prispevky/${entry.slug}`
-          : undefined)
-    }));
 }

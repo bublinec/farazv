@@ -20,7 +20,7 @@ export default async function NewsPage() {
         route="/prispevky"
         eyebrow="Sme tu spolu"
         title="Zo života farnosti"
-        description="Pozvánky, novinky a chvíle, ktoré tvoria naše spoločenstvo."
+        description="Novinky, podujatia a oznamy z našej farnosti na jednom mieste."
       />
       <section className="section" aria-labelledby="all-news">
         <div className="container">
@@ -29,7 +29,7 @@ export default async function NewsPage() {
             className="eyebrow"
             style={{ marginBottom: "1.5rem" }}
           >
-            Aktuality a pozvánky
+            Všetky príspevky
           </h2>
           {initialPage ? (
             <EditorialFeed initialPage={initialPage} kind="news" />

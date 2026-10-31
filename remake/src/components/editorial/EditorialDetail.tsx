@@ -1,7 +1,10 @@
 import Link from "next/link";
 import type { ContentBlock, EditorialEntry } from "@/content/types";
 import { siteConfig } from "@/content/site";
-import type { EditorialDocument } from "@/content/documents";
+import type {
+  EditorialDocument,
+  EditorialRecordKind
+} from "@/content/documents";
 import type { EditorialSummary } from "@/lib/editorial";
 import { RichText } from "./RichText";
 import type { EditorialKind } from "@/lib/editorial";
@@ -11,8 +14,10 @@ import {
   isSafeEditorialLink
 } from "@/lib/editorial";
 import { MediaImage } from "@/components/ui/MediaImage";
+import { ImageLightbox } from "@/components/ui/ImageLightbox";
 import { ImageGallery } from "./ImageGallery";
 import { EditorialGrid } from "./EditorialCard";
+import { PostBadge } from "./PostBadge";
 import styles from "./EditorialDetail.module.css";
 
 function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
@@ -63,7 +68,7 @@ export function EditorialDetail({
   notice = false,
   preview = false
 }: {
-  entry: EditorialDocument;
+  entry: EditorialDocument & { recordKind?: EditorialRecordKind };
   kind: EditorialKind;
   related?: EditorialSummary[];
   notice?: boolean;
@@ -71,18 +76,26 @@ export function EditorialDetail({
 }) {
   const listingHref =
     kind === "article" ? "/farnost/nase-spolocenstvo" : "/prispevky";
-  const listingLabel =
-    kind === "article"
-      ? "Naše spoločenstvo"
-      : notice
-      ? "Výveska"
-      : "Zo života farnosti";
+  const cover = entry.cover ? (
+    <MediaImage
+      image={entry.cover}
+      priority
+      sizes="(max-width: 1200px) 100vw, 1160px"
+      fit="contain"
+    />
+  ) : null;
   return (
     <>
       <article className={styles.article}>
         <div className="container">
           <header className={styles.header}>
-            <span className="eyebrow">{listingLabel}</span>
+            {kind === "article" ? (
+              <span className="eyebrow">Naše spoločenstvo</span>
+            ) : (
+              <PostBadge
+                kind={entry.recordKind ?? (notice ? "notice" : "news")}
+              />
+            )}
             <h1>{entry.title}</h1>
             <div className={styles.metadata}>
               <time dateTime={entry.date}>
@@ -99,12 +112,13 @@ export function EditorialDetail({
           </header>
           {entry.cover && (
             <figure className={styles.cover}>
-              <MediaImage
-                image={entry.cover}
-                priority
-                sizes="(max-width: 1200px) 100vw, 1160px"
-                fit="contain"
-              />
+              {entry.isPoster ? (
+                <ImageLightbox image={entry.cover} label="Zväčšiť plagát:">
+                  {cover}
+                </ImageLightbox>
+              ) : (
+                cover
+              )}
               {entry.cover.caption && (
                 <figcaption>{entry.cover.caption}</figcaption>
               )}
@@ -122,6 +136,14 @@ export function EditorialDetail({
             ) : (
               <ContentRenderer blocks={entry.blocks} />
             )}
+            {entry.posterDestination &&
+            isSafeEditorialLink(entry.posterDestination) ? (
+              <p>
+                <a href={entry.posterDestination}>
+                  Viac informácií <span aria-hidden="true">↗</span>
+                </a>
+              </p>
+            ) : null}
           </div>
           <footer className={styles.articleFooter}>
             <span>
@@ -129,13 +151,8 @@ export function EditorialDetail({
                 ? "Zo života nášho spoločenstva."
                 : "Ďakujeme, že ste súčasťou našej farnosti."}
             </span>
-            <Link href={notice ? "/#vyveska" : listingHref}>
-              ←{" "}
-              {notice
-                ? "Späť na vývesku"
-                : kind === "article"
-                ? "Všetky články"
-                : "Všetky príspevky"}
+            <Link href={listingHref}>
+              ← {kind === "article" ? "Všetky články" : "Všetky príspevky"}
             </Link>
           </footer>
         </div>

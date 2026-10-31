@@ -39,6 +39,7 @@ export function RecordForm({
     case "event":
       return (
         <EditorialForm
+          kind={record.kind}
           document={record.draft}
           onChange={(draft) => onChange({ ...record, draft })}
           disabled={disabled}

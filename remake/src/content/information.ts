@@ -380,7 +380,7 @@ const pageDefinitions: InformationPageConfiguration[] = [
     contentSource: "published",
     links: [
       { label: "Farské oznamy", href: "/farnost/farske-oznamy" },
-      { label: "Pozvánky a výveska", href: "/#vyveska" }
+      { label: "Príspevky farnosti", href: "/prispevky" }
     ]
   },
   {

@@ -1,11 +1,12 @@
 import "server-only";
-import { and, desc, eq, isNotNull, lt, or, sql } from "drizzle-orm";
+import { and, desc, eq, inArray, isNotNull, lt, or, sql } from "drizzle-orm";
 import type {
   BulletinDocument,
   EditorialDocument,
-  RecordKind,
+  EditorialRecordKind,
   SettingsDocument
 } from "@/content/documents";
+import { postKinds } from "@/content/posts";
 import type { CalendarDate } from "@/content/types";
 import { addDays, getMonday } from "@/lib/calendar";
 import {
@@ -14,8 +15,10 @@ import {
   INITIAL_EDITORIAL_COUNT,
   MORE_EDITORIAL_COUNT,
   type EditorialPage,
-  type EditorialSummary
+  type EditorialSummary,
+  type PublishedEditorialEntry
 } from "@/lib/editorial";
+import { editorialRecordPath } from "@/lib/record-routing";
 import { getDb } from "./db";
 import { contentRecords } from "./db/schema";
 
@@ -37,9 +40,9 @@ export async function getPublishedSettings(): Promise<SettingsDocument | null> {
 }
 
 export async function getPublishedEntry(
-  kind: RecordKind,
+  kind: EditorialRecordKind,
   slug: string
-): Promise<EditorialDocument | null> {
+): Promise<PublishedEditorialEntry | null> {
   const [row] = await getDb()
     .select({ document: contentRecords.published })
     .from(contentRecords)
@@ -52,27 +55,51 @@ export async function getPublishedEntry(
     )
     .limit(1);
 
-  return (row?.document as EditorialDocument | null) ?? null;
+  return row?.document
+    ? { ...(row.document as EditorialDocument), recordKind: kind }
+    : null;
 }
 
 export async function getPublishedEditorialPage(
   kind: "article" | "news",
-  cursor?: string | null
+  cursor?: string | null,
+  activeOn?: CalendarDate
 ): Promise<EditorialPage> {
   const after = cursor ? decodeCursor(cursor) : null;
   const limit = after ? MORE_EDITORIAL_COUNT : INITIAL_EDITORIAL_COUNT;
   const date = sql<string>`${contentRecords.published}->>'date'`;
   const rows = await getDb()
     .select({
-      document: sql<EditorialSummary>`jsonb_build_object('id', ${contentRecords.id}, 'slug', ${contentRecords.publicSlug}, 'title', ${contentRecords.published}->>'title', 'excerpt', ${contentRecords.published}->>'excerpt', 'date', ${date}, 'author', ${contentRecords.published}->>'author', 'cover', ${contentRecords.published}->'cover', 'href', (case when ${contentRecords.kind} = 'article' then '/farnost/nase-spolocenstvo/' when ${contentRecords.kind} = 'notice' then '/vyveska/' else '/prispevky/' end) || ${contentRecords.publicSlug})`
+      id: contentRecords.id,
+      slug: contentRecords.publicSlug,
+      kind: contentRecords.kind,
+      title: sql<string>`${contentRecords.published}->>'title'`,
+      excerpt: sql<string>`${contentRecords.published}->>'excerpt'`,
+      date,
+      author: sql<string | null>`${contentRecords.published}->>'author'`,
+      cover: sql<
+        EditorialSummary["cover"]
+      >`${contentRecords.published}->'cover'`,
+      isPoster: sql<boolean>`coalesce(${contentRecords.published}->>'isPoster', 'false') = 'true'`
     })
     .from(contentRecords)
     .where(
       and(
         kind === "article"
           ? eq(contentRecords.kind, "article")
-          : sql`(${contentRecords.kind} in ('article', 'news', 'notice', 'event') and (${contentRecords.published}->>'showInNews' = 'true' or (${contentRecords.kind} = 'news' and coalesce(${contentRecords.published}->>'showInNews', 'true') <> 'false')))`,
+          : or(
+              inArray(contentRecords.kind, [...postKinds]),
+              and(
+                eq(contentRecords.kind, "article"),
+                sql`${contentRecords.published}->>'showInNews' = 'true'`
+              )
+            ),
         isNotNull(contentRecords.published),
+        isNotNull(contentRecords.publicSlug),
+        // Expiry only removes a poster from the homepage; its archive and URL stay available.
+        activeOn
+          ? sql`(coalesce(${contentRecords.published}->>'isPoster', 'false') <> 'true' or coalesce(${contentRecords.published}->>'posterExpiresOn', '') = '' or ${contentRecords.published}->>'posterExpiresOn' >= ${activeOn})`
+          : undefined,
         after
           ? or(
               lt(date, after.date),
@@ -83,11 +110,17 @@ export async function getPublishedEditorialPage(
     )
     .orderBy(desc(date), desc(contentRecords.id))
     .limit(limit + 1);
-  const items = rows.slice(0, limit).map((row) => ({
-    ...row.document,
-    author: row.document.author || undefined,
-    cover: row.document.cover || undefined,
-    excerpt: row.document.excerpt ?? ""
+  const items: EditorialSummary[] = rows.slice(0, limit).map((row) => ({
+    id: row.id,
+    slug: row.slug!,
+    title: row.title,
+    excerpt: row.excerpt ?? "",
+    date: row.date as CalendarDate,
+    author: row.author || undefined,
+    cover: row.cover || undefined,
+    isPoster: row.isPoster,
+    recordKind: row.kind as EditorialRecordKind,
+    href: editorialRecordPath(row.kind as EditorialRecordKind, row.slug!)
   }));
   return {
     items,
@@ -116,28 +149,5 @@ export async function getPublishedBulletins(today: CalendarDate) {
   return rows.map((row) => ({
     ...(row.document as BulletinDocument),
     published: true
-  }));
-}
-
-export async function getPosterCandidates(): Promise<
-  (EditorialDocument & { recordKind: RecordKind })[]
-> {
-  const rows = await getDb()
-    .select({ document: contentRecords.published, kind: contentRecords.kind })
-    .from(contentRecords)
-    .where(
-      and(
-        isNotNull(contentRecords.published),
-        sql`${contentRecords.published}->>'isPoster' = 'true'`
-      )
-    )
-    .orderBy(
-      desc(sql`${contentRecords.published}->>'date'`),
-      desc(contentRecords.id)
-    )
-    .limit(100);
-  return rows.map((row) => ({
-    ...(row.document as EditorialDocument),
-    recordKind: row.kind as RecordKind
   }));
 }

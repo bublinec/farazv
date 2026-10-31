@@ -11,7 +11,7 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
       <div className={`container ${styles.main}`}>
         <div className={styles.identity}>
           <Link href="/" className={styles.brand}>
-            <ChurchMark className={styles.churchTower} />
+            <ChurchMark className={styles.churchMark} />
             <h2>
               {siteConfig.name}
               <small>{siteConfig.city}</small>
@@ -96,7 +96,7 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
           <a href={siteConfig.sourceUrl} target="_blank" rel="noreferrer">
             Otvorený kód pre farnosti <Icon name="external" size={12} />
           </a>
-          <Link href="/admin">Redakcia</Link>
+          <Link href="/admin">Admin</Link>
         </div>
       </div>
     </footer>

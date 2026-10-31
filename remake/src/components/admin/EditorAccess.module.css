@@ -1,0 +1,90 @@
+.page {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.form {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.form > label {
+  flex: 1;
+  margin: 0;
+}
+
+.form button,
+.people button,
+.help summary {
+  min-height: 44px;
+}
+
+.people {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.people li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.people li:first-child {
+  padding-top: 0;
+}
+
+.people li:last-child {
+  border: 0;
+  padding-bottom: 0;
+}
+
+.people strong,
+.people small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.people strong {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.people small {
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.people button {
+  flex-shrink: 0;
+}
+
+.help {
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.help summary {
+  cursor: pointer;
+  color: var(--blue-deep);
+  padding-block: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .form,
+  .people li {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .people li > button,
+  .people li > span {
+    align-self: flex-start;
+  }
+}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { editorialPath, formatEditorialDate } from "@/lib/editorial";
 import type { EditorialKind, EditorialSummary } from "@/lib/editorial";
+import { PostBadge } from "./PostBadge";
 import styles from "./EditorialCard.module.css";
 
 interface EditorialCardProps {
@@ -15,6 +16,8 @@ export function EditorialCard({
   kind,
   featured = false
 }: EditorialCardProps) {
+  const recordKind = entry.recordKind ?? "news";
+
   return (
     <article
       className={`${styles.card} ${featured ? styles.featured : ""} ${
@@ -27,20 +30,22 @@ export function EditorialCard({
             <MediaImage
               image={entry.cover}
               sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 33vw"
+              fit="cover"
             />
           </div>
         )}
         <div className={styles.content}>
           <div className={styles.metadata}>
-            <span>
-              {kind === "article" ? "Naše spoločenstvo" : "Zo života farnosti"}
-            </span>
+            {kind !== "article" && recordKind !== "news" ? (
+              <PostBadge kind={recordKind} />
+            ) : null}
             <time dateTime={entry.date}>{formatEditorialDate(entry.date)}</time>
           </div>
           <h3>{entry.title}</h3>
           {entry.excerpt && <p>{entry.excerpt}</p>}
           <span className={styles.readMore}>
-            Čítať ďalej <span aria-hidden="true">↗</span>
+            {kind === "article" ? "Čítať ďalej" : "Zistiť viac"}{" "}
+            <span aria-hidden="true">↗</span>
           </span>
         </div>
       </Link>

@@ -1,22 +1,45 @@
-import Image from "next/image";
-import churchTower from "../../../public/images/church-tower.png";
+import { useId } from "react";
 
-/** One parish mark, delivered at logo size instead of the full original PNG. */
-export function ChurchMark({
-  className,
-  eager = false
-}: {
-  className?: string;
-  eager?: boolean;
-}) {
+/** Cleaned extraction of the supplied parish logo, tinted with the surrounding text. */
+export function ChurchMark({ className }: { className?: string }) {
+  const maskId = useId();
+
   return (
-    <Image
-      src={churchTower}
-      width={36}
-      height={65}
-      alt=""
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="156 32 836 1450"
+      width="38"
+      height="64"
       className={className}
-      loading={eager ? "eager" : "lazy"}
-    />
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        {/* Crop transparent margins and use the original alpha, without redrawing its lines. */}
+        <mask
+          id={maskId}
+          maskUnits="userSpaceOnUse"
+          x="156"
+          y="32"
+          width="836"
+          height="1450"
+          style={{ maskType: "alpha" }}
+        >
+          <image
+            href="/images/parish-church-mark.png"
+            width="1036"
+            height="1518"
+          />
+        </mask>
+      </defs>
+      <rect
+        x="156"
+        y="32"
+        width="836"
+        height="1450"
+        fill="currentColor"
+        mask={`url(#${maskId})`}
+      />
+    </svg>
   );
 }

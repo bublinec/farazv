@@ -5,15 +5,12 @@ import { churchDetails } from "@/content/church-details";
 import {
   getPublicSettings,
   getPublicBulletins,
-  getPublicEditorialPage,
-  getPublicPosters
+  getPublicEditorialPage
 } from "@/server/public-content";
 import { Unavailable } from "@/components/ui/Unavailable";
 import { getPublicWeek } from "@/lib/calendar";
 import { getPreviewDate } from "@/lib/preview-date";
-import { editorialPath } from "@/lib/editorial";
 import { MassHero } from "@/components/home/MassHero";
-import { PosterWall } from "@/components/home/PosterWall";
 import { SacramentsSection } from "@/components/home/SacramentsSection";
 import { DonationSection } from "@/components/home/DonationSection";
 import { EditorialGrid } from "@/components/editorial/EditorialCard";
@@ -30,19 +27,13 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const today = getPreviewDate();
-  const [
-    settingsResult,
-    bulletinResult,
-    postersResult,
-    newsResult,
-    articlesResult
-  ] = await Promise.allSettled([
-    getPublicSettings(),
-    getPublicBulletins(today),
-    getPublicPosters(today),
-    getPublicEditorialPage("news"),
-    getPublicEditorialPage("article")
-  ]);
+  const [settingsResult, bulletinResult, newsResult, articlesResult] =
+    await Promise.allSettled([
+      getPublicSettings(),
+      getPublicBulletins(today),
+      getPublicEditorialPage("news", undefined, today),
+      getPublicEditorialPage("article")
+    ]);
   const settings =
     settingsResult.status === "fulfilled" ? settingsResult.value : null;
   const days =
@@ -53,20 +44,9 @@ export default async function HomePage() {
           settings?.regularSchedule ?? {}
         ).days
       : null;
-  const activePosters =
-    postersResult.status === "fulfilled" ? postersResult.value : [];
-
-  const posterDestinations = new Set(
-    activePosters.map((poster) => poster.href)
-  );
-
   const recentNews =
     newsResult.status === "fulfilled"
-      ? newsResult.value.items
-          .filter(
-            (entry) => !posterDestinations.has(editorialPath(entry, "news"))
-          )
-          .slice(0, 3)
+      ? newsResult.value.items.slice(0, 6)
       : null;
   const recentArticles =
     articlesResult.status === "fulfilled"
@@ -82,18 +62,12 @@ export default async function HomePage() {
           <Unavailable title="Rozpis je dočasne nedostupný." />
         </section>
       )}
-      {postersResult.status === "fulfilled" ? (
-        <PosterWall posters={activePosters} />
-      ) : (
-        <section id="vyveska" className="container section">
-          <Unavailable compact title="Výveska je dočasne nedostupná." />
-        </section>
-      )}
       <section id="novinky" className="section">
-        <div className="container">
+        <div id="vyveska" className="container">
           <SectionHeading
             eyebrow="Zo života farnosti"
             title="Čo je u nás nové"
+            description="Novinky, podujatia a oznamy na jednom mieste."
             action={
               <Link href="/prispevky" className="textLink">
                 Všetky príspevky
@@ -101,8 +75,10 @@ export default async function HomePage() {
               </Link>
             }
           />
-          {recentNews ? (
+          {recentNews?.length ? (
             <EditorialGrid entries={recentNews} kind="news" />
+          ) : recentNews ? (
+            <p>Zatiaľ tu nie sú žiadne príspevky.</p>
           ) : (
             <Unavailable compact />
           )}

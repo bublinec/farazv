@@ -9,6 +9,7 @@ import {
 import type { CalendarDate } from "@/content/types";
 import { readAdminJson } from "./admin-api";
 import { isBulletinImportResult } from "@/lib/bulletin-import-result";
+import { getMonday } from "@/lib/calendar";
 import {
   BulletinImportPreview,
   type BulletinImportTargetWeek
@@ -16,24 +17,34 @@ import {
 import admin from "./Admin.module.css";
 import styles from "./BulletinImport.module.css";
 
-interface BulletinImportProps {
+type BulletinImportProps = {
   weekStart: CalendarDate;
-  onApply: (result: BulletinImportResult) => void;
-  onTargetWeek?: BulletinImportTargetWeek;
   initialResult?: BulletinImportResult;
   disabled?: boolean;
-}
+} & (
+  | { mode: "start"; onTargetWeek: BulletinImportTargetWeek; onApply?: never }
+  | {
+      mode?: "editor";
+      onApply: (result: BulletinImportResult) => void;
+      onTargetWeek?: BulletinImportTargetWeek;
+    }
+);
 
 export function BulletinImport({
   weekStart,
   onApply,
   onTargetWeek,
   initialResult,
+  mode = "editor",
   disabled = false
 }: BulletinImportProps) {
   const titleId = useId();
   const hintId = useId();
+  const fileId = useId();
   const request = useRef<AbortController | null>(null);
+  const dragDepth = useRef(0);
+  const [dragging, setDragging] = useState(false);
+  const [reviewWeek, setReviewWeek] = useState(weekStart);
   const [result, setResult] = useState<BulletinImportResult | null>(
     initialResult ?? null
   );
@@ -45,6 +56,9 @@ export function BulletinImport({
     setResult(initialResult ?? null);
     setError("");
     setBusy(false);
+    setReviewWeek(initialResult?.suggestedWeekStart ?? weekStart);
+    setDragging(false);
+    dragDepth.current = 0;
 
     return () => request.current?.abort();
   }, [weekStart, initialResult]);
@@ -89,6 +103,7 @@ export function BulletinImport({
         );
       if (request.current === controller && !controller.signal.aborted) {
         setResult(parsed);
+        setReviewWeek(parsed.suggestedWeekStart ?? weekStart);
       }
     } catch (cause) {
       if (request.current === controller && !controller.signal.aborted) {
@@ -126,18 +141,47 @@ export function BulletinImport({
 
   return (
     <section className={admin.panel} aria-labelledby={titleId}>
-      <h2 id={titleId}>Načítať oznamy z dokumentu</h2>
-      <p id={hintId} className={admin.hint}>
-        Vyberte Word dokument a skontrolujte rozpoznaný rozpis, oznamy a dary.
-        Načítanie samo nič nemení ani neukladá. Nejasné časti zostanú dostupné
-        na kontrolu.
-      </p>
-      <label className={admin.field}>
-        Dokument týždenných oznamov
+      <h2 id={titleId} className="srOnly">
+        Nahrať týždenné oznamy
+      </h2>
+      <div
+        className={`${styles.dropzone} ${dragging ? styles.dragging : ""}`}
+        aria-busy={busy}
+        onDragEnter={(event) => {
+          if (!event.dataTransfer.types.includes("Files")) return;
+          event.preventDefault();
+          dragDepth.current++;
+          if (!disabled && !busy) setDragging(true);
+        }}
+        onDragOver={(event) => {
+          if (event.dataTransfer.types.includes("Files")) {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = disabled || busy ? "none" : "copy";
+          }
+        }}
+        onDragLeave={(event) => {
+          event.preventDefault();
+          dragDepth.current = Math.max(0, dragDepth.current - 1);
+          if (!dragDepth.current) setDragging(false);
+        }}
+        onDrop={(event) => {
+          event.preventDefault();
+          dragDepth.current = 0;
+          setDragging(false);
+          if (disabled || busy) return;
+          if (event.dataTransfer.files.length !== 1) {
+            setError("Vyberte jeden dokument oznamov.");
+            return;
+          }
+          void parse(event.dataTransfer.files[0]);
+        }}
+      >
         <input
+          id={fileId}
+          className={styles.fileInput}
           type="file"
           accept=".doc,.docx,.txt"
-          disabled={disabled}
+          disabled={disabled || busy}
           aria-describedby={hintId}
           onChange={(event) => {
             const file = event.currentTarget.files?.[0];
@@ -146,11 +190,35 @@ export function BulletinImport({
             event.currentTarget.value = "";
           }}
         />
-        <small>Podporované sú .doc, .docx a .txt, najviac 3 MB.</small>
-      </label>
+        <label htmlFor={fileId} className={styles.dropLabel}>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 32 32"
+            width="40"
+            height="40"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M16 22V5m-6 6 6-6 6 6M5 21v6h22v-6" />
+          </svg>
+          <strong>Sem presuňte súbor s oznamami</strong>
+          <span id={hintId}>Word alebo text · .doc, .docx, .txt · do 3 MB</span>
+          <span className={admin.button}>
+            {busy ? "Načítavam…" : "Vybrať súbor"}
+          </span>
+        </label>
+      </div>
+      {mode === "start" ? (
+        <p className={admin.hint}>
+          Po nahratí skontrolujete údaje pred zverejnením.
+        </p>
+      ) : null}
 
       <details className={styles.paste}>
-        <summary>Dokument sa nedá prečítať? Vložte skopírovaný text</summary>
+        <summary>Vložiť text namiesto súboru</summary>
         <label className={admin.field}>
           Text oznamov vrátane dátumov a rozpisu
           <textarea
@@ -182,13 +250,11 @@ export function BulletinImport({
         </button>
       </details>
 
-      <p className={admin.status} role="status" aria-live="polite">
-        {busy
-          ? "Čítam dokument a rozpoznávam údaje…"
-          : result
-          ? "Dokument je pripravený na kontrolu."
-          : ""}
-      </p>
+      {busy ? (
+        <p className={admin.status} role="status">
+          Čítam dokument a rozpoznávam údaje…
+        </p>
+      ) : null}
       {busy ? (
         <button
           type="button"
@@ -204,13 +270,47 @@ export function BulletinImport({
         </p>
       ) : null}
       {result ? (
-        <BulletinImportPreview
-          result={result}
-          weekStart={weekStart}
-          disabled={disabled || busy}
-          onApply={onApply}
-          onTargetWeek={onTargetWeek ? openTargetWeek : undefined}
-        />
+        <>
+          {mode === "start" ? (
+            <details
+              className={styles.review}
+              open={!result.suggestedWeekStart}
+            >
+              <summary>Zmeniť týždeň</summary>
+              <label className={admin.field}>
+                Týždeň od pondelka
+                <input
+                  type="date"
+                  value={reviewWeek}
+                  disabled={disabled || busy}
+                  onChange={(event) => {
+                    if (!event.target.value) return;
+                    try {
+                      setReviewWeek(
+                        getMonday(event.target.value as CalendarDate)
+                      );
+                      setError("");
+                    } catch {
+                      setError("Vyberte platný dátum týždňa.");
+                    }
+                  }}
+                />
+                <small>Vyberte ktorýkoľvek deň príslušného týždňa.</small>
+              </label>
+            </details>
+          ) : null}
+          <BulletinImportPreview
+            result={result}
+            weekStart={mode === "start" ? reviewWeek : weekStart}
+            disabled={disabled || busy}
+            onApply={(imported) => {
+              if (mode === "start") void openTargetWeek(reviewWeek, imported);
+              else onApply?.(imported);
+            }}
+            onTargetWeek={onTargetWeek ? openTargetWeek : undefined}
+            starting={mode === "start"}
+          />
+        </>
       ) : null}
     </section>
   );
