@@ -45,6 +45,9 @@ For the immediate priorities, read [the current-state assessment and next steps]
 7. [Reviewed current-content refresh](content-refresh-2026-10-31.md) and
    [detail pass](design-history/v2-refined/README.md): expired guidance and clearer tasks.
 
+8. [Restored church details and sacrament sections](design-history/v2-church-details/README.md):
+   original page photographs, the six-sacrament banner and quotation panels.
+
 Check actual code and dated evidence before claiming a service, import, test or
 release step has completed. Update the relevant records when decisions change.
 

@@ -2,11 +2,12 @@
 
 [Overview](README.md) · [Plan and evidence](plan.md) · [Operations](../../remake/docs/operations.md)
 
-Reviewed **31 October 2026**, after the parish design and detail passes. These
-are recommendations, not approval of a design default, deployment or cutover.
-The user subsequently requested source commits. Implementation checkpoint
-`797b46c` now records the remake, tests, CI and ignore rules; the planning and
-visual records are committed separately. Nothing has been pushed by this review.
+Reviewed **31 October 2026**, after the parish design and detail passes, and
+updated for the user's choice of v2 with the original v1 homepage hero. These
+recommendations do not approve a production default change, deployment or cutover.
+The earlier requested commits are implementation checkpoint `797b46c` and
+planning/visual checkpoint `cc40f9a`. They precede the original-hero refinement.
+Nothing has been pushed by these reviews.
 
 The remake is implemented and well checked locally. The next useful milestone is
 an exact, reviewable release candidate on protected staging, followed by one real
@@ -18,7 +19,7 @@ delay the work that now matters most.
 | Area            | Implemented                                                                                                                | Remaining distinction                                                                                                         |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | Public site     | Responsive routes, Sunday–Sunday schedule, notices, gallery and articles with ten initial summaries and six more per click | A real current bulletin and confirmed recurring times still need parish approval                                              |
-| Parish design   | Warm v2 with genuine church details, serif reading, clearer tasks and mobile controls; v1 preserved                        | V2 is opt-in and disabled in production; no permanent design selection has been made                                          |
+| Parish design   | Chosen v2 composition with the original photographic hero, genuine church details, serif reading and clearer tasks         | V2 is still opt-in and disabled in production; promoting the selected composition requires a default change and verification  |
 | Admin           | Slovak editing, draft/private preview/publication, conflict protection and signed image uploads                            | Live Google login and the complete hosted editor workflow remain unverified                                                   |
 | Content         | 414 imported editable/history records, 146 public magazine articles, unpublished news kept private                         | Counts were reconciled previously; they do not establish final legacy-source freshness                                        |
 | Static pages    | 24 custom layouts, 29 raw published source records, 224 reviewed public reading blocks                                     | Four explicit expiry corrections must be reconciled when the final source export changes                                      |
@@ -43,9 +44,9 @@ See [verification scope](plan.md#verification-record) and
    the locally recorded refactor/design/detail work.
 2. **The production design switch is real work.**
    [`resolvePublicDesign`](../../remake/src/content/design.ts) explicitly forces
-   v1 in production. Approving v2 should lead to a small default change and a
-   focused regression check. Keep the immutable v1 archive; avoid maintaining two
-   full public styles indefinitely once the choice is settled.
+   v1 in production. The user has chosen v2 with the original hero; promotion
+   still needs a small default change and a focused regression check. Keep the
+   immutable v1 archive; simplify the temporary design branching after promotion.
 3. **Today's Mass information has the highest content priority.** The imported
    regular template is empty. The UI honestly directs visitors to the office
    when no schedule is confirmed. Confirm the template, contacts, preparation
@@ -67,21 +68,22 @@ See [verification scope](plan.md#verification-record) and
 
 ## Recommended order
 
-| Order | Work                                                                                                                | Completion evidence                                                                                                                                            |
-| ----- | ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1     | Review v2 on a real phone with a frequent parish visitor and someone seeking a sacrament; select its permanent role | Explicit design choice; Masses, notices, office contact and preparation requirements are easy to find                                                          |
-| 2     | Checkpoint reviewed source, run clean CI and deploy that exact candidate to protected Preview                       | Identifiable commit, passing clean-run checks, selected design visible with actual database content; staging stays unindexed                                   |
-| 3     | Finish Google setup and parish settings; rehearse editing                                                           | Approved account signs in; unapproved account fails; upload/reuse and private/public publication work; a genuine bulletin is checked on the public site        |
-| 4     | Reconcile the fresh source and affected media in parallel with staging review                                       | Final content comparison, reviewed static corrections, recorded media recovery/acceptance, planned editing freeze                                              |
-| 5     | Activate recovery operations and complete manual hosted acceptance                                                  | Successful off-device backup and restored-app/editor check, known operator, keyboard/zoom/screen-reader review, representative phone and slower-network checks |
-| 6     | Prepare the production configuration, then deliberately cut over                                                    | Production auth/data/canonical URLs verified separately from Preview; robots/sitemap/indexing intentional; one real publication checked on the final domain    |
+| Order | Work                                                                                               | Completion evidence                                                                                                                                            |
+| ----- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | Check the chosen v2/original-hero composition on a real phone; prepare its explicit default change | User preference retained; Masses, notices, office contact and preparation requirements remain easy to find; focused default checks pass                        |
+| 2     | Checkpoint reviewed source, run clean CI and deploy that exact candidate to protected Preview      | Identifiable commit, passing clean-run checks, selected design visible with actual database content; staging stays unindexed                                   |
+| 3     | Finish Google setup and parish settings; rehearse editing                                          | Approved account signs in; unapproved account fails; upload/reuse and private/public publication work; a genuine bulletin is checked on the public site        |
+| 4     | Reconcile the fresh source and affected media in parallel with staging review                      | Final content comparison, reviewed static corrections, recorded media recovery/acceptance, planned editing freeze                                              |
+| 5     | Activate recovery operations and complete manual hosted acceptance                                 | Successful off-device backup and restored-app/editor check, known operator, keyboard/zoom/screen-reader review, representative phone and slower-network checks |
+| 6     | Prepare the production configuration, then deliberately cut over                                   | Production auth/data/canonical URLs verified separately from Preview; robots/sitemap/indexing intentional; one real publication checked on the final domain    |
 
 Keep legacy services until a successful real weekly publishing cycle is complete.
 Rollback must account for edits made in the new admin; reverting a deployment
 alone does not restore data. The detailed procedure remains in
 [operations](../../remake/docs/operations.md#release-and-rollback).
 
-The next bounded implementation run should cover the chosen design default,
+The visual composition is now settled by [D30](decisions.md#d30--keep-v2-with-the-original-homepage-hero-31-october-2026).
+The next bounded release-preparation run should cover its explicit default change,
 source/CI checkpoint and updated protected staging. Provider setup, factual
 approval and a fresh private export may need owner input; they should be explicit
 dependencies rather than filled with sample data.

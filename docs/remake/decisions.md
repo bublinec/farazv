@@ -299,3 +299,41 @@ form are listed in [the content refresh](content-refresh-2026-10-31.md).
 clear today/selected status, larger mobile targets, practical sacrament links and
 long-page topic navigation. The warm church identity remains; v1 is still the
 default presentation, with both variants sharing the refreshed reading copy.
+
+## D30 — Keep v2 with the original homepage hero (31 October 2026)
+
+**User choice; implemented locally.** V2 is accepted overall with the homepage
+hero from v1. Restore its full-width church photograph, dark overlay, centered
+schedule/cards and Ubuntu title. Keep the current semantic date/today markers,
+Sunday–Sunday ordering and minimum 44 px controls, including four days per row on
+small screens. One shared hero avoids maintaining separate schedule presentations.
+
+This supersedes the split-photo/cream hero experiment in D28. V2's warmer
+masthead, serif reading, church accents and later detail refinements remain.
+The original v1, v2 and refined-v2 source/capture records stay immutable. The
+selection cookie, nonproduction-only selectors and production default are
+unchanged; promoting the chosen composition is still an explicit release step.
+See [the current design direction](design-direction.md).
+
+## D31 — Restore page photographs and sacrament bands (31 October 2026)
+
+**User choice; implemented locally, verification pending.** Preserve the original
+page-specific photographs of church details rather than repeating one small
+decorative window across headers. V2 reuses the exported covers where appropriate;
+five stock/illustration covers use genuine church-gallery details. The news list
+and curated discovery page also receive real church photographs. These are
+presentation choices: all 29 raw source records, 24 layouts and 224 approved
+current reading blocks remain unchanged.
+
+Restore the original homepage six-sacrament section: the existing precomposed
+`window.png` background, dark overlay, centered descriptions and gold links, with
+the original public summaries and destinations verbatim. Restore full-width
+light-blue catechism bands below the six sacrament heroes, with their complete
+existing quotations and attributions exactly once. Preserve source reading order
+and destination anchors. The window asset has no recorded photographer; do not
+assign the separate gallery's credit to it.
+
+This refines D28's photographic accents without changing D30: the homepage hero
+remains the shared v1 composition. V1 and its saved records remain preserved;
+selectors, production default, content publication and hosting are unchanged.
+See [the design direction](design-direction.md) for component owners and scope.

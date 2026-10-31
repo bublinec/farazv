@@ -31,6 +31,8 @@ directories. Routine checks require no live provider credentials or remote write
 - `src/components/admin/hooks/`: editor, navigation, media search and upload state.
 - `src/content/information.ts`: layout choices; `information-content.ts`: raw source
   reading copy; `information-updates.ts`: reviewed public corrections; `assets.ts`: real photos; `fixtures.ts`: explicit demo data.
+- `src/content/page-photographs.ts`: public page-cover selection;
+  `content/sacraments.ts`: original homepage banner and six summaries.
 - `scripts/migration/`: private snapshot tooling; `scripts/environment.ts`: shared
   lazy CLI configuration. No runtime server module imports migration tooling.
 
@@ -64,6 +66,19 @@ fixtures and documentation. Record meaningful decisions and dated verification i
 Preserve the user’s “our parish, our church” direction: genuine local photographs,
 familiar church details and readable practical UI. Do not remove those accents
 merely to make the site more neutral or uniform. See [the design analysis](../docs/remake/design-direction.md).
+The latest user choice accepts v2 overall but retains the original v1 homepage
+hero: full-width church photograph, dark overlay, centered schedule/cards and
+Ubuntu title. Keep the improved date/today semantics and minimum 44 px controls.
+V2's warmer masthead, serif reading and smaller church photographs remain.
+Restore page-specific original photographs in v2 headers and the original dark
+stained-glass section for the six sacraments. Five stock/illustration covers use
+genuine church details; supplementary news/curated-page covers also use real
+church photographs. Keep those choices separate from the unchanged raw export.
+Sacrament pages retain their complete original catechism quotation and attribution
+exactly once, in a full-width light-blue band below the hero. The original
+`window.png` banner has no recorded photographer; do not infer one from the
+separate church-gallery credits. See
+[D31](../docs/remake/decisions.md#d31--restore-page-photographs-and-sacrament-bands-31-october-2026).
 V1 remains the default; v2 is an opt-in nonproduction study. The original source
 checkpoint and screenshots in `docs/remake/design-history/v1/` are immutable
 reference material. Content and backend behavior are shared by both variants.

@@ -392,3 +392,44 @@ committed separately. Credentials, private data, `farazv-admin/` and the origina
 brief remain excluded. Formatting and scoped staged-file checks passed; the
 upstream font licence is preserved verbatim, including its one whitespace-only
 warning. No push, provider mutation, deployment or DNS change was performed.
+
+### 2026-10-31 — V2 composition with the original homepage hero
+
+The user accepts v2 overall and requests the original v1 homepage hero. Restore
+the shared full-width church photograph, dark overlay, centered schedule/cards
+and Ubuntu title; retain date/today semantics, Sunday–Sunday ordering and minimum
+44 px controls. The warmer masthead, serif reading, church accents and detail
+refinements remain. [D30](decisions.md#d30--keep-v2-with-the-original-homepage-hero-31-october-2026)
+records the choice and superseded split-hero experiment.
+
+The fast check passed: formatting, route generation, TypeScript and 75
+unit/security cases, with one opt-in database suite skipped. The production build
+and 14 focused browser checks passed, including two homepage accessibility scans.
+Hero measurements match between v1 and v2 at five widths; both final home captures
+load all 21 images without runtime errors or overflow. See
+[the current visual record](design-history/v2-original-hero/README.md).
+The existing v1/v2/refined snapshots remain immutable; no production default,
+deployment, content or provider configuration was changed.
+
+### 2026-10-31 — Restore familiar page photographs and sacrament sections
+
+The user supplied original screenshots and requested the page-specific church
+detail photographs and six-sacrament section. V2 now uses the original source
+covers across public page headers, with five explicit stock/illustration
+replacements from the real church gallery and supplementary real photographs for
+the news list and curated discovery page. The original homepage `window.png`
+banner, six unchanged public summaries, gold links and responsive columns are
+restored. No photographer is inferred for that precomposed banner asset.
+
+All six sacrament pages present their existing catechism quotation and attribution
+exactly once in a full-width pale-blue band directly below the hero. Reading
+destinations and source order remain; all 29 raw records, 24 layouts and 224
+approved reading blocks are unchanged. The shared original homepage hero, warm
+masthead and serif reading continue. V1 and earlier visual records remain
+preserved. [D31](decisions.md#d31--restore-page-photographs-and-sacrament-bands-31-october-2026)
+records this refinement.
+
+Verification is pending integration. Record formatting/type/build, source-content
+and browser checks, representative desktop/mobile crops and accessibility results
+here after they complete. No commit, hosted import, upload, deployment or DNS
+change is part of this pass.
