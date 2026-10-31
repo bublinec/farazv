@@ -1,0 +1,148 @@
+.section {
+  padding-block: 82px;
+}
+
+.heading {
+  margin-bottom: 40px;
+}
+
+.heading :global(.sectionHeading) {
+  margin-bottom: 0;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 46px;
+  align-items: start;
+}
+
+.office {
+  display: grid;
+  gap: 38px;
+}
+
+.group h3,
+.location h3 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-size: 1.6rem;
+  font-weight: 450;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.details {
+  margin: 0;
+  font-size: 1.04rem;
+  line-height: 1.7;
+}
+
+.details > div {
+  display: grid;
+  grid-template-columns: 85px minmax(0, 1fr);
+  gap: 12px;
+  margin-bottom: 9px;
+}
+
+.details dt {
+  color: var(--ink);
+}
+
+.details dd {
+  margin: 0;
+  color: var(--blue);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.details a {
+  text-decoration: none;
+}
+
+.details a:hover {
+  text-decoration: underline;
+}
+
+.note {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.6;
+  white-space: pre-line;
+  margin-bottom: 15px;
+}
+
+.note > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 17px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.groupHeading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 12px;
+}
+
+.address {
+  margin-top: 22px;
+}
+
+.address address {
+  font-style: normal;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 850px) {
+  .section {
+    padding-block: 62px;
+  }
+
+  .columns {
+    gap: 32px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  }
+
+  .details > div {
+    grid-template-columns: 75px minmax(0, 1fr);
+    gap: 8px;
+  }
+}
+
+@media (max-width: 700px) {
+  .section {
+    padding-block: 48px;
+  }
+
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .office {
+    gap: 28px;
+  }
+}

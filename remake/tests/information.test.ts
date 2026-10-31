@@ -9,6 +9,7 @@ import {
 } from "../src/content/information";
 import { richTextToPlainText } from "../src/lib/rich-text";
 import { getPublicInformationContent } from "../src/content/information-updates";
+import { getPageCover } from "../src/content/page-photographs";
 
 const approved = JSON.parse(
   await readFile(
@@ -16,6 +17,27 @@ const approved = JSON.parse(
     "utf8"
   )
 );
+
+test("every information page has a photograph and the original sacrament details stay distinct", () => {
+  for (const page of informationPages) {
+    const image = getPageCover(`/${page.slug}`)?.image;
+    assert.ok(image, page.slug);
+    assert.ok(image.width > 0 && image.height > 0, page.slug);
+    assert.match(image.src, /^https:\/\/res\.cloudinary\.com\/dmx3wfvko\//);
+  }
+
+  for (const route of [
+    "/sviatosti/sviatost-krstu",
+    "/sviatosti/sviatost-eucharistie",
+    "/sviatosti/sviatost-birmovania",
+    "/sviatosti/sviatost-manzelstva",
+    "/sviatosti/sviatost-zmierenia"
+  ])
+    assert.deepEqual(
+      getPageCover(route)?.image,
+      publishedInformationContent.find((page) => page.route === route)?.cover
+    );
+});
 
 test("published static export preserves all gallery collections and excludes private and unsafe source material", () => {
   const pages = publishedInformationContent;
@@ -67,8 +89,17 @@ test("approved raw source stays exact and public reading matches reviewed editor
     contentSource: source ? "published" : "curated",
     ...(source ? {} : { sections })
   }));
-  assert.equal(layouts.length, 24);
-  assert.deepEqual(layouts, approved.layouts);
+  // The user merged Birmovanci into the existing sacrament page. Keep the
+  // independent source baseline intact and declare only that approved change.
+  const expectedLayouts = approved.layouts
+    .filter((page: { slug: string }) => page.slug !== "birmovanci")
+    .map((page: { slug: string; links?: unknown }) => {
+      if (page.slug !== "sviatosti/sviatost-birmovania") return page;
+      const { links: _formerCrossLink, ...mergedPage } = page;
+      return mergedPage;
+    });
+  assert.equal(layouts.length, 23);
+  assert.deepEqual(layouts, expectedLayouts);
 
   const reading = informationPages.map((page) => ({
     route: `/${page.slug}`,
@@ -92,18 +123,19 @@ test("approved raw source stays exact and public reading matches reviewed editor
           (text) => text.trim() && !/^(galéria|galeria)$/i.test(text.trim())
         ) ?? []
   }));
-  assert.equal(
-    reading.reduce((total, page) => total + page.blocks.length, 0),
-    224
+  assert.deepEqual(
+    reading,
+    approved.reading.filter(
+      (page: { route: string }) => page.route !== "/birmovanci"
+    )
   );
-  assert.deepEqual(reading, approved.reading);
 });
 
 test("source-backed layouts cannot silently use curated fallback prose", () => {
   assert.equal(
     informationPages.filter((page) => page.contentSource === "published")
       .length,
-    23
+    22
   );
   assert.deepEqual(
     informationPages

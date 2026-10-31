@@ -11,12 +11,12 @@
   margin-top: 20px;
 }
 .more p {
-  font-size: 13px;
+  font-size: 0.9rem;
   color: var(--muted);
 }
 .complete {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 0.9rem;
 }
 .thumbnail {
   position: relative;
@@ -85,7 +85,7 @@
   padding: 0 8px 18px;
   gap: 20px;
   color: #d5dedf;
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 .close {
   display: flex;
@@ -122,7 +122,7 @@
   object-fit: contain;
 }
 .figure figcaption {
-  font-size: 14px;
+  font-size: 0.9rem;
   color: #d5dedf;
   text-align: center;
   line-height: 1.5;
@@ -152,7 +152,7 @@
 .hint {
   color: #aabbbf;
   text-align: center;
-  font-size: 11px;
+  font-size: 0.9rem;
   margin: 20px 0 0;
 }
 @media (max-width: 760px) {
@@ -204,7 +204,7 @@
   }
   .hint {
     margin-top: 15px;
-    font-size: 10px;
+    font-size: 0.9rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {

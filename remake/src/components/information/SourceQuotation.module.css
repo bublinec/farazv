@@ -1,0 +1,56 @@
+.band {
+  --prose-font-size: 0.9rem;
+  --prose-line-height: 1.45;
+  --prose-paragraph-gap: 0;
+  --prose-width: none;
+  margin: 0;
+  padding: 20px max(24px, calc((100% - 1440px) / 2));
+  background: color-mix(in srgb, var(--paper) 55%, var(--white));
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  text-align: center;
+  scroll-margin-top: 32px;
+}
+
+.quotation,
+.attribution {
+  display: inline;
+}
+
+.openMark,
+.closeMark {
+  color: var(--gold);
+  font-family: var(--font-display);
+  display: inline-block;
+  font-size: 2.1em;
+  line-height: 0;
+  vertical-align: -0.18em;
+  padding-inline: 2px;
+}
+
+.inlineCopy {
+  display: inline;
+}
+
+.inlineCopy :where(blockquote, p) {
+  display: inline;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  font-style: normal;
+}
+
+.attribution {
+  --prose-font-size: 0.8rem;
+  margin-left: 0.5em;
+}
+
+@media (max-width: 550px) {
+  .band {
+    padding-inline: 18px;
+    text-align: left;
+  }
+}

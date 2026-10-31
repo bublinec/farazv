@@ -15,15 +15,12 @@ export function PosterWall({ posters }: { posters: Poster[] }) {
       aria-labelledby="noticeboard-heading"
     >
       <div className="container">
-        <div className={styles.top}>
-          <div id="noticeboard-heading">
-            <SectionHeading
-              eyebrow="Pozývame vás"
-              title="Výveska"
-              description="Pozvánky, podujatia a všetko, čo sa práve chystá v našej farnosti."
-            />
-          </div>
-          <span className={styles.note}>Zastavte sa. Ste vítaní.</span>
+        <div id="noticeboard-heading">
+          <SectionHeading
+            eyebrow="Pozývame vás"
+            title="Výveska"
+            description="Pozvánky, podujatia a všetko, čo sa práve chystá v našej farnosti."
+          />
         </div>
         <div className={styles.grid}>
           {posters.map((poster) => (

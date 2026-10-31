@@ -1,6 +1,5 @@
 import { existsSync } from "node:fs";
 import { defineConfig } from "@playwright/test";
-import { DESIGN_COOKIE } from "./src/content/design";
 
 const localChrome =
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
@@ -24,25 +23,6 @@ export default defineConfig({
     viewport: { width: 1440, height: 1000 },
     locale: "sk-SK",
     timezoneId: "Europe/Bratislava",
-    ...(process.env.PLAYWRIGHT_PUBLIC_DESIGN === "parish"
-      ? {
-          storageState: {
-            cookies: [
-              {
-                name: DESIGN_COOKIE,
-                value: "parish",
-                domain: new URL(baseURL).hostname,
-                path: "/",
-                expires: -1,
-                httpOnly: true,
-                secure: false,
-                sameSite: "Lax" as const
-              }
-            ],
-            origins: []
-          }
-        }
-      : {}),
     ...(executablePath
       ? { launchOptions: { executablePath } }
       : { channel: "chromium" }),

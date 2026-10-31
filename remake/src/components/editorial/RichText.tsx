@@ -88,7 +88,18 @@ function renderNode(node: RichTextNode, key: number): ReactNode {
   }
 }
 /** Rendering imports no editor JavaScript and never accepts source HTML. */
-export function RichText({ document }: { document: RichTextDocument }) {
+export function RichText({
+  document,
+  className
+}: {
+  document: RichTextDocument;
+  className?: string;
+}) {
   const safe = validateRichText(document);
-  return <div className="prose">{safe.content.map(renderNode)}</div>;
+
+  return (
+    <div className={`prose ${className ?? ""}`}>
+      {safe.content.map(renderNode)}
+    </div>
+  );
 }

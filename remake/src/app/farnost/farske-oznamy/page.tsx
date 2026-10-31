@@ -35,6 +35,7 @@ export default async function BulletinPage() {
     return (
       <>
         <PageHero
+          route="/farnost/farske-oznamy"
           title="Farské oznamy"
           eyebrow="Život našej farnosti"
           description="Sväté omše, úmysly a aktuálne oznamy na jednom mieste."
@@ -57,11 +58,11 @@ export default async function BulletinPage() {
   return (
     <>
       <PageHero
+        route="/farnost/farske-oznamy"
         title="Farské oznamy"
         eyebrow="Život našej farnosti"
         description="Sväté omše, úmysly a aktuálne oznamy na jednom mieste."
         image={aerialImage}
-        breadcrumb="Farnosť"
       />
       <section className="section">
         <div className="container">

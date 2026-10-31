@@ -7,6 +7,7 @@ import { informationPages } from "@/content/information";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PublishedContent } from "./PublishedContent";
 import styles from "./InformationPage.module.css";
+import reading from "./ReadingContent.module.css";
 
 export const Arrow = ({ diagonal = false }: { diagonal?: boolean }) => (
   <span aria-hidden="true">{diagonal ? "↗" : "→"}</span>
@@ -20,7 +21,7 @@ function SectionCopy({ section }: { section: InformationSection }) {
         <p key={paragraph}>{paragraph}</p>
       ))}
       {section.items ? (
-        <ul className={styles.checklist}>
+        <ul className={reading.checklist}>
           {section.items.map((item) => (
             <li key={item}>{item}</li>
           ))}
@@ -30,22 +31,30 @@ function SectionCopy({ section }: { section: InformationSection }) {
   );
 }
 
-export function ReadingCopy({ page }: { page: InformationPageDefinition }) {
+export function ReadingCopy({
+  page,
+  omitSectionId
+}: {
+  page: InformationPageDefinition;
+  omitSectionId?: string;
+}) {
   // A known source page must never silently fall back to an abridged rewrite.
   return page.contentSource === "published" ? (
-    <PublishedContent page={page} />
+    <PublishedContent page={page} omitSectionId={omitSectionId} />
   ) : (
-    <>
+    <div className={reading.readingCopy}>
       {page.sections.map((section, index) => (
         <section
-          className={styles.copySection}
+          className={reading.copySection}
           key={section.title}
           id={`informacie-${index + 1}`}
         >
-          <SectionCopy section={section} />
+          <div className="prose">
+            <SectionCopy section={section} />
+          </div>
         </section>
       ))}
-    </>
+    </div>
   );
 }
 

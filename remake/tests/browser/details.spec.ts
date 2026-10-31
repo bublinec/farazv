@@ -1,35 +1,25 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/design/v2");
-  await expect(page.locator("[data-public-design=parish]")).toBeVisible();
+  await page.goto("/");
 });
 
-async function expectReadingDestinations(page: Page) {
-  const navigation = page.locator("main").getByRole("navigation", {
-    name: "Na tejto stránke",
-    exact: true
-  });
-  const links = navigation.getByRole("link");
-  expect(await links.count()).toBeGreaterThanOrEqual(3);
+async function expectReadingHeadings(page: Page) {
+  const headings = page.locator('main div[id^="citanie-"]');
+  expect(await headings.count()).toBeGreaterThanOrEqual(3);
+  const ids = await headings.evaluateAll((elements) =>
+    elements.map((element) => element.id)
+  );
+  expect(new Set(ids).size).toBe(ids.length);
 
-  for (const link of await links.all()) {
-    const href = await link.getAttribute("href");
-    expect(href).toMatch(/^#[\w-]+$/);
-    const destination = page.locator(`[id="${href!.slice(1)}"]`);
-    await expect(destination).toHaveCount(1);
-    await expect(destination).toBeVisible();
-    const label = (await link.innerText()).trim();
-    if (label === "Fotografie")
-      await expect(
-        destination
-          .getByRole("button", { name: /^Zväčšiť fotografiu:/ })
-          .first()
-      ).toBeVisible();
-    else await expect(destination).toContainText(label);
+  for (const heading of await headings.all()) {
+    await expect(heading).toHaveAttribute("tabindex", "-1");
+    await expect(heading.getByRole("heading")).toBeVisible();
   }
 
-  return navigation;
+  await expect(
+    page.getByRole("navigation", { name: "Na tejto stránke", exact: true })
+  ).toHaveCount(0);
 }
 
 async function expectAbove(first: Locator, second: Locator) {
@@ -40,36 +30,49 @@ async function expectAbove(first: Locator, second: Locator) {
   expect(firstBox!.y + firstBox!.height).toBeLessThanOrEqual(secondBox!.y);
 }
 
-test("v2 puts current notices before the church welcome and gives each section shortcut a destination", async ({
+test("homepage puts current notices before the church gallery and retains all six sacraments", async ({
   page
 }) => {
   const main = page.locator("main");
   const noticeboard = main.locator("#vyveska");
-  const welcome = main.getByRole("region", {
-    name: "Naša farnosť. Náš kostol.",
+  const gallery = main.getByRole("heading", {
+    name: "Miesto, ktoré poznáme",
     exact: true
   });
   await expect(noticeboard).toBeVisible();
-  await expect(welcome).toBeVisible();
-  await expectAbove(noticeboard, welcome);
+  await expect(gallery).toBeVisible();
+  await expectAbove(noticeboard, gallery);
+  await expect(
+    main.getByRole("navigation", {
+      name: "Na tejto stránke",
+      exact: true
+    })
+  ).toHaveCount(0);
 
-  const shortcuts = main.getByRole("navigation", {
-    name: "Na tejto stránke",
+  const sacraments = main.getByRole("region", {
+    name: "Sviatosti",
     exact: true
   });
-  await expect(shortcuts.getByRole("link")).toHaveCount(4);
-  for (const name of ["Výveska", "Novinky", "Sviatosti", "Časopis"])
+  await expect(sacraments.locator("article")).toHaveCount(6);
+  await expect(sacraments.locator("img")).toHaveAttribute(
+    "src",
+    /window_edb30a4d4a/
+  );
+  for (const slug of [
+    "krstu",
+    "eucharistie",
+    "birmovania",
+    "manzelstva",
+    "zmierenia",
+    "pomazania-chorych"
+  ])
     await expect(
-      shortcuts.getByRole("link", { name, exact: true })
-    ).toBeVisible();
-  for (const link of await shortcuts.getByRole("link").all()) {
-    const href = await link.getAttribute("href");
-    await expect(main.locator(href!)).toHaveCount(1);
-  }
+      sacraments.locator(`a[href="/sviatosti/sviatost-${slug}"]`)
+    ).toHaveCount(1);
 });
 
 for (const width of [320, 390, 501]) {
-  test(`v2 keeps eight ordered, touch-sized day buttons and today's marker at ${width}px`, async ({
+  test(`homepage keeps eight ordered, touch-sized day buttons and today's marker at ${width}px`, async ({
     page
   }) => {
     await page.setViewportSize({ width, height: 900 });
@@ -130,17 +133,29 @@ for (const width of [320, 390, 501]) {
   });
 }
 
-test("baptism puts practical links and a working, focusable reading menu before the full copy", async ({
+test("baptism retains its quotation, practical PDF and stable reading anchors without a duplicate menu", async ({
   page
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/sviatosti/sviatost-krstu");
   const main = page.locator("main");
+  await expect(main.locator(".pageHero img")).toHaveAttribute(
+    "src",
+    /IMG_3270_af6574d3ca/
+  );
+  const quotation = main.locator("figure#informacie-1");
+  await expect(quotation.locator("blockquote")).toHaveCount(1);
+  await expect(quotation.locator("figcaption")).toContainText(
+    "Katechizmus Katolíckej cirkvi 1213"
+  );
+  await expect(
+    main.locator("blockquote").filter({ hasText: "Svätý krst je základom" })
+  ).toHaveCount(1);
   const contact = main.getByRole("link", {
     name: "Kontakt na farskú kanceláriu",
     exact: true
   });
-  await expect(contact).toHaveAttribute("href", "/kontakt");
+  await expect(contact).toHaveCount(0);
   const form = main.getByRole("link", {
     name: "Žiadosť o krst dieťaťa · PDF",
     exact: true
@@ -149,31 +164,17 @@ test("baptism puts practical links and a working, focusable reading menu before 
     "href",
     /^https:\/\/drive\.google\.com\/file\/d\//
   );
-  const navigation = await expectReadingDestinations(page);
-  await expectAbove(contact, navigation);
-  await expectAbove(form, navigation);
-  await expectAbove(
-    navigation,
-    main.locator('section[id^="informacie-"]').first()
-  );
+  await expectReadingHeadings(page);
+  await expectAbove(form, main.locator('section[id^="informacie-"]').first());
 
-  const adultPreparation = navigation.getByRole("link", {
-    name: "Ako je to s krstom dospelých?",
-    exact: true
+  const destination = main.locator('div[id^="citanie-"]').filter({
+    has: page.getByRole("heading", {
+      name: "Ako je to s krstom dospelých?",
+      exact: true
+    })
   });
-  const href = (await adultPreparation.getAttribute("href"))!;
-  await adultPreparation.click();
-  await expect(page).toHaveURL(new RegExp(`${href}$`));
-  const destination = page.locator(href);
-  await expect
-    .poll(() =>
-      destination.evaluate(
-        (element) =>
-          element === document.activeElement ||
-          element.contains(document.activeElement)
-      )
-    )
-    .toBe(true);
+  await destination.focus();
+  await expect(destination).toBeFocused();
   const chapterGaps = await main
     .locator('div[id^="citanie-"]')
     .evaluateAll((headings) =>
@@ -196,10 +197,10 @@ test("church history reading topics resolve and retain the parish history and it
   page
 }) => {
   await page.goto("/farnost/kostol-sv-alzbety");
-  const navigation = await expectReadingDestinations(page);
+  await expectReadingHeadings(page);
   await expect(
-    navigation.getByRole("link", { name: "Kostol sv. Alžbety", exact: true })
-  ).toBeVisible();
+    page.getByRole("heading", { name: "História farnosti", exact: true })
+  ).toHaveCount(1);
   const main = page.locator("main");
   await expect(main).toContainText("iroškótski mnísi");
   await expect(main).toContainText("Jozef Kaniansky");
@@ -226,6 +227,15 @@ test("expired confirmation and marriage timetables give current contact guidance
   await expect(main).toContainText("Aktuálne termíny predmanželských kurzov");
   await expect(main).toContainText("Katechizmus Katolíckej cirkvi 1661");
   await expect(main).toContainText("Potrebné listiny:");
+  const impediments = main.locator("details").filter({
+    has: page.getByRole("heading", {
+      name: "Aké sú manželské prekážky?",
+      exact: true
+    })
+  });
+  await expect(impediments).not.toHaveAttribute("open");
+  await impediments.locator("summary").click();
+  await expect(impediments).toHaveAttribute("open", "");
 });
 
 test("expired parish-family registration and school welcome are removed without losing useful destinations or history", async ({

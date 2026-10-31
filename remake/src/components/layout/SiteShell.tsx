@@ -1,52 +1,53 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { Header } from "./Header";
 import { DateRefresh } from "./DateRefresh";
-import type { PublicDesign } from "@/content/design";
-import { DesignReviewBar } from "@/components/design/DesignReviewBar";
-import theme from "@/components/design/ParishTheme.module.css";
+import theme from "./ParishTheme.module.css";
 
 export function SiteShell({
   children,
-  footer,
-  previewLabel,
-  design = "current",
-  fixtureMode = false
+  footer
 }: {
   children: ReactNode;
   footer: ReactNode;
-  previewLabel?: string;
-  design?: PublicDesign;
-  fixtureMode?: boolean;
 }) {
   const pathname = usePathname();
+  const shell = useRef<HTMLDivElement>(null);
+  const masthead = useRef<HTMLDivElement>(null);
+  const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
 
-  if (pathname === "/admin" || pathname.startsWith("/admin/")) return children;
+  useEffect(() => {
+    const element = masthead.current;
+    if (!element || isAdmin) return;
 
-  const content = (
-    <>
-      {design === "parish" ? (
-        <DesignReviewBar fixtureMode={fixtureMode} />
-      ) : null}
-      <Header
-        previewLabel={design === "parish" ? undefined : previewLabel}
-        design={design}
-      />
+    const updateHeight = () => {
+      shell.current?.style.setProperty(
+        "--site-header-height",
+        `${element.getBoundingClientRect().height}px`
+      );
+    };
+
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [isAdmin]);
+
+  if (isAdmin) return children;
+
+  return (
+    <div ref={shell} className={theme.parish}>
+      <div ref={masthead}>
+        <Header />
+      </div>
       <main id="main" tabIndex={-1}>
         {children}
       </main>
       {footer}
       <DateRefresh />
-    </>
-  );
-
-  return design === "parish" ? (
-    <div className={theme.parish} data-public-design="parish">
-      {content}
     </div>
-  ) : (
-    content
   );
 }

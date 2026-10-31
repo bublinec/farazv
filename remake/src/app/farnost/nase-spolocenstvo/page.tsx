@@ -17,6 +17,7 @@ export default async function ArticlesPage() {
   return (
     <>
       <PageHero
+        route="/farnost/nase-spolocenstvo"
         eyebrow="Farský časopis"
         title="Naše spoločenstvo"
         description="Miesto pre príbehy, zamyslenia a slová povzbudenia. Čítajte s nami."

@@ -1,0 +1,26 @@
+/* Public palette and type roles. Components own their layout and spacing. */
+.parish {
+  --blue: #2e5268;
+  --blue-deep: #203e49;
+  --gold: #af8d52;
+  --gold-dark: #74572e;
+  --gold-light: #e2cd9c;
+  --ink: #383b36;
+  --muted: #62675f;
+  --line: #ddd7c9;
+  --paper: #f0ecdf;
+  --white: #fffdf7;
+  --heading-weight: 450;
+  --heading-line-height: 1.15;
+  --text-page-title: clamp(2.55rem, 4.8vw, 4rem);
+  --text-reading: 1.22rem;
+
+  background: var(--white);
+  color: var(--ink);
+}
+
+@media (max-width: 700px) {
+  .parish {
+    --text-page-title: clamp(2.4rem, 8.5vw, 3.2rem);
+  }
+}

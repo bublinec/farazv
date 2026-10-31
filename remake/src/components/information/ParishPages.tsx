@@ -1,48 +1,24 @@
 import Link from "next/link";
 import type { InformationPageDefinition } from "@/content/information";
-import type { MediaAsset } from "@/content/types";
-import { aerialImage, churchLieskovec, churchZolna } from "@/content/assets";
-import { getPublicDesign } from "@/server/public-design";
-import { MediaImage } from "@/components/ui/MediaImage";
+import { churchPhotographer } from "@/content/church-details";
 import { PageHero } from "@/components/ui/PageHero";
 import { Arrow, ReadingCopy, PageLinks, RelatedPages } from "./PageSections";
 import { OfficeAside } from "./OfficeAside";
 import { PublishedContent, TourFallback } from "./PublishedContent";
-import { ReadingNavigation } from "./ReadingNavigation";
 import styles from "./InformationPage.module.css";
 
-function churchImage(slug: string) {
-  if (slug.endsWith("kostol-sv-alzbety")) return aerialImage;
-  if (slug.includes("lieskovci")) return churchLieskovec;
-  return churchZolna;
-}
-
-export async function ChurchPage({
-  page
-}: {
-  page: InformationPageDefinition;
-}) {
-  const parish = (await getPublicDesign()) === "parish";
-  const image = churchImage(page.slug);
-
+export function ChurchPage({ page }: { page: InformationPageDefinition }) {
   return (
     <>
       <PageHero
+        route={`/${page.slug}`}
         title={page.title}
         eyebrow={page.eyebrow}
         description={page.introduction}
-        image={image}
       />
       <section
-        className={`container ${styles.churchLayout} ${
-          parish ? styles.churchReadingLayout : ""
-        }`}
+        className={`container ${styles.churchLayout} ${styles.churchReadingLayout}`}
       >
-        {parish ? (
-          <div className={styles.churchNavigation}>
-            <ReadingNavigation page={page} />
-          </div>
-        ) : null}
         <div className={styles.sacramentContent}>
           <ReadingCopy page={page} />
           <PageLinks page={page} />
@@ -65,35 +41,16 @@ export async function ChurchPage({
 }
 
 export function CommunityPage({ page }: { page: InformationPageDefinition }) {
-  const cover = page.source?.cover;
-  const galleryImages =
-    page.source?.sections.flatMap((section) =>
-      section.body.content
-        .filter((node) => node.type === "imageGallery")
-        .flatMap((node) => node.attrs?.images as MediaAsset[])
-    ) ?? [];
-  let image: MediaAsset | undefined;
-  if (!page.source?.placeholderSource) {
-    image =
-      cover && cover.width / cover.height < 2.5
-        ? cover
-        : galleryImages.find((image) => image.width / image.height < 2.5);
-  }
-
   return (
     <>
       <PageHero
+        route={`/${page.slug}`}
         title={page.title}
         eyebrow={page.eyebrow}
         description={page.introduction}
       />
       <section className={`container ${styles.communityLayout}`}>
         <div>
-          {image ? (
-            <div className={styles.communityImage}>
-              <MediaImage image={image} sizes="(max-width:760px) 100vw, 65vw" />
-            </div>
-          ) : null}
           <ReadingCopy page={page} />
         </div>
         <aside className={styles.communityAside}>
@@ -130,6 +87,7 @@ export function SchoolPage({ page }: { page: InformationPageDefinition }) {
   return (
     <>
       <PageHero
+        route={`/${page.slug}`}
         title={page.title}
         eyebrow={page.eyebrow}
         description={page.introduction}
@@ -158,12 +116,17 @@ export function GalleryPage({ page }: { page: InformationPageDefinition }) {
   return (
     <>
       <PageHero
+        route={`/${page.slug}`}
         title={page.title}
         eyebrow={page.eyebrow}
         description={page.introduction}
       />
       <section className={`container ${styles.gallerySection}`}>
         <PublishedContent page={page} />
+        <p className={styles.credit}>
+          Detaily nášho kostola: fotografie{" "}
+          <a href={churchPhotographer.href}>{churchPhotographer.name}</a>
+        </p>
         <TourFallback page={page} />
         <PageLinks page={page} />
       </section>
@@ -175,6 +138,7 @@ export function ResourcePage({ page }: { page: InformationPageDefinition }) {
   return (
     <>
       <PageHero
+        route={`/${page.slug}`}
         title={page.title}
         eyebrow={page.eyebrow}
         description={page.introduction}

@@ -1,0 +1,142 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero .eyebrow {
+  margin: 0;
+}
+
+.hero h1 {
+  margin: 14px 0 18px;
+  font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+  line-height: 1.2;
+}
+
+.description {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.photographic {
+  display: grid;
+  align-items: center;
+  min-height: 330px;
+  padding: var(--space-6) 0 44px;
+  background: #282722;
+  color: var(--white);
+  text-align: center;
+}
+
+.photographic::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, #17201ac9, #17201ab3 50%, #17201ac9);
+}
+
+.image {
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: -2;
+  width: var(--cover-image-width, 100%);
+  max-width: none;
+  height: 100%;
+  object-position: center;
+}
+
+.photographic .eyebrow {
+  color: #ecd5a7;
+}
+
+.photographic h1 {
+  max-width: 28ch;
+  margin-inline: auto;
+  color: var(--white);
+  text-shadow: 0 2px 18px #00000030;
+}
+
+.photographic .description {
+  margin-inline: auto;
+  color: var(--white);
+}
+
+/* Curated pages without a cover retain a quiet detail from our church. */
+.decorative {
+  padding: 61px 0 58px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.decorative::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: clamp(190px, 30vw, 460px);
+  background: linear-gradient(90deg, #f0ecdf 0%, #f0ecdf80 28%, #f0ecdf12 75%),
+    url("https://res.cloudinary.com/dmx3wfvko/image/upload/f_auto,q_auto,w_640/v1638551400/IMG_4794_94955124af.jpg")
+      center 43% / cover;
+  opacity: 0.67;
+  pointer-events: none;
+}
+
+.decorative h1 {
+  max-width: 23ch;
+  margin-top: var(--space-5);
+  margin-bottom: 14px;
+}
+
+.decorative .description {
+  max-width: min(60ch, 71%);
+}
+
+@media (max-width: 700px) {
+  .hero h1 {
+    font-size: clamp(1.8rem, 6.2vw, 2.25rem);
+    margin-top: var(--space-3);
+  }
+
+  .photographic {
+    min-height: 292px;
+    padding: var(--space-5) 0 34px;
+  }
+
+  .image {
+    width: 100%;
+    object-position: var(--cover-mobile-position, center);
+  }
+
+  .decorative {
+    padding-bottom: var(--space-10);
+  }
+
+  .decorative::before {
+    width: 145px;
+    opacity: 0.3;
+  }
+
+  .decorative .description {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 550px) {
+  .decorative {
+    padding-top: 53px;
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
+}

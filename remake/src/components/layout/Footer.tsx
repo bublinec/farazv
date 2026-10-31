@@ -1,29 +1,22 @@
-import type { PublicDesign } from "@/content/design";
 import Link from "next/link";
 import type { SettingsDocument } from "@/content/documents";
-import { churchPhotographer } from "@/content/church-details";
 import { siteConfig } from "@/content/site";
 import { Icon } from "@/components/ui/Icon";
+import { ChurchMark } from "./ChurchMark";
 import styles from "./Footer.module.css";
 
-export function Footer({
-  settings,
-  design = "current"
-}: {
-  settings: SettingsDocument | null;
-  design?: PublicDesign;
-}) {
-  const parishDesign = design === "parish";
-
+export function Footer({ settings }: { settings: SettingsDocument | null }) {
   return (
-    <footer className={`${styles.footer} ${parishDesign ? styles.parish : ""}`}>
+    <footer className={styles.footer}>
       <div className={`container ${styles.main}`}>
         <div className={styles.identity}>
-          <Icon name="church" size={37} />
-          <h2>
-            {siteConfig.name}
-            <small>{siteConfig.city}</small>
-          </h2>
+          <Link href="/" className={styles.brand}>
+            <ChurchMark className={styles.churchTower} />
+            <h2>
+              {siteConfig.name}
+              <small>{siteConfig.city}</small>
+            </h2>
+          </Link>
           <p>
             Spolu tvoríme živé spoločenstvo viery,
             <br />
@@ -92,14 +85,6 @@ export function Footer({
           )}
         </div>
       </div>
-      {parishDesign ? (
-        <div className={`container ${styles.photographyCredit}`}>
-          Detaily nášho kostola: fotografie{" "}
-          <a href={churchPhotographer.href} target="_blank" rel="noreferrer">
-            {churchPhotographer.name}
-          </a>
-        </div>
-      ) : null}
       <div className={`container ${styles.bottom}`}>
         <span>
           © {new Date().getFullYear()} {siteConfig.name}

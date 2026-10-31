@@ -103,8 +103,7 @@ const pageDefinitions: InformationPageConfiguration[] = [
     kind: "sacrament",
     introduction:
       "Dar Ducha Svätého nás posilňuje vo viere, prehlbuje naše spojenie s Cirkvou a pozýva vydávať svedectvo o Kristovi.",
-    contentSource: "published",
-    links: [{ label: "Informácie pre birmovancov", href: "/birmovanci" }]
+    contentSource: "published"
   },
   {
     slug: "sviatosti/sviatost-manzelstva",
@@ -335,21 +334,6 @@ const pageDefinitions: InformationPageConfiguration[] = [
       {
         label: "Virtuálna prehliadka a 3D modely",
         href: "/farnost/virtualna-prehliadka"
-      }
-    ]
-  },
-  {
-    slug: "birmovanci",
-    title: "Cesta k birmovaniu",
-    eyebrow: "Birmovanci",
-    kind: "sacrament",
-    introduction:
-      "Rásť vo viere, pýtať sa a objavovať spoločenstvo. Príprava na birmovanie je pozvaním urobiť ďalší krok.",
-    contentSource: "published",
-    links: [
-      {
-        label: "O sviatosti birmovania",
-        href: "/sviatosti/sviatost-birmovania"
       }
     ]
   },

@@ -1,21 +1,22 @@
 import type { ReactNode } from "react";
-import type {
-  InformationPageDefinition,
-  PublishedInformationSection
-} from "@/content/information";
+import type { InformationPageDefinition } from "@/content/information";
+import {
+  getInformationReadingNodes,
+  isInformationCredit,
+  type PresentedReadingNode
+} from "@/content/information-presentation";
 import type { RichTextDocument, RichTextNode } from "@/content/documents";
 import type { MediaAsset } from "@/content/types";
 import { richTextToPlainText } from "@/lib/rich-text";
 import { RichText } from "@/components/editorial/RichText";
 import { MediaImage } from "@/components/ui/MediaImage";
+import { Icon } from "@/components/ui/Icon";
 import { ImageGallery } from "./ImageGallery";
 import { getPublicInformationContent } from "@/content/information-updates";
-import { readingHeadingId } from "./ReadingNavigation";
+import { readingHeadingId } from "./reading-anchors";
 import styles from "./InformationPage.module.css";
+import reading from "./ReadingContent.module.css";
 
-function text(node: RichTextNode): string {
-  return richTextToPlainText({ type: "doc", content: [node] });
-}
 const document = (content: RichTextNode[]): RichTextDocument => ({
   type: "doc",
   content
@@ -26,12 +27,11 @@ function ReadingNodes({
   nodes,
   sectionId
 }: {
-  nodes: RichTextNode[];
+  nodes: PresentedReadingNode[];
   sectionId: string;
 }) {
   const output: ReactNode[] = [];
   let pending: RichTextNode[] = [];
-  let headingOrdinal = 0;
   const flush = () => {
     if (pending.length)
       output.push(
@@ -40,24 +40,66 @@ function ReadingNodes({
     pending = [];
   };
   for (let index = 0; index < nodes.length; index += 1) {
-    const node = nodes[index];
+    const { node, headingOrdinal, collapsed } = nodes[index];
     if (node.type === "heading") {
       flush();
-      headingOrdinal += 1;
+      if (collapsed) {
+        const Heading = `h${node.attrs?.level ?? 2}` as
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6";
+        const nextHeading = nodes.findIndex(
+          (candidate, nextIndex) =>
+            nextIndex > index &&
+            candidate.node.type === "heading" &&
+            Number(candidate.node.attrs?.level ?? 2) <=
+              Number(node.attrs?.level ?? 2)
+        );
+        const end = nextHeading === -1 ? nodes.length : nextHeading;
+
+        output.push(
+          <details
+            id={readingHeadingId(sectionId, headingOrdinal)}
+            className={`${reading.readingAnchor} ${reading.readingDisclosure}`}
+            key={`heading-${index}`}
+          >
+            <summary>
+              <Heading className={reading.disclosureHeading}>
+                <span>{richTextToPlainText(document([node]))}</span>
+                <Icon name="chevron" size={22} />
+              </Heading>
+            </summary>
+            <div className={reading.disclosureContent}>
+              <ReadingNodes
+                nodes={nodes.slice(index + 1, end)}
+                sectionId={sectionId}
+              />
+            </div>
+          </details>
+        );
+        index = end - 1;
+        continue;
+      }
+
       output.push(
         <div
           id={readingHeadingId(sectionId, headingOrdinal)}
-          className={styles.readingAnchor}
+          className={reading.readingAnchor}
           tabIndex={-1}
           key={`heading-${index}`}
         >
-          <RichText document={document([node])} />
+          <RichText
+            document={document([node])}
+            className={reading.headingCopy}
+          />
         </div>
       );
     } else if (node.type === "imageGallery") {
       flush();
       output.push(
-        <div className={styles.sourceGallery} key={`gallery-${index}`}>
+        <div className={reading.sourceGallery} key={`gallery-${index}`}>
           <ImageGallery images={node.attrs?.images as MediaAsset[]} />
         </div>
       );
@@ -73,7 +115,7 @@ function ReadingNodes({
           : {})
       };
       output.push(
-        <figure className={styles.sourceImage} key={`image-${index}`}>
+        <figure className={reading.sourceImage} key={`image-${index}`}>
           <MediaImage
             image={image}
             fit="contain"
@@ -82,49 +124,27 @@ function ReadingNodes({
           {image.caption ? <figcaption>{image.caption}</figcaption> : null}
         </figure>
       );
+    } else if (isInformationCredit(node)) {
+      flush();
+      output.push(
+        <div className={reading.sourceCredit} key={`credit-${index}`}>
+          <RichText document={document([node])} />
+        </div>
+      );
     } else pending.push(node);
   }
   flush();
   return output;
 }
 
-function visibleNodes(
-  section: PublishedInformationSection,
-  page: InformationPageDefinition
-) {
-  const seenCredits = new Set<string>();
-  return section.body.content.filter((node) => {
-    const value = text(node).trim();
-    if (node.type === "paragraph" && /^(?:galéria|galeria)$/i.test(value))
-      return false;
-    if (
-      section.kind === "slides" &&
-      (node.type === "image" ||
-        (node.type === "heading" &&
-          value.toLocaleLowerCase("sk") === page.title.toLocaleLowerCase("sk")))
-    )
-      return false;
-    if (
-      node.type === "paragraph" &&
-      /^(?:autor:|autorka:|claudia nemcová$)/i.test(value)
-    ) {
-      const credit = value
-        .replace(/^autor(?:ka)?:\s*/i, "")
-        .trim()
-        .toLocaleLowerCase("sk");
-      if (seenCredits.has(credit)) return false;
-      seenCredits.add(credit);
-    }
-    return true;
-  });
-}
-
 export function PublishedContent({
   page,
-  galleryOnly = false
+  galleryOnly = false,
+  omitSectionId
 }: {
   page: InformationPageDefinition;
   galleryOnly?: boolean;
+  omitSectionId?: string;
 }) {
   const source = page.source
     ? getPublicInformationContent(page.source)
@@ -138,26 +158,25 @@ export function PublishedContent({
       ) &&
       (!galleryOnly || section.kind === "galleries")
   );
-  const copy = (
-    <>
-      {sections.map((section, index) => (
-        <section
-          className={`${styles.copySection} ${
-            section.kind === "galleries" ? styles.collection : ""
-          }`}
-          id={`informacie-${index + 1}`}
-          tabIndex={-1}
-          key={section.id}
-        >
-          <ReadingNodes
-            nodes={visibleNodes(section, page)}
-            sectionId={section.id}
-          />
-        </section>
-      ))}
-    </>
+  return (
+    <div className={reading.readingCopy}>
+      {sections.map((section, index) => {
+        const nodes = getInformationReadingNodes(section, page);
+        if (section.id === omitSectionId || !nodes.length) return null;
+
+        return (
+          <section
+            className={reading.copySection}
+            id={`informacie-${index + 1}`}
+            tabIndex={-1}
+            key={section.id}
+          >
+            <ReadingNodes nodes={nodes} sectionId={section.id} />
+          </section>
+        );
+      })}
+    </div>
   );
-  return copy;
 }
 
 export function TourFallback({ page }: { page: InformationPageDefinition }) {

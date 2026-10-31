@@ -17,6 +17,7 @@ export default async function NewsPage() {
   return (
     <>
       <PageHero
+        route="/prispevky"
         eyebrow="Sme tu spolu"
         title="Zo života farnosti"
         description="Pozvánky, novinky a chvíle, ktoré tvoria naše spoločenstvo."

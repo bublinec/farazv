@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
+import { MediaImage } from "@/components/ui/MediaImage";
+import { churchDetails } from "@/content/church-details";
 import type { MediaAsset } from "@/content/types";
 import styles from "./DonationSection.module.css";
 
@@ -23,6 +25,9 @@ export function DonationSection({
   }
   return (
     <section className={styles.section}>
+      <div className={styles.background} aria-hidden="true">
+        <MediaImage image={{ ...churchDetails.chapel, alt: "" }} sizes="55vw" />
+      </div>
       <div
         className={`container ${styles.inner} ${!qr ? styles.withoutQr : ""}`}
       >

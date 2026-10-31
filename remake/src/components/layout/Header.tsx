@@ -1,6 +1,5 @@
 "use client";
 
-import type { PublicDesign } from "@/content/design";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -8,15 +7,10 @@ import { navigation } from "@/content/navigation";
 import { siteConfig } from "@/content/site";
 import { containDialogFocus } from "@/lib/dialog";
 import { Icon } from "@/components/ui/Icon";
+import { ChurchMark } from "./ChurchMark";
 import styles from "./Header.module.css";
 
-export function Header({
-  previewLabel,
-  design = "current"
-}: {
-  previewLabel?: string;
-  design?: PublicDesign;
-}) {
+export function Header() {
   const pathname = usePathname();
   const header = useRef<HTMLElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -64,40 +58,17 @@ export function Header({
 
   const active = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
-  const parishDesign = design === "parish";
 
   return (
     <>
       <a href="#main" className="skipLink">
         Preskočiť na obsah
       </a>
-      {previewLabel ? (
-        <div
-          className={`${styles.preview} ${
-            parishDesign ? styles.parishPreview : ""
-          }`}
-        >
-          {previewLabel}
-        </div>
-      ) : null}
-      <header
-        className={`${styles.header} ${parishDesign ? styles.parish : ""}`}
-        ref={header}
-      >
+      <header className={styles.header} ref={header}>
         <div className={`container ${styles.inner}`}>
           <Link href="/" className={styles.brand} onClick={closeDropdowns}>
             <span className={styles.brandMark}>
-              {parishDesign ? (
-                <img
-                  src="/design/church-tower.png"
-                  width="347"
-                  height="630"
-                  alt=""
-                  className={styles.parishTower}
-                />
-              ) : (
-                <Icon name="church" size={33} />
-              )}
+              <ChurchMark className={styles.churchTower} eager />
             </span>
             <span>
               <strong>{siteConfig.name}</strong>
@@ -174,9 +145,7 @@ export function Header({
       </header>
       <dialog
         id="mobile-navigation"
-        className={`${styles.mobileDialog} ${
-          parishDesign ? styles.parishMobile : ""
-        }`}
+        className={styles.mobileDialog}
         ref={dialog}
         onKeyDown={containDialogFocus}
         onClose={() => {
@@ -221,6 +190,7 @@ export function Header({
                       key={child.href}
                       href={child.href}
                       onClick={closeMenu}
+                      aria-current={active(child.href) ? "page" : undefined}
                     >
                       {child.label}
                     </Link>

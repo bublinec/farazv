@@ -1,7 +1,5 @@
 "use client";
 
-import type { PublicDesign } from "@/content/design";
-import Link from "next/link";
 import { useRef, useState } from "react";
 import type { CalendarDate, MediaAsset, ScheduleDay } from "@/content/types";
 import { formatDate } from "@/lib/calendar";
@@ -12,13 +10,11 @@ import styles from "./MassHero.module.css";
 export function MassHero({
   days,
   today,
-  image,
-  design = "current"
+  image
 }: {
   days: ScheduleDay[];
   today: CalendarDate;
   image: MediaAsset;
-  design?: PublicDesign;
 }) {
   const [selected, setSelected] = useState(today);
   const startTouch = useRef<{ x: number; y: number } | null>(null);
@@ -31,7 +27,6 @@ export function MassHero({
   if (!day) return null;
 
   const isToday = day.date === today;
-  const parishDesign = design === "parish";
   const move = (offset: number) => {
     const next = days[index + offset];
 
@@ -39,22 +34,14 @@ export function MassHero({
   };
 
   return (
-    <section
-      className={`${styles.hero}${parishDesign ? ` ${styles.parish}` : ""}`}
-      aria-label="Rozpis svätých omší"
-    >
+    <section className={styles.hero} aria-label="Rozpis svätých omší">
       <MediaImage
         image={image}
         priority
-        sizes={parishDesign ? "(max-width: 750px) 100vw, 47vw" : "100vw"}
+        quality="high"
+        sizes="100vw"
         className={styles.background}
       />
-      {parishDesign ? (
-        <Link href="/farnost/galeria" className={styles.photoCaption}>
-          <strong>Kostol sv. Alžbety</strong>
-          <span>Fotografia: Claudia Nemcová</span>
-        </Link>
-      ) : null}
       <div
         className={`container ${styles.inner}`}
         onTouchStart={(event) => {
@@ -100,11 +87,6 @@ export function MassHero({
             <span />
           </div>
           <p className={styles.date}>
-            {parishDesign ? (
-              <span className={styles.dayStatus}>
-                {isToday ? "Dnes" : "Vybraný deň"}
-              </span>
-            ) : null}
             <time dateTime={day.date}>
               {formatDate(day.date, {
                 weekday: "long",
@@ -143,90 +125,88 @@ export function MassHero({
               ))}
             </div>
           )}
-          <Link href="/farnost/farske-oznamy" className={styles.bulletinLink}>
-            Celý rozpis a farské oznamy
-            <Icon name="arrow-right" size={16} />
-          </Link>
         </div>
-        <div className={styles.controls}>
-          <button
-            type="button"
-            onClick={() => move(-1)}
-            disabled={index === 0}
-            aria-label="Predchádzajúci deň"
-            className={styles.direction}
-          >
-            <Icon name="arrow-left" size={19} />
-            <span>Predchádzajúci</span>
-          </button>
-          <div className={styles.days} role="group" aria-label="Vybrať deň">
-            {days.map((item) => (
-              <button
-                type="button"
-                key={item.date}
-                onClick={() => setSelected(item.date)}
-                className={`${styles.dayButton} ${
-                  item.date === day.date ? styles.selected : ""
-                } ${parishDesign && item.date === today ? styles.today : ""}`}
-                aria-pressed={item.date === day.date}
-                aria-current={
-                  parishDesign && item.date === today ? "date" : undefined
-                }
-                aria-label={`${
-                  item.date === today
-                    ? "Dnes"
-                    : formatDate(item.date, {
-                        weekday: "short",
-                        day: undefined,
-                        month: undefined
-                      }).replace(".", "")
-                } ${formatDate(item.date, {
-                  day: "numeric",
-                  month: undefined
-                }).replace(".", "")} · ${formatDate(item.date, {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long"
-                })}`}
-              >
-                <span>
-                  {item.date === today
-                    ? "Dnes"
-                    : formatDate(item.date, {
-                        weekday: "short",
-                        day: undefined,
-                        month: undefined
-                      }).replace(".", "")}
-                </span>{" "}
-                <strong>
-                  {formatDate(item.date, {
+        <div className={styles.navigation}>
+          <div className={styles.controls}>
+            <button
+              type="button"
+              onClick={() => move(-1)}
+              disabled={index === 0}
+              aria-label="Predchádzajúci deň"
+              className={styles.direction}
+            >
+              <Icon name="arrow-left" size={19} />
+              <span>Predchádzajúci</span>
+            </button>
+            <div className={styles.days} role="group" aria-label="Vybrať deň">
+              {days.map((item) => (
+                <button
+                  type="button"
+                  key={item.date}
+                  onClick={() => setSelected(item.date)}
+                  className={`${styles.dayButton} ${
+                    item.date === day.date ? styles.selected : ""
+                  } ${item.date === today ? styles.today : ""}`}
+                  aria-pressed={item.date === day.date}
+                  aria-current={item.date === today ? "date" : undefined}
+                  aria-label={`${
+                    item.date === today
+                      ? "Dnes"
+                      : formatDate(item.date, {
+                          weekday: "short",
+                          day: undefined,
+                          month: undefined
+                        }).replace(".", "")
+                  } ${formatDate(item.date, {
                     day: "numeric",
                     month: undefined
-                  }).replace(".", "")}
-                </strong>
-              </button>
-            ))}
+                  }).replace(".", "")} · ${formatDate(item.date, {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long"
+                  })}`}
+                >
+                  <span>
+                    {item.date === today
+                      ? "Dnes"
+                      : formatDate(item.date, {
+                          weekday: "short",
+                          day: undefined,
+                          month: undefined
+                        }).replace(".", "")}
+                  </span>{" "}
+                  <strong>
+                    {formatDate(item.date, {
+                      day: "numeric",
+                      month: undefined
+                    }).replace(".", "")}
+                  </strong>
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => move(1)}
+              disabled={index === days.length - 1}
+              aria-label="Nasledujúci deň"
+              className={styles.direction}
+            >
+              <span>Nasledujúci</span>
+              <Icon name="arrow-right" size={19} />
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={() => move(1)}
-            disabled={index === days.length - 1}
-            aria-label="Nasledujúci deň"
-            className={styles.direction}
-          >
-            <span>Nasledujúci</span>
-            <Icon name="arrow-right" size={19} />
-          </button>
+          <div className={styles.todayControl}>
+            {!isToday ? (
+              <button
+                type="button"
+                className={styles.backToday}
+                onClick={() => setSelected(today)}
+              >
+                Späť na dnes
+              </button>
+            ) : null}
+          </div>
         </div>
-        {!isToday ? (
-          <button
-            type="button"
-            className={styles.backToday}
-            onClick={() => setSelected(today)}
-          >
-            Späť na dnes
-          </button>
-        ) : null}
       </div>
     </section>
   );

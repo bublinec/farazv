@@ -1,390 +1,152 @@
-.sectionTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 30px;
-}
-.sectionTop > a {
-  white-space: nowrap;
-  margin-bottom: 30px;
-}
-.highlights {
-  background: var(--blue-deep);
-  color: white;
-  padding: 65px 0;
-}
-.highlightsInner {
-  display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: 110px;
-  align-items: center;
-}
-.highlights :global(.eyebrow) {
-  color: var(--gold-light);
-}
-.highlights h2 {
-  font-weight: 400;
-  margin-bottom: 17px;
-}
-.highlights p:not(:first-child) {
-  color: #c4d1d6;
-  font-size: 0.88rem;
-  max-width: 380px;
-}
-.goldLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.77rem;
-  color: var(--gold-light);
-  margin-top: 7px;
-  text-decoration: none;
-}
-.highlightLinks {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 30px;
-}
-.highlightLinks a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 23px 0;
-  border-bottom: 1px solid #ffffff30;
-  text-decoration: none;
-  color: white;
-  font-size: 1.02rem;
-}
-.highlightLinks small {
-  display: block;
-  color: #b7c9d0;
-  font-size: 0.65rem;
-  margin-bottom: 5px;
-}
-.highlightLinks a > svg {
-  color: var(--gold-light);
-  flex-shrink: 0;
-}
-.highlightLinks a:hover {
-  color: var(--gold-light);
-}
 .gallery {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 17px;
 }
+
 .gallery a {
   position: relative;
   overflow: hidden;
 }
+
 .gallery img {
   width: 100%;
   height: 280px;
   transition: transform 0.3s;
 }
+
 .gallery a:hover img {
   transform: scale(1.035);
 }
+
 .gallery a > span {
   position: absolute;
   bottom: 12px;
   right: 12px;
   color: white;
   background: #173747a6;
-  padding: 8px;
+  padding: var(--space-2);
 }
+
 .magazine {
-  background: var(--paper);
-  border-block: 1px solid var(--line);
-}
-.communities {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-}
-.community {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  padding: 27px 30px 30px;
-  border: 1px solid var(--line);
-}
-.community:hover {
-  background: var(--paper);
-  border-color: #c5b896;
-}
-.communityNumber {
-  font-size: 0.72rem;
-  color: var(--gold-dark);
-  display: block;
-  margin-bottom: 24px;
-}
-.community h3 {
-  color: var(--blue);
-  font-size: 1.2rem;
-  margin-bottom: 13px;
-}
-.community p {
-  color: var(--muted);
-  font-size: 0.85rem;
-  min-height: 60px;
-}
-.community :global(.textLink) {
-  font-size: 0.7rem;
-}
-@media (max-width: 900px) {
-  .highlightsInner {
-    gap: 45px;
-  }
-  .gallery {
-    gap: 12px;
-  }
-  .gallery img {
-    height: 230px;
-  }
-  .communities {
-    gap: 18px;
-  }
-  .community {
-    padding: 23px 20px;
-  }
-}
-@media (max-width: 650px) {
-  .sectionTop {
-    align-items: start;
-    flex-direction: column;
-    gap: 0;
-    margin-bottom: 27px;
-  }
-  .sectionTop > div {
-    margin-bottom: 18px;
-  }
-  .sectionTop > a {
-    margin: 0;
-  }
-  .highlightsInner {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .highlights {
-    padding: 45px 0;
-  }
-  .highlightLinks {
-    gap: 0 25px;
-  }
-  .gallery {
-    grid-template-columns: 1fr 1fr;
-  }
-  .gallery img {
-    height: 210px;
-  }
-  .communities {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-  .community {
-    position: relative;
-    padding: 24px 24px 24px 70px;
-  }
-  .communityNumber {
-    position: absolute;
-    top: 27px;
-    left: 24px;
-  }
-  .community p {
-    min-height: 0;
-  }
-}
-
-/* Practical shortcuts precede the photographs in the parish direction. */
-.sectionJump {
-  background: var(--white);
-  border-block: 1px solid var(--line);
-}
-
-.sectionJumpInner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  column-gap: 32px;
-}
-
-.sectionJump a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 49px;
-  color: var(--blue);
-  font-size: 0.81rem;
-  text-decoration: none;
-}
-
-.sectionJump a > span {
-  margin-left: 9px;
-  color: var(--gold-dark);
-}
-
-.sectionJump a:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-/* Real photographic details give the second proposal its parish identity. */
-.parishHighlights {
-  background: #e9e0d1;
-  color: var(--ink);
-  padding-block: 54px;
-  border-block: 1px solid #d3c6ae;
-}
-.parishHighlights .highlightsInner {
-  grid-template-columns: 0.7fr 1.05fr 1.15fr;
-  gap: 46px;
-}
-.parishHighlights :global(.eyebrow),
-.parishHighlights .goldLink {
-  color: #725126;
-}
-.parishHighlights h2 {
-  color: var(--blue-deep);
-}
-.parishHighlights p:not(:first-child) {
-  color: #5c574e;
-}
-.parishHighlights .highlightLinks a {
-  color: var(--blue-deep);
-  border-bottom-color: #bdae9370;
-}
-.parishHighlights .highlightLinks small {
-  color: #6a6053;
-}
-.parishHighlights .highlightLinks a > svg {
-  color: #806333;
-}
-.sacramentDetail {
-  margin: 0;
   position: relative;
-  align-self: stretch;
-  min-height: 290px;
+  isolation: isolate;
+  overflow: hidden;
+  background: #f0ebe1;
+  border-block: 1px solid #ddd1bb;
 }
-.sacramentDetail img {
+
+.magazineBackground {
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: -1;
+  width: 55%;
+  pointer-events: none;
+}
+
+.magazineBackground img {
   width: 100%;
   height: 100%;
-  max-height: 345px;
-  object-position: 46% 47%;
-  border: 7px solid #fcf8ef;
-  box-shadow: 0 3px 9px #67523916;
-}
-.sacramentDetail figcaption {
-  font-size: 0.65rem;
-  color: #655944;
-  padding-top: 8px;
-}
-.parishMagazine {
-  background: #f0ebe1;
-  border-color: #ddd1bb;
-}
-.magazineDetail {
-  flex: 0 0 142px;
-  align-self: stretch;
-  margin-bottom: 35px;
-  border: 5px solid #fffaf0;
-}
-.magazineDetail img {
-  width: 100%;
-  height: 150px;
   object-position: center 45%;
+  opacity: 0.22;
 }
-.parishMagazine .sectionTop > :global(.sectionHeading) {
-  margin-right: auto;
+
+.magazineBackground::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #f0ebe1, #f0ebe180 45%, transparent);
 }
-.parishCommunities {
-  gap: 0;
+
+.communities {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   border-top: 1px solid var(--gold);
   border-bottom: 1px solid var(--line);
 }
-.parishCommunities .community {
-  border: 0;
+
+.community {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-8) 30px;
   border-right: 1px solid var(--line);
-  padding-block: 32px;
+  color: inherit;
+  text-decoration: none;
 }
-.parishCommunities .community:last-child {
+
+.community:last-child {
   border-right: 0;
 }
-.parishCommunities .communityNumber {
-  margin-bottom: 18px;
+
+.community:hover {
+  background: var(--paper);
 }
-.parishCommunities .community h3 {
-  font-family: var(--font-display);
+
+.communityNumber {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--gold-dark);
+  font-size: 0.9rem;
+}
+
+.community h3 {
+  margin-bottom: 13px;
+  color: var(--blue);
   font-size: 1.6rem;
   font-weight: 450;
 }
-@media (max-width: 1000px) {
-  .parishHighlights .highlightsInner {
-    gap: 30px;
-    grid-template-columns: 0.65fr 1fr 1.1fr;
+
+.community p {
+  flex: 1;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.community :global(.textLink) {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+  .gallery {
+    gap: var(--space-3);
   }
-  .sacramentDetail {
-    min-height: 260px;
+
+  .gallery img {
+    height: 230px;
   }
-  .magazineDetail {
-    flex-basis: 110px;
+
+  .community {
+    padding-inline: var(--space-5);
   }
 }
-@media (max-width: 750px) {
-  .parishHighlights .highlightsInner {
-    grid-template-columns: 160px 1fr;
-    gap: 28px;
+
+@media (max-width: 650px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr;
   }
-  .parishHighlights .highlightLinks {
-    grid-column: 1/-1;
+
+  .gallery img {
+    height: 210px;
   }
-  .sacramentDetail {
-    min-height: 0;
-    height: 250px;
+
+  .communities {
+    grid-template-columns: 1fr;
   }
-  .magazineDetail {
-    display: none;
-  }
-}
-@media (max-width: 550px) {
-  .sectionJumpInner {
-    column-gap: 0;
-    justify-content: space-between;
-  }
-  .sectionJump a {
-    font-size: 0.74rem;
-  }
-  .sectionJump a::after {
-    margin-left: 5px;
-  }
-  .parishHighlights {
-    padding-block: 36px;
-  }
-  .parishHighlights .highlightsInner {
-    grid-template-columns: 100px 1fr;
-    gap: 23px;
-  }
-  .sacramentDetail {
-    height: 220px;
-  }
-  .sacramentDetail img {
-    border-width: 4px;
-  }
-  .sacramentDetail figcaption {
-    font-size: 0.56rem;
-    line-height: 1.5;
-  }
-  .parishHighlights h2 {
-    font-size: 1.9rem;
-  }
-  .parishHighlights p:not(:first-child) {
-    font-size: 0.82rem;
-  }
-  .parishCommunities .community {
+
+  .community {
+    position: relative;
+    padding-inline: 70px var(--space-6);
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }
-  .parishCommunities .community:last-child {
+
+  .community:last-child {
     border-bottom: 0;
+  }
+
+  .communityNumber {
+    position: absolute;
+    top: 27px;
+    left: var(--space-6);
   }
 }

@@ -77,24 +77,10 @@ export function EditorialDetail({
       : notice
       ? "Výveska"
       : "Zo života farnosti";
-  const trailLabel = notice
-    ? "Oznam"
-    : kind === "article"
-    ? "Časopis našej farnosti"
-    : "Aktuality";
   return (
     <>
       <article className={styles.article}>
         <div className="container">
-          <nav className={styles.breadcrumb} aria-label="Navigácia v stránke">
-            <Link href="/">Úvod</Link>
-            <span aria-hidden="true">/</span>
-            <Link href={notice ? "/#vyveska" : listingHref}>
-              {listingLabel}
-            </Link>
-            <span aria-hidden="true">/</span>
-            <span aria-current="page">{trailLabel}</span>
-          </nav>
           <header className={styles.header}>
             <span className="eyebrow">{listingLabel}</span>
             <h1>{entry.title}</h1>

@@ -2,19 +2,6 @@
   background: var(--paper);
   border-bottom: 1px solid var(--line);
 }
-.top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-}
-.note {
-  font-size: 0.76rem;
-  color: var(--muted);
-  border-left: 1px solid var(--gold);
-  padding-left: 15px;
-  white-space: nowrap;
-}
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -60,7 +47,7 @@
   justify-content: space-between;
 }
 .caption h3 {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   line-height: 1.6;
   font-weight: 500;
   margin: 0;
@@ -92,9 +79,6 @@
   .poster img {
     height: 350px;
   }
-  .note {
-    display: none;
-  }
 }
 @media (max-width: 450px) {
   .grid {
@@ -111,7 +95,7 @@
     gap: 4px;
   }
   .caption h3 {
-    font-size: 0.69rem;
+    font-size: 0.9rem;
   }
   .caption > a {
     display: none;

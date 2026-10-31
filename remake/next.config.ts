@@ -3,6 +3,8 @@ import path from "node:path";
 
 const config: NextConfig = {
   poweredByHeader: false,
+  distDir:
+    process.env.FARAZV_PREVIEW_DEV === "true" ? ".next-preview" : ".next",
   // Both loopback names are used by local browser tests and developer previews.
   allowedDevOrigins: ["127.0.0.1"],
   turbopack: { root: path.resolve(import.meta.dirname) },
@@ -24,13 +26,6 @@ const config: NextConfig = {
         ]
       },
       {
-        source: "/design/:path*",
-        headers: [
-          { key: "X-Robots-Tag", value: "noindex, nofollow" },
-          { key: "Cache-Control", value: "private, no-store" }
-        ]
-      },
-      {
         source: "/admin/:path*",
         headers: [
           { key: "X-Robots-Tag", value: "noindex, nofollow" },
@@ -41,6 +36,16 @@ const config: NextConfig = {
   },
   async redirects() {
     return [
+      {
+        source: "/birmovanci",
+        destination: "/sviatosti/sviatost-birmovania",
+        permanent: true
+      },
+      {
+        source: "/design/:path*",
+        destination: "/",
+        permanent: false
+      },
       {
         source: "/cms/index.php/farnost/farske-oznamy",
         destination: "/farnost/farske-oznamy",

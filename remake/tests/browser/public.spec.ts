@@ -22,7 +22,7 @@ test.afterEach(async ({ page }) => {
   ).toEqual([]);
 });
 
-test("desktop navigation opens by keyboard, closes with Escape, and preserves the Birmovanci route", async ({
+test("desktop navigation opens by keyboard, closes with Escape, and uses the merged confirmation page", async ({
   page
 }) => {
   await page.goto("/");
@@ -36,7 +36,7 @@ test("desktop navigation opens by keyboard, closes with Escape, and preserves th
   await sacraments.focus();
   await page.keyboard.press("Enter");
   const candidates = navigation.getByRole("link", {
-    name: "Birmovanci",
+    name: "Birmovanie",
     exact: true
   });
   await expect(candidates).toBeVisible();
@@ -45,9 +45,9 @@ test("desktop navigation opens by keyboard, closes with Escape, and preserves th
   await expect(sacraments).toBeFocused();
   await page.keyboard.press("Enter");
   await candidates.click();
-  await expect(page).toHaveURL(/\/birmovanci$/);
+  await expect(page).toHaveURL(/\/sviatosti\/sviatost-birmovania$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "Cesta k birmovaniu"
+    "Sviatosť birmovania"
   );
 });
 
@@ -295,6 +295,11 @@ test("unknown URLs return real 404s and legacy CMS paths redirect", async ({
   });
   expect([301, 308]).toContain(redirect.status());
   expect(redirect.headers().location).toBe("/kontakt");
+  const confirmation = await request.get("/birmovanci", { maxRedirects: 0 });
+  expect([301, 308]).toContain(confirmation.status());
+  expect(confirmation.headers().location).toBe(
+    "/sviatosti/sviatost-birmovania"
+  );
   await page.goto("/cms/index.php/farnost/kontakt");
   await expect(page).toHaveURL(/\/kontakt$/);
 });

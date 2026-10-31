@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { churchGallery, heroImage } from "@/content/assets";
+import { heroImage } from "@/content/assets";
 import { churchDetails } from "@/content/church-details";
-import { getPublicDesign } from "@/server/public-design";
-import { ChurchWelcome } from "@/components/design/ChurchWelcome";
 import {
   getPublicSettings,
   getPublicBulletins,
@@ -16,6 +14,7 @@ import { getPreviewDate } from "@/lib/preview-date";
 import { editorialPath } from "@/lib/editorial";
 import { MassHero } from "@/components/home/MassHero";
 import { PosterWall } from "@/components/home/PosterWall";
+import { SacramentsSection } from "@/components/home/SacramentsSection";
 import { DonationSection } from "@/components/home/DonationSection";
 import { EditorialGrid } from "@/components/editorial/EditorialCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -31,8 +30,6 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const today = getPreviewDate();
-  const design = await getPublicDesign();
-  const parishDesign = design === "parish";
   const [
     settingsResult,
     bulletinResult,
@@ -58,8 +55,6 @@ export default async function HomePage() {
       : null;
   const activePosters =
     postersResult.status === "fulfilled" ? postersResult.value : [];
-  const showNoticeboard =
-    postersResult.status === "rejected" || activePosters.length > 0;
 
   const posterDestinations = new Set(
     activePosters.map((poster) => poster.href)
@@ -81,38 +76,12 @@ export default async function HomePage() {
   return (
     <>
       {days ? (
-        <MassHero
-          key={today}
-          days={days}
-          today={today}
-          image={heroImage}
-          design={design}
-        />
+        <MassHero key={today} days={days} today={today} image={heroImage} />
       ) : (
         <section className="container section">
           <Unavailable title="Rozpis je dočasne nedostupný." />
         </section>
       )}
-      {parishDesign ? (
-        <nav className={styles.sectionJump} aria-label="Na tejto stránke">
-          <div className={`container ${styles.sectionJumpInner}`}>
-            {showNoticeboard ? (
-              <a href="#vyveska">
-                Výveska<span aria-hidden="true">↓</span>
-              </a>
-            ) : null}
-            <a href="#novinky">
-              Novinky<span aria-hidden="true">↓</span>
-            </a>
-            <a href="#sviatosti">
-              Sviatosti<span aria-hidden="true">↓</span>
-            </a>
-            <a href="#spolocenstvo">
-              Časopis<span aria-hidden="true">↓</span>
-            </a>
-          </div>
-        </nav>
-      ) : null}
       {postersResult.status === "fulfilled" ? (
         <PosterWall posters={activePosters} />
       ) : (
@@ -120,18 +89,18 @@ export default async function HomePage() {
           <Unavailable compact title="Výveska je dočasne nedostupná." />
         </section>
       )}
-      <section id={parishDesign ? "novinky" : undefined} className="section">
+      <section id="novinky" className="section">
         <div className="container">
-          <div className={styles.sectionTop}>
-            <SectionHeading
-              eyebrow="Zo života farnosti"
-              title="Čo je u nás nové"
-            />
-            <Link href="/prispevky" className="textLink">
-              Všetky príspevky
-              <Icon name="arrow-right" size={17} />
-            </Link>
-          </div>
+          <SectionHeading
+            eyebrow="Zo života farnosti"
+            title="Čo je u nás nové"
+            action={
+              <Link href="/prispevky" className="textLink">
+                Všetky príspevky
+                <Icon name="arrow-right" size={17} />
+              </Link>
+            }
+          />
           {recentNews ? (
             <EditorialGrid entries={recentNews} kind="news" />
           ) : (
@@ -139,86 +108,27 @@ export default async function HomePage() {
           )}
         </div>
       </section>
-      {parishDesign ? <ChurchWelcome /> : null}
-      <section
-        id={parishDesign ? "sviatosti" : undefined}
-        className={`${styles.highlights} ${
-          parishDesign ? styles.parishHighlights : ""
-        }`}
-      >
-        <div className={`container ${styles.highlightsInner}`}>
-          {parishDesign ? (
-            <figure className={styles.sacramentDetail}>
-              <MediaImage
-                image={churchDetails.book}
-                sizes="(max-width:650px) 35vw, 22vw"
-              />
-              <figcaption>Zo života nášho kostola</figcaption>
-            </figure>
-          ) : null}
-          <div>
-            <p className="eyebrow">Sme tu pre vás</p>
-            <h2>V každej etape života.</h2>
-            <p>
-              Praktické informácie, kontakty a pomoc pri príprave na prijatie
-              sviatostí.
-            </p>
-            <Link href="/sviatosti/sviatost-krstu" className={styles.goldLink}>
-              Prijatie sviatostí
-              <Icon name="arrow-right" size={18} />
-            </Link>
-          </div>
-          <div className={styles.highlightLinks}>
-            <Link href="/sviatosti/sviatost-krstu">
-              <span>
-                <small>Nový začiatok</small>Krst
-              </span>
-              <Icon name="arrow-right" size={20} />
-            </Link>
-            <Link href="/sviatosti/sviatost-manzelstva">
-              <span>
-                <small>Spoločná cesta</small>Manželstvo
-              </span>
-              <Icon name="arrow-right" size={20} />
-            </Link>
-            <Link href="/sviatosti/sviatost-zmierenia">
-              <span>
-                <small>Pokoj pre dušu</small>Zmierenie
-              </span>
-              <Icon name="arrow-right" size={20} />
-            </Link>
-            <Link href="/kontakt">
-              <span>
-                <small>Radi vám pomôžeme</small>Farská kancelária
-              </span>
-              <Icon name="arrow-right" size={20} />
-            </Link>
-          </div>
-        </div>
-      </section>
+      <SacramentsSection />
       <section className="section">
         <div className="container">
-          <div className={styles.sectionTop}>
-            <SectionHeading
-              eyebrow="Náš farský kostol"
-              title="Miesto, ktoré poznáme"
-              description="Krása ukrytá v detailoch. Nahliadnite do Kostola sv. Alžbety."
-            />
-            <Link href="/farnost/galeria" className="textLink">
-              Celá galéria
-              <Icon name="arrow-right" size={17} />
-            </Link>
-          </div>
+          <SectionHeading
+            eyebrow="Náš farský kostol"
+            title="Miesto, ktoré poznáme"
+            description="Krása ukrytá v detailoch. Nahliadnite do Kostola sv. Alžbety."
+            action={
+              <Link href="/farnost/galeria" className="textLink">
+                Celá galéria
+                <Icon name="arrow-right" size={17} />
+              </Link>
+            }
+          />
           <div className={styles.gallery}>
-            {(parishDesign
-              ? [
-                  churchDetails.vault,
-                  churchDetails.iron,
-                  churchDetails.chapel,
-                  churchDetails.pews
-                ]
-              : churchGallery.slice(0, 4)
-            ).map((image) => (
+            {[
+              churchDetails.vault,
+              churchDetails.iron,
+              churchDetails.chapel,
+              churchDetails.pews
+            ].map((image) => (
               <Link
                 href="/farnost/galeria"
                 key={image.src}
@@ -236,29 +146,22 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-      <section
-        id={parishDesign ? "spolocenstvo" : undefined}
-        className={`section ${styles.magazine} ${
-          parishDesign ? styles.parishMagazine : ""
-        }`}
-      >
+      <section id="spolocenstvo" className={`section ${styles.magazine}`}>
+        <div className={styles.magazineBackground} aria-hidden="true">
+          <MediaImage image={{ ...churchDetails.pews, alt: "" }} sizes="55vw" />
+        </div>
         <div className="container">
-          <div className={styles.sectionTop}>
-            {parishDesign ? (
-              <div className={styles.magazineDetail}>
-                <MediaImage image={churchDetails.pews} sizes="180px" />
-              </div>
-            ) : null}
-            <SectionHeading
-              eyebrow="Ľudia, príbehy, viera"
-              title="Naše spoločenstvo"
-              description="Časopis a príbehy ľudí, ktorí tvoria našu farnosť."
-            />
-            <Link href="/farnost/nase-spolocenstvo" className="textLink">
-              Všetky články
-              <Icon name="arrow-right" size={17} />
-            </Link>
-          </div>
+          <SectionHeading
+            eyebrow="Ľudia, príbehy, viera"
+            title="Naše spoločenstvo"
+            description="Časopis a príbehy ľudí, ktorí tvoria našu farnosť."
+            action={
+              <Link href="/farnost/nase-spolocenstvo" className="textLink">
+                Všetky články
+                <Icon name="arrow-right" size={17} />
+              </Link>
+            }
+          />
           {recentArticles ? (
             <EditorialGrid entries={recentArticles} kind="article" />
           ) : (
@@ -273,11 +176,7 @@ export default async function HomePage() {
             title="Nájdite svoje spoločenstvo"
             align="center"
           />
-          <div
-            className={`${styles.communities} ${
-              parishDesign ? styles.parishCommunities : ""
-            }`}
-          >
+          <div className={styles.communities}>
             {[
               [
                 "Detský spevokol",

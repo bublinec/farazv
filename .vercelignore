@@ -29,6 +29,7 @@
 /.DS_Store
 /remake/node_modules/
 /remake/.next/
+/remake/.next-preview/
 /remake/.vercel/
 /remake/.private/
 /remake/.env*

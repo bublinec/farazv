@@ -5,13 +5,24 @@ import type { EditorialKind, EditorialPage } from "@/lib/editorial";
 import { EditorialGrid } from "./EditorialCard";
 import styles from "./EditorialFeed.module.css";
 
-export function EditorialFeed({
-  initialPage,
-  kind
-}: {
+interface Props {
   initialPage: EditorialPage;
   kind: EditorialKind;
-}) {
+}
+
+export function EditorialFeed({ initialPage, kind }: Props) {
+  // A server refresh resets pagination only when its published snapshot changes.
+  // Unchanged refreshes preserve the reader's already loaded articles and focus.
+  return (
+    <PaginatedFeed
+      key={`${kind}:${JSON.stringify(initialPage)}`}
+      initialPage={initialPage}
+      kind={kind}
+    />
+  );
+}
+
+function PaginatedFeed({ initialPage, kind }: Props) {
   const [items, setItems] = useState(initialPage.items);
   const [nextCursor, setNextCursor] = useState(initialPage.nextCursor);
   const [loading, setLoading] = useState(false);
@@ -34,20 +45,26 @@ export function EditorialFeed({
 
   async function loadMore() {
     if (!nextCursor || pending.current) return;
+
     pending.current = true;
     setLoading(true);
     setError(false);
-    controller.current = new AbortController();
+
+    const request = new AbortController();
+    controller.current = request;
+
     try {
       const query = new URLSearchParams({ cursor: nextCursor });
       const response = await fetch(
         `/api/${kind === "article" ? "articles" : "news"}?${query}`,
         {
-          signal: controller.current.signal
+          signal: request.signal
         }
       );
       if (!response.ok) throw new Error("Could not load editorial page");
       const page: EditorialPage = await response.json();
+      if (request.signal.aborted) return;
+
       if (
         !Array.isArray(page.items) ||
         !(page.nextCursor === null || typeof page.nextCursor === "string")
@@ -63,13 +80,12 @@ export function EditorialFeed({
       if (added.length) focusIndex.current = items.length;
       setItems((existing) => [...existing, ...added]);
       setNextCursor(page.nextCursor);
-      setAnnouncement(`Načítané ďalšie príspevky: ${page.items.length}.`);
-    } catch (caught) {
-      if (!(caught instanceof DOMException && caught.name === "AbortError"))
-        setError(true);
+      setAnnouncement(`Načítané ďalšie príspevky: ${added.length}.`);
+    } catch {
+      if (!request.signal.aborted) setError(true);
     } finally {
       pending.current = false;
-      setLoading(false);
+      if (!request.signal.aborted) setLoading(false);
     }
   }
 

@@ -37,7 +37,7 @@
 }
 .grid figcaption {
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   margin-top: 0.65rem;
   line-height: 1.5;
 }
@@ -78,7 +78,7 @@
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1rem;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
 }
 .viewer button {
   display: inline-flex;
@@ -91,7 +91,7 @@
   cursor: pointer;
   border-radius: 2px;
   font: inherit;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
 }
 .viewer button:disabled {
   opacity: 0.35;
@@ -109,7 +109,7 @@
 }
 .caption {
   text-align: center;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   line-height: 1.6;
   color: #e5e4e0;
   margin: 1rem auto;
@@ -126,10 +126,10 @@
     padding: 0.8rem;
   }
   .toolbar {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
   }
   .viewer button {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     padding: 0.65rem 0.7rem;
   }
   .grid {

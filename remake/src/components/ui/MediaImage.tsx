@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { MediaAsset } from "@/content/types";
 import { imageUrl } from "@/lib/images";
 
@@ -9,6 +9,7 @@ interface Props {
   className?: string;
   priority?: boolean;
   fit?: "cover" | "contain";
+  quality?: "standard" | "high";
 }
 
 export function MediaImage({
@@ -16,11 +17,12 @@ export function MediaImage({
   sizes = "(max-width: 700px) 100vw, 50vw",
   className,
   priority = false,
-  fit = "cover"
+  fit = "cover",
+  quality = "standard"
 }: Props) {
-  const [failed, setFailed] = useState(false);
-  useEffect(() => setFailed(false), [image.src]);
-  if (failed)
+  const [failedSource, setFailedSource] = useState<string | null>(null);
+
+  if (failedSource === image.src)
     return (
       <span
         role="img"
@@ -32,19 +34,31 @@ export function MediaImage({
         <span>Obrázok momentálne nie je dostupný.</span>
       </span>
     );
-  const widths = [320, 480, 720, 960, 1280, 1600].filter(
-    (width) => width <= Math.max(image.width, 320)
-  );
+  const maximumWidth = Math.min(image.width, 3200);
+  const widths = [
+    ...[320, 480, 720, 960, 1280, 1600, 1920, 2560, 3200].filter(
+      (width) => width < maximumWidth
+    ),
+    maximumWidth
+  ];
+  const deliveryQuality = quality === "high" ? "auto:best" : "auto";
   const remote = image.src.startsWith("https://res.cloudinary.com/");
   return (
     // Cloudinary performs delivery optimization; do not optimize these a second time.
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={imageUrl(image.src, priority ? 1280 : 720)}
+      src={imageUrl(
+        image.src,
+        Math.min(image.width, priority ? 1920 : 720),
+        deliveryQuality
+      )}
       srcSet={
         remote
           ? widths
-              .map((width) => `${imageUrl(image.src, width)} ${width}w`)
+              .map(
+                (width) =>
+                  `${imageUrl(image.src, width, deliveryQuality)} ${width}w`
+              )
               .join(", ")
           : undefined
       }
@@ -57,7 +71,7 @@ export function MediaImage({
       fetchPriority={priority ? "high" : "auto"}
       decoding="async"
       style={{ objectFit: fit }}
-      onError={() => setFailed(true)}
+      onError={() => setFailedSource(image.src)}
     />
   );
 }

@@ -28,7 +28,6 @@ export const navigation: NavigationItem[] = [
       { label: "Krst", href: "/sviatosti/sviatost-krstu" },
       { label: "Eucharistia", href: "/sviatosti/sviatost-eucharistie" },
       { label: "Birmovanie", href: "/sviatosti/sviatost-birmovania" },
-      { label: "Birmovanci", href: "/birmovanci" },
       { label: "Manželstvo", href: "/sviatosti/sviatost-manzelstva" },
       { label: "Zmierenie", href: "/sviatosti/sviatost-zmierenia" },
       {

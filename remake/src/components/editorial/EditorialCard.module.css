@@ -57,7 +57,7 @@
   flex-wrap: wrap;
   gap: 0.45rem 1rem;
   color: var(--muted);
-  font-size: 0.73rem;
+  font-size: var(--text-caption);
   line-height: 1.6;
 }
 .metadata > span {
@@ -93,7 +93,7 @@
   margin-top: auto;
   padding-top: 1rem;
   color: var(--blue);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 700;
   border-top: 1px solid var(--line);
 }
