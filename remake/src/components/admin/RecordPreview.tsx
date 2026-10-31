@@ -5,15 +5,14 @@ import type {
   BulletinDocument,
   ContentRecord,
   EditorialDocument,
-  EditorialRecordKind,
   SettingsDocument
 } from "@/content/documents";
 
 import { MediaImage } from "@/components/ui/MediaImage";
 import { RichText } from "@/components/editorial/RichText";
-import { PostBadge } from "@/components/editorial/PostBadge";
 import { isSafeEditorialLink } from "@/lib/editorial";
 import { contentBlocksToRichText } from "@/lib/rich-text";
+import { getMassLabel } from "@/lib/mass";
 import styles from "./Admin.module.css";
 
 function PreviewBulletin({ document }: { document: BulletinDocument }) {
@@ -46,17 +45,11 @@ function PreviewBulletin({ document }: { document: BulletinDocument }) {
               <div className={styles.previewMass} key={index}>
                 <strong>{mass.time}</strong>
                 <div>
-                  {mass.location ? (
+                  {getMassLabel(mass) ? (
                     <strong>
-                      {mass.location}
+                      {getMassLabel(mass)}
                       <br />
                     </strong>
-                  ) : null}
-                  {mass.label ? (
-                    <span>
-                      {mass.label}
-                      <br />
-                    </span>
                   ) : null}
                   {mass.intention || ""}
                   {mass.celebrant ? (
@@ -176,7 +169,9 @@ function PreviewSettings({ document }: { document: SettingsDocument }) {
             {document.regularSchedule[key]
               ?.map(
                 (mass) =>
-                  `${mass.time}${mass.location ? ` (${mass.location})` : ""}`
+                  `${mass.time}${
+                    getMassLabel(mass) ? ` (${getMassLabel(mass)})` : ""
+                  }`
               )
               .join(" · ") || "Nie sú nastavené"}
           </p>
@@ -186,16 +181,9 @@ function PreviewSettings({ document }: { document: SettingsDocument }) {
   );
 }
 
-function PreviewEditorial({
-  document,
-  kind
-}: {
-  document: EditorialDocument;
-  kind: EditorialRecordKind;
-}) {
+function PreviewEditorial({ document }: { document: EditorialDocument }) {
   return (
     <article>
-      <PostBadge kind={kind} />
       <h1>{document.title || "Koncept bez názvu"}</h1>
       <p className={styles.hint}>
         {formatRecordDate(document.date)}
@@ -232,7 +220,7 @@ function PreviewContent({ record }: { record: ContentRecord }): ReactElement {
     case "news":
     case "notice":
     case "event":
-      return <PreviewEditorial document={record.draft} kind={record.kind} />;
+      return <PreviewEditorial document={record.draft} />;
   }
 }
 

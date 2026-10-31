@@ -12,7 +12,7 @@ export function SourceQuotation({
 
   return (
     <figure className={styles.band} id="informacie-1" tabIndex={-1}>
-      <div className={styles.quotation}>
+      <div className={`container ${styles.quotation}`}>
         <span className={styles.openMark} aria-hidden="true">
           „
         </span>
@@ -27,7 +27,7 @@ export function SourceQuotation({
           “
         </span>
       </div>
-      <figcaption className={styles.attribution}>
+      <figcaption className={`container ${styles.attribution}`}>
         <RichText
           className={styles.inlineCopy}
           document={{ type: "doc", content: attribution }}

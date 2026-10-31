@@ -48,7 +48,6 @@ export default async function DetailPage({ params }: Props) {
     <EditorialDetail
       entry={entry}
       kind="article"
-      notice={false}
       related={related}
       preview={isFixtureMode()}
     />

@@ -1,17 +1,8 @@
 import type { EditorialEntry } from "@/content/types";
-import type {
-  EditorialDocument,
-  EditorialRecordKind
-} from "@/content/documents";
 
 export type EditorialKind = "article" | "news";
-export type PublishedEditorialEntry = EditorialDocument & {
-  recordKind: EditorialRecordKind;
-};
 export type EditorialSummary = Omit<EditorialEntry, "blocks"> & {
   href?: string;
-  recordKind?: EditorialRecordKind;
-  isPoster?: boolean;
 };
 
 export interface EditorialPage {
@@ -76,8 +67,7 @@ export function decodeCursor(cursor: string): EditorialCursor {
 
 /** Public summaries deliberately exclude rich-text bodies. */
 export function summarizeEditorial(
-  entry: EditorialEntry &
-    Partial<Pick<EditorialSummary, "href" | "recordKind" | "isPoster">>
+  entry: EditorialEntry & { href?: string }
 ): EditorialSummary {
   return {
     id: entry.id,
@@ -87,9 +77,7 @@ export function summarizeEditorial(
     date: entry.date,
     author: entry.author,
     cover: entry.cover,
-    ...(entry.href ? { href: entry.href } : {}),
-    ...(entry.recordKind ? { recordKind: entry.recordKind } : {}),
-    ...(entry.isPoster !== undefined ? { isPoster: entry.isPoster } : {})
+    ...(entry.href ? { href: entry.href } : {})
   };
 }
 
@@ -99,16 +87,22 @@ export function editorialPage(
 ): EditorialPage {
   const after = cursor ? decodeCursor(cursor) : undefined;
   const limit = after ? MORE_EDITORIAL_COUNT : INITIAL_EDITORIAL_COUNT;
-  const sorted = [...entries].sort(compareEntries);
+  const sorted = allEditorialSummaries(entries);
   const remaining = after
     ? sorted.filter((entry) => compareEntries(entry, after) > 0)
     : sorted;
   const batch = remaining.slice(0, limit);
   return {
-    items: batch.map(summarizeEditorial),
+    items: batch,
     nextCursor:
       remaining.length > limit ? encodeCursor(batch[batch.length - 1]) : null
   };
+}
+
+export function allEditorialSummaries(
+  entries: readonly EditorialEntry[]
+): EditorialSummary[] {
+  return [...entries].sort(compareEntries).map(summarizeEditorial);
 }
 
 /** Unknown/duplicate query parameters cannot turn this endpoint into an unbounded export. */

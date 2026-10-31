@@ -18,18 +18,13 @@ export default async function ArticlesPage() {
     <>
       <PageHero
         route="/farnost/nase-spolocenstvo"
-        eyebrow="Farský časopis"
         title="Naše spoločenstvo"
-        description="Miesto pre príbehy, zamyslenia a slová povzbudenia. Čítajte s nami."
+        description="Farský časopis s príbehmi, zamysleniami a slovami povzbudenia z našej farnosti."
       />
       <section className="section" aria-labelledby="all-articles">
         <div className="container">
-          <h2
-            id="all-articles"
-            className="eyebrow"
-            style={{ marginBottom: "1.5rem" }}
-          >
-            Z nášho časopisu
+          <h2 id="all-articles" className="srOnly">
+            Články
           </h2>
           {initialPage ? (
             <EditorialFeed initialPage={initialPage} kind="article" />

@@ -43,7 +43,6 @@ export function DonationSection({
           </div>
         ) : null}
         <div className={styles.content}>
-          <p className="eyebrow">Ďakujeme za vašu štedrosť</p>
           <h2>
             Aj malý dar pomáha
             <br />

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { CalendarDate, ScheduleDay } from "@/content/types";
 import { formatDate } from "@/lib/calendar";
+import { getMassLabel } from "@/lib/mass";
 import { Icon } from "@/components/ui/Icon";
 import styles from "./WeeklySchedule.module.css";
 
@@ -107,8 +108,7 @@ export function WeeklySchedule({
                       <strong className={styles.time}>{mass.time}</strong>
                       <div>
                         <p className={styles.massName}>
-                          {mass.location || "Kostol sv. Alžbety"}
-                          {mass.label ? <span> · {mass.label}</span> : null}
+                          {getMassLabel(mass) || "Kostol sv. Alžbety"}
                         </p>
                         {mass.intention ? (
                           <p className={styles.intention}>{mass.intention}</p>

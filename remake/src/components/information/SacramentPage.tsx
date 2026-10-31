@@ -18,7 +18,6 @@ export function SacramentPage({ page }: { page: InformationPageDefinition }) {
       <PageHero
         route={`/${page.slug}`}
         title={page.title}
-        eyebrow={page.eyebrow}
         description={page.introduction}
       />
       {openingQuotation ? <SourceQuotation section={openingQuotation} /> : null}

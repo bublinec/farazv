@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import type { Mass } from "@/content/types";
+import { getMassLabel } from "@/lib/mass";
 import styles from "./Admin.module.css";
 
 export function Field({
@@ -56,7 +57,14 @@ export function MassFields({
 }) {
   function update(index: number, key: keyof Mass, value: string) {
     onChange(
-      masses.map((mass, i) => (i === index ? { ...mass, [key]: value } : mass))
+      masses.map((mass, i) => {
+        if (i !== index) return mass;
+        if (key === "label") {
+          const { location, ...rest } = mass;
+          return { ...rest, label: value };
+        }
+        return { ...mass, [key]: value };
+      })
     );
   }
 
@@ -84,16 +92,10 @@ export function MassFields({
               onChange={(value) => update(index, "time", value)}
             />
             <Field
-              label="Miesto"
-              value={mass.location}
-              onChange={(value) => update(index, "location", value)}
-              hint="Prázdne = farský kostol"
-            />
-            <Field
               label="Označenie"
-              value={mass.label}
+              value={getMassLabel(mass)}
               onChange={(value) => update(index, "label", value)}
-              hint="Napríklad rodinná svätá omša"
+              hint="Napríklad Lieskovec, nemocnica alebo rodinná svätá omša. Prázdne = farský kostol."
             />
             {!template ? (
               <>

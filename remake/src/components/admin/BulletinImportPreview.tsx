@@ -1,6 +1,7 @@
 import type { BulletinImportResult } from "@/content/bulletin-import";
 import type { CalendarDate, ScheduleDay } from "@/content/types";
 import { addDays, getMonday } from "@/lib/calendar";
+import { getMassLabel } from "@/lib/mass";
 import { formatRecordDate } from "./admin-format";
 import admin from "./Admin.module.css";
 import styles from "./BulletinImport.module.css";
@@ -45,20 +46,18 @@ function ImportedDay({
               <thead>
                 <tr>
                   <th scope="col">Čas</th>
-                  <th scope="col">Miesto</th>
+                  <th scope="col">Označenie</th>
                   <th scope="col">Úmysel</th>
                   <th scope="col">Celebrant</th>
-                  <th scope="col">Označenie</th>
                 </tr>
               </thead>
               <tbody>
                 {day.masses.map((mass, index) => (
                   <tr key={`${mass.time}-${index}`}>
                     <td>{mass.time || "—"}</td>
-                    <td>{mass.location || "—"}</td>
+                    <td>{getMassLabel(mass) || "—"}</td>
                     <td>{mass.intention || "—"}</td>
                     <td>{mass.celebrant || "—"}</td>
-                    <td>{mass.label || "—"}</td>
                   </tr>
                 ))}
               </tbody>

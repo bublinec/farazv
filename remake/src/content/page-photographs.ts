@@ -11,7 +11,6 @@ import type { MediaAsset } from "./types";
  * pages real church details. Original source records remain unchanged.
  */
 const churchPhotographOverrides: Partial<Record<string, MediaAsset>> = {
-  "/prispevky": churchDetails.pews,
   "/objav-krista": churchGallery[1],
   "/sviatosti/sviatost-pomazania-chorych": churchDetails.chapel,
   "/spolocenstva/lektori": churchDetails.book,

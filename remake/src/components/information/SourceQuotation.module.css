@@ -4,7 +4,7 @@
   --prose-paragraph-gap: 0;
   --prose-width: none;
   margin: 0;
-  padding: 20px max(24px, calc((100% - 1440px) / 2));
+  padding-block: 40px;
   background: color-mix(in srgb, var(--paper) 55%, var(--white));
   border-bottom: 1px solid var(--line);
   color: var(--muted);
@@ -16,7 +16,7 @@
 
 .quotation,
 .attribution {
-  display: inline;
+  display: block;
 }
 
 .openMark,
@@ -45,12 +45,11 @@
 
 .attribution {
   --prose-font-size: 0.8rem;
-  margin-left: 0.5em;
+  margin-top: 14px;
 }
 
 @media (max-width: 550px) {
   .band {
-    padding-inline: 18px;
     text-align: left;
   }
 }

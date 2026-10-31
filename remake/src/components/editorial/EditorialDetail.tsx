@@ -1,10 +1,7 @@
 import Link from "next/link";
 import type { ContentBlock, EditorialEntry } from "@/content/types";
 import { siteConfig } from "@/content/site";
-import type {
-  EditorialDocument,
-  EditorialRecordKind
-} from "@/content/documents";
+import type { EditorialDocument } from "@/content/documents";
 import type { EditorialSummary } from "@/lib/editorial";
 import { RichText } from "./RichText";
 import type { EditorialKind } from "@/lib/editorial";
@@ -17,7 +14,6 @@ import { MediaImage } from "@/components/ui/MediaImage";
 import { ImageLightbox } from "@/components/ui/ImageLightbox";
 import { ImageGallery } from "./ImageGallery";
 import { EditorialGrid } from "./EditorialCard";
-import { PostBadge } from "./PostBadge";
 import styles from "./EditorialDetail.module.css";
 
 function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
@@ -65,17 +61,15 @@ export function EditorialDetail({
   entry,
   kind,
   related = [],
-  notice = false,
   preview = false
 }: {
-  entry: EditorialDocument & { recordKind?: EditorialRecordKind };
+  entry: EditorialDocument;
   kind: EditorialKind;
   related?: EditorialSummary[];
-  notice?: boolean;
   preview?: boolean;
 }) {
   const listingHref =
-    kind === "article" ? "/farnost/nase-spolocenstvo" : "/prispevky";
+    kind === "article" ? "/farnost/nase-spolocenstvo" : "/#vyveska";
   const cover = entry.cover ? (
     <MediaImage
       image={entry.cover}
@@ -89,13 +83,6 @@ export function EditorialDetail({
       <article className={styles.article}>
         <div className="container">
           <header className={styles.header}>
-            {kind === "article" ? (
-              <span className="eyebrow">Naše spoločenstvo</span>
-            ) : (
-              <PostBadge
-                kind={entry.recordKind ?? (notice ? "notice" : "news")}
-              />
-            )}
             <h1>{entry.title}</h1>
             <div className={styles.metadata}>
               <time dateTime={entry.date}>
@@ -152,7 +139,7 @@ export function EditorialDetail({
                 : "Ďakujeme, že ste súčasťou našej farnosti."}
             </span>
             <Link href={listingHref}>
-              ← {kind === "article" ? "Všetky články" : "Všetky príspevky"}
+              ← {kind === "article" ? "Všetky články" : "Späť na vývesku"}
             </Link>
           </footer>
         </div>
@@ -166,7 +153,7 @@ export function EditorialDetail({
             <div className={styles.relatedHeading}>
               <h2 id="related-editorial">Ešte chvíľu spolu</h2>
               <Link href={listingHref}>
-                Všetky {kind === "article" ? "články" : "príspevky"}{" "}
+                {kind === "article" ? "Všetky články" : "Výveska"}{" "}
                 <span aria-hidden="true">↗</span>
               </Link>
             </div>

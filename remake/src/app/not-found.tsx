@@ -8,8 +8,7 @@ export default function NotFound() {
         className="container"
         style={{ textAlign: "center", paddingBlock: 70 }}
       >
-        <p className="eyebrow">404 · Stránka sa nenašla</p>
-        <h1>Touto cestou sa ďalej nedostaneme.</h1>
+        <h1>Stránka sa nenašla.</h1>
         <p style={{ color: "var(--muted)", marginBottom: 30 }}>
           Stránka mohla zmeniť adresu. Radi vám pomôžeme nájsť, čo hľadáte.
         </p>

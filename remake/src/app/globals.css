@@ -145,17 +145,9 @@ p:last-child {
 .section {
   padding-block: var(--section-space);
 }
-.eyebrow {
-  font-size: var(--text-label);
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--eyebrow-color, var(--gold-dark));
-  margin-bottom: 14px;
-}
 .sectionHeading {
   display: grid;
-  gap: var(--space-3);
+  gap: 0.65rem;
   align-content: start;
   max-width: 720px;
   margin-bottom: 28px;
@@ -179,9 +171,6 @@ p:last-child {
   grid-column: 2;
   grid-row: 1;
   align-self: center;
-}
-.sectionHeading > .eyebrow ~ .sectionHeadingAction {
-  grid-row: 2;
 }
 .sectionHeadingAction a {
   min-height: 44px;
@@ -214,8 +203,7 @@ p:last-child {
   .sectionHeadingWithAction {
     grid-template-columns: minmax(0, 1fr);
   }
-  .sectionHeading .sectionHeadingAction,
-  .sectionHeading > .eyebrow ~ .sectionHeadingAction {
+  .sectionHeading .sectionHeadingAction {
     grid-column: 1;
     grid-row: auto;
     justify-self: start;

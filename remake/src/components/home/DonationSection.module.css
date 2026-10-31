@@ -49,7 +49,7 @@
 .content h2 {
   margin-bottom: 20px;
 }
-.content > p:not(:first-child) {
+.content > p {
   font-size: 0.9rem;
   color: var(--muted);
 }

@@ -32,24 +32,8 @@ export function SettingsForm({
   return (
     <>
       <section className={styles.panel}>
-        <h2>Farnosť a kontakty</h2>
+        <h2>Kontaktné údaje</h2>
         <div className={styles.fields}>
-          <Field
-            label="Celý názov farnosti"
-            value={document.name}
-            onChange={(value) => update("name", value)}
-            wide
-          />
-          <Field
-            label="Krátky názov"
-            value={document.shortName}
-            onChange={(value) => update("shortName", value)}
-          />
-          <Field
-            label="Mesto / miesto"
-            value={document.location}
-            onChange={(value) => update("location", value)}
-          />
           <Field
             label="Telefón farského úradu"
             type="tel"

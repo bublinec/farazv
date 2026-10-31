@@ -277,16 +277,48 @@ const pageDefinitions: InformationPageConfiguration[] = [
     title: "Akolyti",
     eyebrow: "Služba vo farnosti",
     kind: "community",
-    introduction: "Obsah pripravujeme.",
-    contentSource: "published"
+    introduction:
+      "Služba pri oltári a blízkosť tým, ktorí sa pre chorobu či vek nemôžu zúčastniť na svätej omši.",
+    contentSource: "curated",
+    sections: [
+      {
+        title: "Pri oltári aj pri chorých",
+        paragraphs: [
+          "Akolyti pomáhajú kňazovi a diakonovi pri slávení liturgie, najmä pri príprave oltára a liturgických nádob. V prípade potreby pomáhajú aj pri rozdávaní svätého prijímania.",
+          "Na základe príslušného poverenia môžu prinášať Eucharistiu chorým a nevládnym. Táto tichá služba spája ľudí, ktorí zostávajú doma alebo v nemocnici, so životom farského spoločenstva."
+        ]
+      },
+      {
+        title: "Záujem o túto službu",
+        paragraphs: [
+          "Služba akolytu si vyžaduje duchovnú aj praktickú prípravu a príslušné ustanovenie alebo poverenie Cirkvi. Ak ťa táto služba oslovuje, porozprávaj sa s kňazom alebo sa obráť na farskú kanceláriu."
+        ]
+      }
+    ]
   },
   {
     slug: "spolocenstva/lektori",
     title: "Lektori",
     eyebrow: "Služba vo farnosti",
     kind: "community",
-    introduction: "Obsah pripravujeme.",
-    contentSource: "published"
+    introduction:
+      "Svojím hlasom pomáhame Božiemu slovu zaznieť tak, aby mu celé spoločenstvo mohlo pozorne načúvať.",
+    contentSource: "curated",
+    sections: [
+      {
+        title: "Služba Božieho slova",
+        paragraphs: [
+          "Lektori pri svätej omši prednášajú biblické čítania okrem evanjelia. Podľa potreby čítajú aj úmysly spoločných modlitieb veriacich. Svojou službou pomáhajú celému spoločenstvu počúvať a prijímať Božie slovo.",
+          "K tejto službe patrí príprava: prečítať si text vopred, porozumieť mu a predniesť ho pokojne a zrozumiteľne. Dôležitá je ochota slúžiť, úcta k Svätému písmu a pripravenosť učiť sa."
+        ]
+      },
+      {
+        title: "Chceš sa zapojiť?",
+        paragraphs: [
+          "Ak ťa oslovuje služba čítania pri bohoslužbách, ozvi sa vo farskej kancelárii alebo oslov kňaza po svätej omši. Dohodneš sa na potrebnej príprave a možnostiach zapojenia."
+        ]
+      }
+    ]
   },
   {
     slug: "spolocenstva/ruzencove-bratstvo",
@@ -380,7 +412,7 @@ const pageDefinitions: InformationPageConfiguration[] = [
     contentSource: "published",
     links: [
       { label: "Farské oznamy", href: "/farnost/farske-oznamy" },
-      { label: "Príspevky farnosti", href: "/prispevky" }
+      { label: "Výveska", href: "/#vyveska" }
     ]
   },
   {

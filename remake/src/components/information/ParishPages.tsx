@@ -13,7 +13,6 @@ export function ChurchPage({ page }: { page: InformationPageDefinition }) {
       <PageHero
         route={`/${page.slug}`}
         title={page.title}
-        eyebrow={page.eyebrow}
         description={page.introduction}
       />
       <section
@@ -24,11 +23,13 @@ export function ChurchPage({ page }: { page: InformationPageDefinition }) {
           <PageLinks page={page} />
         </div>
         <aside className={styles.timeline} aria-label="Z histórie kostola">
-          <span className="eyebrow">Z histórie</span>
+          <h2>Z histórie kostola</h2>
           {page.timeline?.map((event) => (
             <div className={styles.timelineEvent} key={event.year}>
-              <span>{event.year}</span>
-              <h3>{event.title}</h3>
+              <h3>
+                <span className={styles.timelineYear}>{event.year}</span>{" "}
+                {event.title}
+              </h3>
               <p>{event.text}</p>
             </div>
           ))}
@@ -46,7 +47,6 @@ export function CommunityPage({ page }: { page: InformationPageDefinition }) {
       <PageHero
         route={`/${page.slug}`}
         title={page.title}
-        eyebrow={page.eyebrow}
         description={page.introduction}
       />
       <section className={`container ${styles.communityLayout}`}>
@@ -54,9 +54,8 @@ export function CommunityPage({ page }: { page: InformationPageDefinition }) {
           <ReadingCopy page={page} />
         </div>
         <aside className={styles.communityAside}>
-          <span className="eyebrow">Patríme k sebe</span>
           <h2>
-            {page.source?.placeholderSource
+            {page.source?.placeholderSource || page.contentSource === "curated"
               ? "Farská kancelária"
               : "Pridajte sa k nám"}
           </h2>
@@ -70,7 +69,12 @@ export function CommunityPage({ page }: { page: InformationPageDefinition }) {
               ))}
             </dl>
           ) : null}
-          {!page.source?.placeholderSource ? (
+          {page.contentSource === "curated" ? (
+            <p>
+              O možnostiach zapojenia a potrebnej príprave sa informuj vo
+              farskej kancelárii.
+            </p>
+          ) : !page.source?.placeholderSource ? (
             <p>Pomôžeme vám nájsť kontakt a prvé stretnutie.</p>
           ) : null}
           <Link className="button" href="/kontakt">
@@ -89,7 +93,6 @@ export function SchoolPage({ page }: { page: InformationPageDefinition }) {
       <PageHero
         route={`/${page.slug}`}
         title={page.title}
-        eyebrow={page.eyebrow}
         description={page.introduction}
       />
       <section className={`container ${styles.schoolLayout}`}>
@@ -118,7 +121,6 @@ export function GalleryPage({ page }: { page: InformationPageDefinition }) {
       <PageHero
         route={`/${page.slug}`}
         title={page.title}
-        eyebrow={page.eyebrow}
         description={page.introduction}
       />
       <section className={`container ${styles.gallerySection}`}>
@@ -140,7 +142,6 @@ export function ResourcePage({ page }: { page: InformationPageDefinition }) {
       <PageHero
         route={`/${page.slug}`}
         title={page.title}
-        eyebrow={page.eyebrow}
         description={page.introduction}
       />
       <section className={`container ${styles.resourceLayout}`}>

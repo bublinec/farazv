@@ -52,7 +52,6 @@ export default async function DetailPage({ params }: Props) {
     <EditorialDetail
       entry={entry}
       kind="news"
-      notice={false}
       related={related}
       preview={isFixtureMode()}
     />

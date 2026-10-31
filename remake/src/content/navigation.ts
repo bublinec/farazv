@@ -10,7 +10,7 @@ export const navigation: NavigationItem[] = [
     label: "Farnosť",
     children: [
       { label: "Farské oznamy", href: "/farnost/farske-oznamy" },
-      { label: "Príspevky farnosti", href: "/prispevky" },
+      { label: "Výveska", href: "/#vyveska" },
       { label: "Naše spoločenstvo", href: "/farnost/nase-spolocenstvo" },
       { label: "Galéria kostola", href: "/farnost/galeria" },
       { label: "Kostol sv. Alžbety", href: "/farnost/kostol-sv-alzbety" },
@@ -38,11 +38,13 @@ export const navigation: NavigationItem[] = [
     ]
   },
   {
-    label: "Spoločenstvá",
+    label: "Služby vo farnosti",
     children: [
       { label: "Detský spevokol", href: "/spolocenstva/detsky-spevokol" },
       { label: "Mládežnícky zbor", href: "/spolocenstva/mladeznicky-zbor" },
       { label: "Miništranti", href: "/spolocenstva/ministranti" },
+      { label: "Lektori", href: "/spolocenstva/lektori" },
+      { label: "Akolyti", href: "/spolocenstva/akolyti" },
       { label: "Rehoľné sestry", href: "/spolocenstva/reholne-sestry" }
     ]
   },

@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import type { CalendarDate, MediaAsset, ScheduleDay } from "@/content/types";
 import { formatDate } from "@/lib/calendar";
+import { formatCelebrantName, getMassLabel } from "@/lib/mass";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { Icon } from "@/components/ui/Icon";
 import styles from "./MassHero.module.css";
@@ -65,20 +66,9 @@ export function MassHero({
         }}
       >
         <div className={styles.content} aria-live="polite" aria-atomic="true">
-          <p className={styles.eyebrow}>
-            {day.isRegular
-              ? day.masses.length
-                ? "Pravidelné sväté omše"
-                : "Rozpis nie je zverejnený"
-              : isToday
-              ? "Dnešná liturgia"
-              : "Liturgia dňa"}
-          </p>
           <h1>
             {day.isRegular
-              ? day.masses.length
-                ? "Sme tu pre vás každý deň"
-                : "Informujte sa o čase svätej omše"
+              ? "Rozpis svätých omší"
               : day.liturgy || "Sväté omše v našej farnosti"}
           </h1>
           <div className={styles.divider}>
@@ -110,16 +100,13 @@ export function MassHero({
           ) : (
             <div className={styles.masses}>
               {day.masses.map((mass, i) => (
-                <div
-                  className={styles.mass}
-                  key={`${mass.time}-${mass.location}-${i}`}
-                >
+                <div className={styles.mass} key={`${mass.time}-${i}`}>
                   <span className={styles.location}>
-                    {mass.location || "Sv. Alžbeta"}
+                    {getMassLabel(mass) || "Sv. Alžbeta"}
                   </span>
                   <strong>{mass.time}</strong>
                   <span className={styles.celebrant}>
-                    {mass.celebrant || mass.label || "Svätá omša"}
+                    {formatCelebrantName(mass.celebrant) || "Svätá omša"}
                   </span>
                 </div>
               ))}

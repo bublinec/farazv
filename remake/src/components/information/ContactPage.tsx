@@ -22,7 +22,7 @@ function PriestCards({
 
   return (
     <section className={`container ${styles.priests}`}>
-      <SectionHeading eyebrow="Pastoračná služba" title="Naši kňazi" />
+      <SectionHeading title="Naši kňazi" />
       <div className={styles.priestGrid}>
         {priests.map((priest) => (
           <article
@@ -40,8 +40,8 @@ function PriestCards({
               </div>
             )}
             <div>
-              <span>{priest.role}</span>
               <h3>{priest.name}</h3>
+              <p className={styles.priestRole}>{priest.role}</p>
               {priest.phone ? (
                 <a href={`tel:${priest.phone.replace(/\s/g, "")}`}>
                   {priest.phone}
@@ -76,14 +76,13 @@ export async function ContactPage({
       <PageHero
         route={`/${page.slug}`}
         title={page.title}
-        eyebrow={page.eyebrow}
         description={page.introduction}
       />
       {settings ? (
         <>
           <section className={`container ${contact.section}`}>
             <div className={contact.heading}>
-              <SectionHeading eyebrow="Kontakt" title="Farská kancelária" />
+              <SectionHeading title="Farská kancelária" />
             </div>
             <div className={contact.columns}>
               <div className={contact.office}>

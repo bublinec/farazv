@@ -6,8 +6,8 @@ import styles from "./Admin.module.css";
 
 const links = [
   { id: "bulletin", label: "Oznamy", href: "/admin" },
-  { id: "posts", label: "Príspevky", href: "/admin?section=posts" },
-  { id: "article", label: "Články", href: "/admin?section=article" },
+  { id: "posts", label: "Výveska", href: "/admin?section=posts" },
+  { id: "article", label: "Naše spoločenstvo", href: "/admin?section=article" },
   { id: "settings", label: "Nastavenia", href: "/admin/nastavenia" },
   { id: "access", label: "Prístupy", href: "/admin/pristupy" }
 ];

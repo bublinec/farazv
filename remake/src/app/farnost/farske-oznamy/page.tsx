@@ -37,7 +37,6 @@ export default async function BulletinPage() {
         <PageHero
           route="/farnost/farske-oznamy"
           title="Farské oznamy"
-          eyebrow="Život našej farnosti"
           description="Sväté omše, úmysly a aktuálne oznamy na jednom mieste."
           image={aerialImage}
         />
@@ -60,7 +59,6 @@ export default async function BulletinPage() {
       <PageHero
         route="/farnost/farske-oznamy"
         title="Farské oznamy"
-        eyebrow="Život našej farnosti"
         description="Sväté omše, úmysly a aktuálne oznamy na jednom mieste."
         image={aerialImage}
       />
@@ -86,7 +84,6 @@ export default async function BulletinPage() {
             <WeeklySchedule key={today} days={days} today={today} />
             <aside className={styles.aside}>
               <section className={styles.announcements}>
-                <p className="eyebrow">Na tento týždeň</p>
                 <h2>Oznamy</h2>
                 <ol>
                   {bulletin?.announcements.map((announcement, index) => (

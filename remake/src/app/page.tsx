@@ -5,6 +5,7 @@ import { churchDetails } from "@/content/church-details";
 import {
   getPublicSettings,
   getPublicBulletins,
+  getPublicActivePosts,
   getPublicEditorialPage
 } from "@/server/public-content";
 import { Unavailable } from "@/components/ui/Unavailable";
@@ -31,7 +32,7 @@ export default async function HomePage() {
     await Promise.allSettled([
       getPublicSettings(),
       getPublicBulletins(today),
-      getPublicEditorialPage("news", undefined, today),
+      getPublicActivePosts(today),
       getPublicEditorialPage("article")
     ]);
   const settings =
@@ -45,9 +46,7 @@ export default async function HomePage() {
         ).days
       : null;
   const recentNews =
-    newsResult.status === "fulfilled"
-      ? newsResult.value.items.slice(0, 6)
-      : null;
+    newsResult.status === "fulfilled" ? newsResult.value : null;
   const recentArticles =
     articlesResult.status === "fulfilled"
       ? articlesResult.value.items.slice(0, 3)
@@ -65,15 +64,8 @@ export default async function HomePage() {
       <section id="novinky" className="section">
         <div id="vyveska" className="container">
           <SectionHeading
-            eyebrow="Zo života farnosti"
             title="Čo je u nás nové"
-            description="Novinky, podujatia a oznamy na jednom mieste."
-            action={
-              <Link href="/prispevky" className="textLink">
-                Všetky príspevky
-                <Icon name="arrow-right" size={17} />
-              </Link>
-            }
+            description="Čo sa práve deje v našej farnosti."
           />
           {recentNews?.length ? (
             <EditorialGrid entries={recentNews} kind="news" />
@@ -88,7 +80,6 @@ export default async function HomePage() {
       <section className="section">
         <div className="container">
           <SectionHeading
-            eyebrow="Náš farský kostol"
             title="Miesto, ktoré poznáme"
             description="Krása ukrytá v detailoch. Nahliadnite do Kostola sv. Alžbety."
             action={
@@ -128,7 +119,6 @@ export default async function HomePage() {
         </div>
         <div className="container">
           <SectionHeading
-            eyebrow="Ľudia, príbehy, viera"
             title="Naše spoločenstvo"
             description="Časopis a príbehy ľudí, ktorí tvoria našu farnosť."
             action={
@@ -148,8 +138,7 @@ export default async function HomePage() {
       <section className="section">
         <div className="container">
           <SectionHeading
-            eyebrow="Vo farnosti nie ste sami"
-            title="Nájdite svoje spoločenstvo"
+            title="Zapoj sa do života našej farnosti"
             align="center"
           />
           <div className={styles.communities}>
@@ -168,6 +157,11 @@ export default async function HomePage() {
                 "Miništranti",
                 "Služba pri oltári, priateľstvá a spoločné zážitky.",
                 "/spolocenstva/ministranti"
+              ],
+              [
+                "Lektori",
+                "Prednášaním Božieho slova pomáhajú pri spoločnom slávení liturgie.",
+                "/spolocenstva/lektori"
               ]
             ].map(([title, description, href], index) => (
               <Link href={href} className={styles.community} key={href}>
@@ -175,7 +169,7 @@ export default async function HomePage() {
                 <h3>{title}</h3>
                 <p>{description}</p>
                 <span className="textLink">
-                  Spoznať spoločenstvo
+                  Zistiť viac
                   <Icon name="arrow-right" size={16} />
                 </span>
               </Link>

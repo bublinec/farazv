@@ -1,6 +1,7 @@
 import { adminResponse, readJson } from "@/server/admin-http";
 import { createRecord, listRecords } from "@/server/content-store";
 import type { RecordKind } from "@/content/documents";
+import { isPostRecordKind } from "@/content/posts";
 export const dynamic = "force-dynamic";
 export function GET(request: Request) {
   return adminResponse(request, () => {
@@ -18,8 +19,13 @@ export function POST(request: Request) {
     request,
     async () => {
       const body = await readJson(request);
+      // Older clients may still send a historical category. All new posts share one kind.
+      const kind =
+        typeof body.kind === "string" && isPostRecordKind(body.kind)
+          ? "news"
+          : body.kind;
       return createRecord(
-        body.kind as RecordKind,
+        kind as RecordKind,
         typeof body.weekStart === "string" ? body.weekStart : undefined
       );
     },

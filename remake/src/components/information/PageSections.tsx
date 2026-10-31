@@ -89,10 +89,7 @@ export function RelatedPages({ page }: { page: InformationPageDefinition }) {
   return (
     <section className={styles.related}>
       <div className="container">
-        <SectionHeading
-          eyebrow="Súčasť nášho spoločenstva"
-          title={relatedHeading}
-        />
+        <SectionHeading title={relatedHeading} />
         <div className={styles.relatedGrid}>
           {related.map((entry) => (
             <Link

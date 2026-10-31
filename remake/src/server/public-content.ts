@@ -4,15 +4,16 @@ import { createHash } from "node:crypto";
 import { unstable_cache } from "next/cache";
 import type { CalendarDate } from "@/content/types";
 import type {
+  EditorialDocument,
   EditorialRecordKind,
   SettingsDocument
 } from "@/content/documents";
 import * as fixtures from "@/content/fixtures";
 import {
+  allEditorialSummaries,
   decodeCursor,
   editorialPage,
-  InvalidEditorialCursor,
-  type PublishedEditorialEntry
+  InvalidEditorialCursor
 } from "@/lib/editorial";
 import { editorialRecordPath } from "@/lib/record-routing";
 import * as store from "./published-store";
@@ -39,13 +40,19 @@ const cachedSettings = unstable_cache(
 
 const cachedPage = unstable_cache(
   store.getPublishedEditorialPage,
-  ["parish-editorial-v2", cacheNamespace],
+  ["parish-editorial-v3", cacheNamespace],
   { tags: ["parish-published"], revalidate: 300 }
 );
 
 const cachedEntry = unstable_cache(
   store.getPublishedEntry,
-  ["parish-entry-v2", cacheNamespace],
+  ["parish-entry-v3", cacheNamespace],
+  { tags: ["parish-published"], revalidate: 300 }
+);
+
+const cachedActivePosts = unstable_cache(
+  store.getPublishedActivePosts,
+  ["parish-active-posts-v1", cacheNamespace],
   { tags: ["parish-published"], revalidate: 300 }
 );
 
@@ -86,44 +93,47 @@ export async function getPublicEditorialPage(
   cursor?: string | null,
   activeOn?: CalendarDate
 ) {
-  if (isFixtureMode()) {
-    const entries =
-      kind === "article"
-        ? fixtures.articles.map((entry) => ({
-            ...entry,
-            recordKind: "article" as const
-          }))
-        : [
-            ...fixtures.news.map((entry) => {
-              const poster = fixtures.posters.find(
-                (item) => item.href === editorialRecordPath("news", entry.slug)
-              );
-              return {
-                ...entry,
-                recordKind: "news" as const,
-                isPoster: !!poster,
-                posterExpiresOn: poster?.expiresOn
-              };
-            }),
-            ...fixtures.notices.map((entry) => ({
-              ...entry,
-              recordKind: "notice" as const,
-              href: editorialRecordPath("notice", entry.slug),
-              posterExpiresOn: undefined
-            }))
-          ];
-    return editorialPage(
-      entries.filter(
-        (entry) =>
-          !activeOn ||
-          !("posterExpiresOn" in entry) ||
-          !entry.posterExpiresOn ||
-          entry.posterExpiresOn >= activeOn
-      ),
-      cursor
-    );
-  }
+  if (isFixtureMode())
+    return editorialPage(fixtureEditorialEntries(kind, activeOn), cursor);
   return read(() => cachedPage(kind, cursor, activeOn));
+}
+
+export async function getPublicActivePosts(today: CalendarDate) {
+  if (isFixtureMode())
+    return allEditorialSummaries(fixtureEditorialEntries("news", today));
+  return read(() => cachedActivePosts(today));
+}
+
+function fixtureEditorialEntries(
+  kind: "article" | "news",
+  activeOn?: CalendarDate
+) {
+  const entries =
+    kind === "article"
+      ? fixtures.articles
+      : [
+          ...fixtures.news.map((entry) => {
+            const poster = fixtures.posters.find(
+              (item) => item.href === editorialRecordPath("news", entry.slug)
+            );
+            return {
+              ...entry,
+              posterExpiresOn: poster?.expiresOn
+            };
+          }),
+          ...fixtures.notices.map((entry) => ({
+            ...entry,
+            href: editorialRecordPath("notice", entry.slug),
+            posterExpiresOn: undefined
+          }))
+        ];
+  return entries.filter(
+    (entry) =>
+      !activeOn ||
+      !("posterExpiresOn" in entry) ||
+      !entry.posterExpiresOn ||
+      entry.posterExpiresOn >= activeOn
+  );
 }
 
 export function parsePublicCursor(params: URLSearchParams) {
@@ -140,7 +150,7 @@ export const getPublicEntry = cache(
   async (
     kind: EditorialRecordKind,
     slug: string
-  ): Promise<PublishedEditorialEntry | null> => {
+  ): Promise<EditorialDocument | null> => {
     if (isFixtureMode()) {
       const entry =
         (kind === "article"
@@ -157,7 +167,6 @@ export const getPublicEntry = cache(
       );
       return {
         ...entry,
-        recordKind: kind,
         ...(poster ? { isPoster: true } : {})
       };
     }

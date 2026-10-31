@@ -80,6 +80,7 @@ export async function importMigration(
         draft: record.draft,
         published: record.published,
         version,
+        createdAt: current?.createdAt ?? record.createdAt,
         publishedAt: record.published
           ? record.publishedAt ?? new Date().toISOString()
           : null,

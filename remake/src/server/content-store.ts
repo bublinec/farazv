@@ -8,7 +8,7 @@ import type {
   ContentRecordFor,
   RecordKind
 } from "@/content/documents";
-import { postKinds } from "@/content/posts";
+import { postRecordKinds } from "@/content/posts";
 import { addDays, getMonday, getLocalDate } from "@/lib/calendar";
 import { getPublishedSettings } from "./published-store";
 import { getDb } from "./db";
@@ -33,6 +33,7 @@ function toRecord(row: DbRow): ContentRecord {
     published: row.published,
     version: row.version,
     publishedAt: row.publishedAt,
+    createdAt: row.createdAt,
     updatedAt: row.updatedAt,
     source: row.source,
     readOnly: row.readOnly
@@ -98,6 +99,7 @@ export async function listRecords(
       slug: contentRecords.slug,
       version: contentRecords.version,
       publishedAt: contentRecords.publishedAt,
+      createdAt: contentRecords.createdAt,
       updatedAt: contentRecords.updatedAt,
       source: contentRecords.source,
       readOnly: contentRecords.readOnly,
@@ -108,7 +110,7 @@ export async function listRecords(
     .where(
       and(
         options.kind === "posts"
-          ? inArray(contentRecords.kind, [...postKinds])
+          ? inArray(contentRecords.kind, [...postRecordKinds])
           : options.kind
           ? eq(contentRecords.kind, options.kind)
           : undefined,

@@ -544,6 +544,7 @@ export function buildMigration(source: DumpSource): MigrationResult {
         draft: document,
         published: published ? structuredClone(document) : null,
         version: 1,
+        createdAt: timestamp(row.created_at),
         publishedAt: published
           ? timestamp(row.published_at) ?? timestamp(row.created_at) ?? EPOCH
           : null,
@@ -716,6 +717,7 @@ export function buildMigration(source: DumpSource): MigrationResult {
       draft: document,
       published: row.published_at ? structuredClone(document) : null,
       version: 1,
+      createdAt: timestamp(row.created_at),
       publishedAt: timestamp(row.published_at),
       updatedAt:
         timestamp(row.updated_at) ?? timestamp(row.created_at) ?? EPOCH,
@@ -900,6 +902,7 @@ export function buildMigration(source: DumpSource): MigrationResult {
       draft: settings,
       published: structuredClone(settings),
       version: 1,
+      createdAt: timestamp(contact.created_at),
       publishedAt: timestamp(contact.published_at),
       updatedAt:
         timestamp(contact.updated_at) ?? timestamp(contact.created_at) ?? EPOCH,

@@ -22,6 +22,10 @@ export const contentRecords = pgTable(
     draft: jsonb("draft").$type<ContentDocument>().notNull(),
     published: jsonb("published").$type<ContentDocument>(),
     version: integer("version").notNull().default(1),
+    createdAt: timestamp("created_at", {
+      withTimezone: true,
+      mode: "string"
+    }).defaultNow(),
     publishedAt: timestamp("published_at", {
       withTimezone: true,
       mode: "string"

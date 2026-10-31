@@ -81,6 +81,7 @@ interface ContentRecordEnvelope {
   slug: string | null;
   version: number;
   publishedAt: string | null;
+  createdAt: string | null;
   updatedAt: string;
   source: SourceProvenance | null;
   readOnly: boolean;

@@ -37,7 +37,6 @@ export async function OfficeAside({
 
   return (
     <aside className={styles.officeAside} aria-label="Farská kancelária">
-      <span className="eyebrow">Sme tu pre vás</span>
       <h2>Dohodnime si stretnutie</h2>
       <p>Radi vám pomôžeme s prípravou aj s vašimi otázkami.</p>
       <a

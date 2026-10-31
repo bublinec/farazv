@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { ContentRecord } from "@/content/documents";
-import { isPostKind, postKindLabels } from "@/content/posts";
+import { isPostRecordKind } from "@/content/posts";
 import { publicRecordPath } from "@/lib/record-routing";
 import { RecordForm } from "./RecordForm";
 import {
@@ -22,6 +22,20 @@ const operationLabels: Record<
   reloading: "Ukladám alebo načítavam…",
   refreshing: "Ukladám alebo načítavam…"
 };
+
+const timestampFormatter = new Intl.DateTimeFormat("sk-SK", {
+  dateStyle: "medium",
+  timeStyle: "short",
+  timeZone: "Europe/Bratislava"
+});
+
+function RecordTimestamp({ value }: { value: string | null }) {
+  return value ? (
+    <time dateTime={value}>{timestampFormatter.format(new Date(value))}</time>
+  ) : (
+    <>Neznáme</>
+  );
+}
 
 function editorStatus(
   operation: RecordEditorOperation,
@@ -58,6 +72,7 @@ export function RecordEditor({
   } = useRecordEditor(initialRecord);
   const [formBusy, setFormBusy] = useState(false);
   const editorBusy = busy || formBusy;
+  const isSettings = record.kind === "settings";
   const publicPath = publicRecordPath(record);
 
   return (
@@ -70,7 +85,7 @@ export function RecordEditor({
                 record.kind === "bulletin"
                   ? "/admin"
                   : `/admin?section=${
-                      isPostKind(record.kind) ? "posts" : "article"
+                      isPostRecordKind(record.kind) ? "posts" : "article"
                     }`
               }
               className={styles.hint}
@@ -78,9 +93,9 @@ export function RecordEditor({
               ←{" "}
               {record.kind === "bulletin"
                 ? "Oznamy"
-                : isPostKind(record.kind)
-                ? "Príspevky"
-                : "Články"}
+                : isPostRecordKind(record.kind)
+                ? "Výveska"
+                : "Naše spoločenstvo"}
             </Link>
           ) : null}
           <h1 style={{ marginTop: record.kind === "settings" ? 0 : ".8rem" }}>
@@ -88,17 +103,16 @@ export function RecordEditor({
               ? "Nastavenia farnosti"
               : record.title || "Nový koncept"}
           </h1>
-          {isPostKind(record.kind) ? (
-            <p>{postKindLabels[record.kind]}</p>
-          ) : null}
         </div>
-        <span
-          className={`${styles.badge} ${
-            record.published ? styles.published : ""
-          }`}
-        >
-          {record.published ? "Zverejnené" : "Koncept"}
-        </span>
+        {!isSettings ? (
+          <span
+            className={`${styles.badge} ${
+              record.published ? styles.published : ""
+            }`}
+          >
+            {record.published ? "Zverejnené" : "Koncept"}
+          </span>
+        ) : null}
       </div>
       {record.readOnly ? (
         <div className={styles.notice}>
@@ -121,7 +135,7 @@ export function RecordEditor({
         noValidate
         onSubmit={(event) => {
           event.preventDefault();
-          if (!formBusy) void saveRecord();
+          if (!formBusy) void (isSettings ? publishRecord() : saveRecord());
         }}
       >
         <div className={styles.grid}>
@@ -141,7 +155,13 @@ export function RecordEditor({
           </div>
           <aside className={styles.sidebar}>
             <section className={styles.panel}>
-              <h2>{record.readOnly ? "Záznam" : "Uložiť a zverejniť"}</h2>
+              <h2>
+                {isSettings
+                  ? "Uložiť"
+                  : record.readOnly
+                  ? "Záznam"
+                  : "Uložiť a zverejniť"}
+              </h2>
               {error ? (
                 <div className={styles.error} role="alert">
                   {error}
@@ -171,10 +191,20 @@ export function RecordEditor({
               <p className={styles.status} role="status" aria-live="polite">
                 {formBusy
                   ? "Otváram týždeň oznamov…"
+                  : isSettings && operation === "publishing"
+                  ? "Ukladám…"
                   : editorStatus(operation, dirty, message)}
               </p>
               <div className={styles.actions}>
-                {!record.readOnly ? (
+                {isSettings ? (
+                  <button
+                    className={styles.button}
+                    type="submit"
+                    disabled={editorBusy}
+                  >
+                    Uložiť
+                  </button>
+                ) : !record.readOnly ? (
                   <>
                     <button
                       className={styles.secondary}
@@ -219,7 +249,7 @@ export function RecordEditor({
                   </button>
                 ) : null}
               </div>
-              {publicPath && !record.readOnly ? (
+              {publicPath && !record.readOnly && !isSettings ? (
                 <p>
                   <a
                     href={publicPath}
@@ -232,51 +262,47 @@ export function RecordEditor({
                   </a>
                 </p>
               ) : null}
-              {!record.readOnly ? (
+              {!record.readOnly && !isSettings ? (
                 <p className={styles.hint}>
                   Uloženie konceptu nemení verejný web.
                 </p>
               ) : null}
-              <details className={styles.disclosure}>
-                <summary>Viac možností</summary>
-                {record.published &&
-                !record.readOnly &&
-                record.kind !== "settings" ? (
-                  <button
-                    className={styles.danger}
-                    type="button"
-                    disabled={editorBusy}
-                    onClick={() => void unpublishRecord()}
-                  >
-                    Stiahnuť z webu
-                  </button>
-                ) : null}
+              {record.published &&
+              !record.readOnly &&
+              record.kind !== "settings" ? (
+                <button
+                  className={styles.danger}
+                  type="button"
+                  disabled={editorBusy}
+                  onClick={() => void unpublishRecord()}
+                >
+                  Stiahnuť z webu
+                </button>
+              ) : null}
+              <dl className={styles.recordMetadata}>
+                <div>
+                  <dt>Verzia</dt>
+                  <dd>{record.version}</dd>
+                </div>
+                <div>
+                  <dt>Vytvorené</dt>
+                  <dd>
+                    <RecordTimestamp value={record.createdAt} />
+                  </dd>
+                </div>
+                <div>
+                  <dt>Posledná úprava</dt>
+                  <dd>
+                    <RecordTimestamp value={record.updatedAt} />
+                  </dd>
+                </div>
+              </dl>
+              {record.kind === "bulletin" ? (
                 <p className={styles.hint}>
-                  Verzia {record.version}
-                  <br />
-                  Posledná úprava:{" "}
-                  {new Intl.DateTimeFormat("sk-SK", {
-                    dateStyle: "medium",
-                    timeStyle: "short",
-                    timeZone: "Europe/Bratislava"
-                  }).format(new Date(record.updatedAt))}
+                  Budúci zverejnený týždeň sa aktivuje podľa dátumu. Neskoršia
+                  úprava starého týždňa z neho neurobí aktuálny.
                 </p>
-                {record.kind === "bulletin" ? (
-                  <p className={styles.hint}>
-                    Budúci zverejnený týždeň sa aktivuje podľa dátumu. Neskoršia
-                    úprava starého týždňa z neho neurobí aktuálny.
-                  </p>
-                ) : null}
-                {record.source ? (
-                  <p>
-                    Zdroj: {record.source.kind} #{record.source.id}
-                    <br />
-                    Import: {record.source.importedVersion}
-                    <br />
-                    Pôvodne zverejnené: {record.source.publishedAt ?? "nie"}
-                  </p>
-                ) : null}
-              </details>
+              ) : null}
             </section>
           </aside>
         </div>

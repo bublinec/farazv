@@ -2,7 +2,6 @@ import Link from "next/link";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { editorialPath, formatEditorialDate } from "@/lib/editorial";
 import type { EditorialKind, EditorialSummary } from "@/lib/editorial";
-import { PostBadge } from "./PostBadge";
 import styles from "./EditorialCard.module.css";
 
 interface EditorialCardProps {
@@ -16,8 +15,6 @@ export function EditorialCard({
   kind,
   featured = false
 }: EditorialCardProps) {
-  const recordKind = entry.recordKind ?? "news";
-
   return (
     <article
       className={`${styles.card} ${featured ? styles.featured : ""} ${
@@ -36,9 +33,6 @@ export function EditorialCard({
         )}
         <div className={styles.content}>
           <div className={styles.metadata}>
-            {kind !== "article" && recordKind !== "news" ? (
-              <PostBadge kind={recordKind} />
-            ) : null}
             <time dateTime={entry.date}>{formatEditorialDate(entry.date)}</time>
           </div>
           <h3>{entry.title}</h3>

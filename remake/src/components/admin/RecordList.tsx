@@ -4,22 +4,12 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { AdminRecordSummary } from "@/content/documents";
-import {
-  isPostKind,
-  postKinds,
-  postKindLabels,
-  type AdminListSection,
-  type PostKind
-} from "@/content/posts";
-import { PostBadge } from "@/components/editorial/PostBadge";
+import type { AdminListSection } from "@/content/posts";
 import styles from "./Admin.module.css";
 
 export function RecordList({ section }: { section: AdminListSection }) {
   const router = useRouter();
   const kind = section;
-  const [postFilter, setPostFilter] = useState<PostKind | "all">("all");
-  const [newPostKind, setNewPostKind] = useState<PostKind>("news");
-  const listKind = kind === "posts" && postFilter !== "all" ? postFilter : kind;
   const [query, setQuery] = useState("");
   const [search, setSearch] = useState("");
   const [items, setItems] = useState<AdminRecordSummary[]>([]);
@@ -37,7 +27,7 @@ export function RecordList({ section }: { section: AdminListSection }) {
     setError("");
     setItems([]);
     setCursor(null);
-    const params = new URLSearchParams({ kind: listKind, query: search });
+    const params = new URLSearchParams({ kind, query: search });
     fetch(`/api/admin/records?${params}`, {
       cache: "no-store",
       signal: controller.signal
@@ -61,7 +51,7 @@ export function RecordList({ section }: { section: AdminListSection }) {
       controller.abort();
       requestVersion.current++;
     };
-  }, [listKind, search, reload]);
+  }, [kind, search, reload]);
 
   async function more() {
     if (!cursor || loading) return;
@@ -70,7 +60,7 @@ export function RecordList({ section }: { section: AdminListSection }) {
     setError("");
     try {
       const params = new URLSearchParams({
-        kind: listKind,
+        kind,
         query: search,
         cursor
       });
@@ -105,7 +95,7 @@ export function RecordList({ section }: { section: AdminListSection }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          kind: kind === "posts" ? newPostKind : kind
+          kind: kind === "posts" ? "news" : kind
         })
       });
       const data = await response.json();
@@ -126,29 +116,11 @@ export function RecordList({ section }: { section: AdminListSection }) {
             {kind === "bulletin"
               ? "Archív oznamov"
               : kind === "posts"
-              ? "Príspevky"
-              : "Články"}
+              ? "Výveska"
+              : "Naše spoločenstvo"}
           </h1>
         </div>
         <div className={styles.actions}>
-          {kind === "posts" ? (
-            <select
-              aria-label="Typ nového príspevku"
-              className={styles.compactInput}
-              value={newPostKind}
-              disabled={creating}
-              onChange={(event) => {
-                if (isPostKind(event.target.value))
-                  setNewPostKind(event.target.value);
-              }}
-            >
-              {postKinds.map((value) => (
-                <option key={value} value={value}>
-                  {postKindLabels[value]}
-                </option>
-              ))}
-            </select>
-          ) : null}
           {kind === "bulletin" ? (
             <Link href="/admin" className={styles.secondary}>
               ← Nahrať oznamy
@@ -176,23 +148,6 @@ export function RecordList({ section }: { section: AdminListSection }) {
           setSearch(query);
         }}
       >
-        {kind === "posts" ? (
-          <select
-            aria-label="Filtrovať príspevky podľa typu"
-            value={postFilter}
-            onChange={(event) => {
-              const value = event.target.value;
-              if (value === "all" || isPostKind(value)) setPostFilter(value);
-            }}
-          >
-            <option value="all">Všetky typy príspevkov</option>
-            {postKinds.map((value) => (
-              <option key={value} value={value}>
-                {postKindLabels[value]}
-              </option>
-            ))}
-          </select>
-        ) : null}
         <input
           aria-label="Hľadať obsah"
           placeholder={
@@ -238,7 +193,6 @@ export function RecordList({ section }: { section: AdminListSection }) {
               </small>
             </div>
             <div className={styles.recordMeta}>
-              {isPostKind(item.kind) ? <PostBadge kind={item.kind} /> : null}
               <span
                 className={`${styles.badge} ${
                   item.isPublished ? styles.published : ""

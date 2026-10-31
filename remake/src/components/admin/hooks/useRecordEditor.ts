@@ -108,7 +108,11 @@ export function useRecordEditor(initialRecord: ContentRecord) {
         setRecord(savedRecord);
         setSaved(JSON.stringify(savedRecord.draft));
       }
-      setMessage(mutationMessages[action]);
+      setMessage(
+        record.kind === "settings" && action === "publish"
+          ? "Nastavenia sú uložené."
+          : mutationMessages[action]
+      );
       return savedRecord;
     } catch (error) {
       setError(error instanceof Error ? error.message : "Uloženie zlyhalo.");

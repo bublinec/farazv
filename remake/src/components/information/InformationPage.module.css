@@ -38,7 +38,7 @@
   font-size: 25px;
   line-height: 1.3;
   font-weight: 500;
-  margin: 12px 0;
+  margin: 0 0 12px;
 }
 
 .officeAside p,
@@ -219,9 +219,12 @@
   margin-top: 8px;
 }
 
-.timeline > :global(.eyebrow) {
-  display: block;
-  margin-bottom: 28px;
+.timeline > h2 {
+  font-size: 1.1rem;
+  line-height: 1.35;
+  font-weight: 500;
+  color: var(--blue);
+  margin: 0 0 24px;
 }
 
 .timelineEvent {
@@ -244,18 +247,16 @@
   border-radius: 50%;
 }
 
-.timelineEvent > span {
+.timelineYear {
   font-size: 0.9rem;
   color: #876d3f;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
 .timelineEvent h3 {
   font-size: 19px;
   line-height: 1.3;
   color: var(--blue);
-  margin: 9px 0;
+  margin: 0 0 9px;
   font-weight: 500;
 }
 
@@ -403,12 +404,11 @@
   padding: 25px;
 }
 
-.priestCard > div > span {
+.priestRole {
   font-size: 0.9rem;
-  color: var(--gold-dark);
+  color: var(--muted);
   line-height: 1.6;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  margin: 0 0 16px;
 }
 
 .priestCard h3 {
@@ -416,7 +416,7 @@
   color: var(--blue);
   font-weight: 500;
   line-height: 1.35;
-  margin: 8px 0 20px;
+  margin: 0 0 6px;
 }
 
 .priestCard a {

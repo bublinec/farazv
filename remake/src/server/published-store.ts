@@ -6,7 +6,7 @@ import type {
   EditorialRecordKind,
   SettingsDocument
 } from "@/content/documents";
-import { postKinds } from "@/content/posts";
+import { postRecordKinds } from "@/content/posts";
 import type { CalendarDate } from "@/content/types";
 import { addDays, getMonday } from "@/lib/calendar";
 import {
@@ -15,8 +15,7 @@ import {
   INITIAL_EDITORIAL_COUNT,
   MORE_EDITORIAL_COUNT,
   type EditorialPage,
-  type EditorialSummary,
-  type PublishedEditorialEntry
+  type EditorialSummary
 } from "@/lib/editorial";
 import { editorialRecordPath } from "@/lib/record-routing";
 import { getDb } from "./db";
@@ -42,7 +41,7 @@ export async function getPublishedSettings(): Promise<SettingsDocument | null> {
 export async function getPublishedEntry(
   kind: EditorialRecordKind,
   slug: string
-): Promise<PublishedEditorialEntry | null> {
+): Promise<EditorialDocument | null> {
   const [row] = await getDb()
     .select({ document: contentRecords.published })
     .from(contentRecords)
@@ -55,9 +54,7 @@ export async function getPublishedEntry(
     )
     .limit(1);
 
-  return row?.document
-    ? { ...(row.document as EditorialDocument), recordKind: kind }
-    : null;
+  return (row?.document as EditorialDocument | null) ?? null;
 }
 
 export async function getPublishedEditorialPage(
@@ -65,10 +62,30 @@ export async function getPublishedEditorialPage(
   cursor?: string | null,
   activeOn?: CalendarDate
 ): Promise<EditorialPage> {
+  const limit = cursor ? MORE_EDITORIAL_COUNT : INITIAL_EDITORIAL_COUNT;
+  const rows = await getEditorialSummaries(kind, cursor, activeOn, limit + 1);
+  const items = rows.slice(0, limit);
+  return {
+    items,
+    nextCursor:
+      rows.length > limit ? encodeCursor(items[items.length - 1]) : null
+  };
+}
+
+/** The homepage shows every active post, without pagination. */
+export function getPublishedActivePosts(today: CalendarDate) {
+  return getEditorialSummaries("news", undefined, today);
+}
+
+async function getEditorialSummaries(
+  kind: "article" | "news",
+  cursor?: string | null,
+  activeOn?: CalendarDate,
+  limit?: number
+): Promise<EditorialSummary[]> {
   const after = cursor ? decodeCursor(cursor) : null;
-  const limit = after ? MORE_EDITORIAL_COUNT : INITIAL_EDITORIAL_COUNT;
   const date = sql<string>`${contentRecords.published}->>'date'`;
-  const rows = await getDb()
+  const query = getDb()
     .select({
       id: contentRecords.id,
       slug: contentRecords.publicSlug,
@@ -79,8 +96,7 @@ export async function getPublishedEditorialPage(
       author: sql<string | null>`${contentRecords.published}->>'author'`,
       cover: sql<
         EditorialSummary["cover"]
-      >`${contentRecords.published}->'cover'`,
-      isPoster: sql<boolean>`coalesce(${contentRecords.published}->>'isPoster', 'false') = 'true'`
+      >`${contentRecords.published}->'cover'`
     })
     .from(contentRecords)
     .where(
@@ -88,7 +104,7 @@ export async function getPublishedEditorialPage(
         kind === "article"
           ? eq(contentRecords.kind, "article")
           : or(
-              inArray(contentRecords.kind, [...postKinds]),
+              inArray(contentRecords.kind, [...postRecordKinds]),
               and(
                 eq(contentRecords.kind, "article"),
                 sql`${contentRecords.published}->>'showInNews' = 'true'`
@@ -96,7 +112,7 @@ export async function getPublishedEditorialPage(
             ),
         isNotNull(contentRecords.published),
         isNotNull(contentRecords.publicSlug),
-        // Expiry only removes a poster from the homepage; its archive and URL stay available.
+        // Expired posters leave the homepage; their detail URLs stay available.
         activeOn
           ? sql`(coalesce(${contentRecords.published}->>'isPoster', 'false') <> 'true' or coalesce(${contentRecords.published}->>'posterExpiresOn', '') = '' or ${contentRecords.published}->>'posterExpiresOn' >= ${activeOn})`
           : undefined,
@@ -108,9 +124,9 @@ export async function getPublishedEditorialPage(
           : undefined
       )
     )
-    .orderBy(desc(date), desc(contentRecords.id))
-    .limit(limit + 1);
-  const items: EditorialSummary[] = rows.slice(0, limit).map((row) => ({
+    .orderBy(desc(date), desc(contentRecords.id));
+  const rows = await (limit === undefined ? query : query.limit(limit));
+  return rows.map((row) => ({
     id: row.id,
     slug: row.slug!,
     title: row.title,
@@ -118,15 +134,8 @@ export async function getPublishedEditorialPage(
     date: row.date as CalendarDate,
     author: row.author || undefined,
     cover: row.cover || undefined,
-    isPoster: row.isPoster,
-    recordKind: row.kind as EditorialRecordKind,
     href: editorialRecordPath(row.kind as EditorialRecordKind, row.slug!)
   }));
-  return {
-    items,
-    nextCursor:
-      rows.length > limit ? encodeCursor(items[items.length - 1]) : null
-  };
 }
 
 export async function getPublishedBulletins(today: CalendarDate) {

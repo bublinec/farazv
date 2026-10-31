@@ -7,13 +7,11 @@ import styles from "./PageHero.module.css";
 export function PageHero({
   route,
   title,
-  eyebrow = "Farnosť Zvolen – mesto",
   description,
   image
 }: {
   route?: string;
   title: string;
-  eyebrow?: string;
   description?: string;
   image?: MediaAsset;
 }) {
@@ -48,7 +46,6 @@ export function PageHero({
         />
       ) : null}
       <div className={`container ${styles.content}`}>
-        <p className={`eyebrow ${styles.eyebrow}`}>{eyebrow}</p>
         <h1>{title}</h1>
         {description ? (
           <p className={styles.description}>{description}</p>

@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { siteConfig } from "@/content/site";
+import { ChurchMark } from "@/components/layout/ChurchMark";
 import styles from "./Admin.module.css";
 
 import { SignOut } from "./SignOut";
@@ -15,8 +17,16 @@ export function AdminShell({
   return (
     <div className={styles.shell}>
       <header className={styles.topbar}>
-        <Link className={styles.brand} href="/admin">
-          Admin farnosti
+        <Link
+          className={styles.brand}
+          href="/admin"
+          aria-label={`${siteConfig.name} — Admin`}
+        >
+          <ChurchMark className={styles.brandMark} />
+          <span>
+            <strong>{siteConfig.name}</strong>
+            <small>{siteConfig.city}</small>
+          </span>
         </Link>
         {authenticated ? (
           <AdminNavigation canManageAccess={canManageAccess} />

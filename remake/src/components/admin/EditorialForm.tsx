@@ -140,19 +140,14 @@ export function EditorialForm({
             />
             Zobraziť článok aj medzi príspevkami
           </label>
-        ) : (
-          <p className={styles.hint}>
-            Po zverejnení sa príspevok zobrazí v spoločnom zozname s označením
-            svojho typu.
-          </p>
-        )}
+        ) : null}
         <label className={styles.checkbox}>
           <input
             type="checkbox"
             checked={document.isPoster ?? false}
             onChange={(e) => update("isPoster", e.target.checked)}
           />
-          Titulný obrázok je plagát · zobraziť ho celý, bez orezania
+          Obsah je v plagáte · text príspevku nemusí byť vyplnený
         </label>
         {document.isPoster ? (
           <div className={styles.fields}>

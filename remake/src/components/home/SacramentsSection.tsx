@@ -23,7 +23,6 @@ export function SacramentsSection() {
         <div
           className={`sectionHeading sectionHeadingCenter ${styles.heading}`}
         >
-          <p className="eyebrow">Farnosť</p>
           <h2 id="sviatosti-heading">Sviatosti</h2>
           <span className="headingRule" aria-hidden="true" />
         </div>

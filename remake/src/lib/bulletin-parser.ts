@@ -4,6 +4,7 @@ import {
 } from "@/content/bulletin-import";
 import type { CalendarDate, Mass, ScheduleDay } from "@/content/types";
 import { addDays, getMonday } from "./calendar";
+import { getMassLabel } from "./mass";
 
 type Warning = BulletinImportResult["warnings"][number];
 type ParserOptions = {
@@ -350,9 +351,9 @@ function massDetails(value: string): Omit<Mass, "time" | "celebrant"> {
     label = group[1];
     intention = intention.slice(group[0].length).trim();
   }
+  const designation = getMassLabel({ location, label });
   return {
-    ...(location ? { location } : {}),
-    ...(label ? { label } : {}),
+    ...(designation ? { label: designation } : {}),
     ...(intention ? { intention } : {})
   };
 }
