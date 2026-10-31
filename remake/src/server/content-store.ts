@@ -48,10 +48,26 @@ export async function getRecord(id: string): Promise<ContentRecord | null> {
 }
 
 export async function listRecords(
-  options: { kind?: string; query?: string; cursor?: string } = {}
+  options: {
+    kind?: string;
+    query?: string;
+    cursor?: string;
+    weekStart?: string;
+  } = {}
 ) {
   if (options.kind && !recordKinds.includes(options.kind as RecordKind))
     throw new ContentError(400, "Neplatný typ obsahu.", "INVALID_QUERY");
+  if (
+    options.weekStart &&
+    (options.kind !== "bulletin" ||
+      !isCalendarDate(options.weekStart) ||
+      getMonday(options.weekStart) !== options.weekStart)
+  )
+    throw new ContentError(
+      400,
+      "Vyberte platný pondelok týždňa oznamov.",
+      "INVALID_QUERY"
+    );
   let cursor: { date: string; id: string } | undefined;
   if (options.cursor) {
     try {
@@ -86,6 +102,9 @@ export async function listRecords(
     .where(
       and(
         options.kind ? eq(contentRecords.kind, options.kind) : undefined,
+        options.weekStart
+          ? eq(sql`${contentRecords.draft}->>'weekStart'`, options.weekStart)
+          : undefined,
         options.query
           ? ilike(
               contentRecords.title,

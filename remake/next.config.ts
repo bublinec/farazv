@@ -8,6 +8,19 @@ const config: NextConfig = {
   // Both loopback names are used by local browser tests and developer previews.
   allowedDevOrigins: ["127.0.0.1"],
   turbopack: { root: path.resolve(import.meta.dirname) },
+  serverExternalPackages: ["word-extractor"],
+  // Binary extraction runs in an isolated worker with native package resolution.
+  outputFileTracingIncludes: {
+    "/api/admin/bulletins/import": [
+      "./node_modules/word-extractor/**/*",
+      "./node_modules/saxes/**/*",
+      "./node_modules/xmlchars/**/*",
+      "./node_modules/yauzl/**/*",
+      "./node_modules/fd-slicer/**/*",
+      "./node_modules/pend/**/*",
+      "./node_modules/buffer-crc32/**/*"
+    ]
+  },
   async headers() {
     return [
       {

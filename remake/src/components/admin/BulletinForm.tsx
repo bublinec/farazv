@@ -1,98 +1,33 @@
 "use client";
 
 import { formatRecordDate } from "./admin-format";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import type {
-  AdminRecordSummary,
-  BulletinDocument,
-  ContentRecord
-} from "@/content/documents";
-import type { CalendarDate, ScheduleDay } from "@/content/types";
-import { addDays } from "@/lib/calendar";
+import { useEffect } from "react";
+import type { BulletinDocument } from "@/content/documents";
+import type { ScheduleDay } from "@/content/types";
 import { Field, MassFields, StringList } from "./Fields";
+import { BulletinImport } from "./BulletinImport";
+import { PreviousSunday } from "./PreviousSunday";
+import { useBulletinImport } from "./hooks/useBulletinImport";
 import styles from "./Admin.module.css";
-
-function PreviousSunday({ weekStart }: { weekStart: CalendarDate }) {
-  const [record, setRecord] = useState<ContentRecord | null>(null);
-  const [failed, setFailed] = useState(false);
-  const previousMonday = addDays(weekStart, -7);
-  const sunday = addDays(weekStart, -1);
-
-  useEffect(() => {
-    let active = true;
-    async function load() {
-      try {
-        const response = await fetch(
-          `/api/admin/records?kind=bulletin&query=${previousMonday}`,
-          { cache: "no-store" }
-        );
-        if (!response.ok) throw new Error();
-        const data = await response.json();
-        const item = (data.items as AdminRecordSummary[]).find(
-          (value) => value.weekStart === previousMonday
-        );
-        if (item) {
-          const result = await fetch(
-            `/api/admin/records/${encodeURIComponent(item.id)}`,
-            { cache: "no-store" }
-          );
-          if (!result.ok) throw new Error();
-          if (active) setRecord(await result.json());
-        }
-      } catch {
-        if (active) setFailed(true);
-      }
-    }
-    void load();
-    return () => {
-      active = false;
-    };
-  }, [previousMonday]);
-
-  const day =
-    record?.kind === "bulletin"
-      ? record.draft.days.find((value) => value.date === sunday)
-      : null;
-
-  return (
-    <aside className={styles.notice}>
-      <strong>Predchádzajúca nedeľa · {formatRecordDate(sunday)}</strong>
-      <p>
-        Verejný rozpis zobrazí aj túto nedeľu. Patrí do predchádzajúceho týždňa
-        a upravuje sa iba tam.
-      </p>
-      {day ? (
-        <p>
-          {day.status === "no-masses"
-            ? "Bez svätej omše"
-            : day.masses.map((mass) => mass.time).join(" · ") ||
-              "Rozpis nie je vyplnený"}
-          {day.liturgy ? ` · ${day.liturgy}` : ""}
-        </p>
-      ) : (
-        <p>
-          {failed
-            ? "Referenčný rozpis sa nepodarilo načítať. Formulár tohto týždňa môžete ďalej upravovať."
-            : "Predchádzajúci týždeň sa nenašiel. Verejný web použije označené pravidelné časy, ak sú nastavené."}
-        </p>
-      )}
-      {record ? (
-        <Link href={`/admin/records/${encodeURIComponent(record.id)}`}>
-          Otvoriť predchádzajúci týždeň →
-        </Link>
-      ) : null}
-    </aside>
-  );
-}
 
 export function BulletinForm({
   document,
-  onChange
+  onChange,
+  disabled = false,
+  onBusyChange
 }: {
   document: BulletinDocument;
   onChange: (doc: BulletinDocument) => void;
+  disabled?: boolean;
+  onBusyChange?: (busy: boolean) => void;
 }) {
+  const imported = useBulletinImport(document, onChange);
+
+  useEffect(() => {
+    onBusyChange?.(imported.opening);
+    return () => onBusyChange?.(false);
+  }, [imported.opening, onBusyChange]);
+
   function updateDay(index: number, patch: Partial<ScheduleDay>) {
     onChange({
       ...document,
@@ -103,8 +38,23 @@ export function BulletinForm({
   }
 
   return (
-    <>
-      <section className={styles.panel}>
+    <fieldset
+      className={styles.disabled}
+      disabled={disabled || imported.opening}
+    >
+      <BulletinImport
+        weekStart={document.weekStart}
+        onApply={imported.apply}
+        onTargetWeek={imported.openWeek}
+        initialResult={imported.initialResult}
+        disabled={disabled || imported.opening}
+      />
+      {imported.message ? (
+        <p role="status" className={styles.notice}>
+          {imported.message}
+        </p>
+      ) : null}
+      <section className={styles.panel} id="bulletin-week" tabIndex={-1}>
         <h2>
           Týždeň od{" "}
           {formatRecordDate(document.weekStart, {
@@ -274,6 +224,6 @@ export function BulletinForm({
           + Pridať dar alebo zbierku
         </button>
       </section>
-    </>
+    </fieldset>
   );
 }

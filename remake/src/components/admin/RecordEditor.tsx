@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import type { ContentRecord } from "@/content/documents";
 import { recordKindNames } from "@/content/record-labels";
 import { publicRecordPath } from "@/lib/record-routing";
@@ -55,6 +56,8 @@ export function RecordEditor({
     reloadLatest,
     preview
   } = useRecordEditor(initialRecord);
+  const [formBusy, setFormBusy] = useState(false);
+  const editorBusy = busy || formBusy;
   const publicPath = publicRecordPath(record);
 
   return (
@@ -103,20 +106,21 @@ export function RecordEditor({
         noValidate
         onSubmit={(event) => {
           event.preventDefault();
-          void saveRecord();
+          if (!formBusy) void saveRecord();
         }}
       >
         <div className={styles.grid}>
           <div>
             <fieldset
               className={styles.disabled}
-              disabled={busy || record.readOnly}
+              disabled={editorBusy || record.readOnly}
               aria-label="Obsah záznamu"
             >
               <RecordForm
                 record={record}
                 onChange={setRecord}
                 disabled={record.readOnly || busy}
+                onBusyChange={setFormBusy}
               />
             </fieldset>
           </div>
@@ -142,7 +146,7 @@ export function RecordEditor({
                   <button
                     type="button"
                     className={styles.secondary}
-                    disabled={busy}
+                    disabled={editorBusy}
                     onClick={() => void retryCacheRefresh()}
                   >
                     Zopakovať obnovenie webu
@@ -150,7 +154,9 @@ export function RecordEditor({
                 </div>
               ) : null}
               <p className={styles.status} role="status" aria-live="polite">
-                {editorStatus(operation, dirty, message)}
+                {formBusy
+                  ? "Otváram týždeň oznamov…"
+                  : editorStatus(operation, dirty, message)}
               </p>
               <div className={styles.actions}>
                 {!record.readOnly ? (
@@ -158,14 +164,14 @@ export function RecordEditor({
                     <button
                       className={styles.button}
                       type="submit"
-                      disabled={busy}
+                      disabled={editorBusy}
                     >
                       Uložiť koncept
                     </button>
                     <button
                       className={styles.secondary}
                       type="button"
-                      disabled={busy}
+                      disabled={editorBusy}
                       onClick={() => void preview()}
                     >
                       {dirty ? "Uložiť a otvoriť náhľad" : "Súkromný náhľad"}
@@ -173,7 +179,7 @@ export function RecordEditor({
                     <button
                       className={styles.button}
                       type="button"
-                      disabled={busy}
+                      disabled={editorBusy}
                       onClick={() => void publishRecord()}
                     >
                       {record.published ? "Zverejniť zmeny" : "Zverejniť"}
@@ -182,7 +188,7 @@ export function RecordEditor({
                       <button
                         className={styles.danger}
                         type="button"
-                        disabled={busy}
+                        disabled={editorBusy}
                         onClick={() => void unpublishRecord()}
                       >
                         Stiahnuť z webu
@@ -201,7 +207,7 @@ export function RecordEditor({
                   <button
                     className={styles.secondary}
                     type="button"
-                    disabled={busy}
+                    disabled={editorBusy}
                     onClick={() => void reloadLatest()}
                   >
                     Načítať aktuálnu verziu

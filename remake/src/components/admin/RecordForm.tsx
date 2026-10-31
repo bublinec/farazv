@@ -8,17 +8,21 @@ import { SettingsForm } from "./SettingsForm";
 export function RecordForm({
   record,
   onChange,
-  disabled
+  disabled,
+  onBusyChange
 }: {
   record: ContentRecord;
   onChange: (record: ContentRecord) => void;
   disabled: boolean;
+  onBusyChange?: (busy: boolean) => void;
 }): ReactElement {
   switch (record.kind) {
     case "bulletin":
       return (
         <BulletinForm
           document={record.draft}
+          disabled={disabled}
+          onBusyChange={onBusyChange}
           onChange={(draft) => onChange({ ...record, draft })}
         />
       );

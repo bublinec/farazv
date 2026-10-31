@@ -11,5 +11,5 @@ export default async function RecordPage({
   const { id } = await params;
   const record = await getRecord(id);
   if (!record) notFound();
-  return <RecordEditor initialRecord={record} />;
+  return <RecordEditor key={record.id} initialRecord={record} />;
 }

@@ -1,0 +1,151 @@
+.paste,
+.review {
+  border-top: 1px solid var(--admin-border);
+  padding-top: 0.9rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.paste summary,
+.review summary,
+.day summary {
+  cursor: pointer;
+  color: var(--blue-deep);
+  font-weight: 600;
+  min-height: 44px;
+  padding-block: 0.5rem;
+}
+
+.paste[open] summary,
+.review[open] > summary {
+  margin-bottom: 0.7rem;
+}
+
+.paste button {
+  margin-top: 0.8rem;
+}
+
+.paste button,
+.preview button {
+  min-height: 44px;
+}
+
+.preview {
+  border-top: 1px solid var(--admin-border);
+  padding-top: 1.2rem;
+  line-height: 1.6;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.resultHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+}
+
+.resultHeading h3,
+.resultHeading p {
+  margin: 0;
+}
+
+.preview > p {
+  margin: 0.8rem 0 1rem;
+}
+
+.preview > div:last-child {
+  margin-top: 1.2rem;
+}
+
+.day {
+  border: 1px solid var(--admin-border);
+  border-radius: 5px;
+  margin-top: 0.6rem;
+}
+
+.day summary {
+  padding: 0.65rem 0.8rem;
+}
+
+.day summary > span + span {
+  margin-left: 0.6rem;
+}
+
+.dayContent {
+  padding: 0 0.8rem 0.8rem;
+}
+
+.dayContent > p:first-child {
+  margin-top: 0;
+}
+
+.tableScroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.tableScroll table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  text-align: left;
+  font: inherit;
+}
+
+.tableScroll caption {
+  text-align: left;
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding-bottom: 0.5rem;
+}
+
+.tableScroll th,
+.tableScroll td {
+  vertical-align: top;
+  border-bottom: 1px solid var(--admin-border);
+  padding: 0.5rem 0.7rem 0.5rem 0;
+  white-space: pre-wrap;
+}
+
+.tableScroll th {
+  font-weight: 600;
+  color: var(--blue-deep);
+}
+
+.tableScroll th:first-child,
+.tableScroll td:first-child {
+  white-space: nowrap;
+}
+
+.list {
+  margin: 0.6rem 0 0;
+  padding-left: 1.3rem;
+}
+
+.list li {
+  margin-block: 0.45rem;
+  white-space: pre-wrap;
+}
+
+.source {
+  max-height: 480px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  background: #f5f7f7;
+  border: 1px solid var(--admin-border);
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+@media (max-width: 600px) {
+  .day summary > span + span {
+    margin: 0.35rem 0 0 1rem;
+  }
+}

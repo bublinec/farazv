@@ -8,6 +8,7 @@ export function GET(request: Request) {
     return listRecords({
       kind: params.get("kind") || undefined,
       query: params.get("query") || undefined,
+      weekStart: params.get("weekStart") || undefined,
       cursor: params.get("cursor") || undefined
     });
   });
