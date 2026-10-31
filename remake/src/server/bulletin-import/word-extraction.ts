@@ -150,7 +150,9 @@ function checkArchive() {
     parentPort.postMessage({ text, truncated });
   } catch (error) {
     parentPort.postMessage({
-      error: ["archive-limit", "encrypted", "not-word"].includes(error.message)
+      error: ["MODULE_NOT_FOUND", "ERR_MODULE_NOT_FOUND"].includes(error.code)
+        ? "extractor-unavailable"
+        : ["archive-limit", "encrypted", "not-word"].includes(error.message)
         ? error.message
         : "unreadable",
     });
@@ -161,6 +163,12 @@ function checkArchive() {
 export type ExtractedText = { text: string; truncated: boolean };
 
 function extractionFailure(reason: unknown): BulletinImportError {
+  if (reason === "extractor-unavailable")
+    return new BulletinImportError(
+      "Spracovanie dokumentov momentálne nie je dostupné. Skúste vložiť text.",
+      503
+    );
+
   if (reason === "archive-limit")
     return new BulletinImportError(
       "Dokument má neprimerane veľký alebo zložitý komprimovaný obsah. Uložte jednoduchšiu kópiu DOCX alebo vložte text."
@@ -192,7 +200,10 @@ export function extractWordText(
           bytes: buffer,
           format,
           maxText: BULLETIN_IMPORT_MAX_TEXT,
-          extractorPath: require.resolve("word-extractor")
+          // The native worker needs a filesystem path, never a bundler module ID.
+          extractorPath: require.resolve(
+            /* webpackIgnore: true */ "word-extractor"
+          )
         },
         execArgv: [],
         env: {},
