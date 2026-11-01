@@ -42,6 +42,9 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
             <li>
               <Link href="/kontakt">Všetky kontakty</Link>
             </li>
+            <li>
+              <Link href="/podnety">Podnety a nápady</Link>
+            </li>
           </ul>
         </div>
         <div>

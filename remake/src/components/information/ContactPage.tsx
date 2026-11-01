@@ -1,4 +1,5 @@
 import type { InformationPageDefinition } from "@/content/information";
+import Link from "next/link";
 import type { SettingsDocument } from "@/content/documents";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { PageHero } from "@/components/ui/PageHero";
@@ -218,6 +219,18 @@ export async function ContactPage({
           <Unavailable title="Kontaktné údaje sú dočasne nedostupné." />
         </div>
       )}
+      <section className={`container ${contact.feedbackInvite}`}>
+        <div>
+          <h2>Máte podnet alebo nápad?</h2>
+          <p>
+            Napíšte nám, čo môžeme zlepšiť v živote farnosti alebo na tomto
+            webe.
+          </p>
+        </div>
+        <Link href="/podnety" className="textLink">
+          Napísať podnet <Arrow />
+        </Link>
+      </section>
       <PartnerLinks page={page} />
     </>
   );

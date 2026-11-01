@@ -10,7 +10,7 @@ import {
   getPublicEditorialPage
 } from "@/server/public-content";
 import { Unavailable } from "@/components/ui/Unavailable";
-import { getPublicWeek } from "@/lib/calendar";
+import { getLocalDate, getPublicWeek } from "@/lib/calendar";
 import { getPreviewDate } from "@/lib/preview-date";
 import { MassHero } from "@/components/home/MassHero";
 import { SacramentsSection } from "@/components/home/SacramentsSection";
@@ -19,6 +19,8 @@ import { EditorialGrid } from "@/components/editorial/EditorialCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { Icon } from "@/components/ui/Icon";
+import { WelcomeFeedbackBanner } from "@/components/feedback/WelcomeFeedbackBanner";
+import { feedbackWelcomeEndsOn } from "@/content/feedback";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -69,6 +71,9 @@ export default async function HomePage() {
           <Unavailable title="Rozpis je dočasne nedostupný." />
         </section>
       )}
+      {getLocalDate() < feedbackWelcomeEndsOn ? (
+        <WelcomeFeedbackBanner />
+      ) : null}
       <section id="novinky" className={`section ${styles.posts}`}>
         <div id="vyveska" className="container">
           <SectionHeading

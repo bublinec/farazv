@@ -46,7 +46,7 @@ export async function adminResponse(
   }
 }
 
-/** Access management has a stronger boundary than content editing. */
+/** Private administration has a stronger boundary than content editing. */
 export function administratorResponse(
   request: Request,
   operation: (identity: AuthorizedEditor) => Promise<unknown>,

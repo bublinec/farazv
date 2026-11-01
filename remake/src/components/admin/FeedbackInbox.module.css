@@ -1,0 +1,101 @@
+.workspace {
+  max-width: 1000px;
+  margin-inline: auto;
+}
+
+.workspace h1,
+.copy > strong {
+  overflow-wrap: anywhere;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.filters a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.filters a[aria-current="page"] {
+  border-color: #c5d3d8;
+  background: #e3ecee;
+  color: var(--blue-deep);
+}
+
+.item {
+  margin-bottom: 0;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.copy > strong {
+  margin-block: 5px;
+}
+
+.copy > p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.workspace > button {
+  margin-top: 20px;
+}
+
+.detail {
+  display: grid;
+  gap: 24px;
+}
+
+.detail section > h2 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.detail p {
+  white-space: pre-wrap;
+  margin: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.75;
+}
+
+.detail a {
+  overflow-wrap: anywhere;
+}
+
+.detailActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.unreadCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding-inline: 5px;
+  margin-left: 7px;
+  border-radius: 12px;
+  background: var(--blue);
+  color: white;
+  font-size: 0.65rem;
+  font-variant-numeric: tabular-nums;
+}

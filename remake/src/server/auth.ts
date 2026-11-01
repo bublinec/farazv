@@ -153,7 +153,7 @@ export function assertAdministrator(identity: AuthorizedEditor) {
   if (identity.role !== "admin")
     throw new AccessError(
       403,
-      "Prístupy môžu spravovať iba správcovia.",
+      "Túto časť administrácie môžu používať iba správcovia.",
       "ADMIN_REQUIRED"
     );
 }

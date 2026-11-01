@@ -17,6 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "",
     "/farnost/farske-oznamy",
     "/farnost/nase-spolocenstvo",
+    "/podnety",
     ...informationPages.map((page) => `/${page.slug}`)
   ].map((path) => ({ url: new URL(path || "/", siteConfig.url).href }));
   const records = await getDb()

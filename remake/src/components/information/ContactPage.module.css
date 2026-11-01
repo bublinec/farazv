@@ -2,6 +2,33 @@
   padding-block: 82px;
 }
 
+.feedbackInvite {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 30px;
+  padding-block: 32px;
+  margin-block: 30px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.feedbackInvite h2 {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+
+.feedbackInvite p {
+  color: var(--muted);
+  margin: 0;
+  max-width: 55ch;
+}
+
+.feedbackInvite > a {
+  min-height: 44px;
+}
+
 .heading {
   margin-bottom: 40px;
 }

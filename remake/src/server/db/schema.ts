@@ -10,6 +10,11 @@ import {
   index
 } from "drizzle-orm/pg-core";
 import type { ContentDocument, SourceProvenance } from "@/content/documents";
+import type {
+  FeedbackDetails,
+  FeedbackStatus,
+  FeedbackTopic
+} from "@/content/feedback";
 
 export const contentRecords = pgTable(
   "content_records",
@@ -101,3 +106,44 @@ export const editorAccess = pgTable("editor_access", {
   revokedBy: text("revoked_by"),
   revokedAt: timestamp("revoked_at", { withTimezone: true, mode: "string" })
 });
+
+/** Visitor messages are private records, with no publishing or public snapshot. */
+export const visitorFeedback = pgTable(
+  "visitor_feedback",
+  {
+    id: text("id").primaryKey(),
+    topic: text("topic").$type<FeedbackTopic>().notNull(),
+    subject: text("subject").notNull(),
+    email: text("email"),
+    details: jsonb("details").$type<FeedbackDetails>().notNull(),
+    fingerprint: text("fingerprint").notNull(),
+    status: text("status").$type<FeedbackStatus>().notNull().default("new"),
+    createdAt: timestamp("created_at", { withTimezone: true, mode: "string" })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "string" })
+      .notNull()
+      .defaultNow()
+  },
+  (table) => [
+    index("feedback_status_created_idx").on(
+      table.status,
+      table.createdAt,
+      table.id
+    )
+  ]
+);
+
+/** Short-lived HMAC buckets; neither messages nor buckets store raw addresses. */
+export const feedbackRateLimits = pgTable(
+  "feedback_rate_limits",
+  {
+    key: text("key").primaryKey(),
+    attempts: integer("attempts").notNull().default(1),
+    expiresAt: timestamp("expires_at", {
+      withTimezone: true,
+      mode: "string"
+    }).notNull()
+  },
+  (table) => [index("feedback_rate_expiry_idx").on(table.expiresAt)]
+);
