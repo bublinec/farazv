@@ -13,11 +13,11 @@ export function formatAdminTimestamp(value: string) {
 
 /** Read-only imports retain invalid source dates instead of repairing or hiding them. */
 export function formatRecordDate(
-  value: CalendarDate,
-  options: Intl.DateTimeFormatOptions = {}
+  value: string,
+  options: Intl.DateTimeFormatOptions = { year: "numeric" }
 ): string {
   try {
-    return formatDate(value, options);
+    return formatDate(value as CalendarDate, options);
   } catch {
     return String(value || "Dátum neuvedený");
   }

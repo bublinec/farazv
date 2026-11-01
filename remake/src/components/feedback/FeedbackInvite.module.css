@@ -4,14 +4,11 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px 30px;
-  padding-block: 32px;
-  margin-block: 30px;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  padding-block: clamp(28px, 4vw, 44px);
 }
 
 .invite h2 {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   margin-bottom: 8px;
 }
 
@@ -19,6 +16,7 @@
   color: var(--muted);
   margin: 0;
   max-width: 55ch;
+  font-size: 0.95rem;
 }
 
 .invite > a {

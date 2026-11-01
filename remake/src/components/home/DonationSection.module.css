@@ -2,7 +2,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 70px 0;
+  padding: var(--home-section-space, 70px) 0;
   background: #eeede5;
 }
 .background {
@@ -27,7 +27,7 @@
 .inner {
   display: grid;
   grid-template-columns: 0.7fr 1.3fr;
-  gap: 85px;
+  gap: clamp(32px, 6vw, 72px);
   align-items: center;
   max-width: 930px;
 }
@@ -57,8 +57,13 @@
   grid-template-columns: 1fr;
   max-width: 800px;
 }
+.content {
+  min-width: 0;
+}
+
 .content h2 {
-  max-width: 20ch;
+  max-width: 22ch;
+  font-size: var(--home-heading-size, clamp(1.8rem, 3vw, 2.35rem));
   margin-bottom: 14px;
 }
 .content > p {
@@ -66,49 +71,7 @@
   line-height: 1.65;
   color: var(--muted);
 }
-.account {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  margin-top: 20px;
-}
-.account > span {
-  text-transform: uppercase;
-  font-size: var(--text-label);
-  letter-spacing: 0.1em;
-  color: var(--muted);
-}
-.accountNumber {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.accountNumber strong {
-  font-size: 1.2rem;
-  letter-spacing: 0.025em;
-  color: var(--blue);
-  font-variant-numeric: tabular-nums;
-  overflow-wrap: anywhere;
-}
-.account button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  color: var(--blue);
-  padding: 10px;
-  border: 0;
-  border-radius: 5px;
-  background: #ffffff70;
-  cursor: pointer;
-}
-.account button:hover {
-  background: white;
-}
-.content .thanks,
-.content .status {
+.content .thanks {
   margin-top: 15px;
   margin-bottom: 0;
   font-size: 0.9rem;
@@ -131,13 +94,11 @@
     gap: 25px;
   }
   .content {
+    --account-align: center;
     text-align: center;
   }
   .content h2 {
     margin-inline: auto;
-  }
-  .account {
-    align-items: center;
   }
   .qr {
     max-width: 190px;

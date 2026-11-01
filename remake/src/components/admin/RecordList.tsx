@@ -11,6 +11,7 @@ import styles from "./Admin.module.css";
 import formStyles from "./AdminForms.module.css";
 import { useRecordList } from "./hooks/useRecordList";
 import { summaryStateLabel } from "./record-state";
+import { formatRecordDate } from "./admin-format";
 
 export function RecordList({ section }: { section: AdminListSection }) {
   return <RecordListContents key={section} section={section} />;
@@ -157,9 +158,15 @@ function RecordListContents({ section }: { section: AdminListSection }) {
                 </div>
               ) : null}
               <div className={styles.recordCopy}>
-                <strong>{item.title || "Koncept bez názvu"}</strong>
+                <strong>
+                  {item.kind === "bulletin" && item.weekStart
+                    ? `Farské oznamy ${formatRecordDate(item.weekStart)}`
+                    : item.title || "Koncept bez názvu"}
+                </strong>
                 <small>
-                  {item.weekStart ? `Týždeň od ${item.weekStart} · ` : ""}
+                  {item.weekStart
+                    ? `Týždeň od ${formatRecordDate(item.weekStart)} · `
+                    : ""}
                   Upravené{" "}
                   {new Intl.DateTimeFormat("sk-SK", {
                     dateStyle: "medium",

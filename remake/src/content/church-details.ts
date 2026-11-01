@@ -37,6 +37,18 @@ export const churchDetails = {
     width: 1024,
     height: 1536,
     alt: "Lomená klenba bočnej kaplnky Kostola sv. Alžbety vo Zvolene"
+  },
+  nave: {
+    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551363/IMG_4744_5df9dc5fa5.jpg",
+    width: 1024,
+    height: 1536,
+    alt: "Hlavná loď a oltár Kostola sv. Alžbety vo Zvolene"
+  },
+  interior: {
+    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638551432/IMG_4839_494a51725f.jpg",
+    width: 1024,
+    height: 683,
+    alt: "Pohľad do Kostola sv. Alžbety vo Zvolene"
   }
 } satisfies Record<string, MediaAsset>;
 

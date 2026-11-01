@@ -1,22 +1,17 @@
 .section {
-  padding-block: clamp(40px, 5vw, 64px);
+  padding-block: var(--home-section-space, clamp(40px, 5vw, 64px));
   background: var(--paper);
   border-bottom: 1px solid var(--line);
   scroll-margin-top: 24px;
 }
 
-.inner {
-  max-width: 1050px;
-}
-
 .heading {
-  margin-bottom: 30px;
+  max-width: 720px;
 }
 
 .heading h2 {
-  margin-bottom: 14px;
   color: var(--blue-deep);
-  font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  font-size: var(--home-heading-size, clamp(1.7rem, 2.8vw, 2.2rem));
 }
 
 .heading p {
@@ -46,7 +41,8 @@
 }
 
 .mass h3,
-.services h3 {
+.services h3,
+.rosterSection h3 {
   margin-bottom: 8px;
   color: var(--blue-deep);
   font-size: 1.12rem;
@@ -100,13 +96,24 @@
   text-decoration: none;
 }
 
-.plan img {
-  width: 100%;
-  height: 155px;
-  object-position: 52% center;
+.planViewport {
+  display: block;
+  position: relative;
+  height: 205px;
+  overflow: hidden;
 }
 
-.plan > span {
+.planViewport img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-position: 51% 57%;
+  transform: scale(1.55);
+  transform-origin: 51% 57%;
+}
+
+.plan > span:last-child {
   display: flex;
   align-items: center;
   min-height: 44px;
@@ -114,7 +121,7 @@
   font-size: 0.8rem;
 }
 
-.plan:hover > span {
+.plan:hover > span:last-child {
   text-decoration: underline;
 }
 
@@ -145,24 +152,124 @@
   font-weight: 550;
 }
 
-.contact {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 44px;
+.services .request {
   margin-top: 8px;
   font-size: 0.9rem;
-  text-decoration: none;
-}
-
-.contact:hover {
-  text-decoration: underline;
 }
 
 .services .note {
   margin-top: 16px;
   color: var(--muted);
   font-size: 0.85rem;
+}
+
+.rosterSection {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 52px);
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid #dcd5c7;
+}
+
+.rosterSource {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.roster {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.roster > div {
+  display: grid;
+  grid-template-columns: 95px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  border-bottom: 1px solid var(--line);
+}
+
+.roster > div:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.roster dt {
+  color: var(--muted);
+}
+
+.roster dd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 16px;
+  margin: 0;
+}
+
+.roster a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.roster a:hover {
+  text-decoration: underline;
+}
+
+.roster .saturday {
+  padding-block: 10px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.guidance {
+  margin-top: 28px;
+  border: 1px solid #dcd5c7;
+  border-radius: 5px;
+  background: var(--white);
+}
+
+.guidance > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 56px;
+  padding: 14px 20px;
+  color: var(--blue-deep);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+}
+
+.guidance > summary::-webkit-details-marker {
+  display: none;
+}
+
+.guidance summary svg {
+  flex-shrink: 0;
+}
+
+.guidance[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.guidanceBody {
+  --prose-font-size: 0.95rem;
+  --prose-line-height: 1.75;
+  --prose-paragraph-gap: 1rem;
+  max-width: 78ch;
+  padding: 8px 20px 24px;
+  margin-inline: auto;
 }
 
 @media (max-width: 760px) {
@@ -183,9 +290,14 @@
     flex-direction: column;
   }
 
-  .plan img {
+  .planViewport {
     flex: 1;
-    min-height: 155px;
+    min-height: 205px;
+  }
+
+  .rosterSection {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 
@@ -197,5 +309,15 @@
   .plan {
     border-left: 0;
     border-top: 1px solid var(--line);
+  }
+
+  .roster > div {
+    grid-template-columns: 80px minmax(0, 1fr);
+    padding-block: 6px;
+    gap: 8px;
+  }
+
+  .roster dd {
+    display: grid;
   }
 }

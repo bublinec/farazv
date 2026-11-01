@@ -11,7 +11,7 @@ import { RecordLivePreview } from "./RecordLivePreview";
 import { EditorValidation } from "./EditorValidation";
 import { useAdminSection } from "./AdminSectionContext";
 import { hasUnpublishedChanges, recordStateLabel } from "./record-state";
-import { formatAdminTimestamp } from "./admin-format";
+import { formatAdminTimestamp, formatRecordDate } from "./admin-format";
 import {
   useRecordEditor,
   type RecordEditorOperation
@@ -147,6 +147,8 @@ export function RecordEditor({
           <h1 className={isSettings ? undefined : layout.recordTitle}>
             {isSettings
               ? "Nastavenia farnosti"
+              : record.kind === "bulletin"
+              ? `Farské oznamy ${formatRecordDate(record.draft.weekStart)}`
               : record.title || "Nový koncept"}
           </h1>
         </div>

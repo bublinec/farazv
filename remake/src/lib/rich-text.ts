@@ -247,6 +247,31 @@ export function richTextToPlainText(doc: RichTextDocument): string {
   }
   return flatten(doc).trim();
 }
+
+/** Permanent homepage sections render poster information as their own UI. */
+export function withoutRichTextMedia(
+  document: RichTextDocument
+): RichTextDocument {
+  function textOnly(node: RichTextNode): RichTextNode | null {
+    if (node.type === "image" || node.type === "imageGallery") return null;
+    if (!node.content) return node;
+
+    const content = node.content.flatMap((child) => {
+      const text = textOnly(child);
+      return text ? [text] : [];
+    });
+    return content.length ? { ...node, content } : null;
+  }
+
+  return {
+    type: "doc",
+    content: document.content.flatMap((node) => {
+      const text = textOnly(node);
+      return text ? [text] : [];
+    })
+  };
+}
+
 function textNode(text: string): RichTextNode[] {
   return text ? [{ type: "text", text }] : [];
 }

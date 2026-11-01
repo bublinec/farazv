@@ -53,18 +53,25 @@ export function EditorialCard({ entry, kind, imageSizes }: EditorialCardProps) {
 
 export function EditorialGrid({
   entries,
-  kind
+  kind,
+  compact = false
 }: {
   entries: readonly EditorialSummary[];
   kind: EditorialKind;
+  compact?: boolean;
 }) {
   const isPair = kind === "article" && entries.length === 2;
+  const imageSizes = isPair
+    ? "(max-width: 600px) 100vw, (max-width: 1280px) 50vw, 590px"
+    : compact && kind === "news" && entries.length > 1
+    ? "(max-width: 600px) 100vw, (max-width: 1100px) 300px, 220px"
+    : undefined;
 
   return (
     <div
       className={
         kind === "news"
-          ? styles.postGrid
+          ? `${styles.postGrid} ${compact ? styles.compactPosts : ""}`
           : `${styles.grid} ${isPair ? styles.pair : ""}`
       }
     >
@@ -73,11 +80,7 @@ export function EditorialGrid({
           key={entry.id}
           entry={entry}
           kind={kind}
-          imageSizes={
-            isPair
-              ? "(max-width: 600px) 100vw, (max-width: 1280px) 50vw, 590px"
-              : undefined
-          }
+          imageSizes={imageSizes}
         />
       ))}
     </div>

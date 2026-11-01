@@ -1,6 +1,7 @@
 import type { InformationPageDefinition } from "@/content/information";
 import { PageHero } from "@/components/ui/PageHero";
-import { ReadingCopy, PageLinks, RelatedPages } from "./PageSections";
+import { SacramentsSection } from "@/components/home/SacramentsSection";
+import { ReadingCopy, PageLinks } from "./PageSections";
 import { OfficeAside } from "./OfficeAside";
 import { SourceQuotation } from "./SourceQuotation";
 import styles from "./InformationPage.module.css";
@@ -40,7 +41,7 @@ export function SacramentPage({ page }: { page: InformationPageDefinition }) {
           description={page.aside?.description}
         />
       </div>
-      <RelatedPages page={page} />
+      <SacramentsSection />
     </>
   );
 }

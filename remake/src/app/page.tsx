@@ -4,6 +4,7 @@ import { heroImage } from "@/content/assets";
 import { churchDetails } from "@/content/church-details";
 import { parishServices } from "@/content/services";
 import { hospitalMinistry } from "@/content/hospital-ministry";
+import { altarRestoration } from "@/content/altar-restoration";
 import {
   getPublicSettings,
   getPublicBulletins,
@@ -16,10 +17,10 @@ import { getLocalDate, getPublicWeek } from "@/lib/calendar";
 import { getPreviewDate } from "@/lib/preview-date";
 import { editorialRecordPath } from "@/lib/record-routing";
 import { MassHero } from "@/components/home/MassHero";
-import { SacramentsSection } from "@/components/home/SacramentsSection";
 import { DonationSection } from "@/components/home/DonationSection";
 import { SaintCharbelSection } from "@/components/home/SaintCharbelSection";
 import { HospitalMinistrySection } from "@/components/home/HospitalMinistrySection";
+import { AltarRestorationSection } from "@/components/home/AltarRestorationSection";
 import { EditorialGrid } from "@/components/editorial/EditorialCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { MediaImage } from "@/components/ui/MediaImage";
@@ -42,13 +43,15 @@ export default async function HomePage() {
     bulletinResult,
     newsResult,
     articlesResult,
-    hospitalRosterResult
+    hospitalRosterResult,
+    restorationResult
   ] = await Promise.allSettled([
     getPublicSettings(),
     getPublicBulletins(today),
     getPublicActivePosts(today),
     getPublicEditorialPage("article"),
-    getPublicEntry("news", hospitalMinistry.serviceRosterSlug)
+    getPublicEntry("news", hospitalMinistry.serviceRosterSlug),
+    getPublicEntry("news", altarRestoration.postSlug)
   ]);
   const settings =
     settingsResult.status === "fulfilled" ? settingsResult.value : null;
@@ -61,19 +64,32 @@ export default async function HomePage() {
         )
       : null;
   const days = publicWeek?.days;
+  const hospitalArticle =
+    hospitalRosterResult.status === "fulfilled"
+      ? hospitalRosterResult.value
+      : null;
+  const restorationArticle =
+    restorationResult.status === "fulfilled" ? restorationResult.value : null;
+  const permanentPostPaths = [
+    editorialRecordPath("news", hospitalMinistry.serviceRosterSlug),
+    ...(restorationArticle
+      ? [editorialRecordPath("news", altarRestoration.postSlug)]
+      : [])
+  ];
   const recentNews =
-    newsResult.status === "fulfilled" ? newsResult.value : null;
+    newsResult.status === "fulfilled"
+      ? newsResult.value.filter(
+          (entry) =>
+            // Permanent announcements have their own sections below the feed.
+            !permanentPostPaths.includes(entry.href ?? "")
+        )
+      : null;
   const recentArticles =
     articlesResult.status === "fulfilled"
       ? articlesResult.value.items.slice(0, 3)
       : null;
-  const hospitalRosterHref =
-    hospitalRosterResult.status === "fulfilled" && hospitalRosterResult.value
-      ? editorialRecordPath("news", hospitalMinistry.serviceRosterSlug)
-      : undefined;
-
   return (
-    <>
+    <div className={styles.home}>
       {days ? (
         <MassHero
           key={today}
@@ -97,7 +113,7 @@ export default async function HomePage() {
             description="Aktuálne oznamy, pozvánky na podujatia a správy z farského života."
           />
           {recentNews?.length ? (
-            <EditorialGrid entries={recentNews} kind="news" />
+            <EditorialGrid entries={recentNews} kind="news" compact />
           ) : recentNews ? (
             <p>Zatiaľ tu nie sú žiadne príspevky.</p>
           ) : (
@@ -105,60 +121,17 @@ export default async function HomePage() {
           )}
         </div>
       </section>
-      <SaintCharbelSection />
-      <HospitalMinistrySection serviceRosterHref={hospitalRosterHref} />
-      <section className="section">
+      <section className={`section ${styles.services}`}>
         <div className="container">
-          <SectionHeading
-            title="Zapoj sa do života našej farnosti"
-            align="center"
-          />
+          <SectionHeading title="Zapoj sa do života našej farnosti" />
           <div className={styles.communities}>
-            {parishServices.map(({ title, description, href }, index) => (
+            {parishServices.map(({ title, description, href }) => (
               <Link href={href} className={styles.community} key={href}>
-                <span className={styles.communityNumber}>0{index + 1}</span>
                 <h3>{title}</h3>
                 <p>{description}</p>
                 <span className="textLink">
                   Zistiť viac
                   <Icon name="arrow-right" size={16} />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-      <SacramentsSection />
-      <section className="section">
-        <div className="container">
-          <SectionHeading
-            title="Náš kostol zblízka"
-            description="Fotografie interiéru a detailov Kostola sv. Alžbety."
-            action={
-              <Link href="/farnost/galeria" className="textLink">
-                Celá galéria
-                <Icon name="arrow-right" size={17} />
-              </Link>
-            }
-          />
-          <div className={styles.gallery}>
-            {[
-              churchDetails.vault,
-              churchDetails.iron,
-              churchDetails.chapel,
-              churchDetails.pews
-            ].map((image) => (
-              <Link
-                href="/farnost/galeria"
-                key={image.src}
-                aria-label={`Galéria kostola: ${image.alt}`}
-              >
-                <MediaImage
-                  image={image}
-                  sizes="(max-width: 550px) 50vw, 25vw"
-                />
-                <span aria-hidden="true">
-                  <Icon name="image" size={18} />
                 </span>
               </Link>
             ))}
@@ -190,10 +163,13 @@ export default async function HomePage() {
           )}
         </div>
       </section>
+      <AltarRestorationSection article={restorationArticle} />
+      <HospitalMinistrySection article={hospitalArticle} />
+      <SaintCharbelSection />
       {settings ? (
         <DonationSection iban={settings.iban} qr={settings.donationQr} />
       ) : null}
       <FeedbackInvite />
-    </>
+    </div>
   );
 }

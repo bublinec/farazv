@@ -4,6 +4,17 @@ import type { MediaAsset } from "./types";
 export const hospitalMinistry = {
   sectionId: "duchovna-sluzba-v-nemocnici",
   serviceRosterSlug: "sluzba-pomazania-chorych-nemocnica-zvolen",
+  // Transcribed from the newer cover; the older image in the article has a
+  // superseded Thursday contact and must not be combined with this roster.
+  rosterSource:
+    "https://res.cloudinary.com/dmx3wfvko/image/upload/v1789807686/rozpis_spovedania_v_nemocnici_6753655666.jpg",
+  roster: [
+    { day: "Pondelok", priest: "Lukáš Líška", phone: "0915 801 998" },
+    { day: "Utorok", priest: "Marek Hraňo", phone: "0908 488 545" },
+    { day: "Streda", priest: "Daniel Markovič", phone: "0902 462 308" },
+    { day: "Štvrtok", priest: "Rafael Tresa, OP", phone: "0904 846 801" },
+    { day: "Piatok", priest: "Marián Gregor ml.", phone: "0908 964 805" }
+  ],
   plan: {
     src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1682798720/Nemocnica_omse_8b2ffe1977.png",
     width: 2293,
