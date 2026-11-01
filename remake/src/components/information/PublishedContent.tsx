@@ -140,11 +140,9 @@ function ReadingNodes({
 
 export function PublishedContent({
   page,
-  galleryOnly = false,
   omitSectionId
 }: {
   page: InformationPageDefinition;
-  galleryOnly?: boolean;
   omitSectionId?: string;
 }) {
   const source = page.source
@@ -156,8 +154,7 @@ export function PublishedContent({
       section.body.content.length &&
       !["multi_paragraph_image_banners", "partners_sections"].includes(
         section.kind
-      ) &&
-      (!galleryOnly || section.kind === "galleries")
+      )
   );
   return (
     <div className={reading.readingCopy}>
@@ -190,7 +187,7 @@ export function TourFallback({ page }: { page: InformationPageDefinition }) {
         kostolov alebo dostupné 3D modely.
       </p>
       <TechnicalSupport />
-      <a className={styles.textLink} href="/farnost/galeria">
+      <a className={styles.textLink} href="/farnost/kostol-sv-alzbety#galeria">
         Otvoriť galériu <span aria-hidden="true">→</span>
       </a>
     </div>

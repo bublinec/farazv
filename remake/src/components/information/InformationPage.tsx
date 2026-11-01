@@ -1,12 +1,12 @@
 import type { InformationPageDefinition } from "@/content/information";
 import { ContactPage } from "./ContactPage";
 import { SacramentPage } from "./SacramentPage";
-import { VirtualTourPage } from "./VirtualTourPage";
+import { ParishPage } from "./ParishPage";
+import { SaintElizabethChurchPage } from "./SaintElizabethChurchPage";
 import {
   ChurchPage,
   CommunityPage,
   SchoolPage,
-  GalleryPage,
   ResourcePage
 } from "./ParishPages";
 
@@ -17,15 +17,17 @@ export function InformationPage({ page }: { page: InformationPageDefinition }) {
     case "contact":
       return <ContactPage page={page} />;
     case "church":
-      return <ChurchPage page={page} />;
+      return page.slug === "farnost/kostol-sv-alzbety" ? (
+        <SaintElizabethChurchPage page={page} />
+      ) : (
+        <ChurchPage page={page} />
+      );
+    case "parish":
+      return <ParishPage page={page} />;
     case "community":
       return <CommunityPage page={page} />;
     case "school":
       return <SchoolPage page={page} />;
-    case "gallery":
-      return <GalleryPage page={page} />;
-    case "tour":
-      return <VirtualTourPage page={page} />;
     case "resource":
       return <ResourcePage page={page} />;
   }

@@ -1,6 +1,6 @@
 import "server-only";
 import { churchDetails } from "./church-details";
-import { churchGallery } from "./assets";
+import { aerialImage, churchGallery } from "./assets";
 import { publishedInformationContent } from "./information-content";
 import type { MediaAsset } from "./types";
 
@@ -11,6 +11,7 @@ import type { MediaAsset } from "./types";
  * pages real church details. Original source records remain unchanged.
  */
 const churchPhotographOverrides: Partial<Record<string, MediaAsset>> = {
+  "/farnost/o-farnosti": aerialImage,
   "/objav-krista": churchGallery[1],
   "/sviatosti/sviatost-pomazania-chorych": churchDetails.chapel,
   "/spolocenstva/lektori": churchDetails.book,

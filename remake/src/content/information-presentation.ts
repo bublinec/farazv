@@ -24,7 +24,7 @@ interface SectionPresentation {
 
 /** Source IDs locate a section; expected text guards every exceptional rule. */
 const pagePresentation: Record<string, Record<string, SectionPresentation>> = {
-  "farnost/kostol-sv-alzbety": {
+  "farnost/o-farnosti": {
     "components_sections_text-101": {
       expectedOpening: "História farnosti",
       subtopicOffset: 1
@@ -165,8 +165,6 @@ export function getInformationReadingNodes(
 
     if (isInformationCredit(node)) {
       const credit = normalize(value.replace(/^autor(?:ka)?:\s*/i, ""));
-      // GalleryPage provides one linked credit for these photographs.
-      if (page.kind === "gallery" && credit === "claudia nemcová") return [];
       if (seenCredits.has(credit)) return [];
       seenCredits.add(credit);
     }

@@ -28,13 +28,16 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
           <h3>Naša farnosť</h3>
           <ul>
             <li>
+              <Link href="/farnost/o-farnosti">O farnosti</Link>
+            </li>
+            <li>
               <Link href="/farnost/farske-oznamy">Farské oznamy</Link>
             </li>
             <li>
               <Link href="/farnost/nase-spolocenstvo">Naše spoločenstvo</Link>
             </li>
             <li>
-              <Link href="/farnost/galeria">Galéria kostola</Link>
+              <Link href="/farnost/kostol-sv-alzbety">Kostol sv. Alžbety</Link>
             </li>
             <li>
               <Link href="/sviatosti/sviatost-krstu">Sviatosti</Link>

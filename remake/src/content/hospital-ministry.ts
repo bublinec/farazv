@@ -2,7 +2,18 @@ import type { MediaAsset } from "./types";
 
 /** Permanent details from the original homepage's hospital-service panel. */
 export const hospitalMinistry = {
+  title: "Duchovná služba v nemocnici",
+  href: "/farnost/duchovna-sluzba-v-nemocnici",
   sectionId: "duchovna-sluzba-v-nemocnici",
+  mass: {
+    day: "Každú sobotu",
+    time: "15:00",
+    location: "Jedáleň na 2. poschodí spoločného pavilónu"
+  },
+  communion: {
+    day: "V nedeľu dopoludnia",
+    registrationDeadline: "10:00"
+  },
   serviceRosterSlug: "sluzba-pomazania-chorych-nemocnica-zvolen",
   // Transcribed from the newer cover; the older image in the article has a
   // superseded Thursday contact and must not be combined with this roster.

@@ -1,16 +1,12 @@
-import Link from "next/link";
 import type { InformationPageDefinition } from "@/content/information";
-import { churchDetails, churchPhotographer } from "@/content/church-details";
 import { serviceQuotations } from "@/content/service-quotations";
 import { PageHero } from "@/components/ui/PageHero";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Icon } from "@/components/ui/Icon";
-import { ImageGallery } from "./ImageGallery";
 import { ReadingCopy, PageLinks, RelatedPages } from "./PageSections";
 import { OfficeAside } from "./OfficeAside";
 import { CommunityAside } from "./CommunityAside";
 import { ServiceQuotation } from "./SourceQuotation";
-import { PublishedContent, TourFallback } from "./PublishedContent";
+import { TourFallback } from "./PublishedContent";
+import { ParishHistoryBanner } from "./ParishHistoryBanner";
 import styles from "./InformationPage.module.css";
 
 export function ChurchPage({ page }: { page: InformationPageDefinition }) {
@@ -42,35 +38,7 @@ export function ChurchPage({ page }: { page: InformationPageDefinition }) {
           {page.credit ? <p className={styles.credit}>{page.credit}</p> : null}
         </aside>
       </section>
-      {page.slug === "farnost/kostol-sv-alzbety" ? (
-        <section className="section">
-          <div className="container">
-            <SectionHeading
-              title="Náš kostol zblízka"
-              description="Fotografie interiéru a detailov Kostola sv. Alžbety."
-              action={
-                <Link href="/farnost/galeria" className="textLink">
-                  Celá galéria
-                  <Icon name="arrow-right" size={17} />
-                </Link>
-              }
-            />
-            <ImageGallery
-              images={[
-                churchDetails.vault,
-                churchDetails.iron,
-                churchDetails.chapel,
-                churchDetails.pews,
-                churchDetails.window,
-                churchDetails.book,
-                churchDetails.nave,
-                churchDetails.interior
-              ]}
-            />
-          </div>
-        </section>
-      ) : null}
-      <RelatedPages page={page} />
+      <ParishHistoryBanner currentSlug={page.slug} />
     </>
   );
 }
@@ -120,26 +88,6 @@ export function SchoolPage({ page }: { page: InformationPageDefinition }) {
           <ReadingCopy page={page} />
           <PageLinks page={page} />
         </div>
-      </section>
-    </>
-  );
-}
-
-export function GalleryPage({ page }: { page: InformationPageDefinition }) {
-  return (
-    <>
-      <PageHero
-        route={`/${page.slug}`}
-        title={page.title}
-        description={page.introduction}
-      />
-      <section className={`container ${styles.gallerySection}`}>
-        <p className={styles.credit}>
-          Detaily nášho kostola: fotografie{" "}
-          <a href={churchPhotographer.href}>{churchPhotographer.name}</a>
-        </p>
-        <PublishedContent page={page} galleryOnly />
-        <PageLinks page={page} />
       </section>
     </>
   );

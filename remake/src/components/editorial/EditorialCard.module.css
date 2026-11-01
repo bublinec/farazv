@@ -119,21 +119,19 @@
 }
 
 .postCard .image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   aspect-ratio: auto;
   min-width: 0;
   min-height: 280px;
-  padding: 16px;
   border-right: 1px solid var(--line);
   background: #f2f0e9;
 }
 
 .postCard .image img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
-  max-height: 420px;
+  height: 100%;
 }
 
 .postCard .link:hover .image img {
@@ -184,10 +182,6 @@
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr);
   }
 
-  .compactPosts .image {
-    padding: 12px;
-  }
-
   .compactPosts .content {
     padding: 22px;
     justify-content: flex-start;
@@ -207,12 +201,16 @@
     min-height: 44px;
   }
 
-  .compactPosts .postCard:only-child {
+  .compactPosts .postCard:first-child:nth-last-child(odd) {
     grid-column: 1 / -1;
   }
 
-  .compactPosts .postCard:only-child:not(.withoutImage) .link {
-    grid-template-columns: clamp(220px, 28%, 300px) minmax(0, 1fr);
+  .compactPosts .postCard:first-child:nth-last-child(odd) .content {
+    padding: clamp(24px, 3vw, 40px);
+  }
+
+  .compactPosts .postCard:first-child:nth-last-child(odd) h3 {
+    font-size: clamp(1.3rem, 2vw, 1.65rem);
   }
 
   .compactPosts .withoutImage .link {
@@ -233,14 +231,10 @@
   }
 
   .postCard .image {
+    aspect-ratio: 4 / 3;
     min-height: 0;
-    padding: 16px;
     border-right: 0;
     border-bottom: 1px solid var(--line);
-  }
-
-  .postCard .image img {
-    max-height: 540px;
   }
 
   .postCard .content {

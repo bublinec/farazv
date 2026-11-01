@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { findInformationPage, informationPages } from "@/content/information";
 import { InformationPage } from "@/components/information/InformationPage";
 import { siteConfig } from "@/content/site";
+import { getPageCover } from "@/content/page-photographs";
 
 interface PageProps {
   params: Promise<{ slug: string[] }>;
@@ -22,6 +23,8 @@ export async function generateMetadata({
   const { slug } = await params;
   const page = findInformationPage(slug.join("/"));
   if (!page) return {};
+  const cover = getPageCover(`/${page.slug}`)?.image;
+
   return {
     title: page.title,
     description: page.introduction,
@@ -33,14 +36,14 @@ export async function generateMetadata({
       siteName: siteConfig.name,
       locale: "sk_SK",
       type: "website",
-      ...(page.source?.cover && !page.source.placeholderSource
+      ...(cover
         ? {
             images: [
               {
-                url: page.source.cover.src,
-                width: page.source.cover.width,
-                height: page.source.cover.height,
-                alt: page.source.cover.alt || page.title
+                url: cover.src,
+                width: cover.width,
+                height: cover.height,
+                alt: cover.alt || page.title
               }
             ]
           }

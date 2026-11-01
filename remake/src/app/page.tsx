@@ -43,14 +43,12 @@ export default async function HomePage() {
     bulletinResult,
     newsResult,
     articlesResult,
-    hospitalRosterResult,
     restorationResult
   ] = await Promise.allSettled([
     getPublicSettings(),
     getPublicBulletins(today),
     getPublicActivePosts(today),
     getPublicEditorialPage("article"),
-    getPublicEntry("news", hospitalMinistry.serviceRosterSlug),
     getPublicEntry("news", altarRestoration.postSlug)
   ]);
   const settings =
@@ -64,10 +62,6 @@ export default async function HomePage() {
         )
       : null;
   const days = publicWeek?.days;
-  const hospitalArticle =
-    hospitalRosterResult.status === "fulfilled"
-      ? hospitalRosterResult.value
-      : null;
   const restorationArticle =
     restorationResult.status === "fulfilled" ? restorationResult.value : null;
   const permanentPostPaths = [
@@ -164,7 +158,7 @@ export default async function HomePage() {
         </div>
       </section>
       <AltarRestorationSection article={restorationArticle} />
-      <HospitalMinistrySection article={hospitalArticle} />
+      <HospitalMinistrySection />
       <SaintCharbelSection />
       {settings ? (
         <DonationSection iban={settings.iban} qr={settings.donationQr} />

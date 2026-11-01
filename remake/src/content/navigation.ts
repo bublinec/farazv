@@ -1,4 +1,5 @@
 import { parishServices } from "./services";
+import { hospitalMinistry } from "./hospital-ministry";
 
 export interface NavigationItem {
   label: string;
@@ -11,14 +12,15 @@ export const navigation: NavigationItem[] = [
   {
     label: "Farnosť",
     children: [
+      { label: "O farnosti", href: "/farnost/o-farnosti" },
       { label: "Naše spoločenstvo", href: "/farnost/nase-spolocenstvo" },
-      { label: "Galéria kostola", href: "/farnost/galeria" },
       { label: "Kostol sv. Alžbety", href: "/farnost/kostol-sv-alzbety" },
       {
         label: "Kostol v Lieskovci",
         href: "/farnost/kostol-sv-jana-pavla-v-lieskovci"
       },
       { label: "Kostol v Zolnej", href: "/farnost/kostol-sv-matusa-v-zolnej" },
+      { label: hospitalMinistry.title, href: hospitalMinistry.href },
       { label: "Cirkevná škola", href: "/farnost/cirkevna-skola" },
       { label: "Rehoľné sestry", href: "/spolocenstva/reholne-sestry" },
       { label: "Charita", href: "https://www.charitazvolen.sk/" }

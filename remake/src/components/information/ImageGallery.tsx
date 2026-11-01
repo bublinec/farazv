@@ -7,8 +7,14 @@ import { ImageDialog } from "@/components/ui/ImageLightbox";
 import styles from "./ImageGallery.module.css";
 
 /** Native modal background inertness, Escape, and focus return; explicit Tab wrap. */
-export function ImageGallery({ images }: { images: MediaAsset[] }) {
-  const [visibleCount, setVisibleCount] = useState(12);
+export function ImageGallery({
+  images,
+  initialCount = 12
+}: {
+  images: MediaAsset[];
+  initialCount?: number;
+}) {
+  const [visibleCount, setVisibleCount] = useState(initialCount);
   const grid = useRef<HTMLDivElement>(null);
   const pendingFocus = useRef<number | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -51,7 +57,7 @@ export function ImageGallery({ images }: { images: MediaAsset[] }) {
           </button>
         ))}
       </div>
-      {images.length > 12 ? (
+      {images.length > initialCount ? (
         <div className={styles.more}>
           <p aria-live="polite">
             {Math.min(visibleCount, images.length)} z {images.length} fotografií
@@ -62,7 +68,9 @@ export function ImageGallery({ images }: { images: MediaAsset[] }) {
               className="buttonOutline"
               onClick={() => {
                 pendingFocus.current = visibleCount;
-                setVisibleCount((count) => Math.min(count + 12, images.length));
+                setVisibleCount((count) =>
+                  Math.min(count + initialCount, images.length)
+                );
               }}
             >
               Zobraziť ďalšie fotografie <span aria-hidden="true">↓</span>

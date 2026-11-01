@@ -2,6 +2,7 @@ import "server-only";
 import type { RichTextDocument } from "./documents";
 import type { MediaAsset } from "./types";
 import { publishedInformationContent } from "./information-content";
+import { churchHistory } from "./church-history";
 
 /** Purpose-specific page structure, with full published source reading copy. */
 export interface PublishedInformationSection {
@@ -37,11 +38,10 @@ interface InformationPageLayout {
   kind:
     | "sacrament"
     | "church"
+    | "parish"
     | "community"
     | "school"
     | "contact"
-    | "gallery"
-    | "tour"
     | "resource";
   facts?: { label: string; value: string }[];
   aside?: {
@@ -52,7 +52,6 @@ interface InformationPageLayout {
   links?: InformationLink[];
   timeline?: { year: string; title: string; text: string }[];
   credit?: string;
-  models?: { id: string; title: string }[];
 }
 
 export type InformationPageDefinition = InformationPageLayout &
@@ -71,7 +70,7 @@ export type InformationPageDefinition = InformationPageLayout &
 
 type InformationPageConfiguration = InformationPageLayout &
   (
-    | { contentSource: "published" }
+    | { contentSource: "published"; sourceRoute?: string }
     | { contentSource: "curated"; sections: InformationSection[] }
   );
 
@@ -174,28 +173,30 @@ const pageDefinitions: InformationPageConfiguration[] = [
     kind: "church",
     introduction:
       "Srdce farnosti na zvolenskom námestí. Miesto modlitby, stretnutí a príbehov, ktoré spájajú generácie.",
+    contentSource: "curated",
+    sections: churchHistory.sections
+  },
+  {
+    slug: "farnost/o-farnosti",
+    title: "O farnosti",
+    eyebrow: "Naša farnosť",
+    kind: "parish",
+    introduction:
+      "Dejiny viery a spoločenstva vo Zvolene. Spoznajte korene našej farnosti a ľudí, ktorí formovali jej život.",
     contentSource: "published",
-    timeline: [
-      {
-        year: "13. storočie",
-        title: "Stredoveké korene",
-        text: "História farského kostola siaha do stredoveku a je úzko spojená s dejinami mesta Zvolen."
-      },
-      {
-        year: "1673",
-        title: "Mariánska kaplnka",
-        text: "Farská história spája vznik bočnej kaplnky s návratom kostola katolíkom."
-      },
-      {
-        year: "Dnes",
-        title: "Živé spoločenstvo",
-        text: "Farský kostol zostáva miestom slávenia Eucharistie, prijímania sviatostí a spoločnej modlitby."
-      }
-    ],
-    credit: "Spracované podľa farskej histórie od Jozefa Kanianskeho.",
+    // The original church page contains the complete parish history. Keep its
+    // source record intact while presenting it at the more appropriate route.
+    sourceRoute: "/farnost/kostol-sv-alzbety",
     links: [
-      { label: "Galéria kostola", href: "/farnost/galeria" },
-      { label: "Rozpis bohoslužieb", href: "/farnost/farske-oznamy" }
+      { label: "Kostol sv. Alžbety", href: churchHistory.href },
+      {
+        label: "Kostol sv. Jána Pavla II. v Lieskovci",
+        href: "/farnost/kostol-sv-jana-pavla-v-lieskovci"
+      },
+      {
+        label: "Kostol sv. Matúša v Zolnej",
+        href: "/farnost/kostol-sv-matusa-v-zolnej"
+      }
     ]
   },
   {
@@ -426,22 +427,6 @@ const pageDefinitions: InformationPageConfiguration[] = [
     contentSource: "published"
   },
   {
-    slug: "farnost/galeria",
-    title: "Krása nášho kostola",
-    eyebrow: "Galéria kostola",
-    kind: "gallery",
-    introduction:
-      "Zastavte sa pri architektúre, svetle a detailoch Kostola sv. Alžbety. Fotografie odhaľujú miesta, ktoré pri bežnej návšteve ľahko prehliadneme.",
-    contentSource: "published",
-    links: [
-      { label: "O Kostole sv. Alžbety", href: "/farnost/kostol-sv-alzbety" },
-      {
-        label: "Virtuálna prehliadka a 3D modely",
-        href: "/farnost/virtualna-prehliadka"
-      }
-    ]
-  },
-  {
     slug: "objav-krista",
     title: "Objav Krista",
     eyebrow: "Pozvanie",
@@ -486,26 +471,6 @@ const pageDefinitions: InformationPageConfiguration[] = [
       { label: "Farské oznamy", href: "/farnost/farske-oznamy" },
       { label: "Výveska", href: "/#vyveska" }
     ]
-  },
-  {
-    slug: "farnost/virtualna-prehliadka",
-    title: "Objavte kostol zblízka",
-    eyebrow: "Virtuálna prehliadka",
-    kind: "tour",
-    introduction:
-      "Architektúra a umenie našich kostolov aj z iného pohľadu. Pozrite si fotografie a 3D modely.",
-    contentSource: "published",
-    models: [
-      {
-        id: "ba87a3588d624facabb1bb8ef27a786e",
-        title: "Kaplnka"
-      },
-      {
-        id: "e182d079f96641f49d876abdd4735f3d",
-        title: "Oltár v Kostole sv. Alžbety vo Zvolene"
-      }
-    ],
-    links: [{ label: "Otvoriť galériu", href: "/farnost/galeria" }]
   }
 ];
 
@@ -522,9 +487,11 @@ export function requirePublishedInformationContent(route: string) {
 export const informationPages: InformationPageDefinition[] =
   pageDefinitions.map((page) => {
     if (page.contentSource === "curated") return page;
+    const { sourceRoute, ...definition } = page;
+
     return {
-      ...page,
-      source: requirePublishedInformationContent(`/${page.slug}`)
+      ...definition,
+      source: requirePublishedInformationContent(sourceRoute ?? `/${page.slug}`)
     };
   });
 

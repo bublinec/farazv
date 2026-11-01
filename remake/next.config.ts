@@ -51,6 +51,16 @@ const config: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/farnost/galeria",
+        destination: "/farnost/kostol-sv-alzbety#galeria",
+        permanent: true
+      },
+      {
+        source: "/farnost/virtualna-prehliadka",
+        destination: "/farnost/kostol-sv-alzbety#virtualna-prehliadka",
+        permanent: true
+      },
+      {
         source: `/prispevky/${saintCharbel.formerPostSlug}`,
         destination: `/#${saintCharbel.sectionId}`,
         permanent: true

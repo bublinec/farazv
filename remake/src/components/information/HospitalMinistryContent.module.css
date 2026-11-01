@@ -1,0 +1,293 @@
+.section {
+  padding-block: clamp(40px, 6vw, 72px);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(28px, 4vw, 52px);
+}
+
+.mass {
+  overflow: hidden;
+  border: 1px solid #dcd5c7;
+  border-top: 3px solid var(--gold);
+  border-radius: 5px;
+  background: var(--white);
+}
+
+.massDetails {
+  padding: 22px;
+}
+
+.mass h2,
+.services h2 {
+  margin-bottom: 8px;
+  color: var(--blue-deep);
+  font-size: 1.35rem;
+}
+
+.massTime {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 16px;
+  color: var(--blue-deep);
+}
+
+.massTime span {
+  font-size: 0.95rem;
+}
+
+.massTime strong {
+  font-size: 1.8rem;
+  line-height: 1.2;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.location {
+  display: flex;
+  align-items: start;
+  gap: 9px;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.location svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--gold-dark);
+}
+
+.plan {
+  display: block;
+  border-top: 1px solid var(--line);
+  text-decoration: none;
+}
+
+.planViewport {
+  display: block;
+  position: relative;
+  height: 245px;
+  overflow: hidden;
+}
+
+.planViewport img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-position: 51% 57%;
+  transform: scale(1.55);
+  transform-origin: 51% 57%;
+}
+
+.plan > span:last-child {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 22px;
+  font-size: 0.8rem;
+}
+
+.plan:hover > span:last-child {
+  text-decoration: underline;
+}
+
+.plan:focus-visible {
+  outline-offset: -3px;
+}
+
+.services > section + section {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #dcd5c7;
+}
+
+.services p {
+  max-width: 68ch;
+  margin-bottom: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.services .when {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gold-dark);
+}
+
+.services strong {
+  font-weight: 550;
+}
+
+.services .request {
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.services .note {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.rosterSection {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 52px);
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid #dcd5c7;
+}
+
+.rosterSection h2 {
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+  color: var(--blue-deep);
+}
+
+.rosterSource {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.roster {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.roster > div {
+  display: grid;
+  grid-template-columns: 95px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  border-bottom: 1px solid var(--line);
+}
+
+.roster > div:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.roster dt {
+  color: var(--muted);
+}
+
+.roster dd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 16px;
+  margin: 0;
+}
+
+.roster a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.roster a:hover {
+  text-decoration: underline;
+}
+
+.roster .saturday {
+  padding-block: 10px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.guidance {
+  margin-top: 40px;
+  padding: clamp(24px, 4vw, 40px);
+  border-top: 2px solid var(--gold);
+  background: var(--paper);
+}
+
+.guidanceReading {
+  max-width: 78ch;
+  margin-inline: auto;
+  font-size: 0.95rem;
+}
+
+.guidanceReading > h2 {
+  margin-bottom: 24px;
+  color: var(--blue-deep);
+  font-size: 1.5rem;
+}
+
+.guidanceBody {
+  --prose-font-size: 0.95rem;
+  --prose-line-height: 1.75;
+  --prose-paragraph-gap: 1rem;
+}
+
+.guidanceReading > a {
+  margin-top: 24px;
+  min-height: 44px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .mass {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .plan {
+    border-top: 0;
+    border-left: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .planViewport {
+    flex: 1;
+    min-height: 205px;
+  }
+
+  .rosterSection {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mass {
+    display: block;
+  }
+
+  .plan {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .roster > div {
+    grid-template-columns: 80px minmax(0, 1fr);
+    padding-block: 6px;
+    gap: 8px;
+  }
+
+  .roster dd {
+    display: grid;
+  }
+}
