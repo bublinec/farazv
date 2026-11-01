@@ -279,24 +279,26 @@ export function RecordEditor({
                   Stiahnuť z webu
                 </button>
               ) : null}
-              <dl className={styles.recordMetadata}>
-                <div>
-                  <dt>Verzia</dt>
-                  <dd>{record.version}</dd>
-                </div>
-                <div>
-                  <dt>Vytvorené</dt>
-                  <dd>
-                    <RecordTimestamp value={record.createdAt} />
-                  </dd>
-                </div>
-                <div>
-                  <dt>Posledná úprava</dt>
-                  <dd>
-                    <RecordTimestamp value={record.updatedAt} />
-                  </dd>
-                </div>
-              </dl>
+              {!isSettings ? (
+                <dl className={styles.recordMetadata}>
+                  <div>
+                    <dt>Verzia</dt>
+                    <dd>{record.version}</dd>
+                  </div>
+                  <div>
+                    <dt>Vytvorené</dt>
+                    <dd>
+                      <RecordTimestamp value={record.createdAt} />
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Posledná úprava</dt>
+                    <dd>
+                      <RecordTimestamp value={record.updatedAt} />
+                    </dd>
+                  </div>
+                </dl>
+              ) : null}
               {record.kind === "bulletin" ? (
                 <p className={styles.hint}>
                   Budúci zverejnený týždeň sa aktivuje podľa dátumu. Neskoršia

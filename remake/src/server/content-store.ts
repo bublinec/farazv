@@ -75,7 +75,7 @@ export async function listRecords(
       "Vyberte platný pondelok týždňa oznamov.",
       "INVALID_QUERY"
     );
-  let cursor: { date: string; id: string } | undefined;
+  let cursor: { isPublished: boolean; date: string; id: string } | undefined;
   if (options.cursor) {
     try {
       cursor = JSON.parse(Buffer.from(options.cursor, "base64url").toString());
@@ -84,6 +84,7 @@ export async function listRecords(
     }
     if (
       !cursor ||
+      typeof cursor.isPublished !== "boolean" ||
       typeof cursor.id !== "string" ||
       cursor.id.length > 200 ||
       typeof cursor.date !== "string" ||
@@ -91,6 +92,7 @@ export async function listRecords(
     )
       throw new ContentError(400, "Neplatné stránkovanie.", "INVALID_QUERY");
   }
+  const isPublished = sql<boolean>`${contentRecords.published} is not null`;
   const rows = await getDb()
     .select({
       id: contentRecords.id,
@@ -103,7 +105,7 @@ export async function listRecords(
       updatedAt: contentRecords.updatedAt,
       source: contentRecords.source,
       readOnly: contentRecords.readOnly,
-      isPublished: sql<boolean>`${contentRecords.published} is not null`,
+      isPublished,
       weekStart: sql<string | null>`${contentRecords.draft}->>'weekStart'`
     })
     .from(contentRecords)
@@ -125,16 +127,27 @@ export async function listRecords(
           : undefined,
         cursor
           ? or(
-              lt(contentRecords.updatedAt, cursor.date),
+              // After the published group, continue with drafts regardless of date.
+              cursor.isPublished ? eq(isPublished, false) : undefined,
               and(
-                eq(contentRecords.updatedAt, cursor.date),
-                lt(contentRecords.id, cursor.id)
+                eq(isPublished, cursor.isPublished),
+                or(
+                  lt(contentRecords.updatedAt, cursor.date),
+                  and(
+                    eq(contentRecords.updatedAt, cursor.date),
+                    lt(contentRecords.id, cursor.id)
+                  )
+                )
               )
             )
           : undefined
       )
     )
-    .orderBy(desc(contentRecords.updatedAt), desc(contentRecords.id))
+    .orderBy(
+      desc(isPublished),
+      desc(contentRecords.updatedAt),
+      desc(contentRecords.id)
+    )
     .limit(ADMIN_PAGE_SIZE + 1);
   const items = rows.slice(0, ADMIN_PAGE_SIZE).map((row) => ({
     ...row,
@@ -147,7 +160,11 @@ export async function listRecords(
     nextCursor:
       rows.length > ADMIN_PAGE_SIZE && last
         ? Buffer.from(
-            JSON.stringify({ date: last.updatedAt, id: last.id })
+            JSON.stringify({
+              isPublished: last.isPublished,
+              date: last.updatedAt,
+              id: last.id
+            })
           ).toString("base64url")
         : null
   };

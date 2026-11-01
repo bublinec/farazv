@@ -183,7 +183,7 @@ export function TourFallback({ page }: { page: InformationPageDefinition }) {
   if (!page.source?.unavailableTour) return null;
   return (
     <div className={styles.tourFallback}>
-      <h2>Chrám môžete spoznať aj na fotografiách</h2>
+      <h2>Kostol môžete spoznať aj na fotografiách</h2>
       <p>
         Virtuálna prehliadka je dočasne nedostupná. Pozrite si galériu našich
         kostolov alebo dostupné 3D modely.

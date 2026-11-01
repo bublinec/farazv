@@ -41,11 +41,13 @@ interface InformationPageLayout {
     | "school"
     | "contact"
     | "gallery"
+    | "tour"
     | "resource";
   facts?: { label: string; value: string }[];
   links?: InformationLink[];
   timeline?: { year: string; title: string; text: string }[];
   credit?: string;
+  models?: { id: string; title: string }[];
 }
 
 export type InformationPageDefinition = InformationPageLayout &
@@ -91,10 +93,7 @@ const pageDefinitions: InformationPageConfiguration[] = [
     kind: "sacrament",
     introduction:
       "Eucharistia je prameň a vrchol kresťanského života. V jej slávení sa stretávame s Kristom a tvoríme jedno spoločenstvo.",
-    contentSource: "published",
-    links: [
-      { label: "Aktuálny rozpis svätých omší", href: "/farnost/farske-oznamy" }
-    ]
+    contentSource: "published"
   },
   {
     slug: "sviatosti/sviatost-birmovania",
@@ -198,7 +197,7 @@ const pageDefinitions: InformationPageConfiguration[] = [
     eyebrow: "Filiálka Zolná",
     kind: "church",
     introduction:
-      "Malý ranogotický chrám na návrší uprostred obce. Vzácna pamiatka, ktorá uchováva stáročia viery a umenia.",
+      "Malý ranogotický kostol na návrší uprostred obce. Vzácna pamiatka, ktorá uchováva stáročia viery a umenia.",
     contentSource: "published",
     timeline: [
       {
@@ -355,7 +354,7 @@ const pageDefinitions: InformationPageConfiguration[] = [
   },
   {
     slug: "farnost/galeria",
-    title: "Krása nášho chrámu",
+    title: "Krása nášho kostola",
     eyebrow: "Galéria kostola",
     kind: "gallery",
     introduction:
@@ -417,23 +416,23 @@ const pageDefinitions: InformationPageConfiguration[] = [
   },
   {
     slug: "farnost/virtualna-prehliadka",
-    title: "Objavte chrám zblízka",
+    title: "Objavte kostol zblízka",
     eyebrow: "Virtuálna prehliadka",
-    kind: "resource",
+    kind: "tour",
     introduction:
       "Architektúra a umenie našich kostolov aj z iného pohľadu. Pozrite si fotografie a 3D modely.",
     contentSource: "published",
-    links: [
+    models: [
       {
-        label: "Prvý 3D model · Sketchfab",
-        href: "https://sketchfab.com/models/ba87a3588d624facabb1bb8ef27a786e"
+        id: "ba87a3588d624facabb1bb8ef27a786e",
+        title: "Kaplnka"
       },
       {
-        label: "Druhý 3D model · Sketchfab",
-        href: "https://sketchfab.com/models/e182d079f96641f49d876abdd4735f3d"
-      },
-      { label: "Otvoriť galériu", href: "/farnost/galeria" }
-    ]
+        id: "e182d079f96641f49d876abdd4735f3d",
+        title: "Oltár v Kostole sv. Alžbety vo Zvolene"
+      }
+    ],
+    links: [{ label: "Otvoriť galériu", href: "/farnost/galeria" }]
   }
 ];
 

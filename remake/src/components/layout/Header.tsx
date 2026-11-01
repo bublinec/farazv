@@ -7,7 +7,7 @@ import { navigation } from "@/content/navigation";
 import { siteConfig } from "@/content/site";
 import { containDialogFocus } from "@/lib/dialog";
 import { Icon } from "@/components/ui/Icon";
-import { ChurchMark } from "./ChurchMark";
+import { ParishLogo } from "./ParishLogo";
 import styles from "./Header.module.css";
 
 export function Header() {
@@ -67,13 +67,7 @@ export function Header() {
       <header className={styles.header} ref={header}>
         <div className={`container ${styles.inner}`}>
           <Link href="/" className={styles.brand} onClick={closeDropdowns}>
-            <span className={styles.brandMark}>
-              <ChurchMark className={styles.churchMark} />
-            </span>
-            <span>
-              <strong>{siteConfig.name}</strong>
-              <small>{siteConfig.city}</small>
-            </span>
+            <ParishLogo />
           </Link>
           <nav className={styles.desktop} aria-label="Hlavná navigácia">
             {navigation.map((item) =>

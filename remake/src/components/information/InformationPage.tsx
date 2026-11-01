@@ -1,6 +1,7 @@
 import type { InformationPageDefinition } from "@/content/information";
 import { ContactPage } from "./ContactPage";
 import { SacramentPage } from "./SacramentPage";
+import { VirtualTourPage } from "./VirtualTourPage";
 import {
   ChurchPage,
   CommunityPage,
@@ -23,6 +24,8 @@ export function InformationPage({ page }: { page: InformationPageDefinition }) {
       return <SchoolPage page={page} />;
     case "gallery":
       return <GalleryPage page={page} />;
+    case "tour":
+      return <VirtualTourPage page={page} />;
     case "resource":
       return <ResourcePage page={page} />;
   }

@@ -43,16 +43,7 @@ export function DonationSection({
           </div>
         ) : null}
         <div className={styles.content}>
-          <h2>
-            Aj malý dar pomáha
-            <br />
-            veľkým veciam.
-          </h2>
-          <p>
-            Údržba našich kostolov a život farnosti sú možné aj vďaka vám.
-            Prispieť môžete na farský účet{qr ? " alebo načítaním QR kódu" : ""}
-            .
-          </p>
+          <h2>Podporte našu farnosť</h2>
           <div className={styles.account}>
             <span>Farský IBAN</span>
             <strong>{iban}</strong>
@@ -62,7 +53,7 @@ export function DonationSection({
             </button>
           </div>
           <p className={styles.status} role="status">
-            {message || "Pán Boh zaplať za každý milodar."}
+            {message || "Pán Boh zaplať."}
           </p>
         </div>
       </div>

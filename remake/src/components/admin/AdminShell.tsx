@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/content/site";
-import { ChurchMark } from "@/components/layout/ChurchMark";
+import { ParishLogo } from "@/components/layout/ParishLogo";
 import styles from "./Admin.module.css";
 
 import { SignOut } from "./SignOut";
@@ -22,11 +22,7 @@ export function AdminShell({
           href="/admin"
           aria-label={`${siteConfig.name} — Admin`}
         >
-          <ChurchMark className={styles.brandMark} />
-          <span>
-            <strong>{siteConfig.name}</strong>
-            <small>{siteConfig.city}</small>
-          </span>
+          <ParishLogo />
         </Link>
         {authenticated ? (
           <AdminNavigation canManageAccess={canManageAccess} />

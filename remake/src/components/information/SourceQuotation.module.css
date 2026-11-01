@@ -1,11 +1,11 @@
 .band {
-  --prose-font-size: 0.9rem;
-  --prose-line-height: 1.45;
+  --prose-font-size: 0.95rem;
+  --prose-line-height: 1.65;
   --prose-paragraph-gap: 0;
   --prose-width: none;
   margin: 0;
-  padding-block: 40px;
-  background: color-mix(in srgb, var(--paper) 55%, var(--white));
+  padding-block: clamp(32px, 4vw, 48px);
+  background: color-mix(in srgb, var(--blue) 6%, var(--white));
   border-bottom: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.9rem;
@@ -14,28 +14,33 @@
   scroll-margin-top: 32px;
 }
 
-.quotation,
-.attribution {
-  display: block;
+.quotation {
+  display: grid;
+  grid-template-columns: clamp(28px, 5vw, 64px) minmax(0, 1fr) clamp(
+      28px,
+      5vw,
+      64px
+    );
+  align-items: start;
+  gap: clamp(10px, 2vw, 24px);
 }
 
 .openMark,
 .closeMark {
-  color: var(--gold);
+  color: var(--blue);
+  opacity: 0.25;
   font-family: var(--font-display);
-  display: inline-block;
-  font-size: 2.1em;
-  line-height: 0;
-  vertical-align: -0.18em;
-  padding-inline: 2px;
+  font-size: clamp(64px, 8vw, 104px);
+  line-height: 0.9;
+  margin-top: -0.08em;
 }
 
 .inlineCopy {
-  display: inline;
+  display: block;
 }
 
 .inlineCopy :where(blockquote, p) {
-  display: inline;
+  display: block;
   border: 0;
   margin: 0;
   padding: 0;
@@ -45,11 +50,39 @@
 
 .attribution {
   --prose-font-size: 0.8rem;
-  margin-top: 14px;
+  margin-top: 20px;
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 14px;
+  color: var(--blue);
+}
+
+.ornament > span {
+  width: 42px;
+  height: 1px;
+  background: var(--gold);
 }
 
 @media (max-width: 550px) {
   .band {
     text-align: left;
+  }
+
+  .quotation {
+    grid-template-columns: 20px minmax(0, 1fr) 20px;
+  }
+
+  .openMark,
+  .closeMark {
+    font-size: 52px;
+  }
+
+  .attribution {
+    text-align: center;
   }
 }

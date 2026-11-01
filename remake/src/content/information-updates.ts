@@ -14,6 +14,14 @@ function paragraph(value: string): RichTextNode {
   return { type: "paragraph", content: [{ type: "text", text: value }] };
 }
 
+function heading(value: string): RichTextNode {
+  return {
+    type: "heading",
+    attrs: { level: 2 },
+    content: [{ type: "text", text: value }]
+  };
+}
+
 function nodeText(node: RichTextNode) {
   return richTextToPlainText({ type: "doc", content: [node] });
 }
@@ -51,6 +59,42 @@ export function getPublicInformationContent(
   source: PublishedInformationContent
 ): PublishedInformationContent {
   switch (source.route) {
+    case "/spolocenstva/detsky-spevokol": {
+      const sectionId = "components_sections_text-123";
+      const section = source.sections.find((entry) => entry.id === sectionId);
+      const invitation = section?.body.content[2];
+      if (
+        !section ||
+        !invitation ||
+        !nodeText(invitation).normalize("NFC").startsWith("Pridaj sa k nám!")
+      )
+        throw new Error("The children's choir invitation has changed.");
+
+      expectNode(section.body.content, 6, "Okrem toho, že zbor");
+      const updated = updateSection(source, sectionId, (nodes) =>
+        nodes.flatMap((node, index) => {
+          if (index === 2) return [];
+          if (index === 6) return [heading("Naše spoločné chvíle"), node];
+          return [node];
+        })
+      );
+
+      return {
+        ...updated,
+        sections: [
+          ...updated.sections,
+          {
+            id: "detsky-spevokol-pozvanie",
+            kind: "text",
+            body: {
+              type: "doc",
+              content: [heading("Kedy a kde nás nájdeš"), invitation]
+            }
+          }
+        ]
+      };
+    }
+
     case "/sviatosti/sviatost-birmovania":
       return updateSection(source, "components_sections_text-9", (nodes) => {
         expectNode(

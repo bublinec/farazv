@@ -150,7 +150,7 @@ export function SettingsForm({
                   )
                 }
               />
-              <div className={styles.wide}>
+              <div className={`${styles.wide} ${styles.portraitField}`}>
                 <ImageField
                   label="Fotografia kontaktu"
                   value={priest.image}

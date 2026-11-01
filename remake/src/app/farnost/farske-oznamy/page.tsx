@@ -15,6 +15,7 @@ import { getPreviewDate } from "@/lib/preview-date";
 import { PageHero } from "@/components/ui/PageHero";
 import { Icon } from "@/components/ui/Icon";
 import { WeeklySchedule } from "@/components/bulletin/WeeklySchedule";
+import { DonationSection } from "@/components/home/DonationSection";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -43,6 +44,9 @@ export default async function BulletinPage() {
         <section className="container section">
           <Unavailable title="Rozpis je dočasne nedostupný." />
         </section>
+        {settings ? (
+          <DonationSection iban={settings.iban} qr={settings.donationQr} />
+        ) : null}
       </>
     );
   const { days, bulletin } = getPublicWeek(
@@ -132,6 +136,9 @@ export default async function BulletinPage() {
           </div>
         </div>
       </section>
+      {settings ? (
+        <DonationSection iban={settings.iban} qr={settings.donationQr} />
+      ) : null}
     </>
   );
 }

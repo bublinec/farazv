@@ -32,7 +32,8 @@ function PriestCards({
             {priest.image ? (
               <MediaImage
                 image={priest.image}
-                sizes="(max-width:760px) 100vw, 360px"
+                sizes="(max-width: 760px) 42vw, (max-width: 1280px) 33vw, 382px"
+                quality="high"
               />
             ) : (
               <div className={styles.priestPlaceholder} aria-hidden="true">

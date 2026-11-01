@@ -124,12 +124,11 @@ export function GalleryPage({ page }: { page: InformationPageDefinition }) {
         description={page.introduction}
       />
       <section className={`container ${styles.gallerySection}`}>
-        <PublishedContent page={page} />
         <p className={styles.credit}>
           Detaily nášho kostola: fotografie{" "}
           <a href={churchPhotographer.href}>{churchPhotographer.name}</a>
         </p>
-        <TourFallback page={page} />
+        <PublishedContent page={page} galleryOnly />
         <PageLinks page={page} />
       </section>
     </>
