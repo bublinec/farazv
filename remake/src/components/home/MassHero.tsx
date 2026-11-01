@@ -7,6 +7,7 @@ import { formatDate } from "@/lib/calendar";
 import { formatCelebrantName, getMassLabel } from "@/lib/mass";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { Icon } from "@/components/ui/Icon";
+import { LiturgyQuote } from "./LiturgyQuote";
 import styles from "./MassHero.module.css";
 
 function MassTimes({ day }: { day: ScheduleDay }) {
@@ -190,16 +191,6 @@ export function MassHero({
         }}
       >
         <div className={styles.content} aria-live="polite" aria-atomic="true">
-          <h1>
-            {day.isRegular
-              ? "Rozpis svätých omší"
-              : day.liturgy || "Sväté omše v našej farnosti"}
-          </h1>
-          <div className={styles.divider}>
-            <span />
-            <Icon name="cross" size={25} />
-            <span />
-          </div>
           <p className={styles.date}>
             <time dateTime={day.date}>
               {formatDate(day.date, {
@@ -210,6 +201,17 @@ export function MassHero({
               })}
             </time>
           </p>
+          <h1>
+            {day.isRegular
+              ? "Rozpis svätých omší"
+              : day.liturgy || "Sväté omše v našej farnosti"}
+          </h1>
+          <LiturgyQuote date={day.date} liturgy={day.liturgy} />
+          <div className={styles.divider} aria-hidden="true">
+            <span />
+            <Icon name="cross" size={25} />
+            <span />
+          </div>
           {announcementsPending || day.isRegular ? (
             <p className={styles.notice}>
               {announcementsPending ? <>{bulletinPendingMessage} </> : null}

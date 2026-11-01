@@ -50,20 +50,22 @@
   flex-shrink: 0;
 }
 .hero .content h1 {
-  font-family: var(--font-body);
-  max-width: 30ch;
+  font-family: var(--font-display);
+  max-width: 34ch;
   text-wrap: balance;
-  margin: 0 0 20px;
-  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  margin: 0;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
   line-height: 1.25;
   font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
 }
 .divider {
   display: flex;
   gap: 14px;
   align-items: center;
   color: var(--gold-light);
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 .divider span {
   width: 37px;
@@ -72,8 +74,9 @@
   opacity: 0.85;
 }
 .date {
-  font-size: 1.05rem;
-  margin-bottom: 26px;
+  color: var(--gold-light);
+  font-size: 0.95rem;
+  margin-bottom: 12px;
   text-transform: none;
 }
 .masses {
@@ -94,9 +97,9 @@
   align-items: center;
 }
 .location {
-  text-transform: uppercase;
+  text-transform: none;
   font-size: 0.85rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.01em;
   color: #e3e1d7;
   min-height: 15px;
 }
@@ -159,8 +162,8 @@
 }
 .dayButton span {
   font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  text-transform: none;
+  letter-spacing: 0;
 }
 .dayButton strong {
   font-size: 0.95rem;
@@ -182,7 +185,7 @@
   max-width: 530px;
   color: #f4e6c6;
   font-size: 0.85rem;
-  margin-top: -12px;
+  margin-top: 0;
   margin-bottom: 20px;
 }
 .noMass {
@@ -213,11 +216,11 @@
     padding-bottom: 16px;
   }
   .hero .content h1 {
-    font-size: clamp(1.85rem, 6vw, 2.2rem);
+    font-size: clamp(1.65rem, 5.5vw, 2rem);
   }
   .date {
-    font-size: 1rem;
-    margin-bottom: 20px;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
   }
   .masses {
     gap: 9px;
@@ -286,14 +289,13 @@
     padding-bottom: 16px;
   }
   .hero .content h1 {
-    font-size: clamp(1.9rem, 3vw, 2.5rem);
-    margin-bottom: 14px;
+    font-size: clamp(1.7rem, 2.7vw, 2.2rem);
   }
   .divider {
     margin-bottom: 10px;
   }
   .date {
-    margin-bottom: 18px;
+    margin-bottom: 8px;
   }
   .mass {
     padding-block: 10px 12px;

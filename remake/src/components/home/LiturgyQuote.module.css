@@ -1,0 +1,95 @@
+.space {
+  display: grid;
+  align-items: center;
+  width: 100%;
+  min-height: 130px;
+  margin-block: 4px 20px;
+}
+
+.quote {
+  position: relative;
+  width: min(100%, 740px);
+  margin: 0 auto;
+  padding-inline: 34px;
+  animation: reveal 300ms ease-out;
+}
+
+.mark {
+  position: absolute;
+  left: 0;
+  top: -6px;
+  color: var(--gold-light);
+  font-size: 76px;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.quote blockquote,
+.quote p {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.quote blockquote {
+  color: #f7f1e5;
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  font-weight: 350;
+  font-style: italic;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.quote figcaption {
+  margin-top: 6px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.quote a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #dfd5be;
+  text-decoration-color: #dfd5be70;
+  text-underline-offset: 4px;
+}
+
+.quote a:hover {
+  color: var(--white);
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 550px) {
+  .space {
+    min-height: 155px;
+    margin-bottom: 16px;
+  }
+
+  .quote {
+    padding-inline: 22px;
+  }
+
+  .mark {
+    top: -4px;
+    font-size: 56px;
+  }
+
+  .quote blockquote {
+    font-size: 1.03rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quote {
+    animation: none;
+  }
+}

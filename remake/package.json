@@ -39,6 +39,7 @@
     "@tiptap/react": "3.32.2",
     "@tiptap/starter-kit": "3.32.2",
     "better-auth": "1.7.14",
+    "cheerio": "1.2.0",
     "cloudinary": "2.11.0",
     "dotenv": "18.0.9",
     "drizzle-orm": "0.45.4",
