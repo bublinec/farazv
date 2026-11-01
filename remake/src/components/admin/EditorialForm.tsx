@@ -46,6 +46,14 @@ export function EditorialForm({
     onChange({
       ...document,
       title,
+      ...(document.cover
+        ? {
+            cover: {
+              ...document.cover,
+              alt: title.trim() || document.cover.alt
+            }
+          }
+        : {}),
       ...(!pathLocked && !customSlug.current ? { slug: slugify(title) } : {})
     });
   }
@@ -73,6 +81,7 @@ export function EditorialForm({
           />
           <ImageField
             label="Titulný obrázok"
+            imageTitle={document.title}
             path="cover"
             value={document.cover}
             onChange={(image) => update("cover", image)}
@@ -90,6 +99,7 @@ export function EditorialForm({
       <section className={styles.panel} data-field="body">
         <h2>Obsah</h2>
         <VisualEditor
+          imageTitle={document.title}
           disabled={disabled}
           value={body}
           onChange={(value) => update("body", value)}

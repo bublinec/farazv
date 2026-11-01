@@ -15,10 +15,12 @@ import styles from "./Admin.module.css";
 export default function VisualEditor({
   value,
   onChange,
+  imageTitle,
   disabled = false
 }: {
   value: RichTextDocument;
   onChange: (value: RichTextDocument) => void;
+  imageTitle: string;
   disabled?: boolean;
 }) {
   // The editor instance stays stable while receiving the latest controlled callback.
@@ -300,6 +302,7 @@ export default function VisualEditor({
         </p>
       ) : null}
       <MediaPicker
+        imageTitle={imageTitle}
         initialValue={imageValue}
         open={imageOpen}
         onClose={() => setImageOpen(false)}

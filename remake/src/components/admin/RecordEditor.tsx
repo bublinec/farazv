@@ -160,7 +160,7 @@ export function RecordEditor({
       {record.readOnly ? (
         <div className={styles.notice}>Historický záznam · iba na čítanie.</div>
       ) : null}
-      {record.source?.anomalies?.length ? (
+      {!isSettings && record.source?.anomalies?.length ? (
         <details className={styles.disclosure}>
           <summary>
             Poznámky k pôvodnému importu ({record.source.anomalies.length})
@@ -253,7 +253,7 @@ export function RecordEditor({
                 >
                   <span aria-hidden="true" />
                 </button>
-                <span>Na webe</span>
+                <span>Zverejnené</span>
                 {mustSaveBeforePublishing ? <small>Najprv uložiť</small> : null}
               </div>
             ) : null}

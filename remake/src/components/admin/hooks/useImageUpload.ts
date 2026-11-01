@@ -39,7 +39,7 @@ export function useImageUpload(onComplete: (asset: MediaAsset) => void) {
         body: JSON.stringify({
           ticket: pendingUpload.ticket,
           response: pendingUpload.response,
-          alt: description.alt || pendingUpload.defaultAlt,
+          alt: description.alt.trim().slice(0, 500) || pendingUpload.defaultAlt,
           caption: description.caption
         })
       })
@@ -102,7 +102,11 @@ export function useImageUpload(onComplete: (asset: MediaAsset) => void) {
       const uploaded = {
         ticket: signed.ticket,
         response,
-        defaultAlt: file.name.replace(/\.[^.]+$/, "")
+        defaultAlt:
+          file.name
+            .replace(/\.[^.]+$/, "")
+            .trim()
+            .slice(0, 500) || "Obrázok"
       };
       setPending(uploaded);
 

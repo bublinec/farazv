@@ -60,7 +60,7 @@ function RecordListContents({ section }: { section: AdminListSection }) {
         <div className={styles.actions}>
           {kind === "bulletin" ? (
             <Link href="/admin" className={styles.secondary}>
-              ← Nahrať oznamy
+              ← Aktuálne oznamy
             </Link>
           ) : (
             <button

@@ -311,15 +311,6 @@
 .disclosure .panel {
   color: var(--ink);
 }
-.manualWeek {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 0.8rem;
-}
-.manualWeek .field {
-  width: min(100%, 16rem);
-}
 .recordList {
   display: grid;
   gap: 0.65rem;
@@ -423,17 +414,21 @@
   flex-shrink: 0;
   width: 44px;
   height: 44px;
-  border: 0;
+  border: 1px solid #cba098;
   border-radius: 5px;
   cursor: pointer;
   font: inherit;
   font-size: 0.8rem;
-  color: #963e35;
-  background: transparent;
+  color: #8c3025;
+  background: #f8e7e3;
   padding: 0;
 }
 .remove:hover:not(:disabled) {
-  background: #fff0ee;
+  border-color: #b57f74;
+  background: #f1d7d1;
+}
+.remove > svg {
+  stroke-width: 2.2;
 }
 .remove:disabled {
   opacity: 0.5;

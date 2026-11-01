@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { addDays, getLocalDate, getMonday } from "@/lib/calendar";
 import type { ContentRecordFor } from "@/content/documents";
 import type { CalendarDate } from "@/content/types";
-import { BulletinImport } from "./BulletinImport";
 import { loadEditableBulletin } from "./bulletin-records";
 import { hasUnpublishedChanges } from "./record-state";
 import { formatRecordDate } from "./admin-format";
@@ -19,15 +18,12 @@ export function BulletinDashboard() {
   const [today] = useState(getLocalDate);
   const currentWeek = getMonday(addDays(today, 1));
   const nextWeek = addDays(currentWeek, 7);
-  const [weekStart, setWeekStart] = useState(currentWeek);
   const [weeks, setWeeks] = useState<
     (ContentRecordFor<"bulletin"> | undefined)[]
   >([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
   const [error, setError] = useState("");
-  const [technicalFailure, setTechnicalFailure] = useState(false);
-  const [parsing, setParsing] = useState(false);
   const { openWeek, opening } = useBulletinNavigation();
 
   useEffect(() => {
@@ -53,23 +49,13 @@ export function BulletinDashboard() {
     return () => controller.abort();
   }, [currentWeek, nextWeek]);
 
-  async function openManually(target = weekStart) {
+  async function openWeekEditor(weekStart: CalendarDate) {
     setError("");
-    setTechnicalFailure(false);
     try {
-      if (getMonday(target) !== target) {
-        setError("Vyberte pondelok týždňa oznamov.");
-        return;
-      }
-      await openWeek(target);
+      await openWeek(weekStart);
     } catch (cause) {
-      setTechnicalFailure(!(cause instanceof RangeError));
       setError(
-        cause instanceof RangeError
-          ? "Vyberte platný pondelok týždňa oznamov."
-          : cause instanceof Error
-          ? cause.message
-          : "Týždeň sa nepodarilo otvoriť."
+        cause instanceof Error ? cause.message : "Týždeň sa nepodarilo otvoriť."
       );
     }
   }
@@ -82,13 +68,6 @@ export function BulletinDashboard() {
           Archív oznamov
         </Link>
       </div>
-      <BulletinImport
-        mode="start"
-        weekStart={weekStart}
-        disabled={opening}
-        onBusyChange={setParsing}
-        onTargetWeek={(week, result) => openWeek(week, result)}
-      />
       {opening ? (
         <p className={styles.status} role="status">
           Otváram oznamy…
@@ -133,8 +112,8 @@ export function BulletinDashboard() {
                 <button
                   type="button"
                   className={styles.secondary}
-                  disabled={loading || opening || parsing}
-                  onClick={() => void openManually(week)}
+                  disabled={loading || opening}
+                  onClick={() => void openWeekEditor(week)}
                 >
                   Otvoriť
                 </button>
@@ -149,34 +128,10 @@ export function BulletinDashboard() {
           <TechnicalSupport />
         </p>
       ) : null}
-      <details className={styles.disclosure}>
-        <summary>Vybrať iný týždeň alebo vyplniť ručne</summary>
-        <div className={`${styles.panel} ${styles.manualWeek}`}>
-          <label className={styles.field}>
-            Týždeň od pondelka
-            <input
-              type="date"
-              value={weekStart}
-              disabled={opening || parsing}
-              onChange={(event) =>
-                setWeekStart(event.target.value as CalendarDate)
-              }
-            />
-          </label>
-          <button
-            className={styles.secondary}
-            type="button"
-            disabled={opening || parsing}
-            onClick={() => void openManually()}
-          >
-            Otvoriť oznamy
-          </button>
-        </div>
-      </details>
       {error ? (
         <p className={styles.error} role="alert">
           {error}
-          {technicalFailure ? <TechnicalSupport /> : null}
+          <TechnicalSupport />
         </p>
       ) : null}
     </div>

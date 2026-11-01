@@ -29,7 +29,6 @@ export function BulletinForm({
   onBusyChange?: (busy: boolean) => void;
 }) {
   const imported = useBulletinImport(document, onChange, !disabled);
-  const uploader = useRef<HTMLDetailsElement>(null);
   const importReview = useRef<HTMLDetailsElement>(null);
   const [parsing, setParsing] = useState(false);
   const [navigationError, setNavigationError] = useState("");
@@ -46,10 +45,6 @@ export function BulletinForm({
     onBusyChange?.(working);
     return () => onBusyChange?.(false);
   }, [working, onBusyChange]);
-
-  useEffect(() => {
-    if (imported.result && uploader.current) uploader.current.open = false;
-  }, [imported.result]);
 
   async function openImportedWeek(
     weekStart: CalendarDate,
@@ -80,6 +75,12 @@ export function BulletinForm({
       className={`${styles.disabled} ${weekly.editor}`}
       disabled={disabled || imported.opening}
     >
+      <BulletinImport
+        weekStart={document.weekStart}
+        onApply={imported.apply}
+        onBusyChange={setParsing}
+        disabled={disabled || imported.opening}
+      />
       {navigationError ? (
         <p className={styles.error} role="alert">
           {navigationError}
@@ -348,15 +349,6 @@ export function BulletinForm({
           </details>
         ) : null}
       </fieldset>
-      <details className={styles.disclosure} ref={uploader}>
-        <summary>Načítať {imported.result ? "iný " : ""}dokument</summary>
-        <BulletinImport
-          weekStart={document.weekStart}
-          onApply={imported.apply}
-          onBusyChange={setParsing}
-          disabled={disabled || imported.opening}
-        />
-      </details>
     </fieldset>
   );
 }

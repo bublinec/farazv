@@ -10,30 +10,20 @@ import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 import type { CalendarDate } from "@/content/types";
 import { readAdminJson } from "./admin-api";
 import { isBulletinImportResult } from "@/lib/bulletin-import-result";
-import { getMonday } from "@/lib/calendar";
 import { useCancelOnNavigation } from "./hooks/useCancelOnNavigation";
-import type { BulletinImportTargetWeek } from "./BulletinImportPreview";
 import admin from "./Admin.module.css";
 import styles from "./BulletinImport.module.css";
 
-type BulletinImportProps = {
+interface BulletinImportProps {
   weekStart: CalendarDate;
+  onApply: (result: BulletinImportResult) => void;
   disabled?: boolean;
   onBusyChange?: (busy: boolean) => void;
-} & (
-  | { mode: "start"; onTargetWeek: BulletinImportTargetWeek; onApply?: never }
-  | {
-      mode?: "editor";
-      onApply: (result: BulletinImportResult) => void;
-      onTargetWeek?: BulletinImportTargetWeek;
-    }
-);
+}
 
 export function BulletinImport({
   weekStart,
   onApply,
-  onTargetWeek,
-  mode = "editor",
   disabled = false,
   onBusyChange
 }: BulletinImportProps) {
@@ -45,19 +35,15 @@ export function BulletinImport({
   applyLatest.current = onApply;
   const dragDepth = useRef(0);
   const [dragging, setDragging] = useState(false);
-  const [reviewWeek, setReviewWeek] = useState(weekStart);
-  const [result, setResult] = useState<BulletinImportResult | null>(null);
   const [error, setError] = useState("");
   const [technicalFailure, setTechnicalFailure] = useState(false);
   const [busy, setBusy] = useState(false);
   const [pastedText, setPastedText] = useState("");
 
   useEffect(() => {
-    setResult(null);
     setError("");
     setTechnicalFailure(false);
     setBusy(false);
-    setReviewWeek(weekStart);
     setDragging(false);
     dragDepth.current = 0;
 
@@ -78,7 +64,6 @@ export function BulletinImport({
   function clearAnalysis() {
     request.current?.abort();
     request.current = null;
-    setResult(null);
     setError("");
     setTechnicalFailure(false);
     setBusy(false);
@@ -115,20 +100,7 @@ export function BulletinImport({
           "Služba vrátila neúplný výsledok. Vyberte dokument znova alebo vložte jeho text."
         );
       if (request.current === controller && !controller.signal.aborted) {
-        if (mode === "editor") {
-          applyLatest.current?.(parsed);
-        } else if (parsed.suggestedWeekStart) {
-          setResult(parsed);
-          setReviewWeek(parsed.suggestedWeekStart);
-          // Parsing is complete. Navigation owns its separate loading state,
-          // so a parsing Cancel button must not promise to cancel that request.
-          setBusy(false);
-          request.current = null;
-          await openTargetWeek(parsed.suggestedWeekStart, parsed);
-        } else {
-          setResult(parsed);
-          setReviewWeek(weekStart);
-        }
+        applyLatest.current(parsed);
       }
     } catch (cause) {
       if (request.current === controller && !controller.signal.aborted) {
@@ -147,28 +119,11 @@ export function BulletinImport({
     }
   }
 
-  async function openTargetWeek(
-    target: CalendarDate,
-    imported: BulletinImportResult
-  ) {
-    if (!onTargetWeek || disabled) return;
-
-    setError("");
-    setTechnicalFailure(false);
-    try {
-      await onTargetWeek(target, imported);
-    } catch (cause) {
-      setTechnicalFailure(true);
-      setError(
-        cause instanceof Error
-          ? cause.message
-          : "Týždeň sa nepodarilo otvoriť. Načítaný dokument zostáva na kontrolu."
-      );
-    }
-  }
-
   return (
-    <section className={admin.panel} aria-labelledby={titleId}>
+    <section
+      className={`${admin.panel} ${styles.uploader}`}
+      aria-labelledby={titleId}
+    >
       <h2 id={titleId} className="srOnly">
         Nahrať týždenné oznamy
       </h2>
@@ -223,8 +178,8 @@ export function BulletinImport({
           <svg
             aria-hidden="true"
             viewBox="0 0 32 32"
-            width="40"
-            height="40"
+            width="28"
+            height="28"
             fill="none"
             stroke="currentColor"
             strokeWidth="1.4"
@@ -233,7 +188,7 @@ export function BulletinImport({
           >
             <path d="M16 22V5m-6 6 6-6 6 6M5 21v6h22v-6" />
           </svg>
-          <strong>Sem presuňte súbor s oznamami</strong>
+          <strong>Presuňte sem dokument s oznamami</strong>
           <span id={hintId}>Word alebo text · .doc, .docx, .txt · do 3 MB</span>
           <span className={admin.button}>
             {busy ? "Načítavam…" : "Vybrať súbor"}
@@ -289,38 +244,6 @@ export function BulletinImport({
           {error}
           {technicalFailure ? <TechnicalSupport /> : null}
         </p>
-      ) : null}
-      {mode === "start" && result && !busy ? (
-        <div className={styles.weekChoice}>
-          <label className={admin.field}>
-            {result.suggestedWeekStart
-              ? "Týždeň od pondelka"
-              : "Pre ktorý týždeň sú oznamy?"}
-            <input
-              type="date"
-              value={reviewWeek}
-              disabled={disabled || busy}
-              onChange={(event) => {
-                if (!event.target.value) return;
-                try {
-                  setReviewWeek(getMonday(event.target.value as CalendarDate));
-                  setError("");
-                } catch {
-                  setTechnicalFailure(false);
-                  setError("Vyberte platný dátum týždňa.");
-                }
-              }}
-            />
-          </label>
-          <button
-            type="button"
-            className={admin.button}
-            disabled={disabled || busy}
-            onClick={() => void openTargetWeek(reviewWeek, result)}
-          >
-            Otvoriť a upraviť oznamy
-          </button>
-        </div>
       ) : null}
     </section>
   );

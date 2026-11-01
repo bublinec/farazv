@@ -16,12 +16,14 @@ export function MediaPicker({
   open,
   onClose,
   onSelect,
-  initialValue
+  initialValue,
+  imageTitle
 }: {
   open: boolean;
   onClose: () => void;
   onSelect: (asset: MediaAsset) => void;
   initialValue?: MediaAsset;
+  imageTitle: string;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const lastFocus = useRef<HTMLElement | null>(null);
@@ -29,7 +31,6 @@ export function MediaPicker({
   const fileRef = useRef<HTMLInputElement>(null);
   const selectionRef = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState<MediaAsset | null>(null);
-  const [alt, setAlt] = useState("");
   const [caption, setCaption] = useState("");
   const library = useMediaLibrary();
   const imageUpload = useImageUpload((asset) => {
@@ -73,18 +74,17 @@ export function MediaPicker({
 
   function choose(asset: MediaAsset) {
     setSelected(asset);
-    setAlt(asset.alt);
     setCaption(asset.caption ?? "");
   }
 
   async function retryCompletion() {
     library.clearError();
-    await imageUpload.retryCompletion({ alt, caption });
+    await imageUpload.retryCompletion({ alt: imageTitle, caption });
   }
 
   async function upload(file: File) {
     library.clearError();
-    await imageUpload.uploadImage(file, { alt, caption });
+    await imageUpload.uploadImage(file, { alt: imageTitle, caption });
     if (fileRef.current) fileRef.current.value = "";
   }
 
@@ -192,13 +192,6 @@ export function MediaPicker({
             <p>
               Potvrdenie môžete zopakovať bez opätovného odosielania súboru.
             </p>
-            <label className={styles.field}>
-              Opis nového obrázka
-              <input
-                value={alt || pendingUpload.defaultAlt}
-                onChange={(event) => setAlt(event.target.value)}
-              />
-            </label>
             <div className={styles.actions}>
               <button
                 className={styles.secondary}
@@ -224,14 +217,6 @@ export function MediaPicker({
             <MediaImage image={selected} sizes="180px" fit="contain" />
             <div className={formStyles.selectedDetails}>
               <label className={styles.field}>
-                Opis obrázka
-                <input
-                  value={alt}
-                  maxLength={1000}
-                  onChange={(event) => setAlt(event.target.value)}
-                />
-              </label>
-              <label className={styles.field}>
                 Titulok
                 <input
                   value={caption}
@@ -247,7 +232,10 @@ export function MediaPicker({
                   onClick={() => {
                     onSelect({
                       ...selected,
-                      alt,
+                      alt:
+                        imageTitle.trim().slice(0, 500) ||
+                        selected.alt ||
+                        "Obrázok",
                       caption: caption || undefined
                     });
                     close();
@@ -304,13 +292,15 @@ export function ImageField({
   value,
   onChange,
   path,
-  portrait = false
+  portrait = false,
+  imageTitle = label
 }: {
   label: string;
   value?: MediaAsset;
   onChange: (asset?: MediaAsset) => void;
   path?: string;
   portrait?: boolean;
+  imageTitle?: string;
 }) {
   const error = useFieldError(path);
   const errorId = useId();
@@ -330,16 +320,6 @@ export function ImageField({
             sizes={portrait ? "104px" : "200px"}
             fit={portrait ? "cover" : "contain"}
           />
-          <label className={styles.field}>
-            Opis obrázka
-            <input
-              value={value.alt}
-              maxLength={1000}
-              onChange={(event) =>
-                onChange({ ...value, alt: event.target.value })
-              }
-            />
-          </label>
         </div>
       ) : null}
       <div className={styles.actions}>
@@ -364,6 +344,7 @@ export function ImageField({
         ) : null}
       </div>
       <MediaPicker
+        imageTitle={imageTitle}
         initialValue={value}
         open={open}
         onClose={() => setOpen(false)}

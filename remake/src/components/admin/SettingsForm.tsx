@@ -24,7 +24,13 @@ function PriestEditor({
   const [open, setOpen] = useState(!priest.name);
 
   function update<K extends keyof Priest>(key: K, value: Priest[K]) {
-    onChange({ ...priest, [key]: value });
+    onChange({
+      ...priest,
+      [key]: value,
+      ...(key === "name" && typeof value === "string" && priest.image
+        ? { image: { ...priest.image, alt: value.trim() || priest.image.alt } }
+        : {})
+    });
   }
 
   return (
@@ -70,6 +76,7 @@ function PriestEditor({
             <ImageField
               portrait
               label="Fotografia"
+              imageTitle={priest.name}
               path={`priests.${index}.image`}
               value={priest.image}
               onChange={(image) => update("image", image)}
