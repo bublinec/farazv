@@ -1,3 +1,4 @@
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 import type { Metadata } from "next";
 import { isAuthConfigured } from "@/server/auth";
 import { churchDetails } from "@/content/church-details";
@@ -37,6 +38,7 @@ export default async function LoginPage({
           {error && (
             <p className={styles.notice} role="alert">
               Prihlásenie sa nepodarilo. Použite účet s povoleným prístupom.
+              <TechnicalSupport />
             </p>
           )}
           {configured ? (
@@ -49,6 +51,7 @@ export default async function LoginPage({
           ) : (
             <p className={styles.notice} role="status">
               Prihlásenie cez Google ešte nie je nastavené.
+              <TechnicalSupport />
             </p>
           )}
         </div>

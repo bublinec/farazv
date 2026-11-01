@@ -23,8 +23,8 @@ export function isSafePosterDestination(
   return isSafeLink(value) && (!publishing || isSafeEditorialLink(value));
 }
 
-export const fail = (message: string): never => {
-  throw new ContentError(422, message, "INVALID_CONTENT");
+export const fail = (message: string, field?: string): never => {
+  throw new ContentError(422, message, "INVALID_CONTENT", field);
 };
 
 export const text = (value: unknown, max = 500) =>
@@ -64,10 +64,16 @@ export function validateMedia(value: unknown): value is MediaAsset {
   );
 }
 
-export function requirePublishedMassTimes(masses: { time: string }[]) {
-  for (const mass of masses) {
+export function requirePublishedMassTimes(
+  masses: { time: string }[],
+  path?: string
+) {
+  for (const [index, mass] of masses.entries()) {
     if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(mass.time))
-      fail("Čas svätej omše musí mať tvar HH:MM.");
+      fail(
+        "Čas svätej omše musí mať tvar HH:MM.",
+        path ? `${path}.${index}.time` : undefined
+      );
   }
 }
 

@@ -57,6 +57,29 @@
   text-decoration: none;
 }
 
+.officePhone:hover,
+.officeEmail:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.officeEmail {
+  display: block;
+  width: fit-content;
+  color: var(--blue);
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+  margin-bottom: 24px;
+}
+
+.asideLabel,
+.asideContact h3 {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin: 0 0 6px;
+}
+
 .hours {
   margin: 0;
   font-size: 0.9rem;
@@ -279,8 +302,20 @@
   background: #f6f4ee;
 }
 
-.communityAside :global(.button) {
-  margin-top: 16px;
+.asideContact {
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.asideContact p {
+  margin: 0;
+}
+
+.asideContact .officePhone {
+  margin-bottom: 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .facts {

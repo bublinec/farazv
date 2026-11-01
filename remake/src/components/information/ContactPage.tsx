@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { InformationPageDefinition } from "@/content/information";
 import type { SettingsDocument } from "@/content/documents";
 import { MediaImage } from "@/components/ui/MediaImage";
@@ -42,7 +41,9 @@ function PriestCards({
             )}
             <div>
               <h3>{priest.name}</h3>
-              <p className={styles.priestRole}>{priest.role}</p>
+              <p className={styles.priestRole}>
+                {priest.role.replace(/farský vikár/gi, "Kaplán")}
+              </p>
               {priest.phone ? (
                 <a href={`tel:${priest.phone.replace(/\s/g, "")}`}>
                   {priest.phone}
@@ -205,9 +206,6 @@ export async function ContactPage({
                   <a href={mapHref}>
                     Nájsť cestu na mape <Arrow diagonal />
                   </a>
-                  <Link href="/farnost/kostol-sv-alzbety">
-                    Spoznajte náš kostol <Arrow />
-                  </Link>
                 </div>
               </section>
             </div>

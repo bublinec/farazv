@@ -1,96 +1,12 @@
-import type { ReactElement } from "react";
-import { formatRecordDate } from "./admin-format";
+"use client";
+
 import Link from "next/link";
-import type {
-  BulletinDocument,
-  ContentRecord,
-  EditorialDocument,
-  SettingsDocument
-} from "@/content/documents";
-
+import type { ContentRecord, SettingsDocument } from "@/content/documents";
 import { MediaImage } from "@/components/ui/MediaImage";
-import { RichText } from "@/components/editorial/RichText";
-import { isSafeEditorialLink } from "@/lib/editorial";
-import { contentBlocksToRichText } from "@/lib/rich-text";
 import { getMassLabel } from "@/lib/mass";
+import { useAdminSection } from "./AdminSectionContext";
+import { RecordLivePreview } from "./RecordLivePreview";
 import styles from "./Admin.module.css";
-
-function PreviewBulletin({ document }: { document: BulletinDocument }) {
-  return (
-    <>
-      <h1>Farské oznamy · od {formatRecordDate(document.weekStart)}</h1>
-      <p className={styles.hint}>
-        Náhľad tohto pondelka až nedele. Predchádzajúca nedeľa sa na verejnom
-        webe doplní z vlastniaceho zverejneného týždňa.
-      </p>
-      {document.days.map((day) => (
-        <section className={styles.previewDay} key={day.date}>
-          <h2>
-            {formatRecordDate(day.date, {
-              weekday: "long",
-              day: "numeric",
-              month: "long"
-            })}
-          </h2>
-          {day.liturgy ? <p>{day.liturgy}</p> : null}
-          {day.status === "no-masses" ? (
-            <p>V tento deň nie je svätá omša.</p>
-          ) : day.status === "unpublished" ? (
-            <p>
-              Podrobný rozpis nie je zverejnený. Verejná stránka použije
-              označené pravidelné časy, ak sú nastavené.
-            </p>
-          ) : (
-            day.masses.map((mass, index) => (
-              <div className={styles.previewMass} key={index}>
-                <strong>{mass.time}</strong>
-                <div>
-                  {getMassLabel(mass) ? (
-                    <strong>
-                      {getMassLabel(mass)}
-                      <br />
-                    </strong>
-                  ) : null}
-                  {mass.intention || ""}
-                  {mass.celebrant ? (
-                    <small>
-                      <br />
-                      {mass.celebrant}
-                    </small>
-                  ) : null}
-                </div>
-              </div>
-            ))
-          )}
-        </section>
-      ))}
-      <h2>Farské oznamy</h2>
-      {document.announcements.map((text, index) => (
-        <p key={index} style={{ whiteSpace: "pre-wrap" }}>
-          {text}
-        </p>
-      ))}
-      {document.donations?.length ? (
-        <>
-          <h2>Dary a zbierky</h2>
-          <ul>
-            {document.donations.map((donation, index) => (
-              <li key={index}>
-                {donation.category ? (
-                  <strong>{donation.category}: </strong>
-                ) : null}
-                {donation.label}
-                {donation.amount
-                  ? `${donation.label ? " · " : ""}${donation.amount}`
-                  : ""}
-              </li>
-            ))}
-          </ul>
-        </>
-      ) : null}
-    </>
-  );
-}
 
 function PreviewSettings({ document }: { document: SettingsDocument }) {
   const days = [
@@ -181,65 +97,22 @@ function PreviewSettings({ document }: { document: SettingsDocument }) {
   );
 }
 
-function PreviewEditorial({ document }: { document: EditorialDocument }) {
-  return (
-    <article>
-      <h1>{document.title || "Koncept bez názvu"}</h1>
-      <p className={styles.hint}>
-        {formatRecordDate(document.date)}
-        {document.author ? ` · ${document.author}` : ""}
-      </p>
-      {document.cover ? (
-        <MediaImage image={document.cover} sizes="850px" priority />
-      ) : null}
-      {document.excerpt ? (
-        <p style={{ fontSize: "1.15rem", lineHeight: 1.8 }}>
-          {document.excerpt}
-        </p>
-      ) : null}
-      <RichText
-        document={document.body ?? contentBlocksToRichText(document.blocks)}
-      />
-      {document.posterDestination &&
-      isSafeEditorialLink(document.posterDestination) ? (
-        <p>
-          <a href={document.posterDestination}>Viac informácií ↗</a>
-        </p>
-      ) : null}
-    </article>
-  );
-}
-
-function PreviewContent({ record }: { record: ContentRecord }): ReactElement {
-  switch (record.kind) {
-    case "bulletin":
-      return <PreviewBulletin document={record.draft} />;
-    case "settings":
-      return <PreviewSettings document={record.draft} />;
-    case "article":
-    case "news":
-    case "notice":
-    case "event":
-      return <PreviewEditorial document={record.draft} />;
-  }
-}
-
 export function RecordPreview({ record }: { record: ContentRecord }) {
+  useAdminSection(record.kind);
+
   return (
-    <div className={styles.preview}>
-      <aside className={styles.previewHeader}>
-        <strong>
-          Súkromný náhľad {record.readOnly ? "histórie" : "konceptu"}
-        </strong>
-        <p>
-          Túto stránku vidia iba prihlásení oprávnení editori. Zobrazuje uložený
-          koncept verzie {record.version}.
-        </p>
+    <div>
+      <header className={styles.heading}>
+        <h1>{record.readOnly ? "Náhľad histórie" : "Súkromný náhľad"}</h1>
         <Link href={`/admin/records/${encodeURIComponent(record.id)}`}>
-          ← Späť {record.readOnly ? "na historický záznam" : "na úpravu"}
+          ← Späť na úpravu
         </Link>
-      </aside>
-      <PreviewContent record={record} />
+      </header>
+      {record.kind === "settings" ? (
+        <PreviewSettings document={record.draft} />
+      ) : (
+        <RecordLivePreview record={record} />
+      )}
     </div>
   );
 }

@@ -78,12 +78,14 @@ export function parseBulletinDraft(
 
 /** Shape, lengths and dates have already been checked by the draft parser. */
 export function requirePublishedBulletin(bulletin: BulletinDocument) {
-  for (const day of bulletin.days) {
-    requirePublishedMassTimes(day.masses);
+  for (const [index, day] of bulletin.days.entries()) {
+    const path = `days.${index}`;
+    if (day.status === "scheduled")
+      requirePublishedMassTimes(day.masses, `${path}.masses`);
     if (day.status === "no-masses" && day.masses.length)
-      fail("Deň bez omše nemôže obsahovať časy omší.");
+      fail("Deň bez omše nemôže obsahovať časy omší.", `${path}.status`);
     if (day.status === "scheduled" && !day.masses.length)
-      fail("Pridajte omšu alebo označte deň bez omše.");
+      fail("Pridajte omšu alebo označte deň bez omše.", `${path}.status`);
   }
 
   if (

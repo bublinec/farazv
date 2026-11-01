@@ -48,9 +48,6 @@ export function ImageGallery({ images }: { images: MediaAsset[] }) {
               Zväčšiť fotografiu: {image.alt ? "" : index + 1}{" "}
             </span>
             <MediaImage image={image} sizes="(max-width: 760px) 50vw, 25vw" />
-            <span className={styles.expand} aria-hidden="true">
-              ↗
-            </span>
           </button>
         ))}
       </div>

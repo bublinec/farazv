@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TechnicalSupport } from "./TechnicalSupport";
 export function Unavailable({
   title = "Obsah je dočasne nedostupný.",
   compact = false
@@ -16,6 +17,7 @@ export function Unavailable({
         Skúste stránku o chvíľu obnoviť. Ostatné informácie môžete používať
         ďalej.
       </p>
+      <TechnicalSupport />
       <Link href="/kontakt">Kontakty na farnosť →</Link>
     </div>
   );

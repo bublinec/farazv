@@ -1,5 +1,7 @@
 "use client";
 
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
+
 import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { MediaImage } from "@/components/ui/MediaImage";
@@ -15,7 +17,10 @@ export function DonationSection({
   qr?: MediaAsset;
 }) {
   const [message, setMessage] = useState("");
+  const copied = message === "IBAN bol skopírovaný.";
+
   async function copy() {
+    setMessage("");
     try {
       await navigator.clipboard.writeText(iban.replace(/\s/g, ""));
       setMessage("IBAN bol skopírovaný.");
@@ -32,7 +37,7 @@ export function DonationSection({
         className={`container ${styles.inner} ${!qr ? styles.withoutQr : ""}`}
       >
         {qr ? (
-          <div className={styles.qr}>
+          <figure className={styles.qr}>
             <img
               src={qr.src}
               width={qr.width}
@@ -40,20 +45,33 @@ export function DonationSection({
               alt={qr.alt}
               loading="lazy"
             />
-          </div>
+            <figcaption>Načítajte v bankovej aplikácii</figcaption>
+          </figure>
         ) : null}
         <div className={styles.content}>
-          <h2>Podporte našu farnosť</h2>
+          <h2>Aj malý dar pomáha veľkým veciam.</h2>
+          <p>Váš príspevok pomáha starať sa o naše kostoly a život farnosti.</p>
           <div className={styles.account}>
             <span>Farský IBAN</span>
-            <strong>{iban}</strong>
-            <button type="button" onClick={copy}>
-              Skopírovať IBAN
-              <Icon name="arrow-right" size={15} />
-            </button>
+            <div className={styles.accountNumber}>
+              <strong>{iban}</strong>
+              <button
+                type="button"
+                onClick={copy}
+                aria-label="Skopírovať IBAN"
+                title={copied ? "IBAN bol skopírovaný" : "Skopírovať IBAN"}
+              >
+                <Icon name={copied ? "check" : "copy"} size={20} />
+              </button>
+            </div>
           </div>
-          <p className={styles.status} role="status">
-            {message || "Pán Boh zaplať."}
+          <p className={styles.thanks}>Pán Boh zaplať za každý milodar.</p>
+          <p
+            className={message && !copied ? styles.status : "srOnly"}
+            role="status"
+          >
+            {message}
+            {message && !copied ? <TechnicalSupport /> : null}
           </p>
         </div>
       </div>

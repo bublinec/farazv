@@ -1,26 +1,32 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 import type { ContentRecord } from "@/content/documents";
 import { isPostRecordKind } from "@/content/posts";
 import { publicRecordPath } from "@/lib/record-routing";
 import { RecordForm } from "./RecordForm";
+import { RecordLivePreview } from "./RecordLivePreview";
+import { EditorValidation } from "./EditorValidation";
+import { useAdminSection } from "./AdminSectionContext";
+import { hasUnpublishedChanges, recordStateLabel } from "./record-state";
 import {
   useRecordEditor,
   type RecordEditorOperation
 } from "./hooks/useRecordEditor";
 import styles from "./Admin.module.css";
+import layout from "./RecordEditor.module.css";
 
 const operationLabels: Record<
   Exclude<RecordEditorOperation, "idle">,
   string
 > = {
-  saving: "Ukladám alebo načítavam…",
+  saving: "Ukladám…",
   publishing: "Zverejňujem…",
   unpublishing: "Sťahujem z webu…",
-  reloading: "Ukladám alebo načítavam…",
-  refreshing: "Ukladám alebo načítavam…"
+  reloading: "Načítavam…",
+  refreshing: "Obnovujem web…"
 };
 
 const timestampFormatter = new Intl.DateTimeFormat("sk-SK", {
@@ -37,15 +43,33 @@ function RecordTimestamp({ value }: { value: string | null }) {
   );
 }
 
-function editorStatus(
-  operation: RecordEditorOperation,
-  dirty: boolean,
-  message: string
-) {
-  if (operation !== "idle") return operationLabels[operation];
-  if (dirty) return "● Máte neuložené zmeny";
+function focusInvalidField(form: HTMLFormElement | null, path: string) {
+  if (!form || !path) return;
 
-  return message || "Všetky zmeny sú uložené.";
+  const field = Array.from(form.querySelectorAll<HTMLElement>("[data-field]"))
+    .filter((element) => {
+      const candidate = element.dataset.field;
+      return (
+        candidate === path || (candidate && path.startsWith(`${candidate}.`))
+      );
+    })
+    .sort(
+      (left, right) =>
+        (right.dataset.field?.length ?? 0) - (left.dataset.field?.length ?? 0)
+    )[0];
+  if (!field) return;
+
+  let ancestor: HTMLElement | null = field;
+  while (ancestor) {
+    if (ancestor instanceof HTMLDetailsElement) ancestor.open = true;
+    ancestor = ancestor.parentElement;
+  }
+  field.scrollIntoView({ block: "center", behavior: "smooth" });
+  field
+    .querySelector<HTMLElement>(
+      "input, select, textarea, [contenteditable=true], button"
+    )
+    ?.focus({ preventScroll: true });
 }
 
 export function RecordEditor({
@@ -60,6 +84,7 @@ export function RecordEditor({
     busy,
     dirty,
     error,
+    errorField,
     message,
     conflict,
     cacheWarning,
@@ -67,20 +92,47 @@ export function RecordEditor({
     publishRecord,
     unpublishRecord,
     retryCacheRefresh,
-    reloadLatest,
-    preview
+    reloadLatest
   } = useRecordEditor(initialRecord);
   const [formBusy, setFormBusy] = useState(false);
+  const [previewMode, setPreviewMode] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const errorRef = useRef<HTMLDivElement>(null);
   const editorBusy = busy || formBusy;
   const isSettings = record.kind === "settings";
   const publicPath = publicRecordPath(record);
+  const unpublishedChanges = hasUnpublishedChanges(record);
+  const stateLabel = recordStateLabel(record);
+  useAdminSection(record.kind);
+
+  useEffect(() => {
+    if (!error) return;
+    setPreviewMode(false);
+    if (!errorField)
+      errorRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
+    const frame = requestAnimationFrame(() =>
+      focusInvalidField(formRef.current, errorField)
+    );
+    return () => cancelAnimationFrame(frame);
+  }, [error, errorField]);
+
+  const status = formBusy
+    ? "Načítavam dokument alebo týždeň…"
+    : operation !== "idle"
+    ? isSettings && operation === "publishing"
+      ? "Ukladám…"
+      : operationLabels[operation]
+    : dirty
+    ? "Neuložené zmeny"
+    : message || (isSettings ? "Uložené" : stateLabel);
 
   return (
-    <>
+    <div className={layout.workspace}>
       <div className={styles.heading}>
         <div>
-          {record.kind !== "settings" ? (
+          {!isSettings ? (
             <Link
+              className={styles.hint}
               href={
                 record.kind === "bulletin"
                   ? "/admin"
@@ -88,7 +140,6 @@ export function RecordEditor({
                       isPostRecordKind(record.kind) ? "posts" : "article"
                     }`
               }
-              className={styles.hint}
             >
               ←{" "}
               {record.kind === "bulletin"
@@ -98,8 +149,8 @@ export function RecordEditor({
                 : "Naše spoločenstvo"}
             </Link>
           ) : null}
-          <h1 style={{ marginTop: record.kind === "settings" ? 0 : ".8rem" }}>
-            {record.kind === "settings"
+          <h1 className={isSettings ? undefined : layout.recordTitle}>
+            {isSettings
               ? "Nastavenia farnosti"
               : record.title || "Nový koncept"}
           </h1>
@@ -107,42 +158,144 @@ export function RecordEditor({
         {!isSettings ? (
           <span
             className={`${styles.badge} ${
-              record.published ? styles.published : ""
+              record.published && !unpublishedChanges ? styles.published : ""
             }`}
           >
-            {record.published ? "Zverejnené" : "Koncept"}
+            {stateLabel}
           </span>
         ) : null}
       </div>
+
       {record.readOnly ? (
-        <div className={styles.notice}>
-          <strong>História · iba na čítanie.</strong> Tento importovaný záznam
-          sa uchováva v pôvodnej podobe vrátane nezrovnalostí. Nemá verejnú
-          archívnu stránku a nie je možné ho upraviť ani znova zverejniť.
-        </div>
+        <div className={styles.notice}>Historický záznam · iba na čítanie.</div>
       ) : null}
       {record.source?.anomalies?.length ? (
-        <div className={styles.notice}>
-          <strong>Poznámky k importu</strong>
+        <details className={styles.disclosure}>
+          <summary>
+            Poznámky k pôvodnému importu ({record.source.anomalies.length})
+          </summary>
           <ul>
             {record.source.anomalies.map((note, index) => (
               <li key={index}>{note}</li>
             ))}
           </ul>
-        </div>
+        </details>
       ) : null}
+
       <form
+        ref={formRef}
         noValidate
         onSubmit={(event) => {
           event.preventDefault();
-          if (!formBusy) void (isSettings ? publishRecord() : saveRecord());
+          if (!editorBusy) void (isSettings ? publishRecord() : saveRecord());
         }}
       >
-        <div className={styles.grid}>
-          <div>
+        {error ? (
+          <div ref={errorRef} className={styles.error} role="alert">
+            {error}
+            {!errorField && !conflict ? <TechnicalSupport /> : null}
+            {errorField ? (
+              <button
+                type="button"
+                className={styles.quietLink}
+                onClick={() => {
+                  setPreviewMode(false);
+                  requestAnimationFrame(() =>
+                    focusInvalidField(formRef.current, errorField)
+                  );
+                }}
+              >
+                Prejsť na pole →
+              </button>
+            ) : null}
+            {conflict ? (
+              <p>
+                Iný editor uložil novšiu verziu. Vaše zmeny zostali vo
+                formulári.
+              </p>
+            ) : null}
+            {conflict ? (
+              <button
+                className={styles.secondary}
+                type="button"
+                disabled={editorBusy}
+                onClick={() => void reloadLatest()}
+              >
+                Načítať aktuálnu verziu
+              </button>
+            ) : null}
+          </div>
+        ) : null}
+        {cacheWarning ? (
+          <div className={styles.notice} role="alert">
+            <strong>Obsah je uložený, obnovenie webu čaká.</strong>
+            <p>{cacheWarning}</p>
+            <TechnicalSupport />
+            <button
+              type="button"
+              className={styles.secondary}
+              disabled={editorBusy}
+              onClick={() => void retryCacheRefresh()}
+            >
+              Zopakovať obnovenie webu
+            </button>
+          </div>
+        ) : null}
+
+        <div className={layout.actionBar}>
+          <p className={layout.status} role="status" aria-live="polite">
+            {status}
+          </p>
+          <div className={styles.actions}>
+            {!isSettings ? (
+              <button
+                className={styles.quietLink}
+                type="button"
+                disabled={editorBusy}
+                aria-pressed={previewMode}
+                onClick={() => setPreviewMode((current) => !current)}
+              >
+                {previewMode ? "Späť na úpravu" : "Náhľad"}
+              </button>
+            ) : null}
+            {!record.readOnly ? (
+              <>
+                {!isSettings ? (
+                  <button
+                    className={styles.secondary}
+                    type="submit"
+                    disabled={editorBusy || !dirty}
+                  >
+                    Uložiť koncept
+                  </button>
+                ) : null}
+                <button
+                  className={styles.button}
+                  type={isSettings ? "submit" : "button"}
+                  disabled={
+                    editorBusy ||
+                    (isSettings
+                      ? !dirty && !unpublishedChanges && !!record.published
+                      : !!record.published && !unpublishedChanges)
+                  }
+                  onClick={isSettings ? undefined : () => void publishRecord()}
+                >
+                  {isSettings
+                    ? "Uložiť"
+                    : record.published
+                    ? "Zverejniť zmeny"
+                    : "Zverejniť"}
+                </button>
+              </>
+            ) : null}
+          </div>
+        </div>
+
+        <div hidden={previewMode}>
+          <EditorValidation field={errorField} message={error}>
             <fieldset
               className={styles.disabled}
-              disabled={editorBusy || record.readOnly}
+              disabled={busy || record.readOnly}
               aria-label="Obsah záznamu"
             >
               <RecordForm
@@ -152,124 +305,25 @@ export function RecordEditor({
                 onBusyChange={setFormBusy}
               />
             </fieldset>
+          </EditorValidation>
+        </div>
+        {previewMode ? (
+          <div className={layout.preview}>
+            <RecordLivePreview record={record} />
           </div>
-          <aside className={styles.sidebar}>
-            <section className={styles.panel}>
-              <h2>
-                {isSettings
-                  ? "Uložiť"
-                  : record.readOnly
-                  ? "Záznam"
-                  : "Uložiť a zverejniť"}
-              </h2>
-              {error ? (
-                <div className={styles.error} role="alert">
-                  {error}
-                  {conflict ? (
-                    <p>
-                      Obsah medzitým zmenil iný editor. Vaše hodnoty zostali vo
-                      formulári. Pred načítaním aktuálnej verzie si ich
-                      porovnajte alebo skopírujte.
-                    </p>
-                  ) : null}
-                </div>
+        ) : null}
+
+        {!isSettings ? (
+          <footer className={layout.recordFooter}>
+            <div className={layout.recordLinks}>
+              {publicPath && record.published && !record.readOnly ? (
+                <a href={publicPath} target="_blank" rel="noopener noreferrer">
+                  {record.kind === "bulletin"
+                    ? "Verejné oznamy ↗"
+                    : "Verejná stránka ↗"}
+                </a>
               ) : null}
-              {cacheWarning ? (
-                <div className={styles.notice} role="alert">
-                  <strong>Obsah je uložený, obnovenie webu čaká.</strong>
-                  <p>{cacheWarning}</p>
-                  <button
-                    type="button"
-                    className={styles.secondary}
-                    disabled={editorBusy}
-                    onClick={() => void retryCacheRefresh()}
-                  >
-                    Zopakovať obnovenie webu
-                  </button>
-                </div>
-              ) : null}
-              <p className={styles.status} role="status" aria-live="polite">
-                {formBusy
-                  ? "Otváram týždeň oznamov…"
-                  : isSettings && operation === "publishing"
-                  ? "Ukladám…"
-                  : editorStatus(operation, dirty, message)}
-              </p>
-              <div className={styles.actions}>
-                {isSettings ? (
-                  <button
-                    className={styles.button}
-                    type="submit"
-                    disabled={editorBusy}
-                  >
-                    Uložiť
-                  </button>
-                ) : !record.readOnly ? (
-                  <>
-                    <button
-                      className={styles.secondary}
-                      type="submit"
-                      disabled={editorBusy}
-                    >
-                      Uložiť koncept
-                    </button>
-                    <button
-                      className={styles.quietLink}
-                      type="button"
-                      disabled={editorBusy}
-                      onClick={() => void preview()}
-                    >
-                      {dirty ? "Uložiť a otvoriť náhľad" : "Súkromný náhľad"}
-                    </button>
-                    <button
-                      className={styles.button}
-                      type="button"
-                      disabled={editorBusy}
-                      onClick={() => void publishRecord()}
-                    >
-                      {record.published ? "Zverejniť zmeny" : "Zverejniť"}
-                    </button>
-                  </>
-                ) : (
-                  <Link
-                    className={styles.secondary}
-                    href={`/admin/preview/${encodeURIComponent(record.id)}`}
-                  >
-                    Súkromný náhľad histórie
-                  </Link>
-                )}
-                {conflict ? (
-                  <button
-                    className={styles.secondary}
-                    type="button"
-                    disabled={editorBusy}
-                    onClick={() => void reloadLatest()}
-                  >
-                    Načítať aktuálnu verziu
-                  </button>
-                ) : null}
-              </div>
-              {publicPath && !record.readOnly && !isSettings ? (
-                <p>
-                  <a
-                    href={publicPath}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {record.kind === "bulletin"
-                      ? "Otvoriť aktuálne verejné oznamy ↗"
-                      : "Otvoriť verejnú stránku ↗"}
-                  </a>
-                </p>
-              ) : null}
-              {!record.readOnly && !isSettings ? (
-                <p className={styles.hint}>
-                  Uloženie konceptu nemení verejný web.
-                </p>
-              ) : null}
-              {record.published &&
-              !record.readOnly &&
-              record.kind !== "settings" ? (
+              {record.published && !record.readOnly ? (
                 <button
                   className={styles.danger}
                   type="button"
@@ -279,36 +333,28 @@ export function RecordEditor({
                   Stiahnuť z webu
                 </button>
               ) : null}
-              {!isSettings ? (
-                <dl className={styles.recordMetadata}>
-                  <div>
-                    <dt>Verzia</dt>
-                    <dd>{record.version}</dd>
-                  </div>
-                  <div>
-                    <dt>Vytvorené</dt>
-                    <dd>
-                      <RecordTimestamp value={record.createdAt} />
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Posledná úprava</dt>
-                    <dd>
-                      <RecordTimestamp value={record.updatedAt} />
-                    </dd>
-                  </div>
-                </dl>
-              ) : null}
-              {record.kind === "bulletin" ? (
-                <p className={styles.hint}>
-                  Budúci zverejnený týždeň sa aktivuje podľa dátumu. Neskoršia
-                  úprava starého týždňa z neho neurobí aktuálny.
-                </p>
-              ) : null}
-            </section>
-          </aside>
-        </div>
+            </div>
+            <dl className={layout.metadata}>
+              <div>
+                <dt>Verzia</dt>
+                <dd>{record.version}</dd>
+              </div>
+              <div>
+                <dt>Vytvorené</dt>
+                <dd>
+                  <RecordTimestamp value={record.createdAt} />
+                </dd>
+              </div>
+              <div>
+                <dt>Posledná úprava</dt>
+                <dd>
+                  <RecordTimestamp value={record.updatedAt} />
+                </dd>
+              </div>
+            </dl>
+          </footer>
+        ) : null}
       </form>
-    </>
+    </div>
   );
 }

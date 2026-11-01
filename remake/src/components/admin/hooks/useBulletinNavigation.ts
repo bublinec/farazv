@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { useCancelOnNavigation } from "./useCancelOnNavigation";
 import type { BulletinImportResult } from "@/content/bulletin-import";
 import type { CalendarDate } from "@/content/types";
 import { readAdminJson } from "../admin-api";
-import { findEditableBulletin } from "../bulletin-records";
 import {
   clearBulletinImport,
   storeBulletinImport
@@ -16,97 +16,71 @@ export function useBulletinNavigation() {
   const [navigating, startNavigation] = useTransition();
   const request = useRef<AbortController | null>(null);
 
-  useEffect(() => {
-    function cancelOpening() {
-      request.current?.abort();
-      request.current = null;
-      setOpening(false);
-    }
+  useCancelOnNavigation(() => {
+    request.current?.abort();
+    request.current = null;
+    setOpening(false);
+  });
 
-    function followLink(event: MouseEvent) {
-      if (
-        event.defaultPrevented ||
-        event.button !== 0 ||
-        event.metaKey ||
-        event.ctrlKey ||
-        event.shiftKey ||
-        event.altKey ||
-        !(event.target instanceof Element)
-      )
-        return;
-      const anchor = event.target.closest<HTMLAnchorElement>("a[href]");
-      if (
-        !anchor ||
-        (anchor.target && anchor.target !== "_self") ||
-        anchor.hasAttribute("download")
-      )
-        return;
-      const url = new URL(anchor.href, window.location.href);
-      if (
-        url.origin !== window.location.origin ||
-        url.pathname !== window.location.pathname ||
-        url.search !== window.location.search
-      )
-        cancelOpening();
-    }
-
-    function leave(event: Event) {
-      if (!event.defaultPrevented) cancelOpening();
-    }
-
-    document.addEventListener("click", followLink);
-    window.addEventListener("popstate", cancelOpening);
-    window.addEventListener("admin:before-leave", leave);
-    return () => {
-      request.current?.abort();
-      request.current = null;
-      document.removeEventListener("click", followLink);
-      window.removeEventListener("popstate", cancelOpening);
-      window.removeEventListener("admin:before-leave", leave);
-    };
-  }, []);
+  useEffect(() => () => request.current?.abort(), []);
 
   async function openWeek(
     weekStart: CalendarDate,
     result?: BulletinImportResult,
-    fillForm = false
+    options?: { newTab?: boolean }
   ) {
     if (request.current || navigating) return;
     if (
+      !options?.newTab &&
       !window.dispatchEvent(
         new Event("admin:before-leave", { cancelable: true })
       )
     )
       return;
 
+    // Open synchronously from the click so the browser permits the new tab.
+    // Its own temporary storage receives the import; the current draft stays here.
+    const tab = options?.newTab ? window.open("about:blank", "_blank") : null;
+    if (options?.newTab && !tab)
+      throw new Error(
+        "Povoľte otvorenie novej karty a skúste znova. Aktuálne oznamy zostali zachované."
+      );
+    if (tab) {
+      tab.opener = null;
+      tab.document.title = "Farské oznamy · Admin";
+      tab.document.body.textContent = "Otváram oznamy…";
+    }
+
     const controller = new AbortController();
     request.current = controller;
     setOpening(true);
 
     try {
-      const existing = await findEditableBulletin(weekStart, controller.signal);
-      if (controller.signal.aborted) return;
-
-      const target =
-        existing ??
-        (await readAdminJson(
-          await fetch("/api/admin/records", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ kind: "bulletin", weekStart }),
-            signal: controller.signal
-          })
-        ));
-      if (controller.signal.aborted) return;
-
-      if (result) storeBulletinImport(weekStart, result, fillForm);
-      else clearBulletinImport();
-      startNavigation(() =>
-        router.push(`/admin/records/${encodeURIComponent(target.id)}`)
+      const target = await readAdminJson(
+        await fetch("/api/admin/bulletins/open", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ weekStart }),
+          signal: controller.signal
+        })
       );
+      if (controller.signal.aborted) return;
+
+      const href = `/admin/records/${encodeURIComponent(target.id)}`;
+      if (tab) {
+        if (tab.closed) return;
+        if (result) storeBulletinImport(weekStart, result, tab.sessionStorage);
+        tab.location.replace(href);
+      } else {
+        if (result) storeBulletinImport(weekStart, result);
+        else clearBulletinImport();
+        startNavigation(() => router.push(href));
+      }
     } catch (error) {
+      tab?.close();
       if (!controller.signal.aborted) throw error;
     } finally {
+      if (controller.signal.aborted) tab?.close();
       if (request.current === controller) {
         request.current = null;
         setOpening(false);

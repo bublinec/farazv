@@ -14,9 +14,13 @@ export async function settingsOrUnavailable(): Promise<SettingsDocument | null> 
 }
 
 export async function OfficeAside({
-  preparationType
+  preparationType,
+  title = "Farská kancelária",
+  description
 }: {
   preparationType?: "baptism" | "marriage";
+  title?: string;
+  description?: string;
 }) {
   const settings = await settingsOrUnavailable();
 
@@ -37,14 +41,20 @@ export async function OfficeAside({
 
   return (
     <aside className={styles.officeAside} aria-label="Farská kancelária">
-      <h2>Dohodnime si stretnutie</h2>
-      <p>Radi vám pomôžeme s prípravou aj s vašimi otázkami.</p>
+      <h2>{title}</h2>
+      {description ? <p>{description}</p> : null}
       <a
         className={styles.officePhone}
         href={`tel:${settings.phone.replace(/\s/g, "")}`}
       >
         {settings.phone}
       </a>
+      <a className={styles.officeEmail} href={`mailto:${settings.email}`}>
+        {settings.email}
+      </a>
+      {settings.officeHours.length ? (
+        <h3 className={styles.asideLabel}>Úradné hodiny</h3>
+      ) : null}
       <dl className={styles.hours}>
         {settings.officeHours.map((hours) => (
           <div key={hours.day}>

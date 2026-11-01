@@ -1,0 +1,129 @@
+.weekCards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-block: 1.2rem;
+}
+
+.weekCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  background: white;
+}
+
+.weekCard h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--blue-deep);
+}
+
+.weekCard p {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+}
+
+.importReceipt {
+  padding: 1rem 1.2rem;
+  margin-block: 1rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  background: white;
+}
+
+.daySummary {
+  display: inline-grid;
+  grid-template-columns: minmax(10rem, 0.8fr) minmax(0, 1.5fr) auto;
+  gap: 0.25rem 1rem;
+  vertical-align: middle;
+  width: calc(100% - 1.3rem);
+  align-items: center;
+}
+
+.daySummary strong {
+  font-weight: 600;
+}
+
+.daySummary small {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+
+.times {
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.warnings {
+  color: #795322;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0.7rem 0;
+  padding-left: 1.2rem;
+}
+
+.previousSunday {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding: 0 0 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--admin-border);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.previousSunday strong {
+  color: var(--blue-deep);
+  font-weight: 500;
+}
+
+.previousSunday p {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+}
+
+.previousSunday > a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.previousSunday details {
+  flex-basis: 100%;
+}
+
+.previousSunday summary {
+  cursor: pointer;
+  color: var(--blue-deep);
+  padding-block: 0.3rem;
+}
+
+@media (max-width: 760px) {
+  .weekCards {
+    grid-template-columns: 1fr;
+  }
+
+  .daySummary {
+    grid-template-columns: 1fr auto;
+  }
+
+  .daySummary small {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .times {
+    white-space: normal;
+    text-align: right;
+  }
+}

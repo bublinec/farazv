@@ -1,6 +1,24 @@
 import type { BulletinDocument } from "@/content/documents";
 import type { BulletinImportResult } from "@/content/bulletin-import";
+import { sameMasses } from "./mass";
 import { formatDate } from "./calendar";
+
+function sameDonations(
+  left: BulletinDocument["donations"] = [],
+  right: BulletinDocument["donations"] = []
+) {
+  return (
+    left.length === right.length &&
+    left.every((donation, index) => {
+      const other = right[index];
+      return (
+        donation.label === other.label &&
+        (donation.amount ?? "") === (other.amount ?? "") &&
+        (donation.category ?? "") === (other.category ?? "")
+      );
+    })
+  );
+}
 
 /** Name actual existing content that the import will replace, rather than merging duplicate Mass times. */
 export function bulletinImportReplacements(
@@ -15,7 +33,7 @@ export function bulletinImportReplacements(
     const replacesMasses =
       (day.masses.length > 0 || day.status === "no-masses") &&
       (day.status !== imported.status ||
-        JSON.stringify(day.masses) !== JSON.stringify(imported.masses));
+        !sameMasses(day.masses, imported.masses));
     const replacesLiturgy = day.liturgy && day.liturgy !== imported.liturgy;
     if (replacesMasses || replacesLiturgy)
       replacements.push(
@@ -32,7 +50,7 @@ export function bulletinImportReplacements(
     replacements.push(`Farské oznamy (${current.announcements.length})`);
   if (
     current.donations?.length &&
-    JSON.stringify(current.donations) !== JSON.stringify(next.donations)
+    !sameDonations(current.donations, next.donations)
   )
     replacements.push(`Dary a zbierky (${current.donations.length})`);
 

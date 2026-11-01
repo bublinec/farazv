@@ -41,19 +41,6 @@
   margin-top: 0.65rem;
   line-height: 1.5;
 }
-.zoom {
-  position: absolute;
-  bottom: 0.7rem;
-  right: 0.7rem;
-  display: grid;
-  place-items: center;
-  background: rgb(255 255 255 / 92%);
-  color: var(--blue);
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  font-size: 1.3rem;
-}
 .dialog {
   max-width: none;
   width: 100vw;

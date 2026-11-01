@@ -6,21 +6,20 @@ import {
   BULLETIN_IMPORT_MAX_TEXT,
   type BulletinImportResult
 } from "@/content/bulletin-import";
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 import type { CalendarDate } from "@/content/types";
 import { readAdminJson } from "./admin-api";
 import { isBulletinImportResult } from "@/lib/bulletin-import-result";
 import { getMonday } from "@/lib/calendar";
-import {
-  BulletinImportPreview,
-  type BulletinImportTargetWeek
-} from "./BulletinImportPreview";
+import { useCancelOnNavigation } from "./hooks/useCancelOnNavigation";
+import type { BulletinImportTargetWeek } from "./BulletinImportPreview";
 import admin from "./Admin.module.css";
 import styles from "./BulletinImport.module.css";
 
 type BulletinImportProps = {
   weekStart: CalendarDate;
-  initialResult?: BulletinImportResult;
   disabled?: boolean;
+  onBusyChange?: (busy: boolean) => void;
 } & (
   | { mode: "start"; onTargetWeek: BulletinImportTargetWeek; onApply?: never }
   | {
@@ -34,40 +33,54 @@ export function BulletinImport({
   weekStart,
   onApply,
   onTargetWeek,
-  initialResult,
   mode = "editor",
-  disabled = false
+  disabled = false,
+  onBusyChange
 }: BulletinImportProps) {
   const titleId = useId();
   const hintId = useId();
   const fileId = useId();
   const request = useRef<AbortController | null>(null);
+  const applyLatest = useRef(onApply);
+  applyLatest.current = onApply;
   const dragDepth = useRef(0);
   const [dragging, setDragging] = useState(false);
   const [reviewWeek, setReviewWeek] = useState(weekStart);
-  const [result, setResult] = useState<BulletinImportResult | null>(
-    initialResult ?? null
-  );
+  const [result, setResult] = useState<BulletinImportResult | null>(null);
   const [error, setError] = useState("");
+  const [technicalFailure, setTechnicalFailure] = useState(false);
   const [busy, setBusy] = useState(false);
   const [pastedText, setPastedText] = useState("");
 
   useEffect(() => {
-    setResult(initialResult ?? null);
+    setResult(null);
     setError("");
+    setTechnicalFailure(false);
     setBusy(false);
-    setReviewWeek(initialResult?.suggestedWeekStart ?? weekStart);
+    setReviewWeek(weekStart);
     setDragging(false);
     dragDepth.current = 0;
 
     return () => request.current?.abort();
-  }, [weekStart, initialResult]);
+  }, [weekStart]);
+
+  useCancelOnNavigation(() => {
+    request.current?.abort();
+    request.current = null;
+    setBusy(false);
+  });
+
+  useEffect(() => {
+    onBusyChange?.(busy);
+    return () => onBusyChange?.(false);
+  }, [busy, onBusyChange]);
 
   function clearAnalysis() {
     request.current?.abort();
     request.current = null;
     setResult(null);
     setError("");
+    setTechnicalFailure(false);
     setBusy(false);
   }
 
@@ -102,11 +115,24 @@ export function BulletinImport({
           "Služba vrátila neúplný výsledok. Vyberte dokument znova alebo vložte jeho text."
         );
       if (request.current === controller && !controller.signal.aborted) {
-        setResult(parsed);
-        setReviewWeek(parsed.suggestedWeekStart ?? weekStart);
+        if (mode === "editor") {
+          applyLatest.current?.(parsed);
+        } else if (parsed.suggestedWeekStart) {
+          setResult(parsed);
+          setReviewWeek(parsed.suggestedWeekStart);
+          // Parsing is complete. Navigation owns its separate loading state,
+          // so a parsing Cancel button must not promise to cancel that request.
+          setBusy(false);
+          request.current = null;
+          await openTargetWeek(parsed.suggestedWeekStart, parsed);
+        } else {
+          setResult(parsed);
+          setReviewWeek(weekStart);
+        }
       }
     } catch (cause) {
       if (request.current === controller && !controller.signal.aborted) {
+        setTechnicalFailure(true);
         setError(
           cause instanceof Error
             ? cause.message
@@ -128,9 +154,11 @@ export function BulletinImport({
     if (!onTargetWeek || disabled) return;
 
     setError("");
+    setTechnicalFailure(false);
     try {
       await onTargetWeek(target, imported);
     } catch (cause) {
+      setTechnicalFailure(true);
       setError(
         cause instanceof Error
           ? cause.message
@@ -170,6 +198,7 @@ export function BulletinImport({
           setDragging(false);
           if (disabled || busy) return;
           if (event.dataTransfer.files.length !== 1) {
+            setTechnicalFailure(false);
             setError("Vyberte jeden dokument oznamov.");
             return;
           }
@@ -211,11 +240,6 @@ export function BulletinImport({
           </span>
         </label>
       </div>
-      {mode === "start" ? (
-        <p className={admin.hint}>
-          Po nahratí skontrolujete údaje pred zverejnením.
-        </p>
-      ) : null}
 
       <details className={styles.paste}>
         <summary>Vložiť text namiesto súboru</summary>
@@ -231,10 +255,6 @@ export function BulletinImport({
               setPastedText(event.target.value);
             }}
           />
-          <small>
-            Skopírujte celý dokument aj s hlavičkami. Časy a údaje z tabuliek
-            oddeľte tabulátorom alebo ponechajte každý riadok samostatne.
-          </small>
         </label>
         <button
           type="button"
@@ -267,50 +287,40 @@ export function BulletinImport({
       {error ? (
         <p className={admin.error} role="alert">
           {error}
+          {technicalFailure ? <TechnicalSupport /> : null}
         </p>
       ) : null}
-      {result ? (
-        <>
-          {mode === "start" ? (
-            <details
-              className={styles.review}
-              open={!result.suggestedWeekStart}
-            >
-              <summary>Zmeniť týždeň</summary>
-              <label className={admin.field}>
-                Týždeň od pondelka
-                <input
-                  type="date"
-                  value={reviewWeek}
-                  disabled={disabled || busy}
-                  onChange={(event) => {
-                    if (!event.target.value) return;
-                    try {
-                      setReviewWeek(
-                        getMonday(event.target.value as CalendarDate)
-                      );
-                      setError("");
-                    } catch {
-                      setError("Vyberte platný dátum týždňa.");
-                    }
-                  }}
-                />
-                <small>Vyberte ktorýkoľvek deň príslušného týždňa.</small>
-              </label>
-            </details>
-          ) : null}
-          <BulletinImportPreview
-            result={result}
-            weekStart={mode === "start" ? reviewWeek : weekStart}
+      {mode === "start" && result && !busy ? (
+        <div className={styles.weekChoice}>
+          <label className={admin.field}>
+            {result.suggestedWeekStart
+              ? "Týždeň od pondelka"
+              : "Pre ktorý týždeň sú oznamy?"}
+            <input
+              type="date"
+              value={reviewWeek}
+              disabled={disabled || busy}
+              onChange={(event) => {
+                if (!event.target.value) return;
+                try {
+                  setReviewWeek(getMonday(event.target.value as CalendarDate));
+                  setError("");
+                } catch {
+                  setTechnicalFailure(false);
+                  setError("Vyberte platný dátum týždňa.");
+                }
+              }}
+            />
+          </label>
+          <button
+            type="button"
+            className={admin.button}
             disabled={disabled || busy}
-            onApply={(imported) => {
-              if (mode === "start") void openTargetWeek(reviewWeek, imported);
-              else onApply?.(imported);
-            }}
-            onTargetWeek={onTargetWeek ? openTargetWeek : undefined}
-            starting={mode === "start"}
-          />
-        </>
+            onClick={() => void openTargetWeek(reviewWeek, result)}
+          >
+            Otvoriť a upraviť oznamy
+          </button>
+        </div>
       ) : null}
     </section>
   );

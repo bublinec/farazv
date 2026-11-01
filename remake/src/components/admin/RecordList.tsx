@@ -1,91 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { AdminRecordSummary } from "@/content/documents";
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 import type { AdminListSection } from "@/content/posts";
 import styles from "./Admin.module.css";
+import formStyles from "./AdminForms.module.css";
+import { useRecordList } from "./hooks/useRecordList";
+import { summaryStateLabel } from "./record-state";
 
 export function RecordList({ section }: { section: AdminListSection }) {
+  return <RecordListContents key={section} section={section} />;
+}
+
+function RecordListContents({ section }: { section: AdminListSection }) {
   const router = useRouter();
   const kind = section;
-  const [query, setQuery] = useState("");
-  const [search, setSearch] = useState("");
-  const [items, setItems] = useState<AdminRecordSummary[]>([]);
-  const [cursor, setCursor] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const list = useRecordList(section);
+  const { query, setQuery, items, cursor, loading, error, setError } = list;
   const [creating, setCreating] = useState(false);
-  const [error, setError] = useState("");
-  const [reload, setReload] = useState(0);
-  const requestVersion = useRef(0);
-
-  useEffect(() => {
-    const version = ++requestVersion.current;
-    const controller = new AbortController();
-    setLoading(true);
-    setError("");
-    setItems([]);
-    setCursor(null);
-    const params = new URLSearchParams({ kind, query: search });
-    fetch(`/api/admin/records?${params}`, {
-      cache: "no-store",
-      signal: controller.signal
-    })
-      .then(async (response) => {
-        const data = await response.json();
-        if (controller.signal.aborted || version !== requestVersion.current)
-          return;
-        if (!response.ok)
-          throw new Error(data.error || "Obsah sa nepodarilo načítať.");
-        setItems(data.items);
-        setCursor(data.nextCursor ?? null);
-      })
-      .catch((error) => {
-        if (!controller.signal.aborted) setError(error.message);
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) setLoading(false);
-      });
-    return () => {
-      controller.abort();
-      requestVersion.current++;
-    };
-  }, [kind, search, reload]);
-
-  async function more() {
-    if (!cursor || loading) return;
-    const version = requestVersion.current;
-    setLoading(true);
-    setError("");
-    try {
-      const params = new URLSearchParams({
-        kind,
-        query: search,
-        cursor
-      });
-      const response = await fetch(`/api/admin/records?${params}`, {
-        cache: "no-store"
-      });
-      const data = await response.json();
-      if (version !== requestVersion.current) return;
-      if (!response.ok)
-        throw new Error(data.error || "Obsah sa nepodarilo načítať.");
-      setItems((old) => [
-        ...old,
-        ...data.items.filter(
-          (item: AdminRecordSummary) =>
-            !old.some((previous) => previous.id === item.id)
-        )
-      ]);
-      setCursor(data.nextCursor ?? null);
-    } catch (error) {
-      if (version === requestVersion.current)
-        setError(error instanceof Error ? error.message : "Načítanie zlyhalo.");
-    } finally {
-      if (version === requestVersion.current) setLoading(false);
-    }
-  }
 
   async function create() {
     setCreating(true);
@@ -101,6 +35,7 @@ export function RecordList({ section }: { section: AdminListSection }) {
       const data = await response.json();
       if (!response.ok)
         throw new Error(data.error || "Koncept sa nepodarilo vytvoriť.");
+      list.remember();
       router.push(`/admin/records/${encodeURIComponent(data.id)}`);
     } catch (error) {
       setError(error instanceof Error ? error.message : "Vytvorenie zlyhalo.");
@@ -145,7 +80,7 @@ export function RecordList({ section }: { section: AdminListSection }) {
         className={styles.search}
         onSubmit={(event) => {
           event.preventDefault();
-          setSearch(query);
+          list.searchForQuery();
         }}
       >
         <input
@@ -156,19 +91,41 @@ export function RecordList({ section }: { section: AdminListSection }) {
               : "Hľadať názov…"
           }
           value={query}
+          maxLength={150}
           onChange={(event) => setQuery(event.target.value)}
         />
         <button className={styles.secondary} disabled={loading}>
           Hľadať
         </button>
+        <div
+          className={formStyles.filters}
+          role="group"
+          aria-label="Stav obsahu"
+        >
+          <button
+            type="button"
+            aria-pressed={list.filter === "all"}
+            onClick={() => list.setFilter("all")}
+          >
+            Všetky
+          </button>
+          <button
+            type="button"
+            aria-pressed={list.filter === "draft"}
+            onClick={() => list.setFilter("draft")}
+          >
+            Koncepty
+          </button>
+        </div>
       </form>
       {error ? (
         <div className={styles.error} role="alert">
-          {error}{" "}
+          {error}
+          <TechnicalSupport />
           <button
             className={styles.secondary}
             type="button"
-            onClick={() => setReload((value) => value + 1)}
+            onClick={list.retry}
           >
             Skúsiť znova
           </button>
@@ -180,6 +137,7 @@ export function RecordList({ section }: { section: AdminListSection }) {
             key={item.id}
             href={`/admin/records/${encodeURIComponent(item.id)}`}
             className={styles.record}
+            onClick={list.remember}
           >
             <div>
               <strong>{item.title || "Koncept bez názvu"}</strong>
@@ -195,14 +153,15 @@ export function RecordList({ section }: { section: AdminListSection }) {
             <div className={styles.recordMeta}>
               <span
                 className={`${styles.badge} ${
-                  item.isPublished ? styles.published : ""
+                  item.isPublished &&
+                  !item.hasUnpublishedChanges &&
+                  !item.readOnly
+                    ? styles.published
+                    : ""
                 }`}
               >
-                {item.isPublished ? "Zverejnené" : "Koncept"}
+                {summaryStateLabel(item)}
               </span>
-              {item.readOnly ? (
-                <span className={styles.badge}>História · iba čítanie</span>
-              ) : null}
             </div>
           </Link>
         ))}
@@ -213,7 +172,11 @@ export function RecordList({ section }: { section: AdminListSection }) {
         </p>
       ) : !items.length && !error ? (
         <div className={styles.empty}>
-          Žiadny záznam. Vytvorte nový koncept alebo upravte hľadanie.
+          {kind === "bulletin"
+            ? "Žiadne oznamy. Skúste upraviť hľadanie."
+            : list.filter === "draft"
+            ? "Žiadne koncepty."
+            : "Žiadny záznam. Vytvorte nový alebo upravte hľadanie."}
         </div>
       ) : null}
       {cursor ? (
@@ -221,7 +184,7 @@ export function RecordList({ section }: { section: AdminListSection }) {
           className={styles.secondary}
           type="button"
           disabled={loading}
-          onClick={() => void more()}
+          onClick={() => void list.more()}
           style={{ marginTop: "1rem" }}
         >
           Načítať ďalšie

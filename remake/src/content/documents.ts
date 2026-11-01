@@ -101,5 +101,6 @@ export type ContentRecord = ContentRecordFor<RecordKind>;
 export interface AdminRecordSummary
   extends Omit<ContentRecord, "draft" | "published"> {
   isPublished: boolean;
+  hasUnpublishedChanges?: boolean;
   weekStart?: string;
 }

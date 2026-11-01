@@ -145,6 +145,20 @@ p:last-child {
 .section {
   padding-block: var(--section-space);
 }
+
+.technicalSupport {
+  display: block;
+  margin-top: 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.technicalSupport a {
+  color: inherit;
+  overflow-wrap: anywhere;
+  text-underline-offset: 3px;
+}
 .sectionHeading {
   display: grid;
   gap: 0.65rem;

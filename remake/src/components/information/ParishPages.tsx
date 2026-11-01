@@ -1,9 +1,12 @@
 import Link from "next/link";
 import type { InformationPageDefinition } from "@/content/information";
 import { churchPhotographer } from "@/content/church-details";
+import { serviceQuotations } from "@/content/service-quotations";
 import { PageHero } from "@/components/ui/PageHero";
-import { Arrow, ReadingCopy, PageLinks, RelatedPages } from "./PageSections";
+import { ReadingCopy, PageLinks, RelatedPages } from "./PageSections";
 import { OfficeAside } from "./OfficeAside";
+import { CommunityAside } from "./CommunityAside";
+import { ServiceQuotation } from "./SourceQuotation";
 import { PublishedContent, TourFallback } from "./PublishedContent";
 import styles from "./InformationPage.module.css";
 
@@ -42,6 +45,8 @@ export function ChurchPage({ page }: { page: InformationPageDefinition }) {
 }
 
 export function CommunityPage({ page }: { page: InformationPageDefinition }) {
+  const quotation = serviceQuotations[page.slug];
+
   return (
     <>
       <PageHero
@@ -49,38 +54,12 @@ export function CommunityPage({ page }: { page: InformationPageDefinition }) {
         title={page.title}
         description={page.introduction}
       />
+      {quotation ? <ServiceQuotation quotation={quotation} /> : null}
       <section className={`container ${styles.communityLayout}`}>
         <div>
           <ReadingCopy page={page} />
         </div>
-        <aside className={styles.communityAside}>
-          <h2>
-            {page.source?.placeholderSource || page.contentSource === "curated"
-              ? "Farská kancelária"
-              : "Pridajte sa k nám"}
-          </h2>
-          {page.facts ? (
-            <dl className={styles.facts}>
-              {page.facts.map((fact) => (
-                <div key={fact.label}>
-                  <dt>{fact.label}</dt>
-                  <dd>{fact.value}</dd>
-                </div>
-              ))}
-            </dl>
-          ) : null}
-          {page.contentSource === "curated" ? (
-            <p>
-              O možnostiach zapojenia a potrebnej príprave sa informuj vo
-              farskej kancelárii.
-            </p>
-          ) : !page.source?.placeholderSource ? (
-            <p>Pomôžeme vám nájsť kontakt a prvé stretnutie.</p>
-          ) : null}
-          <Link className="button" href="/kontakt">
-            Ozvite sa nám <Arrow />
-          </Link>
-        </aside>
+        <CommunityAside page={page} />
       </section>
       <RelatedPages page={page} />
     </>

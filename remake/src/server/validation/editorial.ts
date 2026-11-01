@@ -131,15 +131,18 @@ export function parseEditorialDraft(
 }
 
 export function requirePublishedEditorial(entry: EditorialDocument) {
-  if (!entry.title.trim()) fail("Vyplňte názov.");
+  if (!entry.title.trim()) fail("Vyplňte názov.", "title");
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(entry.slug))
-    fail("URL môže obsahovať malé písmená bez diakritiky, čísla a pomlčky.");
+    fail(
+      "URL môže obsahovať malé písmená bez diakritiky, čísla a pomlčky.",
+      "slug"
+    );
   if (
     !entry.body ||
     (!hasMeaningfulBody(entry.body) && !(entry.isPoster && entry.cover))
   )
-    fail("Pridajte text alebo obrázok do obsahu príspevku.");
-  if (entry.isPoster && !entry.cover) fail("Plagát musí mať obrázok.");
+    fail("Pridajte text alebo obrázok do obsahu príspevku.", "body");
+  if (entry.isPoster && !entry.cover) fail("Plagát musí mať obrázok.", "cover");
 
   // Drafts may retain an in-page anchor or incomplete URL. Publication keeps
   // the existing stricter destination policy until an explicit product change.
@@ -147,5 +150,5 @@ export function requirePublishedEditorial(entry: EditorialDocument) {
     entry.posterDestination &&
     !isSafePosterDestination(entry.posterDestination, true)
   )
-    fail("Cieľ plagátu musí byť platný bezpečný odkaz.");
+    fail("Cieľ plagátu musí byť platný bezpečný odkaz.", "posterDestination");
 }

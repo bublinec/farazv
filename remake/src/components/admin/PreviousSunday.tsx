@@ -1,24 +1,38 @@
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { ContentRecordFor } from "@/content/documents";
 import type { CalendarDate, ScheduleDay } from "@/content/types";
+import { sameMasses } from "@/lib/mass";
 import { addDays } from "@/lib/calendar";
-import { readAdminJson } from "./admin-api";
-import { findEditableBulletin } from "./bulletin-records";
+import { loadEditableBulletin } from "./bulletin-records";
 import { formatRecordDate } from "./admin-format";
 import styles from "./Admin.module.css";
+import weekly from "./WeeklyWorkspace.module.css";
 
 function summarize(day: ScheduleDay) {
   const times =
     day.status === "no-masses"
       ? "Bez svätej omše"
+      : day.status === "unpublished"
+      ? "Pravidelné časy"
       : day.masses.map((mass) => mass.time).join(" · ") ||
         "Rozpis nie je vyplnený";
   return [times, day.liturgy].filter(Boolean).join(" · ");
 }
 
 /** Reference the public snapshot explicitly; an unpublished draft is never presented as live. */
-export function PreviousSunday({ weekStart }: { weekStart: CalendarDate }) {
+export function PreviousSunday({
+  weekStart,
+  importedDay,
+  onEditImportedSunday,
+  disabled = false
+}: {
+  weekStart: CalendarDate;
+  importedDay?: ScheduleDay;
+  onEditImportedSunday?: () => void;
+  disabled?: boolean;
+}) {
   const [record, setRecord] = useState<ContentRecordFor<"bulletin"> | null>(
     null
   );
@@ -28,77 +42,109 @@ export function PreviousSunday({ weekStart }: { weekStart: CalendarDate }) {
   const sunday = addDays(weekStart, -1);
 
   useEffect(() => {
-    const controller = new AbortController();
+    let controller = new AbortController();
     setRecord(null);
-    setError("");
-    setLoading(true);
 
     async function load() {
+      controller.abort();
+      controller = new AbortController();
+      const request = controller;
+      setError("");
+      setLoading(true);
       try {
-        const item = await findEditableBulletin(
+        const found = await loadEditableBulletin(
           previousMonday,
-          controller.signal
+          request.signal
         );
-        if (!item || controller.signal.aborted) return;
-        const found = await readAdminJson(
-          await fetch(`/api/admin/records/${encodeURIComponent(item.id)}`, {
-            cache: "no-store",
-            signal: controller.signal
-          })
-        );
-        if (!controller.signal.aborted && found.kind === "bulletin")
-          setRecord(found);
+        if (!request.signal.aborted) setRecord(found ?? null);
       } catch (cause) {
-        if (!controller.signal.aborted)
+        if (!request.signal.aborted)
           setError(
             cause instanceof Error
               ? cause.message
               : "Referenčný rozpis sa nepodarilo načítať."
           );
       } finally {
-        if (!controller.signal.aborted) setLoading(false);
+        if (!request.signal.aborted) setLoading(false);
       }
     }
+    function refresh() {
+      void load();
+    }
     void load();
-    return () => controller.abort();
+    window.addEventListener("focus", refresh);
+    return () => {
+      controller.abort();
+      window.removeEventListener("focus", refresh);
+    };
   }, [previousMonday]);
 
-  const published = record?.published?.days.find(
-    (day) => day.date === sunday && day.status !== "unpublished"
+  const publishedDay = record?.published?.days.find(
+    (day) => day.date === sunday
   );
+  const published =
+    publishedDay?.status === "unpublished" ? undefined : publishedDay;
   const draft = record?.draft.days.find((day) => day.date === sunday);
   const draftChanged =
-    draft && JSON.stringify(draft) !== JSON.stringify(published);
+    draft &&
+    (draft.status !== publishedDay?.status ||
+      (draft.liturgy ?? "") !== (publishedDay?.liturgy ?? "") ||
+      !sameMasses(draft.masses, publishedDay?.masses));
+
+  const importedDiffers = Boolean(
+    importedDay &&
+      ((importedDay.liturgy && importedDay.liturgy !== published?.liturgy) ||
+        ((importedDay.masses.length || importedDay.status === "no-masses") &&
+          (importedDay.status !== published?.status ||
+            !sameMasses(importedDay.masses, published?.masses))))
+  );
 
   return (
-    <aside className={styles.notice}>
-      <strong>Predchádzajúca nedeľa · {formatRecordDate(sunday)}</strong>
-      <p>
-        Verejný rozpis používa zverejnenú verziu predchádzajúceho týždňa. Táto
-        nedeľa sa upravuje iba tam.
-      </p>
-      {loading ? (
-        <p>Načítavam referenčný rozpis…</p>
-      ) : error ? (
-        <p>{error} Formulár tohto týždňa môžete ďalej upravovať.</p>
-      ) : (
-        <>
-          <p>
-            {published
-              ? `Zverejnené: ${summarize(published)}`
-              : "Nedeľa nemá zverejnený rozpis. Web použije označené pravidelné časy, ak sú nastavené."}
-          </p>
-          {draftChanged ? (
-            <p>
-              Koncept: {summarize(draft)}. Táto verzia ešte nie je zverejnená.
-            </p>
-          ) : null}
-        </>
-      )}
-      {record ? (
-        <Link href={`/admin/records/${encodeURIComponent(record.id)}`}>
-          Otvoriť predchádzajúci týždeň →
+    <aside className={weekly.previousSunday} aria-label="Úvodná nedeľa rozpisu">
+      <div>
+        <strong>Nedeľa {formatRecordDate(sunday)}</strong>
+        <p>
+          {loading
+            ? "Načítavam rozpis…"
+            : error
+            ? error
+            : published
+            ? summarize(published)
+            : "Použijú sa pravidelné časy, ak sú nastavené."}
+        </p>
+      </div>
+      {error ? <TechnicalSupport /> : null}
+      {importedDiffers && onEditImportedSunday ? (
+        <button
+          type="button"
+          className={styles.secondary}
+          disabled={disabled || loading}
+          onClick={onEditImportedSunday}
+        >
+          Upraviť nedeľu v novom okne ↗
+        </button>
+      ) : record ? (
+        <Link
+          href={`/admin/records/${encodeURIComponent(record.id)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Upraviť nedeľu v novom okne ↗
         </Link>
+      ) : null}
+      {importedDiffers ? (
+        <p className={weekly.warnings} role="alert">
+          Dokument uvádza iný rozpis tejto nedele. Patrí do predchádzajúceho
+          týždňa; tu sa nemení.
+        </p>
+      ) : null}
+      {draftChanged ? (
+        <details>
+          <summary>Predchádzajúci týždeň má nezverejnené zmeny</summary>
+          <p>
+            Koncept: {summarize(draft)}. Na webe sa použije zverejnená verzia.
+          </p>
+        </details>
       ) : null}
     </aside>
   );

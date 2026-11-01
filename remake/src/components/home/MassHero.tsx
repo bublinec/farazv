@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import type { CalendarDate, MediaAsset, ScheduleDay } from "@/content/types";
+import { bulletinPendingMessage } from "@/content/bulletin-messages";
 import { formatDate } from "@/lib/calendar";
 import { formatCelebrantName, getMassLabel } from "@/lib/mass";
 import { MediaImage } from "@/components/ui/MediaImage";
@@ -11,11 +12,13 @@ import styles from "./MassHero.module.css";
 export function MassHero({
   days,
   today,
-  image
+  image,
+  announcementsPending = false
 }: {
   days: ScheduleDay[];
   today: CalendarDate;
   image: MediaAsset;
+  announcementsPending?: boolean;
 }) {
   const [selected, setSelected] = useState(today);
   const startTouch = useRef<{ x: number; y: number } | null>(null);
@@ -27,7 +30,6 @@ export function MassHero({
 
   if (!day) return null;
 
-  const isToday = day.date === today;
   const move = (offset: number) => {
     const next = days[index + offset];
 
@@ -86,11 +88,14 @@ export function MassHero({
               })}
             </time>
           </p>
-          {day.isRegular ? (
+          {announcementsPending || day.isRegular ? (
             <p className={styles.notice}>
-              {day.masses.length
-                ? "Podrobný rozpis ešte nie je zverejnený. Časy sú pravidelné, môžu sa zmeniť."
-                : "Podrobný rozpis ani pravidelné časy ešte nie sú potvrdené. Aktuálne informácie vám poskytne farská kancelária."}
+              {announcementsPending ? <>{bulletinPendingMessage} </> : null}
+              {day.isRegular
+                ? day.masses.length
+                  ? "Uvádzame pravidelné časy svätých omší, ktoré sa môžu zmeniť."
+                  : "Časy svätých omší ešte nie sú potvrdené. Informujte sa vo farskej kancelárii."
+                : null}
             </p>
           ) : null}
           {day.status === "no-masses" ? (
@@ -181,17 +186,6 @@ export function MassHero({
               <span>Nasledujúci</span>
               <Icon name="arrow-right" size={19} />
             </button>
-          </div>
-          <div className={styles.todayControl}>
-            {!isToday ? (
-              <button
-                type="button"
-                className={styles.backToday}
-                onClick={() => setSelected(today)}
-              >
-                Späť na dnes
-              </button>
-            ) : null}
           </div>
         </div>
       </div>

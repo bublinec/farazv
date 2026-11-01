@@ -1,3 +1,5 @@
+import { parishServices } from "./services";
+
 export interface NavigationItem {
   label: string;
   href?: string;
@@ -18,6 +20,7 @@ export const navigation: NavigationItem[] = [
       },
       { label: "Kostol v Zolnej", href: "/farnost/kostol-sv-matusa-v-zolnej" },
       { label: "Cirkevná škola", href: "/farnost/cirkevna-skola" },
+      { label: "Rehoľné sestry", href: "/spolocenstva/reholne-sestry" },
       { label: "Charita", href: "https://www.charitazvolen.sk/" }
     ]
   },
@@ -37,14 +40,7 @@ export const navigation: NavigationItem[] = [
   },
   {
     label: "Služby vo farnosti",
-    children: [
-      { label: "Detský spevokol", href: "/spolocenstva/detsky-spevokol" },
-      { label: "Mládežnícky zbor", href: "/spolocenstva/mladeznicky-zbor" },
-      { label: "Miništranti", href: "/spolocenstva/ministranti" },
-      { label: "Lektori", href: "/spolocenstva/lektori" },
-      { label: "Akolyti", href: "/spolocenstva/akolyti" },
-      { label: "Rehoľné sestry", href: "/spolocenstva/reholne-sestry" }
-    ]
+    children: parishServices.map(({ title, href }) => ({ label: title, href }))
   },
   { label: "Kontakt", href: "/kontakt" }
 ];

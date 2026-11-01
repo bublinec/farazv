@@ -1,11 +1,15 @@
 "use client";
 
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
+
 import { useEffect, useId, useRef, useState } from "react";
 import type { MediaAsset } from "@/content/types";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { useMediaLibrary } from "./hooks/useMediaLibrary";
 import { useImageUpload } from "./hooks/useImageUpload";
+import { useFieldError } from "./EditorValidation";
 import styles from "./Admin.module.css";
+import formStyles from "./AdminForms.module.css";
 
 export function MediaPicker({
   open,
@@ -22,6 +26,7 @@ export function MediaPicker({
   const lastFocus = useRef<HTMLElement | null>(null);
   const titleId = useId();
   const fileRef = useRef<HTMLInputElement>(null);
+  const selectionRef = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState<MediaAsset | null>(null);
   const [alt, setAlt] = useState("");
   const [caption, setCaption] = useState("");
@@ -34,6 +39,14 @@ export function MediaPicker({
   const pendingUpload = imageUpload.pending;
   const busy = library.busy || imageUpload.busy;
   const error = imageUpload.error || library.error;
+
+  useEffect(() => {
+    if (open && selected)
+      selectionRef.current?.scrollIntoView({
+        block: "nearest",
+        behavior: "smooth"
+      });
+  }, [open, selected?.src]);
 
   async function load(next?: string) {
     imageUpload.clearError();
@@ -126,6 +139,7 @@ export function MediaPicker({
         {error ? (
           <p className={styles.error} role="alert">
             {error}
+            <TechnicalSupport />
           </p>
         ) : null}
         <div className={styles.search}>
@@ -170,10 +184,6 @@ export function MediaPicker({
             }}
           />
         </div>
-        <p className={styles.hint}>
-          Vyberte existujúci obrázok alebo nahrajte nový. Odstránenie z článku
-          nevymaže originál z Cloudinary.
-        </p>
         {busy ? <p role="status">Načítavam alebo nahrávam obrázok…</p> : null}
         {pendingUpload ? (
           <div className={styles.notice}>
@@ -208,6 +218,54 @@ export function MediaPicker({
             </div>
           </div>
         ) : null}
+        {selected ? (
+          <div ref={selectionRef} className={formStyles.selectedMedia}>
+            <MediaImage image={selected} sizes="180px" fit="contain" />
+            <div className={formStyles.selectedDetails}>
+              <label className={styles.field}>
+                Opis obrázka
+                <input
+                  value={alt}
+                  maxLength={1000}
+                  onChange={(event) => setAlt(event.target.value)}
+                />
+              </label>
+              <label className={styles.field}>
+                Titulok
+                <input
+                  value={caption}
+                  maxLength={1000}
+                  onChange={(event) => setCaption(event.target.value)}
+                />
+              </label>
+              <div className={styles.actions}>
+                <button
+                  className={styles.button}
+                  type="button"
+                  disabled={busy || !!pendingUpload}
+                  onClick={() => {
+                    onSelect({
+                      ...selected,
+                      alt,
+                      caption: caption || undefined
+                    });
+                    close();
+                  }}
+                >
+                  Použiť obrázok
+                </button>
+                <button
+                  className={styles.quietLink}
+                  type="button"
+                  disabled={busy}
+                  onClick={close}
+                >
+                  Zrušiť
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
         <div className={styles.mediaGrid}>
           {items.map((image, index) => (
             <button
@@ -235,56 +293,6 @@ export function MediaPicker({
             Načítať ďalšie obrázky
           </button>
         ) : null}
-        {selected ? (
-          <div className={styles.selectedMedia}>
-            <MediaImage image={selected} sizes="180px" />
-            <div>
-              <label className={styles.field}>
-                Opis obrázka (alternatívny text)
-                <input
-                  value={alt}
-                  maxLength={1000}
-                  onChange={(e) => setAlt(e.target.value)}
-                />
-                <small>
-                  Krátko opíšte, čo obrázok zobrazuje. Pri plagáte uveďte názov
-                  podujatia.
-                </small>
-              </label>
-              <label className={styles.field}>
-                Titulok
-                <input
-                  value={caption}
-                  maxLength={1000}
-                  onChange={(e) => setCaption(e.target.value)}
-                />
-              </label>
-            </div>
-          </div>
-        ) : null}
-        <div className={styles.actions}>
-          <button
-            className={styles.button}
-            type="button"
-            disabled={!selected || busy}
-            onClick={() => {
-              if (selected) {
-                onSelect({ ...selected, alt, caption: caption || undefined });
-                close();
-              }
-            }}
-          >
-            Použiť obrázok
-          </button>
-          <button
-            className={styles.secondary}
-            type="button"
-            disabled={busy}
-            onClick={close}
-          >
-            Zrušiť
-          </button>
-        </div>
       </div>
     </dialog>
   );
@@ -293,20 +301,34 @@ export function MediaPicker({
 export function ImageField({
   label,
   value,
-  onChange
+  onChange,
+  path,
+  portrait = false
 }: {
   label: string;
   value?: MediaAsset;
   onChange: (asset?: MediaAsset) => void;
+  path?: string;
+  portrait?: boolean;
 }) {
+  const error = useFieldError(path);
+  const errorId = useId();
   const [open, setOpen] = useState(false);
   return (
-    <div>
+    <div data-field={path}>
       <h3>{label}</h3>
+      {error ? (
+        <p id={errorId} className={formStyles.fieldError}>
+          {error}
+        </p>
+      ) : null}
       {value ? (
-        <div className={styles.imagePreview}>
-          <MediaImage image={value} sizes="400px" />
-          <p>{value.alt || "Bez alternatívneho textu"}</p>
+        <div className={formStyles.imagePreview}>
+          <MediaImage
+            image={value}
+            sizes={portrait ? "104px" : "200px"}
+            fit={portrait ? "cover" : "contain"}
+          />
           <label className={styles.field}>
             Opis obrázka
             <input
@@ -324,6 +346,7 @@ export function ImageField({
           className={styles.secondary}
           type="button"
           onClick={() => setOpen(true)}
+          aria-describedby={error ? errorId : undefined}
         >
           {value ? "Zmeniť obrázok" : "Vybrať obrázok"}
         </button>

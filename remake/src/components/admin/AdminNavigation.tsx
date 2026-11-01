@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import styles from "./Admin.module.css";
+import { useActiveAdminSection } from "./AdminSectionContext";
 
 const links = [
   { id: "bulletin", label: "Oznamy", href: "/admin" },
@@ -19,9 +20,11 @@ export function AdminNavigation({
 }) {
   const pathname = usePathname();
   const params = useSearchParams();
+  const recordSection = useActiveAdminSection();
   let section: string | null = null;
   if (pathname.startsWith("/admin/nastavenia")) section = "settings";
   else if (pathname.startsWith("/admin/pristupy")) section = "access";
+  else if (pathname.startsWith("/admin/records/")) section = recordSection;
   else if (pathname === "/admin") {
     const selected = params.get("section");
     section =

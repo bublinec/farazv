@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { heroImage } from "@/content/assets";
 import { churchDetails } from "@/content/church-details";
+import { parishServices } from "@/content/services";
 import {
   getPublicSettings,
   getPublicBulletins,
@@ -37,14 +38,15 @@ export default async function HomePage() {
     ]);
   const settings =
     settingsResult.status === "fulfilled" ? settingsResult.value : null;
-  const days =
+  const publicWeek =
     bulletinResult.status === "fulfilled"
       ? getPublicWeek(
           bulletinResult.value,
           today,
           settings?.regularSchedule ?? {}
-        ).days
+        )
       : null;
+  const days = publicWeek?.days;
   const recentNews =
     newsResult.status === "fulfilled" ? newsResult.value : null;
   const recentArticles =
@@ -55,17 +57,23 @@ export default async function HomePage() {
   return (
     <>
       {days ? (
-        <MassHero key={today} days={days} today={today} image={heroImage} />
+        <MassHero
+          key={today}
+          days={days}
+          today={today}
+          image={heroImage}
+          announcementsPending={!publicWeek?.bulletin?.announcements.length}
+        />
       ) : (
         <section className="container section">
           <Unavailable title="Rozpis je dočasne nedostupný." />
         </section>
       )}
-      <section id="novinky" className="section">
+      <section id="novinky" className={`section ${styles.posts}`}>
         <div id="vyveska" className="container">
           <SectionHeading
-            title="Čo je u nás nové"
-            description="Čo sa práve deje v našej farnosti."
+            title="Zo života našej farnosti"
+            description="Aktuálne oznamy, pozvánky na podujatia a správy z farského života."
           />
           {recentNews?.length ? (
             <EditorialGrid entries={recentNews} kind="news" />
@@ -76,12 +84,33 @@ export default async function HomePage() {
           )}
         </div>
       </section>
+      <section className="section">
+        <div className="container">
+          <SectionHeading
+            title="Zapoj sa do života našej farnosti"
+            align="center"
+          />
+          <div className={styles.communities}>
+            {parishServices.map(({ title, description, href }, index) => (
+              <Link href={href} className={styles.community} key={href}>
+                <span className={styles.communityNumber}>0{index + 1}</span>
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <span className="textLink">
+                  Zistiť viac
+                  <Icon name="arrow-right" size={16} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
       <SacramentsSection />
       <section className="section">
         <div className="container">
           <SectionHeading
-            title="Miesto, ktoré poznáme"
-            description="Krása ukrytá v detailoch. Nahliadnite do Kostola sv. Alžbety."
+            title="Náš kostol zblízka"
+            description="Fotografie interiéru a detailov Kostola sv. Alžbety."
             action={
               <Link href="/farnost/galeria" className="textLink">
                 Celá galéria
@@ -113,7 +142,10 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-      <section id="spolocenstvo" className={`section ${styles.magazine}`}>
+      <section
+        id="spolocenstvo"
+        className={`section ${styles.posts} ${styles.magazine}`}
+      >
         <div className={styles.magazineBackground} aria-hidden="true">
           <MediaImage image={{ ...churchDetails.pews, alt: "" }} sizes="55vw" />
         </div>
@@ -133,48 +165,6 @@ export default async function HomePage() {
           ) : (
             <Unavailable compact />
           )}
-        </div>
-      </section>
-      <section className="section">
-        <div className="container">
-          <SectionHeading
-            title="Zapoj sa do života našej farnosti"
-            align="center"
-          />
-          <div className={styles.communities}>
-            {[
-              [
-                "Detský spevokol",
-                "Radosť z hudby a spoločnej viery pre najmenších.",
-                "/spolocenstva/detsky-spevokol"
-              ],
-              [
-                "Mládežnícky zbor",
-                "Miesto pre mladých, ktorí chcú spievať a patriť do spoločenstva.",
-                "/spolocenstva/mladeznicky-zbor"
-              ],
-              [
-                "Miništranti",
-                "Služba pri oltári, priateľstvá a spoločné zážitky.",
-                "/spolocenstva/ministranti"
-              ],
-              [
-                "Lektori",
-                "Prednášaním Božieho slova pomáhajú pri spoločnom slávení liturgie.",
-                "/spolocenstva/lektori"
-              ]
-            ].map(([title, description, href], index) => (
-              <Link href={href} className={styles.community} key={href}>
-                <span className={styles.communityNumber}>0{index + 1}</span>
-                <h3>{title}</h3>
-                <p>{description}</p>
-                <span className="textLink">
-                  Zistiť viac
-                  <Icon name="arrow-right" size={16} />
-                </span>
-              </Link>
-            ))}
-          </div>
         </div>
       </section>
       {settings ? (

@@ -9,17 +9,16 @@ const lifetime = 60 * 60 * 1000;
 export function storeBulletinImport(
   weekStart: CalendarDate,
   result: BulletinImportResult,
-  fillForm = false
+  storage: Pick<Storage, "setItem"> = sessionStorage
 ) {
   try {
-    sessionStorage.setItem(
+    storage.setItem(
       key,
       JSON.stringify({
-        version: 2,
+        version: 3,
         expiresAt: Date.now() + lifetime,
         weekStart,
-        result,
-        fillForm
+        result
       })
     );
   } catch {
@@ -31,7 +30,7 @@ export function storeBulletinImport(
 
 export function takeBulletinImport(
   weekStart: CalendarDate
-): { result: BulletinImportResult; fillForm: boolean } | undefined {
+): { result: BulletinImportResult } | undefined {
   try {
     const stored = sessionStorage.getItem(key);
     if (!stored) return;
@@ -42,7 +41,7 @@ export function takeBulletinImport(
     const handoff = JSON.parse(stored);
     if (
       !handoff ||
-      handoff.version !== 2 ||
+      handoff.version !== 3 ||
       !Number.isFinite(handoff.expiresAt) ||
       handoff.expiresAt < Date.now() ||
       !isBulletinImportResult(handoff.result)
@@ -52,7 +51,7 @@ export function takeBulletinImport(
     }
     if (handoff.weekStart !== weekStart) return;
     clearBulletinImport();
-    return { result: handoff.result, fillForm: handoff.fillForm === true };
+    return { result: handoff.result };
   } catch {
     clearBulletinImport();
   }

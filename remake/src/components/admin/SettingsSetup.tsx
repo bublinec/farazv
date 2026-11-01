@@ -1,5 +1,7 @@
 "use client";
 
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { readAdminJson } from "./admin-api";
@@ -39,6 +41,7 @@ export function SettingsSetup() {
       {error ? (
         <p role="alert" className={styles.error}>
           {error}
+          <TechnicalSupport />
         </p>
       ) : null}
       <button

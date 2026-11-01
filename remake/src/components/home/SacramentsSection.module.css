@@ -72,8 +72,9 @@
 
 .sacrament > p {
   flex: 1;
-  color: var(--white);
+  color: #eeece5;
   font-size: 0.92rem;
+  font-weight: 350;
   line-height: 1.65;
   margin-bottom: 6px;
 }

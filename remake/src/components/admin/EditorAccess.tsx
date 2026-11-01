@@ -1,5 +1,7 @@
 "use client";
 
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
+
 import { useEffect, useRef, useState } from "react";
 import type { EditorAccessList } from "@/content/editor-access";
 import { readAdminJson } from "./admin-api";
@@ -26,7 +28,7 @@ export function EditorAccess({
     if (
       method === "DELETE" &&
       !window.confirm(
-        `Odobrať účtu ${address} redaktorský prístup? Odobratie platí aj pre už prihláseného redaktora.`
+        `Odobrať účtu ${address} prístup? Platí to aj pre jeho aktuálne prihlásenie.`
       )
     )
       return;
@@ -56,9 +58,9 @@ export function EditorAccess({
       setAccess(next);
       if (method === "POST") {
         setEmail("");
-        setMessage(`Redaktor ${address} sa teraz môže prihlásiť cez Google.`);
+        setMessage(`Prístup pridaný: ${address}.`);
       } else if (method === "DELETE") {
-        setMessage(`Redaktorský prístup účtu ${address} bol odobratý.`);
+        setMessage(`Prístup odobratý: ${address}.`);
       } else setMessage("Zoznam prístupov je aktuálny.");
     } catch (cause) {
       if (!controller.signal.aborted)
@@ -94,6 +96,7 @@ export function EditorAccess({
       {error ? (
         <p className={styles.error} role="alert">
           {error}
+          <TechnicalSupport />
         </p>
       ) : null}
       {message ? (
@@ -103,6 +106,10 @@ export function EditorAccess({
       ) : null}
 
       <section className={styles.panel}>
+        <h2>
+          Používatelia{" "}
+          <span className={styles.badge}>{access.editors.length}</span>
+        </h2>
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -111,7 +118,7 @@ export function EditorAccess({
           className={accessStyles.form}
         >
           <label className={styles.field}>
-            Google e-mail nového redaktora
+            Google e-mail
             <input
               type="email"
               required
@@ -123,7 +130,6 @@ export function EditorAccess({
               onChange={(event) => setEmail(event.target.value)}
               disabled={!!busy}
               placeholder="meno@gmail.com"
-              aria-describedby="editor-access-hint"
             />
           </label>
           <button
@@ -131,19 +137,9 @@ export function EditorAccess({
             type="submit"
             disabled={!!busy || !email.trim()}
           >
-            {busy === "grant" ? "Pridávam…" : "Pridať"}
+            {busy === "grant" ? "Pridávam…" : "Pridať prístup"}
           </button>
         </form>
-        <p id="editor-access-hint" className={styles.hint}>
-          Redaktor upravuje a zverejňuje obsah. Prístupy spravuje iba správca.
-        </p>
-      </section>
-
-      <section className={styles.panel}>
-        <h2>
-          Redaktori{" "}
-          <span className={styles.badge}>{access.editors.length}</span>
-        </h2>
         {access.editors.length ? (
           <ul className={accessStyles.people}>
             {access.editors.map((editor) => (
@@ -170,7 +166,7 @@ export function EditorAccess({
             ))}
           </ul>
         ) : (
-          <p className={styles.hint}>Zatiaľ žiadni redaktori.</p>
+          <p className={styles.hint}>Zatiaľ žiadni ďalší používatelia.</p>
         )}
       </section>
 
@@ -180,24 +176,11 @@ export function EditorAccess({
           {access.administrators.map((administrator) => (
             <li key={administrator}>
               <strong>{administrator}</strong>
-              <span className={styles.badge}>Správca</span>
+              <span className={styles.badge}>Chránený účet</span>
             </li>
           ))}
         </ul>
-        <p className={styles.hint}>
-          Správcovia upravujú obsah aj prístupy. Tieto chránené účty sa tu
-          nedajú odobrať.
-        </p>
       </section>
-
-      <details className={accessStyles.help}>
-        <summary>Nový redaktor sa nevie prihlásiť cez Google?</summary>
-        <p>
-          Skontrolujte, či pri prihlásení vybral presne tú adresu, ktorú ste
-          pridali. Nový účet ani ďalšie heslo nepotrebuje. Pri pracovnom Google
-          účte môže prihlásenie obmedzovať správca jeho organizácie.
-        </p>
-      </details>
     </div>
   );
 }

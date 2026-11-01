@@ -1,5 +1,7 @@
 "use client";
 
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
+
 import { useEffect, useRef, useState } from "react";
 import type { EditorialKind, EditorialPage } from "@/lib/editorial";
 import { EditorialGrid } from "./EditorialCard";
@@ -104,6 +106,7 @@ function PaginatedFeed({ initialPage, kind }: Props) {
         {error && (
           <p role="alert" className={styles.error}>
             Ďalšie príspevky sa nepodarilo načítať. Skúste to znova.
+            <TechnicalSupport />
           </p>
         )}
         {nextCursor ? (

@@ -3,14 +3,16 @@ import { randomUUID } from "node:crypto";
 import { and, desc, eq, ilike, inArray, lt, or, sql } from "drizzle-orm";
 import type {
   AdminRecordSummary,
+  BulletinDocument,
   ContentDocument,
   ContentRecord,
   ContentRecordFor,
-  RecordKind
+  RecordKind,
+  SettingsDocument
 } from "@/content/documents";
 import { postRecordKinds } from "@/content/posts";
+import { siteConfig } from "@/content/site";
 import { addDays, getMonday, getLocalDate } from "@/lib/calendar";
-import { getPublishedSettings } from "./published-store";
 import { getDb } from "./db";
 import { contentRecords } from "./db/schema";
 import { ContentError } from "./errors";
@@ -56,6 +58,7 @@ export async function listRecords(
     query?: string;
     cursor?: string;
     weekStart?: string;
+    status?: string;
   } = {}
 ) {
   if (
@@ -64,6 +67,8 @@ export async function listRecords(
     !recordKinds.includes(options.kind as RecordKind)
   )
     throw new ContentError(400, "Neplatný typ obsahu.", "INVALID_QUERY");
+  if (options.status && options.status !== "draft")
+    throw new ContentError(400, "Neplatný stav obsahu.", "INVALID_QUERY");
   if (
     options.weekStart &&
     (options.kind !== "bulletin" ||
@@ -106,6 +111,7 @@ export async function listRecords(
       source: contentRecords.source,
       readOnly: contentRecords.readOnly,
       isPublished,
+      hasUnpublishedChanges: sql<boolean>`${contentRecords.published} is not null and ${contentRecords.draft} <> ${contentRecords.published}`,
       weekStart: sql<string | null>`${contentRecords.draft}->>'weekStart'`
     })
     .from(contentRecords)
@@ -118,6 +124,9 @@ export async function listRecords(
           : undefined,
         options.weekStart
           ? eq(sql`${contentRecords.draft}->>'weekStart'`, options.weekStart)
+          : undefined,
+        options.status === "draft"
+          ? and(eq(isPublished, false), eq(contentRecords.readOnly, false))
           : undefined,
         options.query
           ? ilike(
@@ -170,27 +179,58 @@ export async function listRecords(
   };
 }
 
-export async function createRecord<K extends RecordKind>(
-  kind: K,
-  weekStart?: string
-): Promise<ContentRecordFor<K>> {
-  if (!recordKinds.includes(kind))
-    throw new ContentError(422, "Neplatný typ obsahu.", "INVALID_KIND");
-  if (kind === "settings") {
-    const existing = await getRecord("site-settings");
-    if (existing) return existing as ContentRecordFor<K>;
-  }
-  const id = kind === "settings" ? "site-settings" : randomUUID();
-  let draft: ContentDocument;
-  if (kind === "bulletin") {
-    if (!isCalendarDate(weekStart) || getMonday(weekStart) !== weekStart)
+/** Repeated or simultaneous requests open the same editable week, never its history. */
+export async function openBulletinWeek(
+  weekStart: unknown
+): Promise<ContentRecordFor<"bulletin">> {
+  if (!isCalendarDate(weekStart) || getMonday(weekStart) !== weekStart)
+    throw new ContentError(
+      422,
+      "Vyberte pondelok pripravovaného týždňa.",
+      "INVALID_WEEK"
+    );
+
+  return getDb().transaction(async (transaction) => {
+    // A transaction-scoped lock covers both the lookup and insert across tabs
+    // and server instances. Hash collisions only serialize unrelated weeks.
+    await transaction.execute(
+      sql`select pg_advisory_xact_lock(hashtextextended(${`farazv:bulletin:${weekStart}`}, 0))`
+    );
+
+    const existing = await transaction
+      .select()
+      .from(contentRecords)
+      .where(
+        and(
+          eq(contentRecords.kind, "bulletin"),
+          eq(contentRecords.readOnly, false),
+          eq(sql`${contentRecords.draft}->>'weekStart'`, weekStart)
+        )
+      )
+      .limit(2);
+
+    if (existing.length > 1)
       throw new ContentError(
-        422,
-        "Vyberte pondelok pripravovaného týždňa.",
-        "INVALID_WEEK"
+        409,
+        "Pre tento týždeň existuje viac záznamov. Vyberte správny v prehľade oznamov.",
+        "AMBIGUOUS_WEEK"
       );
-    const settings = await getPublishedSettings();
-    draft = {
+    if (existing[0])
+      return toRecord(existing[0]) as ContentRecordFor<"bulletin">;
+
+    const [settingsRow] = await transaction
+      .select({ document: contentRecords.published })
+      .from(contentRecords)
+      .where(
+        and(
+          eq(contentRecords.id, "site-settings"),
+          eq(contentRecords.kind, "settings")
+        )
+      )
+      .limit(1);
+    const settings = settingsRow?.document as SettingsDocument | null;
+    const id = randomUUID();
+    const draft: BulletinDocument = {
       id,
       weekStart,
       days: Array.from({ length: 7 }, (_, index) => {
@@ -215,11 +255,41 @@ export async function createRecord<K extends RecordKind>(
       announcements: [],
       donations: []
     };
-  } else if (kind === "settings") {
+
+    const [created] = await transaction
+      .insert(contentRecords)
+      .values({
+        id,
+        kind: "bulletin",
+        title: `Farské oznamy ${weekStart}`,
+        draft
+      })
+      .returning();
+
+    return toRecord(created) as ContentRecordFor<"bulletin">;
+  });
+}
+
+export async function createRecord<K extends RecordKind>(
+  kind: K,
+  weekStart?: string
+): Promise<ContentRecordFor<K>> {
+  if (!recordKinds.includes(kind))
+    throw new ContentError(422, "Neplatný typ obsahu.", "INVALID_KIND");
+  if (kind === "bulletin")
+    return (await openBulletinWeek(weekStart)) as ContentRecordFor<K>;
+  if (kind === "settings") {
+    const existing = await getRecord("site-settings");
+    if (existing) return existing as ContentRecordFor<K>;
+  }
+
+  const id = kind === "settings" ? "site-settings" : randomUUID();
+  let draft: ContentDocument;
+  if (kind === "settings") {
     draft = {
-      name: "",
-      shortName: "",
-      location: "",
+      name: siteConfig.name,
+      shortName: siteConfig.name,
+      location: siteConfig.city,
       address: "",
       phone: "",
       email: "",
@@ -246,12 +316,7 @@ export async function createRecord<K extends RecordKind>(
     .values({
       id,
       kind,
-      title:
-        kind === "bulletin"
-          ? `Farské oznamy ${weekStart}`
-          : kind === "settings"
-          ? "Nastavenia farnosti"
-          : "Bez názvu",
+      title: kind === "settings" ? "Nastavenia farnosti" : "Bez názvu",
       draft
     })
     .onConflictDoNothing()
@@ -324,14 +389,28 @@ export async function updateRecord(
       "Základné nastavenia farnosti nemožno zrušiť.",
       "SETTINGS_REQUIRED"
     );
+  // These fixed identity fields have no editor controls. Repair older empty
+  // setup drafts using the parish identity while preserving existing names.
+  let editableInput = input ?? current.draft;
+  if (
+    current.kind === "settings" &&
+    editableInput &&
+    typeof editableInput === "object" &&
+    !Array.isArray(editableInput)
+  ) {
+    const settings = editableInput as Record<string, unknown>;
+    editableInput = {
+      ...settings,
+      name: settings.name === "" ? siteConfig.name : settings.name,
+      shortName:
+        settings.shortName === "" ? siteConfig.name : settings.shortName,
+      location: settings.location === "" ? siteConfig.city : settings.location
+    };
+  }
   const document =
     action === "unpublish"
       ? current.draft
-      : validateDocument(
-          current.kind,
-          input ?? current.draft,
-          action === "publish"
-        );
+      : validateDocument(current.kind, editableInput, action === "publish");
   if ("id" in document) document.id = id;
   // The parser above selected its document family from this envelope's kind.
   // Keep that correlation at this write boundary for the remaining operations.
@@ -364,7 +443,8 @@ export async function updateRecord(
       throw new ContentError(
         422,
         "Pri zmene účtu aktualizujte alebo odstráňte aj platobný QR kód.",
-        "STALE_DONATION_QR"
+        "STALE_DONATION_QR",
+        "donationQr"
       );
   }
   try {

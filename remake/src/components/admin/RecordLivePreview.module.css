@@ -1,0 +1,30 @@
+.surface {
+  background: var(--white);
+  border: 1px solid var(--admin-border, var(--line));
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 0;
+}
+.surface :global(.container) {
+  width: min(calc(100% - 2rem), var(--content-width));
+}
+.surface :global(.section) {
+  padding-block: clamp(1.5rem, 3vw, 3rem);
+}
+.message {
+  padding: 1.5rem;
+  margin: 0;
+  color: var(--muted);
+}
+.message p {
+  margin: 0 0 0.75rem;
+}
+.message button {
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--white);
+  color: var(--blue-deep);
+  cursor: pointer;
+}

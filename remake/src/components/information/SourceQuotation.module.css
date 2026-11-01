@@ -1,28 +1,24 @@
 .band {
-  --prose-font-size: 0.95rem;
-  --prose-line-height: 1.65;
+  --prose-font-size: 0.9rem;
+  --prose-line-height: 1.5;
   --prose-paragraph-gap: 0;
   --prose-width: none;
   margin: 0;
-  padding-block: clamp(32px, 4vw, 48px);
+  padding-block: 16px;
   background: color-mix(in srgb, var(--blue) 6%, var(--white));
   border-bottom: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.9rem;
-  line-height: 1.45;
+  line-height: 1.5;
   text-align: center;
   scroll-margin-top: 32px;
 }
 
 .quotation {
   display: grid;
-  grid-template-columns: clamp(28px, 5vw, 64px) minmax(0, 1fr) clamp(
-      28px,
-      5vw,
-      64px
-    );
-  align-items: start;
-  gap: clamp(10px, 2vw, 24px);
+  grid-template-columns: 36px minmax(0, 1fr) 36px;
+  align-items: center;
+  gap: 12px;
 }
 
 .openMark,
@@ -30,9 +26,21 @@
   color: var(--blue);
   opacity: 0.25;
   font-family: var(--font-display);
-  font-size: clamp(64px, 8vw, 104px);
-  line-height: 0.9;
-  margin-top: -0.08em;
+  font-size: 56px;
+  line-height: 0.75;
+}
+
+.copy {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  font-style: normal;
+  font-weight: 350;
+}
+
+.copy > p {
+  margin: 0;
 }
 
 .inlineCopy {
@@ -49,40 +57,41 @@
 }
 
 .attribution {
-  --prose-font-size: 0.8rem;
-  margin-top: 20px;
-}
-
-.ornament {
+  --prose-font-size: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  margin-bottom: 14px;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.attribution > svg {
+  flex-shrink: 0;
+  color: var(--gold-dark);
+  opacity: 0.7;
+}
+
+.attribution a {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, var(--muted) 35%, transparent);
+  text-underline-offset: 3px;
+}
+
+.attribution a:hover {
   color: var(--blue);
 }
 
-.ornament > span {
-  width: 42px;
-  height: 1px;
-  background: var(--gold);
-}
-
 @media (max-width: 550px) {
-  .band {
-    text-align: left;
-  }
-
   .quotation {
     grid-template-columns: 20px minmax(0, 1fr) 20px;
+    gap: 8px;
+    text-align: left;
   }
 
   .openMark,
   .closeMark {
-    font-size: 52px;
-  }
-
-  .attribution {
-    text-align: center;
+    font-size: 42px;
   }
 }

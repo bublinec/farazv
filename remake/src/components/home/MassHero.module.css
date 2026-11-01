@@ -178,21 +178,6 @@
 .dayButton:hover {
   background: #ffffff12;
 }
-.backToday {
-  display: block;
-  min-height: 44px;
-  margin: 0 auto;
-  background: transparent;
-  color: var(--gold-light);
-  border: 0;
-  padding: 7px 10px;
-  font-size: 0.85rem;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-.todayControl {
-  min-height: 44px;
-}
 .notice {
   max-width: 530px;
   color: #f4e6c6;

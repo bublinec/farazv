@@ -38,9 +38,6 @@ export function ImageGallery({ images }: { images: MediaAsset[] }) {
                 }
                 fit={images.length === 1 ? "contain" : "cover"}
               />
-              <span className={styles.zoom} aria-hidden="true">
-                ↗
-              </span>
             </button>
             {image.caption && <figcaption>{image.caption}</figcaption>}
           </figure>

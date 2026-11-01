@@ -1,4 +1,6 @@
 "use client";
+
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 import styles from "@/components/admin/Admin.module.css";
 export default function AdminError({
   reset
@@ -12,6 +14,7 @@ export default function AdminError({
       <p>
         Skontrolujte prihlásenie a pripojenie. Obsah na serveri ostal zachovaný.
       </p>
+      <TechnicalSupport />
       <button className={styles.button} type="button" onClick={reset}>
         Skúsiť znova
       </button>

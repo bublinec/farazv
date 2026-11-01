@@ -44,6 +44,11 @@ interface InformationPageLayout {
     | "tour"
     | "resource";
   facts?: { label: string; value: string }[];
+  aside?: {
+    title: string;
+    description?: string;
+    contact?: { name: string; phone: string };
+  };
   links?: InformationLink[];
   timeline?: { year: string; title: string; text: string }[];
   credit?: string;
@@ -73,6 +78,11 @@ type InformationPageConfiguration = InformationPageLayout &
 const pageDefinitions: InformationPageConfiguration[] = [
   {
     slug: "sviatosti/sviatost-krstu",
+    aside: {
+      title: "Dohodnite krst",
+      description:
+        "Termín krstu a krstnej náuky si dohodnite vo farskej kancelárii."
+    },
     title: "Sviatosť krstu",
     eyebrow: "Sviatosti",
     introduction:
@@ -88,6 +98,11 @@ const pageDefinitions: InformationPageConfiguration[] = [
   },
   {
     slug: "sviatosti/sviatost-eucharistie",
+    aside: {
+      title: "Prvé sväté prijímanie",
+      description:
+        "Prihlásenie dieťaťa riešte s katechétom v jeho škole. S prípravou dospelých vám pomôže farská kancelária."
+    },
     title: "Sviatosť Eucharistie",
     eyebrow: "Sviatosti",
     kind: "sacrament",
@@ -97,6 +112,11 @@ const pageDefinitions: InformationPageConfiguration[] = [
   },
   {
     slug: "sviatosti/sviatost-birmovania",
+    aside: {
+      title: "Príprava na birmovanie",
+      description:
+        "Aktuálne prihlásenie a termíny stretnutí si overte vo farských oznamoch alebo vo farskej kancelárii."
+    },
     title: "Sviatosť birmovania",
     eyebrow: "Sviatosti",
     kind: "sacrament",
@@ -106,6 +126,11 @@ const pageDefinitions: InformationPageConfiguration[] = [
   },
   {
     slug: "sviatosti/sviatost-manzelstva",
+    aside: {
+      title: "Plánujete sobáš?",
+      description:
+        "Vo farskej kancelárii si dohodnite termín sobáša a ďalší postup prípravy."
+    },
     title: "Sviatosť manželstva",
     eyebrow: "Sviatosti",
     kind: "sacrament",
@@ -115,6 +140,11 @@ const pageDefinitions: InformationPageConfiguration[] = [
   },
   {
     slug: "sviatosti/sviatost-zmierenia",
+    aside: {
+      title: "Sviatosť zmierenia",
+      description:
+        "Aktuálne informácie nájdete vo farských oznamoch. Individuálny termín alebo návštevu chorého si dohodnite s kňazom."
+    },
     title: "Sviatosť zmierenia",
     eyebrow: "Sviatosti",
     kind: "sacrament",
@@ -125,6 +155,11 @@ const pageDefinitions: InformationPageConfiguration[] = [
   },
   {
     slug: "sviatosti/sviatost-pomazania-chorych",
+    aside: {
+      title: "Návšteva kňaza u chorého",
+      description:
+        "Kontaktujte farskú kanceláriu a dohodnite návštevu kňaza. V súrnom prípade zavolajte aj mimo úradných hodín."
+    },
     title: "Pomazanie chorých",
     eyebrow: "Sviatosti",
     kind: "sacrament",
@@ -221,6 +256,10 @@ const pageDefinitions: InformationPageConfiguration[] = [
   },
   {
     slug: "spolocenstva/detsky-spevokol",
+    aside: {
+      title: "Pridaj sa k Alžbetke",
+      contact: { name: "Magdaléna Turanská", phone: "0914 189 867" }
+    },
     title: "Detský spevokol Alžbetka",
     eyebrow: "Spoločenstvá",
     kind: "community",
@@ -228,12 +267,20 @@ const pageDefinitions: InformationPageConfiguration[] = [
       "Spievame, hráme a rastieme spolu. Detský spevokol je miestom pre deti, ktoré chcú prinášať radosť do spoločného slávenia.",
     contentSource: "published",
     facts: [
-      { label: "Kde sa stretávame", value: "Farský klub" },
-      { label: "Služba", value: "Detské sväté omše" }
+      { label: "Svätá omša", value: "Nedeľa o 10:30" },
+      { label: "Nácvik", value: "Nedeľa o 9:00" },
+      {
+        label: "Miesto nácviku",
+        value: "Farský klub · vchod od Divadla J. G. Tajovského"
+      }
     ]
   },
   {
     slug: "spolocenstva/mladeznicky-zbor",
+    aside: {
+      title: "Pridaj sa k zboru",
+      contact: { name: "Kristína Považanová", phone: "0944 389 886" }
+    },
     title: "Mládežnícky zbor Alžbeta",
     eyebrow: "Spoločenstvá",
     kind: "community",
@@ -241,12 +288,23 @@ const pageDefinitions: InformationPageConfiguration[] = [
       "Spoločenstvo mladých ľudí, ktorých spája viera a hudba. Každý talent môže priniesť niečo nové.",
     contentSource: "published",
     facts: [
-      { label: "Kde sa stretávame", value: "Farský klub" },
-      { label: "Služba", value: "Mládežnícke sväté omše" }
+      { label: "Svätá omša", value: "Nedeľa o 19:00" },
+      {
+        label: "Spoločný nácvik",
+        value: "Nedeľa o 17:00 · dve hodiny pred omšou"
+      },
+      { label: "Miesto nácviku", value: "Farský klub" }
     ]
   },
   {
     slug: "spolocenstva/ministranti",
+    aside: {
+      title: "Chceš miništrovať?",
+      contact: {
+        name: "Filip Krahulec · hlavný miništrant",
+        phone: "0951 606 212"
+      }
+    },
     title: "Miništranti Zvolen-mesto",
     eyebrow: "Spoločenstvá",
     kind: "community",
@@ -254,25 +312,21 @@ const pageDefinitions: InformationPageConfiguration[] = [
       "Služba pri oltári, priateľstvá aj spoločné zážitky. Radi medzi nami privítame každého nového miništranta.",
     contentSource: "published",
     facts: [
-      { label: "Prvý krok", value: "Príďte do sakristie" },
-      { label: "Služba", value: "Pri slávení liturgie" }
-    ]
-  },
-  {
-    slug: "spolocenstva/reholne-sestry",
-    title: "Rehoľné sestry",
-    eyebrow: "Spoločenstvá",
-    kind: "community",
-    introduction:
-      "Kongregácia Dcér sv. Františka Assiského. Zasvätený život, modlitba a služba potrebám farnosti.",
-    contentSource: "published",
-    facts: [
-      { label: "Kongregácia", value: "Dcéry sv. Františka Assiského" },
-      { label: "Spiritualita", value: "Františkánska" }
+      {
+        label: "Prvý krok",
+        value: "Príď do sakristie aspoň 7 minút pred svätou omšou."
+      },
+      { label: "Stretká", value: "Piatok po večernej svätej omši" },
+      { label: "Miesto stretiek", value: "Farský klub" }
     ]
   },
   {
     slug: "spolocenstva/akolyti",
+    aside: {
+      title: "Záujem o službu akolytu",
+      description:
+        "Porozprávaj sa s kňazom o potrebnej príprave a poverení na túto službu."
+    },
     title: "Akolyti",
     eyebrow: "Služba vo farnosti",
     kind: "community",
@@ -296,7 +350,26 @@ const pageDefinitions: InformationPageConfiguration[] = [
     ]
   },
   {
+    slug: "spolocenstva/reholne-sestry",
+    aside: { title: "O komunite" },
+    title: "Rehoľné sestry",
+    eyebrow: "Spoločenstvá",
+    kind: "community",
+    introduction:
+      "Kongregácia Dcér sv. Františka Assiského. Zasvätený život, modlitba a služba potrebám farnosti.",
+    contentSource: "published",
+    facts: [
+      { label: "Kongregácia", value: "Dcéry sv. Františka Assiského" },
+      { label: "Spiritualita", value: "Františkánska" }
+    ]
+  },
+  {
     slug: "spolocenstva/lektori",
+    aside: {
+      title: "Chceš sa stať lektorom?",
+      description:
+        "Oslov kňaza po svätej omši alebo kontaktuj farskú kanceláriu. Dohodneš sa na príprave a možnostiach služby."
+    },
     title: "Lektori",
     eyebrow: "Služba vo farnosti",
     kind: "community",
@@ -312,7 +385,7 @@ const pageDefinitions: InformationPageConfiguration[] = [
         ]
       },
       {
-        title: "Chceš sa zapojiť?",
+        title: "Chcete sa zapojiť?",
         paragraphs: [
           "Ak ťa oslovuje služba čítania pri bohoslužbách, ozvi sa vo farskej kancelárii alebo oslov kňaza po svätej omši. Dohodneš sa na potrebnej príprave a možnostiach zapojenia."
         ]

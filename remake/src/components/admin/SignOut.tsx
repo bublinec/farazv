@@ -1,5 +1,7 @@
 "use client";
 
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
+
 import { useState } from "react";
 import styles from "./Admin.module.css";
 
@@ -35,7 +37,12 @@ export function SignOut() {
       >
         {state === "busy" ? "Odhlasujem…" : "Odhlásiť sa"}
       </button>
-      {state && state !== "busy" ? <span role="alert">{state}</span> : null}
+      {state && state !== "busy" ? (
+        <span role="alert">
+          {state}
+          <TechnicalSupport />
+        </span>
+      ) : null}
     </>
   );
 }

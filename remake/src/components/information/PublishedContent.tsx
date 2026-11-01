@@ -1,3 +1,4 @@
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 import type { ReactNode } from "react";
 import type { InformationPageDefinition } from "@/content/information";
 import {
@@ -188,6 +189,7 @@ export function TourFallback({ page }: { page: InformationPageDefinition }) {
         Virtuálna prehliadka je dočasne nedostupná. Pozrite si galériu našich
         kostolov alebo dostupné 3D modely.
       </p>
+      <TechnicalSupport />
       <a className={styles.textLink} href="/farnost/galeria">
         Otvoriť galériu <span aria-hidden="true">→</span>
       </a>

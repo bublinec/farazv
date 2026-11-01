@@ -11,63 +11,72 @@ import {
   takeBulletinImport
 } from "../bulletin-import-handoff";
 
-/** Own review handoff and navigation; applying, saving and publishing stay separate. */
+function confirmReplacement(current: BulletinDocument, next: BulletinDocument) {
+  const replacements = bulletinImportReplacements(current, next);
+  return (
+    !replacements.length ||
+    window.confirm(
+      `Nahradiť existujúce údaje načítaným dokumentom?\n\n${replacements.join(
+        "\n"
+      )}\n\nOstatné dni zostanú zachované.`
+    )
+  );
+}
+
+/** Imported values stay local until the editor explicitly saves or publishes. */
 export function useBulletinImport(
   document: BulletinDocument,
   onChange: (document: BulletinDocument) => void,
   enabled = true
 ) {
   const navigation = useBulletinNavigation();
-  const [initialResult, setInitialResult] = useState<BulletinImportResult>();
-  const [message, setMessage] = useState("");
+  const [result, setResult] = useState<BulletinImportResult>();
+  const [pending, setPending] = useState(false);
   const handoffKey = useRef("");
+
+  function apply(imported: BulletinImportResult, allowDifferentWeek = false) {
+    setResult(imported);
+    if (
+      !allowDifferentWeek &&
+      imported.suggestedWeekStart &&
+      imported.suggestedWeekStart !== document.weekStart
+    ) {
+      setPending(true);
+      return;
+    }
+
+    const next = applyBulletinImport(document, imported);
+    if (!confirmReplacement(document, next)) {
+      setPending(true);
+      return;
+    }
+
+    onChange(next);
+    setPending(false);
+    clearBulletinImport();
+  }
+
+  const applyLatest = useRef(apply);
+  applyLatest.current = apply;
 
   useEffect(() => {
     if (!enabled) return;
     const key = `${document.id}:${document.weekStart}`;
-    // Consume and fill only once, including StrictMode's effect replay.
+    // Consume once, including StrictMode's effect replay. Both upload paths use
+    // the same replacement confirmation before changing existing local fields.
     if (handoffKey.current === key) return;
     handoffKey.current = key;
     const handoff = takeBulletinImport(document.weekStart);
-    setInitialResult(handoff?.result);
-    setMessage("");
-    if (handoff?.fillForm) {
-      onChange(applyBulletinImport(document, handoff.result));
-      setMessage(
-        "Dokument je vo formulári. Skontrolujte údaje a uložte koncept alebo ho zverejnite."
-      );
-    }
-  }, [document, onChange, enabled]);
-
-  function apply(result: BulletinImportResult) {
-    const next = applyBulletinImport(document, result);
-    const replacements = bulletinImportReplacements(document, next);
-    if (
-      replacements.length &&
-      !window.confirm(
-        `Načítanie nahradí existujúce údaje vo formulári:\n\n${replacements.join(
-          "\n"
-        )}\n\nOstatné dni zostanú zachované. Pokračovať?`
-      )
-    )
-      return;
-
-    onChange(next);
-    setMessage(
-      "Údaje sú vo formulári. Skontrolujte ich a uložte koncept alebo ho zverejnite."
-    );
-    clearBulletinImport();
-    requestAnimationFrame(() => {
-      const fields = window.document.getElementById("bulletin-week");
-      fields?.focus();
-      fields?.scrollIntoView({ block: "start" });
-    });
-  }
+    setResult(handoff?.result);
+    setPending(false);
+    if (handoff) applyLatest.current(handoff.result);
+  }, [document.id, document.weekStart, enabled]);
 
   return {
-    initialResult,
-    message,
+    result,
+    pending,
     apply,
+    applyCurrentWeek: () => result && apply(result, true),
     ...navigation
   };
 }

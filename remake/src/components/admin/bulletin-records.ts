@@ -1,4 +1,4 @@
-import type { AdminRecordSummary } from "@/content/documents";
+import type { AdminRecordSummary, ContentRecordFor } from "@/content/documents";
 import type { CalendarDate } from "@/content/types";
 import { readAdminJson } from "./admin-api";
 
@@ -27,4 +27,23 @@ export async function findEditableBulletin(
       "Pre tento týždeň existuje viac záznamov. Vyberte správny v prehľade oznamov."
     );
   return matches[0];
+}
+
+/** Load the snapshots as well when the UI must distinguish draft and live content. */
+export async function loadEditableBulletin(
+  weekStart: CalendarDate,
+  signal?: AbortSignal
+): Promise<ContentRecordFor<"bulletin"> | undefined> {
+  const item = await findEditableBulletin(weekStart, signal);
+  if (!item || signal?.aborted) return;
+
+  const record = await readAdminJson(
+    await fetch(`/api/admin/records/${encodeURIComponent(item.id)}`, {
+      cache: "no-store",
+      signal
+    })
+  );
+  if (record.kind !== "bulletin" || record.readOnly)
+    throw new Error("Týždeň sa nepodarilo načítať.");
+  return record as ContentRecordFor<"bulletin">;
 }

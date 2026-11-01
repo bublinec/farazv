@@ -1,9 +1,11 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import type { Mass } from "@/content/types";
 import { getMassLabel } from "@/lib/mass";
+import { useFieldError } from "./EditorValidation";
 import styles from "./Admin.module.css";
+import formStyles from "./AdminForms.module.css";
 
 export function Field({
   label,
@@ -13,7 +15,11 @@ export function Field({
   hint,
   wide = false,
   multiline = false,
-  maxLength
+  maxLength,
+  path,
+  readOnly = false,
+  autoCapitalize,
+  spellCheck
 }: {
   label: string;
   value?: string;
@@ -23,15 +29,34 @@ export function Field({
   wide?: boolean;
   multiline?: boolean;
   maxLength?: number;
+  path?: string;
+  readOnly?: boolean;
+  autoCapitalize?: string;
+  spellCheck?: boolean;
 }) {
+  const error = useFieldError(path);
+  const hintId = useId();
+  const errorId = useId();
+  const describedBy =
+    [hint ? hintId : "", error ? errorId : ""].filter(Boolean).join(" ") ||
+    undefined;
+
   return (
-    <label className={`${styles.field} ${wide ? styles.wide : ""}`}>
+    <label
+      className={`${styles.field} ${wide ? styles.wide : ""}`}
+      data-field={path}
+    >
       {label}
       {multiline ? (
         <textarea
           value={value ?? ""}
           onChange={(e) => onChange(e.target.value)}
           maxLength={maxLength}
+          readOnly={readOnly}
+          autoCapitalize={autoCapitalize}
+          spellCheck={spellCheck}
+          aria-invalid={!!error}
+          aria-describedby={describedBy}
         />
       ) : (
         <input
@@ -39,9 +64,19 @@ export function Field({
           value={value ?? ""}
           onChange={(e) => onChange(e.target.value)}
           maxLength={maxLength}
+          readOnly={readOnly}
+          autoCapitalize={autoCapitalize}
+          spellCheck={spellCheck}
+          aria-invalid={!!error}
+          aria-describedby={describedBy}
         />
       )}{" "}
-      {hint ? <small>{hint}</small> : null}
+      {hint ? <small id={hintId}>{hint}</small> : null}
+      {error ? (
+        <small id={errorId} className={formStyles.fieldError}>
+          {error}
+        </small>
+      ) : null}
     </label>
   );
 }
@@ -49,11 +84,13 @@ export function Field({
 export function MassFields({
   masses,
   onChange,
-  template = false
+  template = false,
+  path
 }: {
   masses: Mass[];
   onChange: (value: Mass[]) => void;
   template?: boolean;
+  path?: string;
 }) {
   function update(index: number, key: keyof Mass, value: string) {
     onChange(
@@ -71,65 +108,71 @@ export function MassFields({
   return (
     <div>
       {masses.map((mass, index) => (
-        <div className={styles.mass} key={index}>
-          <div className={styles.massHeading}>
-            <strong>
-              {template ? "Pravidelná svätá omša" : "Svätá omša"} {index + 1}
-            </strong>
-            <button
-              type="button"
-              className={styles.remove}
-              onClick={() => onChange(masses.filter((_, i) => i !== index))}
-            >
-              Odobrať omšu {index + 1}
-            </button>
-          </div>
-          <div className={styles.fields}>
+        <div
+          className={formStyles.mass}
+          key={index}
+          role="group"
+          aria-label={`Svätá omša ${index + 1}`}
+        >
+          <div className={formStyles.massMain}>
             <Field
               label="Čas"
               type="time"
               value={mass.time}
               onChange={(value) => update(index, "time", value)}
+              path={path ? `${path}.${index}.time` : undefined}
             />
             <Field
               label="Označenie"
               value={getMassLabel(mass)}
               onChange={(value) => update(index, "label", value)}
-              hint="Napríklad Lieskovec, nemocnica alebo rodinná svätá omša. Prázdne = farský kostol."
+              path={path ? `${path}.${index}.label` : undefined}
             />
-            {!template ? (
-              <>
-                <Field
-                  label="Celebrant"
-                  value={mass.celebrant}
-                  onChange={(value) => update(index, "celebrant", value)}
-                />
-                <Field
-                  label="Úmysel"
-                  value={mass.intention}
-                  onChange={(value) => update(index, "intention", value)}
-                  wide
-                  multiline
-                />
-              </>
-            ) : null}
           </div>
-          {index > 0 ? (
+          {!template ? (
+            <div className={formStyles.massDetails}>
+              <Field
+                label="Celebrant"
+                value={mass.celebrant}
+                onChange={(value) => update(index, "celebrant", value)}
+                path={path ? `${path}.${index}.celebrant` : undefined}
+              />
+              <Field
+                label="Úmysel"
+                value={mass.intention}
+                onChange={(value) => update(index, "intention", value)}
+                path={path ? `${path}.${index}.intention` : undefined}
+                multiline
+              />
+            </div>
+          ) : null}
+          <div className={formStyles.rowActions}>
+            {index > 0 ? (
+              <button
+                type="button"
+                className={styles.quietLink}
+                aria-label={`Posunúť svätú omšu ${index + 1} vyššie`}
+                onClick={() => {
+                  const items = [...masses];
+                  [items[index - 1], items[index]] = [
+                    items[index],
+                    items[index - 1]
+                  ];
+                  onChange(items);
+                }}
+              >
+                ↑ Posunúť
+              </button>
+            ) : null}
             <button
               type="button"
               className={styles.remove}
-              onClick={() => {
-                const items = [...masses];
-                [items[index - 1], items[index]] = [
-                  items[index],
-                  items[index - 1]
-                ];
-                onChange(items);
-              }}
+              aria-label={`Odobrať svätú omšu ${index + 1}`}
+              onClick={() => onChange(masses.filter((_, i) => i !== index))}
             >
-              Posunúť vyššie
+              Odobrať
             </button>
-          ) : null}
+          </div>
         </div>
       ))}
       <button

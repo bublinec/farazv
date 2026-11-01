@@ -1,5 +1,7 @@
 "use client";
 
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
+
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import styles from "./page.module.css";
@@ -35,6 +37,7 @@ export function GoogleSignIn() {
       {error && (
         <p className={styles.notice} role="alert">
           {error}
+          <TechnicalSupport />
         </p>
       )}
     </>

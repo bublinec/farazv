@@ -1,5 +1,7 @@
 "use client";
 
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
+
 import { useEffect, useRef, useState } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -150,6 +152,7 @@ function MapCanvas({ address, href }: { address: string; href: string }) {
           ) : (
             <>
               <p>Mapu sa nepodarilo načítať.</p>
+              <TechnicalSupport />
               <a href={href}>Otvoriť polohu farskej kancelárie na mape →</a>
             </>
           )}

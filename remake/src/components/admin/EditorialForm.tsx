@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useRef } from "react";
 import type {
   EditorialDocument,
   EditorialRecordKind,
@@ -10,6 +11,7 @@ import { contentBlocksToRichText } from "@/lib/rich-text";
 import { Field } from "./Fields";
 import { ImageField } from "./MediaPicker";
 import styles from "./Admin.module.css";
+import formStyles from "./AdminForms.module.css";
 
 const VisualEditor = dynamic(() => import("./VisualEditor"), {
   ssr: false,
@@ -38,6 +40,16 @@ export function EditorialForm({
   pathLocked?: boolean;
   disabled?: boolean;
 }) {
+  const customSlug = useRef(Boolean(document.slug));
+
+  function updateTitle(title: string) {
+    onChange({
+      ...document,
+      title,
+      ...(!pathLocked && !customSlug.current ? { slug: slugify(title) } : {})
+    });
+  }
+
   function update<K extends keyof EditorialDocument>(
     key: K,
     value: EditorialDocument[K]
@@ -51,47 +63,50 @@ export function EditorialForm({
   return (
     <>
       <section className={styles.panel}>
-        <h2>Základné údaje</h2>
-        <div className={styles.fields}>
+        <div className={formStyles.stack}>
           <Field
             label="Názov"
+            path="title"
             value={document.title}
-            onChange={(value) => update("title", value)}
-            wide
+            onChange={updateTitle}
             maxLength={300}
           />
-          <label className={`${styles.field} ${styles.wide}`}>
-            Adresa stránky · posledná časť URL
-            <input
-              value={document.slug ?? ""}
-              readOnly={pathLocked}
-              onChange={(event) => update("slug", event.target.value)}
-              maxLength={300}
-            />
-            <small>
-              {pathLocked
-                ? "Adresa už bola zverejnená. Zmena názvu ju nemení, aby existujúce odkazy ostali funkčné."
-                : "Malé písmená bez diakritiky, číslice a spojovníky. Názov ani dátum adresu automaticky nemenia."}
-            </small>
-            {!pathLocked ? (
-              <button
-                className={styles.secondary}
-                type="button"
-                style={{ alignSelf: "start" }}
-                onClick={() => update("slug", slugify(document.title))}
-              >
-                Vytvoriť adresu z názvu
-              </button>
-            ) : null}
-          </label>
+          <ImageField
+            label="Titulný obrázok"
+            path="cover"
+            value={document.cover}
+            onChange={(image) => update("cover", image)}
+          />
+          <Field
+            label="Krátky úvod"
+            path="excerpt"
+            value={document.excerpt}
+            onChange={(value) => update("excerpt", value)}
+            multiline
+            maxLength={3000}
+          />
+        </div>
+      </section>
+      <section className={styles.panel} data-field="body">
+        <h2>Obsah</h2>
+        <VisualEditor
+          disabled={disabled}
+          value={body}
+          onChange={(value) => update("body", value)}
+        />
+      </section>
+      <section className={styles.panel}>
+        <h2>Podrobnosti</h2>
+        <div className={styles.fields}>
           <Field
             label="Dátum zobrazenia"
+            path="date"
             type="date"
             value={document.date}
             onChange={(value) =>
               update("date", value as EditorialDocument["date"])
             }
-            hint="Zverejnenie je okamžité. Tento dátum slúži na zobrazenie a radenie."
+            hint="Určuje dátum a poradie na webe."
           />
           <Field
             label="Autor"
@@ -99,38 +114,38 @@ export function EditorialForm({
             onChange={(value) => update("author", value)}
             maxLength={300}
           />
-          <Field
-            label="Krátky úvod do zoznamu"
-            value={document.excerpt}
-            onChange={(value) => update("excerpt", value)}
-            multiline
-            wide
-            maxLength={3000}
-          />
         </div>
-      </section>
-      <section className={styles.panel}>
-        <ImageField
-          label="Titulný obrázok"
-          value={document.cover}
-          onChange={(image) => update("cover", image)}
-        />
-      </section>
-      <section className={styles.panel}>
-        <h2>Obsah</h2>
-        <VisualEditor
-          disabled={disabled}
-          value={body}
-          onChange={(value) => update("body", value)}
-        />
-        <p className={styles.hint}>
-          Nadpis stránky je vyššie. V texte začínajte nadpisom 2. Obrázok
-          vložíte z knižnice alebo priamym nahraním; PDF pridajte ako existujúci
-          odkaz.
-        </p>
-      </section>
-      <section className={styles.panel}>
-        <h2>Zobrazenie na webe</h2>
+        <details className={formStyles.options}>
+          <summary>Adresa stránky</summary>
+          <Field
+            label="Posledná časť adresy"
+            path="slug"
+            value={document.slug}
+            readOnly={pathLocked}
+            autoCapitalize="none"
+            spellCheck={false}
+            onChange={(value) => {
+              customSlug.current = true;
+              update("slug", value);
+            }}
+            maxLength={300}
+            hint={
+              pathLocked ? "Po zverejnení zostáva adresa rovnaká." : undefined
+            }
+          />
+          {!pathLocked ? (
+            <button
+              className={styles.quietLink}
+              type="button"
+              onClick={() => {
+                customSlug.current = false;
+                update("slug", slugify(document.title));
+              }}
+            >
+              Použiť adresu z názvu
+            </button>
+          ) : null}
+        </details>
         {kind === "article" ? (
           <label className={styles.checkbox}>
             <input
@@ -138,7 +153,7 @@ export function EditorialForm({
               checked={document.showInNews ?? false}
               onChange={(e) => update("showInNews", e.target.checked)}
             />
-            Zobraziť článok aj medzi príspevkami
+            Zobraziť aj na Výveske
           </label>
         ) : null}
         <label className={styles.checkbox}>
@@ -147,22 +162,23 @@ export function EditorialForm({
             checked={document.isPoster ?? false}
             onChange={(e) => update("isPoster", e.target.checked)}
           />
-          Obsah je v plagáte · text príspevku nemusí byť vyplnený
+          Príspevok tvorí plagát
         </label>
         {document.isPoster ? (
           <div className={styles.fields}>
             <Field
               label="Odkaz na ďalšie informácie (nepovinné)"
+              path="posterDestination"
               value={document.posterDestination}
               onChange={(value) => update("posterDestination", value)}
-              hint="https://… alebo /miestna-stranka. Odkaz sa zobrazí v detaile príspevku."
             />
             <Field
               label="Zobraziť na úvodnej stránke do (vrátane)"
+              path="posterExpiresOn"
               type="date"
               value={document.posterExpiresOn}
               onChange={(value) => update("posterExpiresOn", value)}
-              hint="Po tomto dni sa skryje z úvodnej stránky. V zozname príspevkov a na svojom odkaze zostane dostupný."
+              hint="Po tomto dni sa skryje z úvodnej stránky. Jeho vlastná adresa zostáva dostupná."
             />
           </div>
         ) : null}

@@ -23,7 +23,13 @@ export async function adminResponse(
   } catch (error) {
     if (error instanceof AccessError || error instanceof ContentError)
       return Response.json(
-        { error: error.message, code: error.code },
+        {
+          error: error.message,
+          code: error.code,
+          ...(error instanceof ContentError && error.field
+            ? { field: error.field }
+            : {})
+        },
         { status: error.status, headers: PRIVATE_RESPONSE_HEADERS }
       );
     console.error("Admin request failed", {

@@ -10,6 +10,7 @@ export function GET(request: Request) {
       kind: params.get("kind") || undefined,
       query: params.get("query") || undefined,
       weekStart: params.get("weekStart") || undefined,
+      status: params.get("status") || undefined,
       cursor: params.get("cursor") || undefined
     });
   });

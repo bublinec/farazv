@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import type { ContentRecord } from "@/content/documents";
 import { useUnsavedChanges } from "./useUnsavedChanges";
+import { publicationMessage } from "../record-state";
 
 export type RecordEditorOperation =
   | "idle"
@@ -19,21 +19,20 @@ const mutationOperations = {
   unpublish: "unpublishing"
 } as const;
 
-const mutationMessages: Record<RecordMutation, string> = {
+const mutationMessages = {
   save: "Koncept je uložený. Verejná verzia sa nezmenila.",
-  publish: "Zverejnené. Verejný web používa túto verziu.",
   unpublish: "Stiahnuté z webu. Koncept ostáva zachovaný."
 };
 
 /** Own the draft and optimistic version together; a failed write keeps both intact. */
 export function useRecordEditor(initialRecord: ContentRecord) {
-  const router = useRouter();
   const [record, setRecord] = useState(initialRecord);
   const [saved, setSaved] = useState(JSON.stringify(initialRecord.draft));
   const [operation, setOperation] = useState<RecordEditorOperation>("idle");
   const operationRef = useRef<RecordEditorOperation>("idle");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [errorField, setErrorField] = useState("");
   const [conflict, setConflict] = useState(false);
   const [cacheWarning, setCacheWarning] = useState("");
 
@@ -66,6 +65,7 @@ export function useRecordEditor(initialRecord: ContentRecord) {
     if (!beginOperation(mutationOperations[action])) return null;
 
     setError("");
+    setErrorField("");
     setMessage("");
     setConflict(false);
 
@@ -83,6 +83,7 @@ export function useRecordEditor(initialRecord: ContentRecord) {
       });
       const data = await response.json();
       if (!response.ok) {
+        setErrorField(typeof data.field === "string" ? data.field : "");
         if (response.status === 409 && data.code === "VERSION_CONFLICT")
           setConflict(true);
         throw new Error(
@@ -109,8 +110,8 @@ export function useRecordEditor(initialRecord: ContentRecord) {
         setSaved(JSON.stringify(savedRecord.draft));
       }
       setMessage(
-        record.kind === "settings" && action === "publish"
-          ? "Nastavenia sú uložené."
+        action === "publish"
+          ? publicationMessage(savedRecord)
           : mutationMessages[action]
       );
       return savedRecord;
@@ -161,6 +162,10 @@ export function useRecordEditor(initialRecord: ContentRecord) {
       return;
     if (!beginOperation("reloading")) return;
 
+    setError("");
+    setErrorField("");
+    setMessage("");
+
     try {
       const response = await fetch(
         `/api/admin/records/${encodeURIComponent(record.id)}`,
@@ -174,6 +179,7 @@ export function useRecordEditor(initialRecord: ContentRecord) {
       setSaved(JSON.stringify(latest.draft));
       setConflict(false);
       setError("");
+      setErrorField("");
       setMessage("Aktuálna verzia je načítaná.");
     } catch (error) {
       setError(error instanceof Error ? error.message : "Načítanie zlyhalo.");
@@ -182,21 +188,18 @@ export function useRecordEditor(initialRecord: ContentRecord) {
     }
   }
 
-  async function preview() {
-    if (operationRef.current !== "idle") return;
-
-    const savedRecord = dirty ? await mutate("save") : record;
-    if (savedRecord)
-      router.push(`/admin/preview/${encodeURIComponent(record.id)}`);
-  }
-
   return {
     record,
-    setRecord,
+    setRecord: (next: ContentRecord) => {
+      setRecord(next);
+      if (!conflict) setError("");
+      setErrorField("");
+    },
     operation,
     busy,
     dirty,
     error,
+    errorField,
     message,
     conflict,
     cacheWarning,
@@ -204,7 +207,6 @@ export function useRecordEditor(initialRecord: ContentRecord) {
     publishRecord: () => mutate("publish"),
     unpublishRecord: () => mutate("unpublish"),
     retryCacheRefresh,
-    reloadLatest,
-    preview
+    reloadLatest
   };
 }

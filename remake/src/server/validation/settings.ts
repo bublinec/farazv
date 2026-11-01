@@ -146,31 +146,37 @@ export function requirePublishedSettings(settings: SettingsDocument) {
         ? settingsTextLimits.publishedAddress
         : settingsTextLimits.field;
     if (!nonempty(settings[key], maximum))
-      fail("Vyplňte základné kontaktné údaje.");
+      fail("Vyplňte základné kontaktné údaje.", key);
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(settings.email))
-    fail("Skontrolujte e-mailovú adresu.");
+    fail("Skontrolujte e-mailovú adresu.", "email");
 
   const iban = settings.iban.replace(/\s/g, "");
   if (!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(iban))
-    fail("Skontrolujte IBAN farského účtu.");
+    fail("Skontrolujte IBAN farského účtu.", "iban");
   const digits = (iban.slice(4) + iban.slice(0, 4)).replace(/[A-Z]/g, (char) =>
     String(char.charCodeAt(0) - 55)
   );
   let mod = 0;
   for (const digit of digits) mod = (mod * 10 + Number(digit)) % 97;
-  if (mod !== 1) fail("Kontrolný súčet IBAN nie je platný.");
+  if (mod !== 1) fail("Kontrolný súčet IBAN nie je platný.", "iban");
 
-  if (settings.officeHours.some((row) => !row.day.trim() || !row.time.trim()))
-    fail("Skontrolujte úradné hodiny.");
-  if (
-    settings.preparationMeetings.some(
-      (row) => !row.name.trim() || !row.time.trim()
-    )
-  )
-    fail("Skontrolujte náuky.");
-  for (const masses of Object.values(settings.regularSchedule))
-    requirePublishedMassTimes(masses);
-  if (settings.priests?.some((priest) => !priest.name.trim()))
-    fail("Skontrolujte kontakty na kňazov.");
+  settings.officeHours.forEach((row, index) => {
+    if (!row.day.trim())
+      fail("Vyplňte deň úradných hodín.", `officeHours.${index}.day`);
+    if (!row.time.trim())
+      fail("Vyplňte čas úradných hodín.", `officeHours.${index}.time`);
+  });
+  settings.preparationMeetings.forEach((row, index) => {
+    if (!row.name.trim())
+      fail("Vyplňte názov náuky.", `preparationMeetings.${index}.name`);
+    if (!row.time.trim())
+      fail("Vyplňte čas náuky.", `preparationMeetings.${index}.time`);
+  });
+  for (const [day, masses] of Object.entries(settings.regularSchedule))
+    requirePublishedMassTimes(masses, `regularSchedule.${day}`);
+  settings.priests?.forEach((priest, index) => {
+    if (!priest.name.trim())
+      fail("Vyplňte meno kontaktu.", `priests.${index}.name`);
+  });
 }

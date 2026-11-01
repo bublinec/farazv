@@ -1,5 +1,10 @@
 export class ContentError extends Error {
-  constructor(public status: number, message: string, public code: string) {
+  constructor(
+    public status: number,
+    message: string,
+    public code: string,
+    public field?: string
+  ) {
     super(message);
   }
 }

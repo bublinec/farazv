@@ -1,3 +1,4 @@
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 import Link from "next/link";
 import type { SettingsDocument } from "@/content/documents";
 import { siteConfig } from "@/content/site";
@@ -81,7 +82,10 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
               </li>
             </ul>
           ) : (
-            <p>Skúste stránku obnoviť neskôr.</p>
+            <p>
+              Kontaktné údaje sa nepodarilo načítať. Skúste stránku obnoviť.
+              <TechnicalSupport />
+            </p>
           )}
         </div>
       </div>
