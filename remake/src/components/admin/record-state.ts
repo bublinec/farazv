@@ -1,6 +1,10 @@
 import type { AdminRecordSummary, ContentRecord } from "@/content/documents";
 import type { CalendarDate } from "@/content/types";
-import { addDays, getLocalDate } from "@/lib/calendar";
+import {
+  addDays,
+  BULLETIN_SWITCH_HOUR,
+  getBulletinWeekStart
+} from "@/lib/calendar";
 import { formatRecordDate } from "./admin-format";
 
 function canonical(value: unknown): string {
@@ -26,7 +30,13 @@ export function scheduledPublication(record: ContentRecord) {
   if (record.kind !== "bulletin" || !record.published) return null;
 
   const date = record.published.weekStart;
-  return date > getLocalDate() ? date : null;
+  return date > getBulletinWeekStart() ? date : null;
+}
+
+export function formatBulletinStart(weekStart: CalendarDate) {
+  return `${formatRecordDate(
+    addDays(weekStart, -2)
+  )} o ${BULLETIN_SWITCH_HOUR}:00`;
 }
 
 export function recordStateLabel(record: ContentRecord) {
@@ -35,7 +45,7 @@ export function recordStateLabel(record: ContentRecord) {
   if (hasUnpublishedChanges(record)) return "Nezverejnené zmeny";
 
   const date = scheduledPublication(record);
-  return date ? `Naplánované od ${formatRecordDate(date)}` : "Zverejnené";
+  return date ? `Naplánované od ${formatBulletinStart(date)}` : "Zverejnené";
 }
 
 export function publicationMessage(record: ContentRecord) {
@@ -43,7 +53,7 @@ export function publicationMessage(record: ContentRecord) {
 
   const date = scheduledPublication(record);
   return date
-    ? `Zverejnenie je naplánované od ${formatRecordDate(date)}.`
+    ? `Zverejnenie je naplánované od ${formatBulletinStart(date)}.`
     : "Zverejnené.";
 }
 
@@ -54,8 +64,8 @@ export function summaryStateLabel(record: AdminRecordSummary) {
   if (record.kind === "bulletin" && record.weekStart) {
     try {
       const date = addDays(record.weekStart as CalendarDate, 0);
-      if (date > getLocalDate())
-        return `Naplánované od ${formatRecordDate(date)}`;
+      if (date > getBulletinWeekStart())
+        return `Naplánované od ${formatBulletinStart(date)}`;
     } catch {
       // Keep preserved imported dates readable; editing validates them separately.
     }

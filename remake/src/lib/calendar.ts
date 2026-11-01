@@ -6,6 +6,7 @@ import type {
 } from "@/content/types";
 
 export const PARISH_TIME_ZONE = "Europe/Bratislava";
+export const BULLETIN_SWITCH_HOUR = 20;
 
 /** Date-only arithmetic uses UTC as a calendar, never as the parish's timezone. */
 function parseDate(date: CalendarDate): Date {
@@ -46,6 +47,29 @@ export function getMonday(date: CalendarDate): CalendarDate {
   return addDays(date, -((weekday + 6) % 7));
 }
 
+/** Monday identifies the bulletin; its public week starts on Saturday at 20:00. */
+export function getBulletinWeekStart(
+  at: Date | CalendarDate = new Date()
+): CalendarDate {
+  // A date-only preview represents the start of that day, without a clock cutoff.
+  const date = typeof at === "string" ? at : getLocalDate(at);
+  const weekday = parseDate(date).getUTCDay();
+  if (weekday === 0) return addDays(date, 1);
+
+  if (weekday === 6 && typeof at !== "string") {
+    const hour = Number(
+      new Intl.DateTimeFormat("en-GB", {
+        timeZone: PARISH_TIME_ZONE,
+        hour: "numeric",
+        hourCycle: "h23"
+      }).format(at)
+    );
+    if (hour >= BULLETIN_SWITCH_HOUR) return addDays(date, 2);
+  }
+
+  return getMonday(date);
+}
+
 export function formatDate(
   date: CalendarDate,
   options: Intl.DateTimeFormatOptions = {}
@@ -84,22 +108,19 @@ function regularDay(
   return { date, masses, status: "unpublished", isRegular: true };
 }
 
-/** Bulletins change on Monday; the display includes the preceding Sunday. */
+/** Public announcements and their Sunday–Sunday display follow the same cutoff. */
 export function getPublicWeek(
   bulletins: Bulletin[],
-  today: CalendarDate,
+  at: Date | CalendarDate,
   regularSchedule: RegularSchedule
 ): { days: ScheduleDay[]; bulletin?: Bulletin } {
-  parseDate(today);
+  const weekStart = getBulletinWeekStart(at);
   const published = bulletins
     .filter(validBulletin)
     .sort(
       (a, b) =>
         b.weekStart.localeCompare(a.weekStart) || a.id.localeCompare(b.id)
     );
-  const weekStart = getMonday(today);
-  // A published next-week bulletin stays future through Sunday. The date alone
-  // activates it on Monday, without edits or another deployment.
   const bulletin = published.find((item) => item.weekStart === weekStart);
   const firstSunday = addDays(weekStart, -1);
   const days = Array.from({ length: 8 }, (_, index): ScheduleDay => {
@@ -156,4 +177,16 @@ export function getNextLocalMidnight(now = new Date()): Date {
     instant += target - localAsUtc;
   }
   return new Date(instant);
+}
+
+/** Open pages update at midnight and at the Saturday bulletin change. */
+export function getNextParishRefresh(now = new Date()): Date {
+  const midnight = getNextLocalMidnight(now);
+  if (parseDate(getLocalDate(now)).getUTCDay() === 6) {
+    // Bratislava's clock changes on Sunday, after this Saturday-evening window.
+    const cutoff =
+      midnight.getTime() - (24 - BULLETIN_SWITCH_HOUR) * 60 * 60 * 1000;
+    if (cutoff > now.getTime()) return new Date(cutoff);
+  }
+  return midnight;
 }

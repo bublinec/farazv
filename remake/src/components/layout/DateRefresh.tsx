@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getNextLocalMidnight } from "@/lib/calendar";
+import { getNextParishRefresh } from "@/lib/calendar";
 
 /** Date-derived labels and visibility must change even without a content publish. */
 export function DateRefresh() {
@@ -13,7 +13,7 @@ export function DateRefresh() {
       timer = setTimeout(() => {
         router.refresh();
         schedule();
-      }, getNextLocalMidnight().getTime() - Date.now() + 150);
+      }, getNextParishRefresh().getTime() - Date.now() + 150);
     }
     function visible() {
       if (!document.hidden) {

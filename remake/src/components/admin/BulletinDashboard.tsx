@@ -5,22 +5,21 @@ import { useEffect, useState } from "react";
 import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 import {
   addDays,
-  getLocalDate,
-  getMonday,
-  getNextLocalMidnight
+  getBulletinWeekStart,
+  getNextParishRefresh
 } from "@/lib/calendar";
 import type { ContentRecordFor } from "@/content/documents";
 import type { CalendarDate } from "@/content/types";
 import { loadEditableBulletin } from "./bulletin-records";
-import { hasUnpublishedChanges } from "./record-state";
+import { formatBulletinStart, hasUnpublishedChanges } from "./record-state";
 import { formatRecordDate } from "./admin-format";
 import { useBulletinNavigation } from "./hooks/useBulletinNavigation";
 import styles from "./Admin.module.css";
 import weekly from "./WeeklyWorkspace.module.css";
 
 export function BulletinDashboard() {
-  const [today, setToday] = useState(getLocalDate);
-  const currentWeek = getMonday(today);
+  const [now, setNow] = useState(() => new Date());
+  const currentWeek = getBulletinWeekStart(now);
   const nextWeek = addDays(currentWeek, 7);
   const [weeks, setWeeks] = useState<
     (ContentRecordFor<"bulletin"> | undefined)[]
@@ -35,10 +34,10 @@ export function BulletinDashboard() {
 
     function refreshDate() {
       clearTimeout(timer);
-      setToday(getLocalDate());
+      setNow(new Date());
       timer = setTimeout(
         refreshDate,
-        getNextLocalMidnight().getTime() - Date.now() + 150
+        getNextParishRefresh().getTime() - Date.now() + 150
       );
     }
 
@@ -104,7 +103,7 @@ export function BulletinDashboard() {
         {[currentWeek, nextWeek].map((week, index) => {
           const found = weeks[index];
           const record = found?.draft.weekStart === week ? found : undefined;
-          const scheduled = record?.published && week > today;
+          const scheduled = record?.published && week > currentWeek;
           const hasChanges = record && hasUnpublishedChanges(record);
           return (
             <section className={weekly.weekCard} key={week}>
@@ -121,7 +120,7 @@ export function BulletinDashboard() {
                     ? "Stav nedostupný"
                     : record?.published
                     ? scheduled
-                      ? `Naplánované od ${formatRecordDate(week)}`
+                      ? `Naplánované od ${formatBulletinStart(week)}`
                       : "Zverejnené"
                     : record
                     ? "Koncept"

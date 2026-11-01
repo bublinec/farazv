@@ -59,3 +59,10 @@
   font-size: 0.9rem;
   color: var(--account-muted, var(--muted));
 }
+
+@media (max-width: 600px) {
+  .number strong {
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+  }
+}

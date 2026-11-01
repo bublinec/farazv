@@ -14,7 +14,10 @@ export function WeeklySchedule({
   days: ScheduleDay[];
   today: CalendarDate;
 }) {
-  const [expanded, setExpanded] = useState<CalendarDate[]>([today]);
+  const initialDay = days.some((day) => day.date === today)
+    ? today
+    : days[0]?.date ?? today;
+  const [expanded, setExpanded] = useState<CalendarDate[]>([initialDay]);
   const allExpanded = expanded.length === days.length;
   function toggle(date: CalendarDate) {
     setExpanded((current) =>
@@ -30,7 +33,9 @@ export function WeeklySchedule({
         <button
           type="button"
           onClick={() =>
-            setExpanded(allExpanded ? [today] : days.map((day) => day.date))
+            setExpanded(
+              allExpanded ? [initialDay] : days.map((day) => day.date)
+            )
           }
         >
           {allExpanded ? "Zbaliť týždeň" : "Rozbaliť celý týždeň"}

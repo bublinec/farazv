@@ -8,9 +8,11 @@ import type {
 import {
   addDays,
   formatDate,
+  getBulletinWeekStart,
   getLocalDate,
   getMonday,
   getNextLocalMidnight,
+  getNextParishRefresh,
   getPublicWeek
 } from "../src/lib/calendar";
 
@@ -93,6 +95,47 @@ test("next parish midnight respects a 23-hour spring day and 25-hour autumn day"
   );
 });
 
+test("the bulletin cutoff uses Bratislava Saturday at 20:00 in winter and summer", () => {
+  for (const [before, cutoff, endingWeek, newWeek] of [
+    [
+      "2026-10-31T18:59:59Z",
+      "2026-10-31T19:00:00Z",
+      "2026-10-26",
+      "2026-11-02"
+    ],
+    [
+      "2026-07-04T17:59:59Z",
+      "2026-07-04T18:00:00Z",
+      "2026-06-29",
+      "2026-07-06"
+    ],
+    [
+      "2026-03-28T18:59:59Z",
+      "2026-03-28T19:00:00Z",
+      "2026-03-23",
+      "2026-03-30"
+    ],
+    ["2026-10-24T17:59:59Z", "2026-10-24T18:00:00Z", "2026-10-19", "2026-10-26"]
+  ]) {
+    assert.equal(getBulletinWeekStart(new Date(before)), endingWeek);
+    assert.equal(getBulletinWeekStart(new Date(cutoff)), newWeek);
+    assert.equal(
+      getNextParishRefresh(new Date(before)).getTime(),
+      new Date(cutoff).getTime()
+    );
+  }
+  assert.equal(getBulletinWeekStart("2026-10-31"), "2026-10-26");
+  assert.equal(getBulletinWeekStart("2026-11-01"), "2026-11-02");
+  assert.equal(
+    getNextParishRefresh(new Date("2026-10-31T19:00:00Z")).toISOString(),
+    "2026-10-31T23:00:00.000Z"
+  );
+  assert.equal(
+    getNextParishRefresh(new Date("2026-03-29T00:00:00Z")).toISOString(),
+    "2026-03-29T22:00:00.000Z"
+  );
+});
+
 test("an empty CMS produces eight dated fallback days without invented details", () => {
   const result = getPublicWeek([], "2026-10-28", regular);
   assert.equal(result.bulletin, undefined);
@@ -135,28 +178,53 @@ test("prior Sunday comes from its actual date in the preceding bulletin", () => 
   assert.equal(result.days[0].masses[0].time, "11:15");
 });
 
-test("future published records activate on Monday and Sunday keeps the ending week", () => {
+test("published bulletins activate on Saturday evening with both Sundays preserved", () => {
   const current = bulletin("2026-10-26");
   const future = bulletin("2026-11-02");
   assert.equal(
-    getPublicWeek([future, current], "2026-10-31", regular).bulletin?.id,
+    getPublicWeek([future, current], new Date("2026-10-31T18:59:59Z"), regular)
+      .bulletin?.id,
     current.id
   );
+  const saturdayEvening = getPublicWeek(
+    [current, future],
+    new Date("2026-10-31T19:00:00Z"),
+    regular
+  );
+  assert.equal(saturdayEvening.bulletin?.id, future.id);
+  assert.equal(saturdayEvening.days[0].date, "2026-11-01");
+  assert.equal(saturdayEvening.days[0].masses[0].time, "12:00");
+  assert.equal(saturdayEvening.days[1].date, "2026-11-02");
+  assert.equal(saturdayEvening.days[7].date, "2026-11-08");
   const sunday = getPublicWeek([current, future], "2026-11-01", regular);
-  assert.equal(sunday.bulletin?.id, current.id);
-  assert.equal(sunday.days[0].date, "2026-10-25");
-  assert.equal(sunday.days[7].date, "2026-11-01");
-  assert.equal(sunday.days[7].masses[0].time, "12:00");
+  assert.equal(sunday.bulletin?.id, future.id);
+  assert.equal(sunday.days[0].date, "2026-11-01");
+  assert.equal(sunday.days[7].date, "2026-11-08");
+  assert.equal(sunday.days[0].masses[0].time, "12:00");
   // Input order and subsequent editing of an old record do not affect selection.
   assert.equal(
     getPublicWeek([future, current], "2026-11-01", regular).bulletin?.id,
-    current.id
+    future.id
   );
   const monday = getPublicWeek([current, future], "2026-11-02", regular);
   assert.equal(monday.bulletin?.id, future.id);
   assert.equal(monday.days[0].date, "2026-11-01");
   assert.equal(monday.days[0].masses[0].time, "12:00");
   assert.equal(monday.days[1].date, "2026-11-02");
+});
+
+test("an unpublished upcoming bulletin stays pending after the cutoff", () => {
+  const previous = bulletin("2026-10-26");
+  const draft = bulletin("2026-11-02", false);
+  const result = getPublicWeek(
+    [previous, draft],
+    new Date("2026-10-31T19:00:00Z"),
+    regular
+  );
+  assert.equal(result.bulletin, undefined);
+  assert.equal(result.days[0].date, "2026-11-01");
+  assert.equal(result.days[0].isRegular, false);
+  assert.equal(result.days[1].isRegular, true);
 });
 
 test("draft, expired, far-future and malformed-week bulletins cannot become current", () => {
@@ -189,10 +257,10 @@ test("missing publication is distinct from an explicitly confirmed no-Mass day",
   assert.equal(result.days[4].status, "unpublished");
 });
 
-test("the no-data Sunday view keeps the ending week, and returned masses do not mutate source records", () => {
+test("the no-data Sunday view starts the new week, and returned masses do not mutate source records", () => {
   const fallback = getPublicWeek([], "2026-11-01", regular);
-  assert.equal(fallback.days[0].date, "2026-10-25");
-  assert.equal(fallback.days[7].date, "2026-11-01");
+  assert.equal(fallback.days[0].date, "2026-11-01");
+  assert.equal(fallback.days[7].date, "2026-11-08");
   const current = bulletin("2026-10-26");
   const result = getPublicWeek([current], "2026-10-28", regular);
   result.days[1].masses[0].time = "23:59";

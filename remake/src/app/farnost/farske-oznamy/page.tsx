@@ -7,8 +7,8 @@ import {
   isFixtureMode
 } from "@/server/public-content";
 import { Unavailable } from "@/components/ui/Unavailable";
-import { getPublicWeek } from "@/lib/calendar";
-import { getPreviewDate } from "@/lib/preview-date";
+import { getLocalDate, getPublicWeek } from "@/lib/calendar";
+import { getPreviewNow } from "@/lib/preview-date";
 import { PageHero } from "@/components/ui/PageHero";
 import { BulletinContent } from "@/components/bulletin/BulletinContent";
 import { DonationSection } from "@/components/home/DonationSection";
@@ -22,7 +22,8 @@ export const metadata: Metadata = {
 };
 
 export default async function BulletinPage() {
-  const today = getPreviewDate();
+  const now = getPreviewNow();
+  const today = getLocalDate(now);
   const [schedule, settings] = await Promise.all([
     getPublicBulletins(today).catch(() => null),
     getPublicSettings().catch(() => null)
@@ -46,7 +47,7 @@ export default async function BulletinPage() {
     );
   const { days, bulletin } = getPublicWeek(
     schedule,
-    today,
+    now,
     settings?.regularSchedule ?? {}
   );
   return (

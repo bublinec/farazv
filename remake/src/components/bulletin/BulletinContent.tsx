@@ -30,7 +30,11 @@ export function BulletinContent({
       <div className="container">
         {fixture ? <p className={styles.preview}>Ukážkový rozpis</p> : null}
         <div className={styles.layout}>
-          <WeeklySchedule key={today} days={days} today={today} />
+          <WeeklySchedule
+            key={`${days[0]?.date}:${today}`}
+            days={days}
+            today={today}
+          />
           <aside className={styles.aside}>
             <section className={styles.announcements}>
               <h2>Oznamy</h2>

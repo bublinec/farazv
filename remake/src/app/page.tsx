@@ -14,7 +14,7 @@ import {
 } from "@/server/public-content";
 import { Unavailable } from "@/components/ui/Unavailable";
 import { getLocalDate, getPublicWeek } from "@/lib/calendar";
-import { getPreviewDate } from "@/lib/preview-date";
+import { getPreviewNow } from "@/lib/preview-date";
 import { editorialRecordPath } from "@/lib/record-routing";
 import { MassHero } from "@/components/home/MassHero";
 import { DonationSection } from "@/components/home/DonationSection";
@@ -37,7 +37,8 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const today = getPreviewDate();
+  const now = getPreviewNow();
+  const today = getLocalDate(now);
   const [
     settingsResult,
     bulletinResult,
@@ -57,7 +58,7 @@ export default async function HomePage() {
     bulletinResult.status === "fulfilled"
       ? getPublicWeek(
           bulletinResult.value,
-          today,
+          now,
           settings?.regularSchedule ?? {}
         )
       : null;
@@ -86,7 +87,7 @@ export default async function HomePage() {
     <div className={styles.home}>
       {days ? (
         <MassHero
-          key={today}
+          key={`${days[0]?.date}:${today}`}
           days={days}
           today={today}
           image={heroImage}
