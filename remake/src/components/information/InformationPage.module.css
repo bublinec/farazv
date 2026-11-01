@@ -457,7 +457,9 @@
 }
 
 .priestCard a {
-  display: block;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--blue);
   line-height: 1.8;
   font-size: 0.9rem;

@@ -3,23 +3,29 @@ import Link from "next/link";
 import { heroImage } from "@/content/assets";
 import { churchDetails } from "@/content/church-details";
 import { parishServices } from "@/content/services";
+import { hospitalMinistry } from "@/content/hospital-ministry";
 import {
   getPublicSettings,
   getPublicBulletins,
   getPublicActivePosts,
-  getPublicEditorialPage
+  getPublicEditorialPage,
+  getPublicEntry
 } from "@/server/public-content";
 import { Unavailable } from "@/components/ui/Unavailable";
 import { getLocalDate, getPublicWeek } from "@/lib/calendar";
 import { getPreviewDate } from "@/lib/preview-date";
+import { editorialRecordPath } from "@/lib/record-routing";
 import { MassHero } from "@/components/home/MassHero";
 import { SacramentsSection } from "@/components/home/SacramentsSection";
 import { DonationSection } from "@/components/home/DonationSection";
+import { SaintCharbelSection } from "@/components/home/SaintCharbelSection";
+import { HospitalMinistrySection } from "@/components/home/HospitalMinistrySection";
 import { EditorialGrid } from "@/components/editorial/EditorialCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { Icon } from "@/components/ui/Icon";
 import { WelcomeFeedbackBanner } from "@/components/feedback/WelcomeFeedbackBanner";
+import { FeedbackInvite } from "@/components/feedback/FeedbackInvite";
 import { feedbackWelcomeEndsOn } from "@/content/feedback";
 import styles from "./page.module.css";
 
@@ -31,13 +37,19 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const today = getPreviewDate();
-  const [settingsResult, bulletinResult, newsResult, articlesResult] =
-    await Promise.allSettled([
-      getPublicSettings(),
-      getPublicBulletins(today),
-      getPublicActivePosts(today),
-      getPublicEditorialPage("article")
-    ]);
+  const [
+    settingsResult,
+    bulletinResult,
+    newsResult,
+    articlesResult,
+    hospitalRosterResult
+  ] = await Promise.allSettled([
+    getPublicSettings(),
+    getPublicBulletins(today),
+    getPublicActivePosts(today),
+    getPublicEditorialPage("article"),
+    getPublicEntry("news", hospitalMinistry.serviceRosterSlug)
+  ]);
   const settings =
     settingsResult.status === "fulfilled" ? settingsResult.value : null;
   const publicWeek =
@@ -55,6 +67,10 @@ export default async function HomePage() {
     articlesResult.status === "fulfilled"
       ? articlesResult.value.items.slice(0, 3)
       : null;
+  const hospitalRosterHref =
+    hospitalRosterResult.status === "fulfilled" && hospitalRosterResult.value
+      ? editorialRecordPath("news", hospitalMinistry.serviceRosterSlug)
+      : undefined;
 
   return (
     <>
@@ -89,6 +105,8 @@ export default async function HomePage() {
           )}
         </div>
       </section>
+      <SaintCharbelSection />
+      <HospitalMinistrySection serviceRosterHref={hospitalRosterHref} />
       <section className="section">
         <div className="container">
           <SectionHeading
@@ -175,6 +193,7 @@ export default async function HomePage() {
       {settings ? (
         <DonationSection iban={settings.iban} qr={settings.donationQr} />
       ) : null}
+      <FeedbackInvite />
     </>
   );
 }

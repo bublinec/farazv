@@ -147,61 +147,6 @@
   padding-left: 1.2rem;
 }
 
-.previousSunday {
-  padding: 0 0 0.6rem;
-  margin-bottom: 0.6rem;
-  border-bottom: 1px solid var(--admin-border);
-  font-size: 0.85rem;
-  line-height: 1.6;
-}
-
-.previousSunday > summary {
-  min-height: 44px;
-  cursor: pointer;
-  color: var(--blue-deep);
-  padding-block: 0.4rem;
-}
-
-.previousSunday > summary > span {
-  margin-left: 0.6rem;
-  color: #795322;
-  font-size: 0.75rem;
-}
-
-.previousSundayContent {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.25rem 1rem;
-}
-
-.previousSunday strong {
-  color: var(--blue-deep);
-  font-weight: 500;
-}
-
-.previousSunday p {
-  margin: 0.3rem 0 0;
-  color: var(--muted);
-}
-
-.previousSundayContent > a {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-}
-
-.previousSunday details {
-  flex-basis: 100%;
-}
-
-.previousSunday summary {
-  cursor: pointer;
-  color: var(--blue-deep);
-  padding-block: 0.3rem;
-}
-
 @media (max-width: 760px) {
   .weekCards {
     grid-template-columns: 1fr;

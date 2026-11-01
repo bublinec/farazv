@@ -11,6 +11,7 @@ import { RecordLivePreview } from "./RecordLivePreview";
 import { EditorValidation } from "./EditorValidation";
 import { useAdminSection } from "./AdminSectionContext";
 import { hasUnpublishedChanges, recordStateLabel } from "./record-state";
+import { formatAdminTimestamp } from "./admin-format";
 import {
   useRecordEditor,
   type RecordEditorOperation
@@ -29,15 +30,9 @@ const operationLabels: Record<
   refreshing: "Obnovujem web…"
 };
 
-const timestampFormatter = new Intl.DateTimeFormat("sk-SK", {
-  dateStyle: "medium",
-  timeStyle: "short",
-  timeZone: "Europe/Bratislava"
-});
-
 function RecordTimestamp({ value }: { value: string | null }) {
   return value ? (
-    <time dateTime={value}>{timestampFormatter.format(new Date(value))}</time>
+    <time dateTime={value}>{formatAdminTimestamp(value)}</time>
   ) : (
     <>Neznáme</>
   );

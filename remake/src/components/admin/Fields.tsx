@@ -144,24 +144,6 @@ export function MassFields({
             rows={1}
           />
           <div className={formStyles.rowActions}>
-            {index > 0 ? (
-              <button
-                type="button"
-                className={formStyles.rowAction}
-                title="Posunúť vyššie"
-                aria-label={`Posunúť svätú omšu ${index + 1} vyššie`}
-                onClick={() => {
-                  const items = [...masses];
-                  [items[index - 1], items[index]] = [
-                    items[index],
-                    items[index - 1]
-                  ];
-                  onChange(items);
-                }}
-              >
-                <span aria-hidden="true">↑</span>
-              </button>
-            ) : null}
             <button
               type="button"
               className={`${formStyles.rowAction} ${formStyles.removeAction}`}

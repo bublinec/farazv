@@ -30,11 +30,14 @@ export function BulletinImportPreview({
     result.suggestedWeekStart && result.suggestedWeekStart !== weekStart
   );
   const weekEnd = addDays(weekStart, 6);
-  const daysInWeek = result.days.filter(
-    (day) =>
-      day.date >= weekStart &&
-      day.date <= weekEnd &&
-      (day.liturgy || day.masses.length || day.status === "no-masses")
+  const recognizedDays = result.days.filter(
+    (day) => day.liturgy || day.masses.length || day.status === "no-masses"
+  );
+  const daysInWeek = recognizedDays.filter(
+    (day) => day.date >= weekStart && day.date <= weekEnd
+  );
+  const outsideWeekDays = recognizedDays.filter(
+    (day) => day.date < weekStart || day.date > weekEnd
   );
   const hasApplicableContent = Boolean(
     daysInWeek.length ||
@@ -48,11 +51,7 @@ export function BulletinImportPreview({
   const targetWeeks = [
     ...new Set([
       ...(result.suggestedWeekStart ? [result.suggestedWeekStart] : []),
-      ...result.days
-        .filter(
-          (day) => day.date < addDays(weekStart, -1) || day.date > weekEnd
-        )
-        .map((day) => getMonday(day.date))
+      ...outsideWeekDays.map((day) => getMonday(day.date))
     ])
   ]
     .filter((week) => week !== weekStart)
@@ -90,6 +89,13 @@ export function BulletinImportPreview({
           Dokument patrí k týždňu od{" "}
           {formatRecordDate(result.suggestedWeekStart!)}. Do tohto týždňa možno
           vložiť iba zodpovedajúce dni; oznamy a dary zostanú zachované.
+        </p>
+      ) : null}
+      {outsideWeekDays.length ? (
+        <p className={admin.hint}>
+          Dni mimo tohto týždňa (
+          {outsideWeekDays.map((day) => formatRecordDate(day.date)).join(", ")})
+          sa tu nemenia. Na ich vloženie otvorte príslušný týždeň.
         </p>
       ) : null}
       {!hasApplicableContent ? (

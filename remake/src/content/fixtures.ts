@@ -745,7 +745,7 @@ export const regularSchedule: RegularSchedule = {
  * actual priest assignments. Never transplant personal Mass intentions.
  */
 export function getFixtureBulletins(today: CalendarDate): Bulletin[] {
-  const monday = getMonday(addDays(today, 1));
+  const monday = getMonday(today);
   return [-7, 0, 7].map((offset) => {
     const weekStart = addDays(monday, offset);
     return {

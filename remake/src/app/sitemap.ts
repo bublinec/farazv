@@ -1,11 +1,16 @@
 import type { MetadataRoute } from "next";
 import { and, isNotNull, sql } from "drizzle-orm";
 import { siteConfig } from "@/content/site";
+import type { EditorialRecordKind } from "@/content/documents";
 import { informationPages } from "@/content/information";
+import { saintCharbel } from "@/content/saint-charbel";
+import { editorialRecordPath } from "@/lib/record-routing";
 import { getDb } from "@/server/db";
 import { contentRecords } from "@/server/db/schema";
 import { isFixtureMode } from "@/server/public-content";
+
 export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (
     isFixtureMode() ||
@@ -13,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     process.env.VERCEL_ENV !== "production"
   )
     return [];
+
   const pages: MetadataRoute.Sitemap = [
     "",
     "/farnost/farske-oznamy",
@@ -20,6 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/podnety",
     ...informationPages.map((page) => `/${page.slug}`)
   ].map((path) => ({ url: new URL(path || "/", siteConfig.url).href }));
+
   const records = await getDb()
     .select({
       kind: contentRecords.kind,
@@ -34,18 +41,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         sql`${contentRecords.kind} in ('article', 'news', 'notice', 'event')`
       )
     );
+
   for (const record of records) {
-    const prefix =
-      record.kind === "article"
-        ? "/farnost/nase-spolocenstvo/"
-        : record.kind === "notice"
-        ? "/vyveska/"
-        : "/prispevky/";
+    if (
+      record.kind !== "article" &&
+      record.slug === saintCharbel.formerPostSlug
+    )
+      continue;
+
     pages.push({
-      url: new URL(prefix + encodeURIComponent(record.slug!), siteConfig.url)
-        .href,
+      url: new URL(
+        editorialRecordPath(record.kind as EditorialRecordKind, record.slug!),
+        siteConfig.url
+      ).href,
       lastModified: record.updatedAt
     });
   }
+
   return pages;
 }

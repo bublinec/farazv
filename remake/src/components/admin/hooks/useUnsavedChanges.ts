@@ -64,13 +64,14 @@ export function useUnsavedChanges(dirty: boolean) {
       .navigation;
     navigation?.addEventListener("navigate", traversal);
     window.addEventListener("beforeunload", unload);
-    window.addEventListener("admin:before-leave", leave);
+    // Decide before ordinary listeners cancel pending imports or navigation.
+    window.addEventListener("admin:before-leave", leave, true);
     window.document.addEventListener("click", click, true);
 
     return () => {
       navigation?.removeEventListener("navigate", traversal);
       window.removeEventListener("beforeunload", unload);
-      window.removeEventListener("admin:before-leave", leave);
+      window.removeEventListener("admin:before-leave", leave, true);
       window.document.removeEventListener("click", click, true);
     };
   }, [dirty]);

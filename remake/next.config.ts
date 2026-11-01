@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import path from "node:path";
+import { saintCharbel } from "./src/content/saint-charbel";
 
 const config: NextConfig = {
   poweredByHeader: false,
@@ -49,6 +50,11 @@ const config: NextConfig = {
   },
   async redirects() {
     return [
+      {
+        source: `/prispevky/${saintCharbel.formerPostSlug}`,
+        destination: `/#${saintCharbel.sectionId}`,
+        permanent: true
+      },
       {
         source: "/birmovanci",
         destination: "/sviatosti/sviatost-birmovania",

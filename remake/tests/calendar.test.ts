@@ -135,7 +135,7 @@ test("prior Sunday comes from its actual date in the preceding bulletin", () => 
   assert.equal(result.days[0].masses[0].time, "11:15");
 });
 
-test("future published records activate on Sunday and latest week wins the overlap", () => {
+test("future published records activate on Monday and Sunday keeps the ending week", () => {
   const current = bulletin("2026-10-26");
   const future = bulletin("2026-11-02");
   assert.equal(
@@ -143,15 +143,20 @@ test("future published records activate on Sunday and latest week wins the overl
     current.id
   );
   const sunday = getPublicWeek([current, future], "2026-11-01", regular);
-  assert.equal(sunday.bulletin?.id, future.id);
-  assert.equal(sunday.days[0].date, "2026-11-01");
-  assert.equal(sunday.days[0].masses[0].time, "12:00");
-  assert.equal(sunday.days[1].date, "2026-11-02");
+  assert.equal(sunday.bulletin?.id, current.id);
+  assert.equal(sunday.days[0].date, "2026-10-25");
+  assert.equal(sunday.days[7].date, "2026-11-01");
+  assert.equal(sunday.days[7].masses[0].time, "12:00");
   // Input order and subsequent editing of an old record do not affect selection.
   assert.equal(
     getPublicWeek([future, current], "2026-11-01", regular).bulletin?.id,
-    future.id
+    current.id
   );
+  const monday = getPublicWeek([current, future], "2026-11-02", regular);
+  assert.equal(monday.bulletin?.id, future.id);
+  assert.equal(monday.days[0].date, "2026-11-01");
+  assert.equal(monday.days[0].masses[0].time, "12:00");
+  assert.equal(monday.days[1].date, "2026-11-02");
 });
 
 test("draft, expired, far-future and malformed-week bulletins cannot become current", () => {
@@ -184,10 +189,10 @@ test("missing publication is distinct from an explicitly confirmed no-Mass day",
   assert.equal(result.days[4].status, "unpublished");
 });
 
-test("the no-data Sunday view starts today, and returned masses do not mutate source records", () => {
+test("the no-data Sunday view keeps the ending week, and returned masses do not mutate source records", () => {
   const fallback = getPublicWeek([], "2026-11-01", regular);
-  assert.equal(fallback.days[0].date, "2026-11-01");
-  assert.equal(fallback.days[7].date, "2026-11-08");
+  assert.equal(fallback.days[0].date, "2026-10-25");
+  assert.equal(fallback.days[7].date, "2026-11-01");
   const current = bulletin("2026-10-26");
   const result = getPublicWeek([current], "2026-10-28", regular);
   result.days[1].masses[0].time = "23:59";

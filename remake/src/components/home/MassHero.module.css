@@ -247,7 +247,6 @@
   }
   .dayButton {
     min-width: 0;
-    flex: 1;
     padding-inline: 3px;
     min-height: 50px;
   }

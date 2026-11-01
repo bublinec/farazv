@@ -19,12 +19,13 @@ export function WelcomeFeedbackBanner() {
   if (dismissed) return null;
 
   return (
-    <aside className={styles.welcome} aria-label="Vitajte na novom webe">
+    <aside className={styles.welcome} aria-label="Vitajte na novej webstránke">
       <div className={`container ${styles.welcomeInner}`}>
         <p>
-          <strong>Vitajte na našom novom webe.</strong> Čo môžeme zlepšiť?
+          <strong>Vitajte na našej novej webstránke.</strong> Čo môžeme zlepšiť
+          alebo pridať?
         </p>
-        <Link href="/podnety?tema=web">Napíšte nám svoj podnet</Link>
+        <Link href="/podnety?tema=web">Napíšte nám svoj nápad</Link>
         <button
           type="button"
           className={styles.close}

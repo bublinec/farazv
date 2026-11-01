@@ -58,6 +58,15 @@
     1px 0 3px var(--white), -1px 0 3px var(--white);
 }
 
+.churchMarker .markerPin {
+  background: var(--gold-dark);
+}
+
+.officeMarker .markerLabel {
+  top: 49px;
+  bottom: auto;
+}
+
 .canvas :global(.maplibregl-ctrl-group) {
   overflow: hidden;
   border: 1px solid var(--line);

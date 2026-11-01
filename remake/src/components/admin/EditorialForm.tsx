@@ -71,29 +71,34 @@ export function EditorialForm({
   return (
     <>
       <section className={styles.panel}>
-        <div className={formStyles.stack}>
-          <Field
-            label="Názov"
-            path="title"
-            value={document.title}
-            onChange={updateTitle}
-            maxLength={300}
-          />
-          <ImageField
-            label="Titulný obrázok"
-            imageTitle={document.title}
-            path="cover"
-            value={document.cover}
-            onChange={(image) => update("cover", image)}
-          />
-          <Field
-            label="Krátky úvod"
-            path="excerpt"
-            value={document.excerpt}
-            onChange={(value) => update("excerpt", value)}
-            multiline
-            maxLength={3000}
-          />
+        <div className={formStyles.editorialOverview}>
+          <div className={formStyles.editorialText}>
+            <Field
+              label="Názov"
+              path="title"
+              value={document.title}
+              onChange={updateTitle}
+              maxLength={300}
+            />
+            <Field
+              label="Krátky úvod"
+              path="excerpt"
+              value={document.excerpt}
+              onChange={(value) => update("excerpt", value)}
+              multiline
+              rows={5}
+              maxLength={3000}
+            />
+          </div>
+          <div className={formStyles.editorialCover}>
+            <ImageField
+              label="Titulný obrázok"
+              imageTitle={document.title}
+              path="cover"
+              value={document.cover}
+              onChange={(image) => update("cover", image)}
+            />
+          </div>
         </div>
       </section>
       <section className={styles.panel} data-field="body">

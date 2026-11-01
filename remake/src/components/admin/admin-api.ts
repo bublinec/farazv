@@ -1,16 +1,42 @@
-/** The provider and admin APIs use slightly different error envelopes. */
-export async function readAdminJson(response: Response) {
+export class AdminRequestError extends Error {
+  constructor(
+    message: string,
+    readonly status: number,
+    readonly code = "",
+    readonly field = ""
+  ) {
+    super(message);
+    this.name = "AdminRequestError";
+  }
+}
+
+/** Keep provider messages and admin validation/conflict details in one parser. */
+export async function readAdminJson(
+  response: Response,
+  fallbackMessage = "Požiadavka zlyhala. Skúste znova."
+) {
   let data;
   try {
     data = await response.json();
   } catch {
-    throw new Error("Služba neodpovedá správne. Skúste požiadavku zopakovať.");
+    throw new AdminRequestError(
+      "Služba neodpovedá správne. Skúste požiadavku zopakovať.",
+      response.status
+    );
   }
   if (!response.ok) {
-    throw new Error(
+    const message =
       typeof data?.error === "string"
         ? data.error
-        : data?.error?.message || "Požiadavka zlyhala. Skúste znova."
+        : typeof data?.error?.message === "string"
+        ? data.error.message
+        : "";
+
+    throw new AdminRequestError(
+      message || fallbackMessage,
+      response.status,
+      typeof data?.code === "string" ? data.code : "",
+      typeof data?.field === "string" ? data.field : ""
     );
   }
 

@@ -1,11 +1,11 @@
 import type { InformationPageDefinition } from "@/content/information";
-import Link from "next/link";
 import type { SettingsDocument } from "@/content/documents";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Unavailable } from "@/components/ui/Unavailable";
 import { DonationSection } from "@/components/home/DonationSection";
+import { FeedbackInvite } from "@/components/feedback/FeedbackInvite";
 import { PartnerLinks } from "./PublishedContent";
 import { Arrow } from "./PageSections";
 import { settingsOrUnavailable } from "./OfficeAside";
@@ -94,7 +94,7 @@ export async function ContactPage({
                   aria-labelledby="office-contact"
                 >
                   <h3 id="office-contact">Kontakt</h3>
-                  <dl className={contact.details}>
+                  <dl className={`${contact.details} ${contact.identity}`}>
                     <div>
                       <dt>{settings.mobile ? "Mobil:" : "Telefón:"}</dt>
                       <dd>
@@ -118,7 +118,7 @@ export async function ContactPage({
                       </div>
                     ) : null}
                     <div>
-                      <dt>Email:</dt>
+                      <dt>E-mail:</dt>
                       <dd>
                         <a href={`mailto:${settings.email}`}>
                           {settings.email}
@@ -127,7 +127,7 @@ export async function ContactPage({
                     </div>
                     <div>
                       <dt>IBAN:</dt>
-                      <dd>{settings.iban}</dd>
+                      <dd className={contact.iban}>{settings.iban}</dd>
                     </div>
                   </dl>
                 </section>
@@ -212,26 +212,17 @@ export async function ContactPage({
             </div>
           </section>
           <PriestCards priests={settings.priests ?? []} />
-          <DonationSection iban={settings.iban} qr={settings.donationQr} />
         </>
       ) : (
         <div className={`container ${contact.section}`}>
           <Unavailable title="Kontaktné údaje sú dočasne nedostupné." />
         </div>
       )}
-      <section className={`container ${contact.feedbackInvite}`}>
-        <div>
-          <h2>Máte podnet alebo nápad?</h2>
-          <p>
-            Napíšte nám, čo môžeme zlepšiť v živote farnosti alebo na tomto
-            webe.
-          </p>
-        </div>
-        <Link href="/podnety" className="textLink">
-          Napísať podnet <Arrow />
-        </Link>
-      </section>
+      <FeedbackInvite />
       <PartnerLinks page={page} />
+      {settings ? (
+        <DonationSection iban={settings.iban} qr={settings.donationQr} />
+      ) : null}
     </>
   );
 }

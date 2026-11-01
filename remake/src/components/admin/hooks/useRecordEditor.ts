@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import type { ContentRecord } from "@/content/documents";
 import { useUnsavedChanges } from "./useUnsavedChanges";
 import { publicationMessage } from "../record-state";
+import { AdminRequestError, readAdminJson } from "../admin-api";
 
 export type RecordEditorOperation =
   | "idle"
@@ -74,18 +75,12 @@ export function useRecordEditor(initialRecord: ContentRecord) {
           ...(action === "save" ? { document: record.draft } : {})
         })
       });
-      const data = await response.json();
-      if (!response.ok) {
-        setErrorField(typeof data.field === "string" ? data.field : "");
-        if (response.status === 409 && data.code === "VERSION_CONFLICT")
-          setConflict(true);
-        throw new Error(
-          data.error ||
-            (response.status === 401 || response.status === 403
-              ? "Prihlásenie vypršalo alebo nemáte prístup. Vaše zmeny ostávajú vo formulári."
-              : "Zápis sa nepodaril. Skúste znova.")
-        );
-      }
+      const data = await readAdminJson(
+        response,
+        response.status === 401 || response.status === 403
+          ? "Prihlásenie vypršalo alebo nemáte prístup. Vaše zmeny ostávajú vo formulári."
+          : "Zápis sa nepodaril. Skúste znova."
+      );
 
       const savedRecord = data as ContentRecord;
       setCacheWarning(data.cacheWarning ?? "");
@@ -115,6 +110,10 @@ export function useRecordEditor(initialRecord: ContentRecord) {
       );
       return savedRecord;
     } catch (error) {
+      if (error instanceof AdminRequestError) {
+        setErrorField(error.field);
+        setConflict(error.status === 409 && error.code === "VERSION_CONFLICT");
+      }
       setError(error instanceof Error ? error.message : "Uloženie zlyhalo.");
       return null;
     } finally {
@@ -126,17 +125,14 @@ export function useRecordEditor(initialRecord: ContentRecord) {
     if (!beginOperation("refreshing")) return;
 
     try {
-      const response = await fetch("/api/admin/revalidate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: "{}"
-      });
-      const data = await response.json();
-      if (!response.ok)
-        throw new Error(
-          data.error ||
-            "Obnovenie webu sa nepodarilo. Zverejnený obsah ostal uložený."
-        );
+      await readAdminJson(
+        await fetch("/api/admin/revalidate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: "{}"
+        }),
+        "Obnovenie webu sa nepodarilo. Zverejnený obsah ostal uložený."
+      );
 
       setCacheWarning("");
       setMessage("Verejný web je obnovený. Obsah sa znovu nezverejňoval.");
@@ -166,14 +162,12 @@ export function useRecordEditor(initialRecord: ContentRecord) {
     setMessage("");
 
     try {
-      const response = await fetch(
-        `/api/admin/records/${encodeURIComponent(record.id)}`,
-        { cache: "no-store" }
-      );
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Načítanie zlyhalo.");
-
-      const latest = data as ContentRecord;
+      const latest = (await readAdminJson(
+        await fetch(`/api/admin/records/${encodeURIComponent(record.id)}`, {
+          cache: "no-store"
+        }),
+        "Načítanie zlyhalo."
+      )) as ContentRecord;
       setRecord(latest);
       setSaved(JSON.stringify(latest.draft));
       setConflict(false);

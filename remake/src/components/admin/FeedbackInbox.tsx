@@ -27,6 +27,17 @@ export function FeedbackInbox({
   const loading = useRef(false);
   const request = useRef<AbortController | null>(null);
 
+  useEffect(() => {
+    // Route refreshes preserve client state, but a fresh first page supersedes
+    // the old pagination cursor and any request that was extending that list.
+    request.current?.abort();
+    request.current = null;
+    loading.current = false;
+    setPage(initialPage);
+    setBusy(false);
+    setError("");
+  }, [initialPage]);
+
   useEffect(() => () => request.current?.abort(), []);
 
   async function more() {
@@ -63,9 +74,11 @@ export function FeedbackInbox({
             : "Podnety sa nepodarilo načítať."
         );
     } finally {
-      loading.current = false;
-      request.current = null;
-      if (!controller.signal.aborted) setBusy(false);
+      if (request.current === controller) {
+        loading.current = false;
+        request.current = null;
+        if (!controller.signal.aborted) setBusy(false);
+      }
     }
   }
 

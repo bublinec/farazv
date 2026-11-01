@@ -1,10 +1,14 @@
 "use client";
 
-import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
-
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { addDays, getLocalDate, getMonday } from "@/lib/calendar";
+import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
+import {
+  addDays,
+  getLocalDate,
+  getMonday,
+  getNextLocalMidnight
+} from "@/lib/calendar";
 import type { ContentRecordFor } from "@/content/documents";
 import type { CalendarDate } from "@/content/types";
 import { loadEditableBulletin } from "./bulletin-records";
@@ -15,8 +19,8 @@ import styles from "./Admin.module.css";
 import weekly from "./WeeklyWorkspace.module.css";
 
 export function BulletinDashboard() {
-  const [today] = useState(getLocalDate);
-  const currentWeek = getMonday(addDays(today, 1));
+  const [today, setToday] = useState(getLocalDate);
+  const currentWeek = getMonday(today);
   const nextWeek = addDays(currentWeek, 7);
   const [weeks, setWeeks] = useState<
     (ContentRecordFor<"bulletin"> | undefined)[]
@@ -27,7 +31,30 @@ export function BulletinDashboard() {
   const { openWeek, opening } = useBulletinNavigation();
 
   useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+
+    function refreshDate() {
+      clearTimeout(timer);
+      setToday(getLocalDate());
+      timer = setTimeout(
+        refreshDate,
+        getNextLocalMidnight().getTime() - Date.now() + 150
+      );
+    }
+
+    refreshDate();
+    window.addEventListener("focus", refreshDate);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("focus", refreshDate);
+    };
+  }, []);
+
+  useEffect(() => {
     const controller = new AbortController();
+    setLoading(true);
+    setLoadError("");
+    setWeeks([]);
     Promise.all([
       loadEditableBulletin(currentWeek, controller.signal),
       loadEditableBulletin(nextWeek, controller.signal)
@@ -75,8 +102,9 @@ export function BulletinDashboard() {
       ) : null}
       <div className={weekly.weekCards} aria-busy={loading}>
         {[currentWeek, nextWeek].map((week, index) => {
-          const record = weeks[index];
-          const scheduled = record?.published && addDays(week, -1) > today;
+          const found = weeks[index];
+          const record = found?.draft.weekStart === week ? found : undefined;
+          const scheduled = record?.published && week > today;
           const hasChanges = record && hasUnpublishedChanges(record);
           return (
             <section className={weekly.weekCard} key={week}>
@@ -93,7 +121,7 @@ export function BulletinDashboard() {
                     ? "Stav nedostupný"
                     : record?.published
                     ? scheduled
-                      ? `Naplánované od ${formatRecordDate(addDays(week, -1))}`
+                      ? `Naplánované od ${formatRecordDate(week)}`
                       : "Zverejnené"
                     : record
                     ? "Koncept"

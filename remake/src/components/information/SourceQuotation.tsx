@@ -26,7 +26,9 @@ function QuotationBand({
         </span>
       </div>
       <figcaption className={`container ${styles.attribution}`}>
-        <Icon name="cross" size={17} />
+        <div className={styles.ornament} aria-hidden="true">
+          <Icon name="cross" size={25} />
+        </div>
         <div>{attribution}</div>
       </figcaption>
     </figure>
@@ -46,14 +48,12 @@ export function ServiceQuotation({
   );
 }
 
-/** The imported source remains intact; an explicit excerpt can shorten its display. */
+/** Preserve the complete quotation and attribution from the imported source. */
 export function SourceQuotation({
   section,
-  excerpt,
   sourceHref
 }: {
   section: PublishedInformationSection;
-  excerpt?: string;
   sourceHref?: string;
 }) {
   const [quotation, ...attribution] = section.body.content;
@@ -76,17 +76,13 @@ export function SourceQuotation({
     <QuotationBand
       id="informacie-1"
       quotation={
-        excerpt ? (
-          <p>{excerpt}</p>
-        ) : (
-          <RichText
-            className={styles.inlineCopy}
-            document={{
-              type: "doc",
-              content: quotationContent
-            }}
-          />
-        )
+        <RichText
+          className={styles.inlineCopy}
+          document={{
+            type: "doc",
+            content: quotationContent
+          }}
+        />
       }
       attribution={sourceHref ? <a href={sourceHref}>{source}</a> : source}
     />

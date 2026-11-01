@@ -84,7 +84,7 @@ function regularDay(
   return { date, masses, status: "unpublished", isRegular: true };
 }
 
-/** The public view is Sunday–Sunday, with each Sunday read from its actual record. */
+/** Bulletins change on Monday; the display includes the preceding Sunday. */
 export function getPublicWeek(
   bulletins: Bulletin[],
   today: CalendarDate,
@@ -97,14 +97,10 @@ export function getPublicWeek(
       (a, b) =>
         b.weekStart.localeCompare(a.weekStart) || a.id.localeCompare(b.id)
     );
-  const bulletin = published.find(
-    (item) =>
-      today >= addDays(item.weekStart, -1) &&
-      today <= addDays(item.weekStart, 6)
-  );
-  // On Sunday the upcoming Monday's window starts. A future bulletin becomes
-  // eligible naturally, without edits, deployment or cache invalidation.
-  const weekStart = bulletin?.weekStart ?? getMonday(addDays(today, 1));
+  const weekStart = getMonday(today);
+  // A published next-week bulletin stays future through Sunday. The date alone
+  // activates it on Monday, without edits or another deployment.
+  const bulletin = published.find((item) => item.weekStart === weekStart);
   const firstSunday = addDays(weekStart, -1);
   const days = Array.from({ length: 8 }, (_, index): ScheduleDay => {
     const date = addDays(firstSunday, index);

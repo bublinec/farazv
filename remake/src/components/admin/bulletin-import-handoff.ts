@@ -8,11 +8,10 @@ const lifetime = 60 * 60 * 1000;
 /** A one-use handoff within this tab; it never saves imported content to the server. */
 export function storeBulletinImport(
   weekStart: CalendarDate,
-  result: BulletinImportResult,
-  storage: Pick<Storage, "setItem"> = sessionStorage
+  result: BulletinImportResult
 ) {
   try {
-    storage.setItem(
+    sessionStorage.setItem(
       key,
       JSON.stringify({
         version: 3,

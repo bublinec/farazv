@@ -1,33 +1,38 @@
 .band {
-  --prose-font-size: 0.9rem;
-  --prose-line-height: 1.5;
+  --prose-font-size: 1.08rem;
+  --prose-line-height: 1.75;
   --prose-paragraph-gap: 0;
   --prose-width: none;
   margin: 0;
-  padding-block: 16px;
-  background: color-mix(in srgb, var(--blue) 6%, var(--white));
+  padding-block: clamp(36px, 4vw, 56px);
+  background: color-mix(in srgb, var(--blue) 7%, var(--white));
   border-bottom: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 1.08rem;
+  line-height: 1.75;
   text-align: center;
   scroll-margin-top: 32px;
 }
 
 .quotation {
   display: grid;
-  grid-template-columns: 36px minmax(0, 1fr) 36px;
-  align-items: center;
-  gap: 12px;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  max-width: 1050px;
+  align-items: start;
+  gap: 24px;
 }
 
 .openMark,
 .closeMark {
   color: var(--blue);
-  opacity: 0.25;
+  opacity: 0.3;
   font-family: var(--font-display);
-  font-size: 56px;
+  font-size: 112px;
   line-height: 0.75;
+}
+
+.closeMark {
+  align-self: end;
 }
 
 .copy {
@@ -57,20 +62,32 @@
 }
 
 .attribution {
-  --prose-font-size: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 8px;
-  font-size: 0.75rem;
-  line-height: 1.4;
+  --prose-font-size: 0.8rem;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  font-size: 0.8rem;
+  line-height: 1.5;
 }
 
-.attribution > svg {
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  color: var(--blue);
+}
+
+.ornament::before,
+.ornament::after {
+  content: "";
+  width: 48px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.ornament > svg {
   flex-shrink: 0;
-  color: var(--gold-dark);
-  opacity: 0.7;
 }
 
 .attribution a {
@@ -84,14 +101,19 @@
 }
 
 @media (max-width: 550px) {
+  .band {
+    --prose-font-size: 1rem;
+    font-size: 1rem;
+    padding-block: 32px;
+  }
+
   .quotation {
-    grid-template-columns: 20px minmax(0, 1fr) 20px;
-    gap: 8px;
-    text-align: left;
+    grid-template-columns: 32px minmax(0, 1fr) 32px;
+    gap: 10px;
   }
 
   .openMark,
   .closeMark {
-    font-size: 42px;
+    font-size: 76px;
   }
 }

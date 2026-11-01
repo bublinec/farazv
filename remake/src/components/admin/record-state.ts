@@ -25,7 +25,7 @@ export function hasUnpublishedChanges(record: ContentRecord) {
 export function scheduledPublication(record: ContentRecord) {
   if (record.kind !== "bulletin" || !record.published) return null;
 
-  const date = addDays(record.published.weekStart, -1);
+  const date = record.published.weekStart;
   return date > getLocalDate() ? date : null;
 }
 
@@ -53,7 +53,7 @@ export function summaryStateLabel(record: AdminRecordSummary) {
   if (record.hasUnpublishedChanges) return "Nezverejnené zmeny";
   if (record.kind === "bulletin" && record.weekStart) {
     try {
-      const date = addDays(record.weekStart as CalendarDate, -1);
+      const date = addDays(record.weekStart as CalendarDate, 0);
       if (date > getLocalDate())
         return `Naplánované od ${formatRecordDate(date)}`;
     } catch {

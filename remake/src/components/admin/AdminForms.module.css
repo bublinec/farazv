@@ -1,6 +1,36 @@
-.stack {
+.editorialOverview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  align-items: start;
+  gap: 1.5rem;
+}
+
+.editorialText {
   display: grid;
   gap: 1.2rem;
+  min-width: 0;
+}
+
+.editorialCover {
+  min-width: 0;
+}
+
+.editorialCover h3 {
+  margin: 0 0 0.45rem;
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.editorialCover .imagePreview {
+  margin-bottom: 0.6rem;
+}
+
+.editorialCover .imagePreview > img {
+  width: 100%;
+  height: 170px;
+  border: 1px solid var(--admin-border);
 }
 
 .fieldError {
@@ -87,7 +117,7 @@
 
 .mass {
   display: grid;
-  grid-template-columns: 7rem minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2fr) 88px;
+  grid-template-columns: 7rem minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2fr) 44px;
   align-items: start;
   gap: 0.5rem;
   padding-block: 0.55rem;
@@ -234,7 +264,7 @@
 
 @media (max-width: 1000px) {
   .mass {
-    grid-template-columns: 7rem minmax(0, 1fr) minmax(0, 1fr) 88px;
+    grid-template-columns: 7rem minmax(0, 1fr) minmax(0, 1fr) 44px;
   }
 
   .mass > :nth-child(4) {
@@ -244,6 +274,17 @@
   .rowActions {
     grid-column: 4;
     grid-row: 1 / 3;
+  }
+}
+
+@media (max-width: 760px) {
+  .editorialOverview {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .editorialCover {
+    max-width: 240px;
   }
 }
 

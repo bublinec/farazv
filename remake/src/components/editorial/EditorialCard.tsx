@@ -7,17 +7,15 @@ import styles from "./EditorialCard.module.css";
 interface EditorialCardProps {
   entry: EditorialSummary;
   kind: EditorialKind;
-  featured?: boolean;
+  imageSizes?: string;
 }
 
-export function EditorialCard({
-  entry,
-  kind,
-  featured = false
-}: EditorialCardProps) {
+export function EditorialCard({ entry, kind, imageSizes }: EditorialCardProps) {
+  const isPost = kind === "news";
+
   return (
     <article
-      className={`${styles.card} ${featured ? styles.featured : ""} ${
+      className={`${styles.card} ${isPost ? styles.postCard : ""} ${
         entry.cover ? "" : styles.withoutImage
       }`}
     >
@@ -26,8 +24,14 @@ export function EditorialCard({
           <div className={styles.image}>
             <MediaImage
               image={entry.cover}
-              sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 33vw"
-              fit="cover"
+              sizes={
+                imageSizes ??
+                (isPost
+                  ? "(max-width: 600px) 90vw, 300px"
+                  : "(max-width: 600px) 100vw, (max-width: 980px) 50vw, 33vw")
+              }
+              fit={isPost ? "contain" : "cover"}
+              quality={isPost ? "high" : "standard"}
             />
           </div>
         )}
@@ -54,12 +58,27 @@ export function EditorialGrid({
   entries: readonly EditorialSummary[];
   kind: EditorialKind;
 }) {
+  const isPair = kind === "article" && entries.length === 2;
+
   return (
     <div
-      className={`${styles.grid} ${entries.length === 2 ? styles.pair : ""}`}
+      className={
+        kind === "news"
+          ? styles.postGrid
+          : `${styles.grid} ${isPair ? styles.pair : ""}`
+      }
     >
       {entries.map((entry) => (
-        <EditorialCard key={entry.id} entry={entry} kind={kind} />
+        <EditorialCard
+          key={entry.id}
+          entry={entry}
+          kind={kind}
+          imageSizes={
+            isPair
+              ? "(max-width: 600px) 100vw, (max-width: 1280px) 50vw, 590px"
+              : undefined
+          }
+        />
       ))}
     </div>
   );

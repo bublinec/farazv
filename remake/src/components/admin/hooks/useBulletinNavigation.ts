@@ -26,30 +26,15 @@ export function useBulletinNavigation() {
 
   async function openWeek(
     weekStart: CalendarDate,
-    result?: BulletinImportResult,
-    options?: { newTab?: boolean }
+    result?: BulletinImportResult
   ) {
     if (request.current || navigating) return;
     if (
-      !options?.newTab &&
       !window.dispatchEvent(
         new Event("admin:before-leave", { cancelable: true })
       )
     )
       return;
-
-    // Open synchronously from the click so the browser permits the new tab.
-    // Its own temporary storage receives the import; the current draft stays here.
-    const tab = options?.newTab ? window.open("about:blank", "_blank") : null;
-    if (options?.newTab && !tab)
-      throw new Error(
-        "Povoľte otvorenie novej karty a skúste znova. Aktuálne oznamy zostali zachované."
-      );
-    if (tab) {
-      tab.opener = null;
-      tab.document.title = "Farské oznamy · Admin";
-      tab.document.body.textContent = "Otváram oznamy…";
-    }
 
     const controller = new AbortController();
     request.current = controller;
@@ -67,20 +52,12 @@ export function useBulletinNavigation() {
       if (controller.signal.aborted) return;
 
       const href = `/admin/records/${encodeURIComponent(target.id)}`;
-      if (tab) {
-        if (tab.closed) return;
-        if (result) storeBulletinImport(weekStart, result, tab.sessionStorage);
-        tab.location.replace(href);
-      } else {
-        if (result) storeBulletinImport(weekStart, result);
-        else clearBulletinImport();
-        startNavigation(() => router.push(href));
-      }
+      if (result) storeBulletinImport(weekStart, result);
+      else clearBulletinImport();
+      startNavigation(() => router.push(href));
     } catch (error) {
-      tab?.close();
       if (!controller.signal.aborted) throw error;
     } finally {
-      if (controller.signal.aborted) tab?.close();
       if (request.current === controller) {
         request.current = null;
         setOpening(false);

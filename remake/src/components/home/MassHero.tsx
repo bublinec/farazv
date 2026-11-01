@@ -9,6 +9,128 @@ import { MediaImage } from "@/components/ui/MediaImage";
 import { Icon } from "@/components/ui/Icon";
 import styles from "./MassHero.module.css";
 
+function MassTimes({ day }: { day: ScheduleDay }) {
+  if (day.status === "no-masses")
+    return (
+      <p className={styles.noMass}>
+        V tento deň nie sú naplánované sväté omše.
+      </p>
+    );
+
+  return (
+    <div className={styles.masses}>
+      {day.masses.map((mass, index) => (
+        <div className={styles.mass} key={`${mass.time}-${index}`}>
+          <span className={styles.location}>
+            {getMassLabel(mass) || "Sv. Alžbeta"}
+          </span>
+          <strong>{mass.time}</strong>
+          <span className={styles.celebrant}>
+            {formatCelebrantName(mass.celebrant) || "Svätá omša"}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function HeroDayButton({
+  day,
+  today,
+  selected,
+  onSelect
+}: {
+  day: ScheduleDay;
+  today: CalendarDate;
+  selected: boolean;
+  onSelect: (date: CalendarDate) => void;
+}) {
+  const isToday = day.date === today;
+  const dayLabel = isToday
+    ? "Dnes"
+    : formatDate(day.date, {
+        weekday: "short",
+        day: undefined,
+        month: undefined
+      }).replace(".", "");
+  const dayNumber = formatDate(day.date, {
+    day: "numeric",
+    month: undefined
+  }).replace(".", "");
+  const fullDate = formatDate(day.date, {
+    weekday: "long",
+    day: "numeric",
+    month: "long"
+  });
+
+  return (
+    <button
+      type="button"
+      onClick={() => onSelect(day.date)}
+      className={`${styles.dayButton} ${selected ? styles.selected : ""} ${
+        isToday ? styles.today : ""
+      }`}
+      aria-pressed={selected}
+      aria-current={isToday ? "date" : undefined}
+      aria-label={`${dayLabel} ${dayNumber} · ${fullDate}`}
+    >
+      <span>{dayLabel}</span> <strong>{dayNumber}</strong>
+    </button>
+  );
+}
+
+function DayNavigation({
+  days,
+  today,
+  index,
+  onSelect,
+  onMove
+}: {
+  days: ScheduleDay[];
+  today: CalendarDate;
+  index: number;
+  onSelect: (date: CalendarDate) => void;
+  onMove: (offset: number) => void;
+}) {
+  return (
+    <div className={styles.navigation}>
+      <div className={styles.controls}>
+        <button
+          type="button"
+          onClick={() => onMove(-1)}
+          disabled={index === 0}
+          aria-label="Predchádzajúci deň"
+          className={styles.direction}
+        >
+          <Icon name="arrow-left" size={19} />
+          <span>Predchádzajúci</span>
+        </button>
+        <div className={styles.days} role="group" aria-label="Vybrať deň">
+          {days.map((day) => (
+            <HeroDayButton
+              key={day.date}
+              day={day}
+              today={today}
+              selected={day.date === days[index]?.date}
+              onSelect={onSelect}
+            />
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={() => onMove(1)}
+          disabled={index === days.length - 1}
+          aria-label="Nasledujúci deň"
+          className={styles.direction}
+        >
+          <span>Nasledujúci</span>
+          <Icon name="arrow-right" size={19} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export function MassHero({
   days,
   today,
@@ -98,96 +220,15 @@ export function MassHero({
                 : null}
             </p>
           ) : null}
-          {day.status === "no-masses" ? (
-            <p className={styles.noMass}>
-              V tento deň nie sú naplánované sväté omše.
-            </p>
-          ) : (
-            <div className={styles.masses}>
-              {day.masses.map((mass, i) => (
-                <div className={styles.mass} key={`${mass.time}-${i}`}>
-                  <span className={styles.location}>
-                    {getMassLabel(mass) || "Sv. Alžbeta"}
-                  </span>
-                  <strong>{mass.time}</strong>
-                  <span className={styles.celebrant}>
-                    {formatCelebrantName(mass.celebrant) || "Svätá omša"}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
+          <MassTimes day={day} />
         </div>
-        <div className={styles.navigation}>
-          <div className={styles.controls}>
-            <button
-              type="button"
-              onClick={() => move(-1)}
-              disabled={index === 0}
-              aria-label="Predchádzajúci deň"
-              className={styles.direction}
-            >
-              <Icon name="arrow-left" size={19} />
-              <span>Predchádzajúci</span>
-            </button>
-            <div className={styles.days} role="group" aria-label="Vybrať deň">
-              {days.map((item) => (
-                <button
-                  type="button"
-                  key={item.date}
-                  onClick={() => setSelected(item.date)}
-                  className={`${styles.dayButton} ${
-                    item.date === day.date ? styles.selected : ""
-                  } ${item.date === today ? styles.today : ""}`}
-                  aria-pressed={item.date === day.date}
-                  aria-current={item.date === today ? "date" : undefined}
-                  aria-label={`${
-                    item.date === today
-                      ? "Dnes"
-                      : formatDate(item.date, {
-                          weekday: "short",
-                          day: undefined,
-                          month: undefined
-                        }).replace(".", "")
-                  } ${formatDate(item.date, {
-                    day: "numeric",
-                    month: undefined
-                  }).replace(".", "")} · ${formatDate(item.date, {
-                    weekday: "long",
-                    day: "numeric",
-                    month: "long"
-                  })}`}
-                >
-                  <span>
-                    {item.date === today
-                      ? "Dnes"
-                      : formatDate(item.date, {
-                          weekday: "short",
-                          day: undefined,
-                          month: undefined
-                        }).replace(".", "")}
-                  </span>{" "}
-                  <strong>
-                    {formatDate(item.date, {
-                      day: "numeric",
-                      month: undefined
-                    }).replace(".", "")}
-                  </strong>
-                </button>
-              ))}
-            </div>
-            <button
-              type="button"
-              onClick={() => move(1)}
-              disabled={index === days.length - 1}
-              aria-label="Nasledujúci deň"
-              className={styles.direction}
-            >
-              <span>Nasledujúci</span>
-              <Icon name="arrow-right" size={19} />
-            </button>
-          </div>
-        </div>
+        <DayNavigation
+          days={days}
+          today={today}
+          index={index}
+          onSelect={setSelected}
+          onMove={move}
+        />
       </div>
     </section>
   );

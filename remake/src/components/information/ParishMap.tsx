@@ -9,6 +9,8 @@ import styles from "./ParishMap.module.css";
 
 // MapLibre uses longitude, latitude; this is the original parish-office location.
 const officeCoordinates: [number, number] = [19.1266, 48.5781];
+// Church location: https://vvvw.apsida.sk/c/1582/zvolen
+const churchCoordinates: [number, number] = [19.125648, 48.578032];
 const mapStyle = "https://tiles.openfreemap.org/styles/positron";
 const surfaceColors: Record<string, string> = {
   park: "#dce6d7",
@@ -61,7 +63,10 @@ function MapCanvas({ address, href }: { address: string; href: string }) {
       const currentMap = new maps.Map({
         container: canvas.current,
         style: mapStyle,
-        center: officeCoordinates,
+        center: [
+          (officeCoordinates[0] + churchCoordinates[0]) / 2,
+          (officeCoordinates[1] + churchCoordinates[1]) / 2
+        ],
         zoom: 16.5,
         scrollZoom: false,
         dragRotate: false,
@@ -93,25 +98,43 @@ function MapCanvas({ address, href }: { address: string; href: string }) {
       });
       map = currentMap;
       currentMap.touchZoomRotate.disableRotation();
-      currentMap.getCanvas().setAttribute("aria-label", `Mapa: ${address}`);
+      currentMap
+        .getCanvas()
+        .setAttribute(
+          "aria-label",
+          `Mapa kostola sv. Alžbety a farskej kancelárie: ${address}`
+        );
       currentMap.addControl(
         new maps.NavigationControl({ showCompass: false }),
         "bottom-right"
       );
       currentMap.addControl(new maps.FullscreenControl(), "top-right");
 
-      const marker = document.createElement("div");
-      marker.className = styles.marker;
-      marker.setAttribute("aria-hidden", "true");
-      const pin = document.createElement("span");
-      pin.className = styles.markerPin;
-      const label = document.createElement("span");
-      label.className = styles.markerLabel;
-      label.textContent = "Farská kancelária";
-      marker.append(pin, label);
-      new maps.Marker({ element: marker, anchor: "bottom" })
-        .setLngLat(officeCoordinates)
-        .addTo(currentMap);
+      for (const place of [
+        {
+          coordinates: officeCoordinates,
+          label: "Farská kancelária",
+          className: styles.officeMarker
+        },
+        {
+          coordinates: churchCoordinates,
+          label: "Kostol sv. Alžbety",
+          className: styles.churchMarker
+        }
+      ]) {
+        const marker = document.createElement("div");
+        marker.className = `${styles.marker} ${place.className}`;
+        marker.setAttribute("aria-hidden", "true");
+        const pin = document.createElement("span");
+        pin.className = styles.markerPin;
+        const label = document.createElement("span");
+        label.className = styles.markerLabel;
+        label.textContent = place.label;
+        marker.append(pin, label);
+        new maps.Marker({ element: marker, anchor: "bottom" })
+          .setLngLat(place.coordinates)
+          .addTo(currentMap);
+      }
 
       currentMap.on("load", () => {
         loaded = true;
@@ -141,7 +164,7 @@ function MapCanvas({ address, href }: { address: string; href: string }) {
         ref={canvas}
         className={styles.canvas}
         role="region"
-        aria-label={`Mapa polohy farskej kancelárie: ${address}`}
+        aria-label={`Mapa polohy kostola sv. Alžbety a farskej kancelárie: ${address}`}
         aria-busy={status === "loading"}
         inert={status !== "ready"}
       />

@@ -9,6 +9,7 @@ import type {
   SettingsDocument
 } from "@/content/documents";
 import * as fixtures from "@/content/fixtures";
+import { saintCharbel } from "@/content/saint-charbel";
 import {
   allEditorialSummaries,
   decodeCursor,
@@ -40,7 +41,7 @@ const cachedSettings = unstable_cache(
 
 const cachedPage = unstable_cache(
   store.getPublishedEditorialPage,
-  ["parish-editorial-v3", cacheNamespace],
+  ["parish-editorial-v4", cacheNamespace],
   { tags: ["parish-published"], revalidate: 300 }
 );
 
@@ -52,13 +53,13 @@ const cachedEntry = unstable_cache(
 
 const cachedActivePosts = unstable_cache(
   store.getPublishedActivePosts,
-  ["parish-active-posts-v1", cacheNamespace],
+  ["parish-active-posts-v2", cacheNamespace],
   { tags: ["parish-published"], revalidate: 300 }
 );
 
 const cachedBulletins = unstable_cache(
   store.getPublishedBulletins,
-  ["parish-bulletins-v1", cacheNamespace],
+  ["parish-bulletins-v2", cacheNamespace],
   { tags: ["parish-published"], revalidate: 300 }
 );
 
@@ -129,10 +130,11 @@ function fixtureEditorialEntries(
         ];
   return entries.filter(
     (entry) =>
-      !activeOn ||
-      !("posterExpiresOn" in entry) ||
-      !entry.posterExpiresOn ||
-      entry.posterExpiresOn >= activeOn
+      (kind === "article" || entry.slug !== saintCharbel.formerPostSlug) &&
+      (!activeOn ||
+        !("posterExpiresOn" in entry) ||
+        !entry.posterExpiresOn ||
+        entry.posterExpiresOn >= activeOn)
   );
 }
 

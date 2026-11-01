@@ -1,5 +1,15 @@
 import "server-only";
-import { and, desc, eq, inArray, isNotNull, lt, or, sql } from "drizzle-orm";
+import {
+  and,
+  desc,
+  eq,
+  inArray,
+  isNotNull,
+  lt,
+  ne,
+  or,
+  sql
+} from "drizzle-orm";
 import type {
   BulletinDocument,
   EditorialDocument,
@@ -7,6 +17,7 @@ import type {
   SettingsDocument
 } from "@/content/documents";
 import { postRecordKinds } from "@/content/posts";
+import { saintCharbel } from "@/content/saint-charbel";
 import type { CalendarDate } from "@/content/types";
 import { addDays, getMonday } from "@/lib/calendar";
 import {
@@ -112,6 +123,13 @@ async function getEditorialSummaries(
             ),
         isNotNull(contentRecords.published),
         isNotNull(contentRecords.publicSlug),
+        // This dated post now has its own permanent homepage section.
+        kind === "news"
+          ? or(
+              eq(contentRecords.kind, "article"),
+              ne(contentRecords.publicSlug, saintCharbel.formerPostSlug)
+            )
+          : undefined,
         // Expired posters leave the homepage; their detail URLs stay available.
         activeOn
           ? sql`(coalesce(${contentRecords.published}->>'isPoster', 'false') <> 'true' or coalesce(${contentRecords.published}->>'posterExpiresOn', '') = '' or ${contentRecords.published}->>'posterExpiresOn' >= ${activeOn})`
@@ -139,7 +157,7 @@ async function getEditorialSummaries(
 }
 
 export async function getPublishedBulletins(today: CalendarDate) {
-  const monday = getMonday(addDays(today, 1));
+  const monday = getMonday(today);
   const rows = await getDb()
     .select({ document: contentRecords.published })
     .from(contentRecords)

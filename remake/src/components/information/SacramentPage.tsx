@@ -24,11 +24,6 @@ export function SacramentPage({ page }: { page: InformationPageDefinition }) {
       {openingQuotation ? (
         <SourceQuotation
           section={openingQuotation}
-          excerpt={
-            isEucharist
-              ? "Eucharistia je prameň a vrchol celého kresťanského života."
-              : undefined
-          }
           sourceHref={
             isEucharist ? "https://dkc.kbs.sk/dkc.php?in=kkc1324" : undefined
           }

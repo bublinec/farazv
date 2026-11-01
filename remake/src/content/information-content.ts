@@ -8166,7 +8166,7 @@ export const publishedInformationContent: PublishedInformationContent[] = [
               content: [
                 {
                   type: "text",
-                  text: "Sme spoločenstvo mladých ľudí, ktorým je blízka hudba, a preto spievame a hráme na mládežníckych svätých omšiach v nedeľu večer (o 19:00 hod.) Máme medzi sebou rôznych hudobníkov, ale aj spevákov. Nácvik mávajú hudobníci počas týždňa zvlášť a spolu so spevákmi trénujeme dve hodiny pred svätou omšou vo farskom klube. Stále sú vítaní noví ľudia, ktorí môžu obohatiť zbor svojím talentom a originalitou. Neváhaj a príď, tešíme sa na teba. 🙂"
+                  text: "Sme spoločenstvo mladých ľudí, ktorým je blízka hudba, a preto spievame a hráme na mládežníckych svätých omšiach v nedeľu večer (o 19:00 hod.) Máme medzi sebou rôznych hudobníkov, ale aj spevákov. Nácvik mávajú hudobníci počas týždňa zvlášť a spolu so spevákmi trénujeme dve hodiny pred svätou omšou vo farskom klube. Stále sú vítaní noví ľudia, ktorí môžu obohatiť zbor svojím talentom a originalitou. Neváhaj a príď, tešíme sa na teba."
                 }
               ]
             },
@@ -8208,12 +8208,6 @@ export const publishedInformationContent: PublishedInformationContent[] = [
               type: "imageGallery",
               attrs: {
                 images: [
-                  {
-                    src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1640604924/269924012_904157393579511_8621953174800699664_n_7c9a8503f0.jpg",
-                    alt: "",
-                    width: 2731,
-                    height: 2048
-                  },
                   {
                     src: "https://res.cloudinary.com/dmx3wfvko/image/upload/v1638949401/Screenshot_from_2021_12_08_08_40_38_d2f4d2a22e.png",
                     alt: "",
