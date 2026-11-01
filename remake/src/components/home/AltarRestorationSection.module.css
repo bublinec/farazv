@@ -59,6 +59,13 @@
   margin-bottom: 24px;
 }
 
+.introduction strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #fffaf1;
+  font-weight: 500;
+}
+
 .appeal {
   padding: 20px 22px;
   border: 1px solid #d8bb7f70;
@@ -107,47 +114,28 @@
   color: #f3d99f;
 }
 
-.letter {
-  border-top: 1px solid #d8bb7f40;
-  border-bottom: 1px solid #d8bb7f40;
-}
-
-.letter > summary {
-  display: flex;
+.more {
+  display: inline-flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
   min-height: 48px;
+  padding-block: 10px;
+  border-top: 1px solid #d8bb7f40;
+  border-bottom: 1px solid #d8bb7f40;
   color: #f3d99f;
-  font-size: 0.85rem;
-  cursor: pointer;
-  list-style: none;
+  font-size: 0.9rem;
+  text-decoration: none;
 }
 
-.letter > summary::-webkit-details-marker {
-  display: none;
+.more:hover {
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
-.letter summary svg {
-  flex-shrink: 0;
-}
-
-.letter[open] summary svg {
-  transform: rotate(180deg);
-}
-
-.letterBody {
-  --prose-font-size: 0.9rem;
-  --prose-line-height: 1.75;
-  --prose-paragraph-gap: 1rem;
-  --prose-h2-size: 1.1rem;
-  --prose-heading-margin: 0 0 12px;
-  padding-block: 8px 18px;
-  color: #e5dccd;
-}
-
-.letterBody a {
-  color: #f3d99f;
+.more:focus-visible {
+  outline-color: var(--white);
 }
 
 .thanks {

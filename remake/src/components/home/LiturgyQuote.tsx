@@ -100,13 +100,13 @@ export function LiturgyQuote({
             <p>{verse.text}</p>
           </blockquote>
           <figcaption>
+            {verse.variant ? <span>{verse.variant} · </span> : null}
             <a
               href={liturgySourceUrl(date)}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {verse.variant ? `${verse.variant} · ` : ""}Verš pred evanjeliom ·
-              KBS
+              Liturgický kalendár
               <span className="srOnly"> (otvorí sa v novom okne)</span>
             </a>
           </figcaption>

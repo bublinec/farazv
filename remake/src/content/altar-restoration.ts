@@ -2,6 +2,8 @@ import type { MediaAsset } from "./types";
 
 /** Dedicated restoration appeal, distinct from the account for everyday parish life. */
 export const altarRestoration = {
+  title: "Obnova oltára sv. Jozefa",
+  href: "/farnost/obnova-oltarov",
   sectionId: "obnova-oltarov",
   postSlug: "pomozme-spolu-zrestaurovat-oltar-1",
   iban: "SK53 1111 0000 0066 1528 6057",

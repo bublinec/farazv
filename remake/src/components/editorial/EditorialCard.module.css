@@ -205,6 +205,10 @@
     grid-column: 1 / -1;
   }
 
+  .compactPosts .postCard:first-child:nth-last-child(odd) .link {
+    min-height: clamp(380px, 32vw, 460px);
+  }
+
   .compactPosts .postCard:first-child:nth-last-child(odd) .content {
     padding: clamp(24px, 3vw, 40px);
   }

@@ -1,5 +1,6 @@
 import { parishServices } from "./services";
 import { hospitalMinistry } from "./hospital-ministry";
+import { altarRestoration } from "./altar-restoration";
 
 export interface NavigationItem {
   label: string;
@@ -15,6 +16,7 @@ export const navigation: NavigationItem[] = [
       { label: "O farnosti", href: "/farnost/o-farnosti" },
       { label: "Naše spoločenstvo", href: "/farnost/nase-spolocenstvo" },
       { label: "Kostol sv. Alžbety", href: "/farnost/kostol-sv-alzbety" },
+      { label: altarRestoration.title, href: altarRestoration.href },
       {
         label: "Kostol v Lieskovci",
         href: "/farnost/kostol-sv-jana-pavla-v-lieskovci"

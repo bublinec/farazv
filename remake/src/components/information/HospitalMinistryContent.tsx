@@ -6,9 +6,9 @@ import {
   richTextToPlainText,
   withoutRichTextMedia
 } from "@/lib/rich-text";
-import { RichText } from "@/components/editorial/RichText";
 import { Icon } from "@/components/ui/Icon";
 import { MediaImage } from "@/components/ui/MediaImage";
+import { AnointingGuidance } from "./AnointingGuidance";
 import styles from "./HospitalMinistryContent.module.css";
 
 export function HospitalMinistryContent({
@@ -130,24 +130,7 @@ export function HospitalMinistryContent({
           </dl>
         </section>
         {hasReading && reading ? (
-          <section
-            className={styles.guidance}
-            aria-labelledby="pomazanie-chorych-heading"
-          >
-            <div className={styles.guidanceReading}>
-              <h2 id="pomazanie-chorych-heading">
-                O prijímaní sviatosti pomazania chorých
-              </h2>
-              <RichText document={reading} className={styles.guidanceBody} />
-              <Link
-                href="/sviatosti/sviatost-pomazania-chorych"
-                className="textLink"
-              >
-                Viac o sviatosti pomazania chorých{" "}
-                <Icon name="arrow-right" size={18} />
-              </Link>
-            </div>
-          </section>
+          <AnointingGuidance document={reading} />
         ) : null}
       </div>
     </section>

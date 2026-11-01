@@ -5,6 +5,7 @@ import type { EditorialRecordKind } from "@/content/documents";
 import { informationPages } from "@/content/information";
 import { saintCharbel } from "@/content/saint-charbel";
 import { hospitalMinistry } from "@/content/hospital-ministry";
+import { altarRestoration } from "@/content/altar-restoration";
 import { editorialRecordPath } from "@/lib/record-routing";
 import { getDb } from "@/server/db";
 import { contentRecords } from "@/server/db/schema";
@@ -24,6 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "",
     "/farnost/farske-oznamy",
     hospitalMinistry.href,
+    altarRestoration.href,
     "/farnost/nase-spolocenstvo",
     "/podnety",
     ...informationPages.map((page) => `/${page.slug}`)
@@ -47,7 +49,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const record of records) {
     if (
       record.kind !== "article" &&
-      record.slug === saintCharbel.formerPostSlug
+      (record.slug === saintCharbel.formerPostSlug ||
+        record.slug === altarRestoration.postSlug)
     )
       continue;
 

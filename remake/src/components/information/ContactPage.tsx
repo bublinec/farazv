@@ -218,7 +218,7 @@ export async function ContactPage({
           <Unavailable title="Kontaktné údaje sú dočasne nedostupné." />
         </div>
       )}
-      <FeedbackInvite />
+      <FeedbackInvite divided />
       <PartnerLinks page={page} />
       {settings ? (
         <DonationSection iban={settings.iban} qr={settings.donationQr} />

@@ -1,7 +1,6 @@
+import Link from "next/link";
 import type { EditorialDocument } from "@/content/documents";
 import { altarRestoration } from "@/content/altar-restoration";
-import { contentBlocksToRichText, withoutRichTextMedia } from "@/lib/rich-text";
-import { RichText } from "@/components/editorial/RichText";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { IbanAccount } from "@/components/ui/IbanAccount";
 import { Icon } from "@/components/ui/Icon";
@@ -13,9 +12,6 @@ export function AltarRestorationSection({
   article: EditorialDocument | null;
 }) {
   if (!article) return null;
-  const letter = withoutRichTextMedia(
-    article.body ?? contentBlocksToRichText(article.blocks)
-  );
 
   return (
     <section
@@ -32,14 +28,14 @@ export function AltarRestorationSection({
       </div>
       <div className={`container ${styles.inner}`}>
         <div className={styles.content}>
-          <h2 id="obnova-oltarov-heading">Pomôžme spolu zreštaurovať oltáre</h2>
+          <h2 id="obnova-oltarov-heading">Pomôžme obnoviť oltár sv. Jozefa</h2>
           <p className={styles.introduction}>
-            Vaše milodary pomáhajú obnoviť oltár sv. Jozefa, posledný z trojice
-            oltárov nášho farského kostola.
+            <strong>Posledný z trojice oltárov nášho farského kostola.</strong>{" "}
+            Vaše milodary nám pomáhajú dokončiť ich obnovu.
           </p>
           <div className={styles.appeal}>
             <p className={styles.goal}>
-              <span>Cieľ zbierky na obnovu</span>
+              <span>Cieľ zbierky na oltár sv. Jozefa</span>
               <strong>{altarRestoration.goal}</strong>
             </p>
             <IbanAccount
@@ -54,13 +50,9 @@ export function AltarRestorationSection({
             Každého <strong>17. v mesiaci</strong> sa v Kostole sv. Alžbety
             modlíme za našich dobrodincov a obetujeme za nich svätú omšu.
           </p>
-          <details className={styles.letter}>
-            <summary>
-              Poďakovanie a forma pomoci
-              <Icon name="chevron" size={18} />
-            </summary>
-            <RichText document={letter} className={styles.letterBody} />
-          </details>
+          <Link href={altarRestoration.href} className={styles.more}>
+            Podrobnosti a príhovor <Icon name="arrow-right" size={18} />
+          </Link>
           <p className={styles.thanks}>Pán Boh vám zaplať a požehnaj!</p>
         </div>
       </div>

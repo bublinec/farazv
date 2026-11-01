@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import path from "node:path";
 import { saintCharbel } from "./src/content/saint-charbel";
+import { altarRestoration } from "./src/content/altar-restoration";
 
 const config: NextConfig = {
   poweredByHeader: false,
@@ -50,6 +51,11 @@ const config: NextConfig = {
   },
   async redirects() {
     return [
+      {
+        source: `/prispevky/${altarRestoration.postSlug}`,
+        destination: altarRestoration.href,
+        permanent: true
+      },
       {
         source: "/farnost/galeria",
         destination: "/farnost/kostol-sv-alzbety#galeria",

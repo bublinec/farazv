@@ -13,6 +13,7 @@ import { MediaImage } from "@/components/ui/MediaImage";
 import { Icon } from "@/components/ui/Icon";
 import { ImageGallery } from "./ImageGallery";
 import { ParishHistoryBanner } from "./ParishHistoryBanner";
+import { HistoricalChurchGallery } from "./HistoricalChurchGallery";
 import styles from "./SaintElizabethChurchPage.module.css";
 
 function galleryGroups() {
@@ -115,6 +116,7 @@ export function SaintElizabethChurchPage({
           </div>
         </aside>
       </section>
+      <HistoricalChurchGallery />
       <section
         id="galeria"
         className={styles.galleries}

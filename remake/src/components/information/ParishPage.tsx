@@ -1,8 +1,14 @@
 import Link from "next/link";
 import type { InformationPageDefinition } from "@/content/information";
 import { PageHero } from "@/components/ui/PageHero";
-import { ReadingCopy, PageLinks } from "./PageSections";
-import styles from "./InformationPage.module.css";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Icon } from "@/components/ui/Icon";
+import { ReadingCopy } from "./PageSections";
+import {
+  HistoricalChurchGallery,
+  historicalGallerySectionId
+} from "./HistoricalChurchGallery";
+import styles from "./ParishPage.module.css";
 
 export function ParishPage({ page }: { page: InformationPageDefinition }) {
   return (
@@ -12,18 +18,27 @@ export function ParishPage({ page }: { page: InformationPageDefinition }) {
         title={page.title}
         description={page.introduction}
       />
-      <section className={`container ${styles.resourceLayout}`}>
-        <div className={styles.resourceContent}>
-          <ReadingCopy page={page} />
-        </div>
-        <aside className={styles.officeAside} aria-label="Naše kostoly">
-          <h2>Naše kostoly</h2>
-          <PageLinks page={page} />
-          <p>
-            Aktuálne dianie a pozvania nájdete vo{" "}
-            <Link href="/farnost/farske-oznamy">farských oznamoch</Link>.
-          </p>
-        </aside>
+      <section className={`container ${styles.history}`}>
+        <article className={styles.reading}>
+          <ReadingCopy page={page} omitSectionId={historicalGallerySectionId} />
+        </article>
+      </section>
+      <HistoricalChurchGallery />
+      <section
+        className={`container ${styles.churches}`}
+        aria-label="Naše kostoly"
+      >
+        <SectionHeading title="Naše kostoly" />
+        <ul className={styles.links}>
+          {page.links?.map((link) => (
+            <li key={link.href}>
+              <Link href={link.href}>
+                <span>{link.label}</span>
+                <Icon name="arrow-right" size={20} />
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
     </>
   );

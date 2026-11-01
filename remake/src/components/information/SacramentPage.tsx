@@ -1,6 +1,7 @@
 import type { InformationPageDefinition } from "@/content/information";
 import { PageHero } from "@/components/ui/PageHero";
 import { SacramentsSection } from "@/components/home/SacramentsSection";
+import { HospitalMinistrySection } from "@/components/home/HospitalMinistrySection";
 import { ReadingCopy, PageLinks } from "./PageSections";
 import { OfficeAside } from "./OfficeAside";
 import { SourceQuotation } from "./SourceQuotation";
@@ -11,6 +12,7 @@ export function SacramentPage({ page }: { page: InformationPageDefinition }) {
   const openingQuotation =
     firstSection?.kind === "quotation_sections" ? firstSection : undefined;
   const isEucharist = page.slug === "sviatosti/sviatost-eucharistie";
+  const isAnointing = page.slug === "sviatosti/sviatost-pomazania-chorych";
   let preparationType: "baptism" | "marriage" | undefined;
   if (page.slug.endsWith("sviatost-krstu")) preparationType = "baptism";
   if (page.slug.endsWith("sviatost-manzelstva")) preparationType = "marriage";
@@ -30,6 +32,7 @@ export function SacramentPage({ page }: { page: InformationPageDefinition }) {
           }
         />
       ) : null}
+      {isAnointing ? <HospitalMinistrySection /> : null}
       <div className={`container ${styles.sacramentLayout}`}>
         <div className={styles.sacramentContent}>
           <PageLinks page={page} />

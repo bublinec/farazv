@@ -212,36 +212,6 @@
   line-height: 1.6;
 }
 
-.guidance {
-  margin-top: 40px;
-  padding: clamp(24px, 4vw, 40px);
-  border-top: 2px solid var(--gold);
-  background: var(--paper);
-}
-
-.guidanceReading {
-  max-width: 78ch;
-  margin-inline: auto;
-  font-size: 0.95rem;
-}
-
-.guidanceReading > h2 {
-  margin-bottom: 24px;
-  color: var(--blue-deep);
-  font-size: 1.5rem;
-}
-
-.guidanceBody {
-  --prose-font-size: 0.95rem;
-  --prose-line-height: 1.75;
-  --prose-paragraph-gap: 1rem;
-}
-
-.guidanceReading > a {
-  margin-top: 24px;
-  min-height: 44px;
-}
-
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;

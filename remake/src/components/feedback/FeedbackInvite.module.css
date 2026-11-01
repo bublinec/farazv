@@ -7,6 +7,10 @@
   padding-block: clamp(28px, 4vw, 44px);
 }
 
+.divided {
+  border-block: 1px solid var(--line);
+}
+
 .invite h2 {
   font-size: 1.4rem;
   margin-bottom: 8px;
