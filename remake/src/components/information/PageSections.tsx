@@ -82,7 +82,7 @@ export function RelatedPages({ page }: { page: InformationPageDefinition }) {
     .slice(0, 3);
   if (!related.length) return null;
 
-  let relatedHeading = "Spoznajte aj ďalších";
+  let relatedHeading = "Spoznajte aj ďalšie služby";
   if (page.kind === "sacrament") relatedHeading = "Ďalšie sviatosti";
   if (page.kind === "church") relatedHeading = "Naše ďalšie kostoly";
 

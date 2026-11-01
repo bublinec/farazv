@@ -92,12 +92,14 @@
   }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 900px), (pointer: coarse) {
   .space {
-    min-height: 155px;
-    margin-bottom: 16px;
+    min-height: 96px;
+    margin-block: 14px;
   }
+}
 
+@media (max-width: 550px) {
   .quote {
     padding-inline: 22px;
   }

@@ -193,22 +193,29 @@ export function MassHero({
       <div
         className={`container ${styles.inner}`}
         onTouchStart={(event) => {
+          if (event.touches.length !== 1) {
+            startTouch.current = null;
+            return;
+          }
+
           startTouch.current = {
-            x: event.changedTouches[0].clientX,
-            y: event.changedTouches[0].clientY
+            x: event.touches[0].clientX,
+            y: event.touches[0].clientY
           };
         }}
         onTouchEnd={(event) => {
           const start = startTouch.current;
+          startTouch.current = null;
 
-          if (!start) return;
+          if (!start || event.touches.length) return;
 
           const dx = event.changedTouches[0].clientX - start.x;
           const dy = event.changedTouches[0].clientY - start.y;
 
           if (Math.abs(dx) > 65 && Math.abs(dx) > Math.abs(dy) * 1.5)
             move(dx < 0 ? 1 : -1);
-
+        }}
+        onTouchCancel={() => {
           startTouch.current = null;
         }}
       >
