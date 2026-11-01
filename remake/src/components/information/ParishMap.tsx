@@ -72,12 +72,15 @@ function MapCanvas({ address, href }: { address: string; href: string }) {
         dragRotate: false,
         pitchWithRotate: false,
         touchPitch: false,
+        cooperativeGestures: true,
         attributionControl: { compact: false },
         locale: {
           "NavigationControl.ZoomIn": "Priblížiť",
           "NavigationControl.ZoomOut": "Oddialiť",
           "FullscreenControl.Enter": "Zväčšiť mapu",
-          "FullscreenControl.Exit": "Zmenšiť mapu"
+          "FullscreenControl.Exit": "Zmenšiť mapu",
+          "CooperativeGesturesHandler.MobileHelpText":
+            "Mapu posuniete dvoma prstami."
         },
         transformStyle: (_previous, next) => ({
           ...next,

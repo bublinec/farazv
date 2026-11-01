@@ -26,7 +26,7 @@
 }
 .inner {
   display: grid;
-  grid-template-columns: 0.7fr 1.3fr;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
   gap: clamp(32px, 6vw, 72px);
   align-items: center;
   max-width: 930px;
@@ -84,7 +84,7 @@
     padding: 15px;
   }
 }
-@media (max-width: 550px) {
+@media (max-width: 700px) {
   .section {
     padding: 45px 0;
   }
@@ -94,6 +94,7 @@
     gap: 25px;
   }
   .content {
+    width: 100%;
     --account-align: center;
     text-align: center;
   }
@@ -101,6 +102,6 @@
     margin-inline: auto;
   }
   .qr {
-    max-width: 190px;
+    width: min(220px, 100%);
   }
 }

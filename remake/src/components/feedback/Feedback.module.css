@@ -31,6 +31,7 @@
 }
 
 .topics {
+  min-width: 0;
   padding: 0;
   border: 0;
   margin: 0;
@@ -64,6 +65,7 @@
 }
 
 .topics input {
+  flex-shrink: 0;
   width: 18px;
   height: 18px;
   accent-color: var(--blue);
@@ -225,4 +227,28 @@
 
 .close:hover {
   background: #e8dcc6;
+}
+
+@media (max-width: 550px) {
+  .topics > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fields > button {
+    width: 100%;
+  }
+
+  .success {
+    padding: 24px 18px;
+  }
+
+  .welcomeInner {
+    padding-right: 52px;
+  }
+
+  .close {
+    top: 0;
+    transform: none;
+  }
 }

@@ -35,8 +35,10 @@
   object-fit: cover;
   transition: transform 350ms ease;
 }
-.thumbnail:hover img {
-  transform: scale(1.045);
+@media (hover: hover) and (pointer: fine) {
+  .thumbnail:hover img {
+    transform: scale(1.045);
+  }
 }
 .dialog {
   border: 0;
@@ -49,18 +51,23 @@
   margin: 0;
   background: rgb(17 29 35 / 97%);
   color: white;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .dialog::backdrop {
   background: rgb(17 29 35 / 96%);
 }
 .dialog[open] {
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
 }
 .lightbox {
+  flex: 0 0 auto;
   width: min(1320px, 100%);
-  max-height: 100dvh;
-  padding: 20px 35px;
+  margin: auto;
+  padding: max(20px, env(safe-area-inset-top))
+    max(35px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom))
+    max(35px, env(safe-area-inset-left));
 }
 .toolbar {
   display: flex;
@@ -111,6 +118,7 @@
   text-align: center;
   line-height: 1.5;
   padding: 18px 12px 0;
+  overflow-wrap: anywhere;
 }
 .direction {
   width: 48px;
@@ -150,10 +158,13 @@
     gap: 12px;
   }
   .thumbnail {
-    aspect-ratio: 0.88;
+    aspect-ratio: 1;
   }
   .lightbox {
-    padding: 15px 12px;
+    padding: max(15px, env(safe-area-inset-top))
+      max(12px, env(safe-area-inset-right))
+      max(15px, env(safe-area-inset-bottom))
+      max(12px, env(safe-area-inset-left));
   }
   .toolbar {
     padding: 0 0 14px;
@@ -163,7 +174,7 @@
     padding-bottom: 60px;
   }
   .figure img {
-    height: 60dvh;
+    height: 60svh;
   }
   .figure figcaption {
     padding: 15px 3px;
@@ -181,6 +192,18 @@
   .hint {
     margin-top: 15px;
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .more > button {
+    width: 100%;
+  }
+}
+
+@media (hover: none) {
+  .hint {
+    display: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {

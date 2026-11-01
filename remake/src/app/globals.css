@@ -355,7 +355,8 @@ p:last-child {
   width: min(1100px, 94vw);
   max-width: 94vw;
   max-height: 94dvh;
-  overflow: visible;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .imageDialog::backdrop {
   background: #081b27ed;
@@ -376,6 +377,7 @@ p:last-child {
   padding: 15px 30px 0;
   font-size: var(--text-caption);
   text-align: center;
+  overflow-wrap: anywhere;
 }
 .imageDialogClose {
   position: absolute;
@@ -385,8 +387,8 @@ p:last-child {
   color: white;
   background: #173b4e;
   border: 1px solid #ffffff65;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
 }

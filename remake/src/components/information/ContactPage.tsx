@@ -32,7 +32,7 @@ function PriestCards({
             {priest.image ? (
               <MediaImage
                 image={priest.image}
-                sizes="(max-width: 760px) 42vw, (max-width: 1280px) 33vw, 382px"
+                sizes="(max-width: 480px) 100px, (max-width: 760px) 34vw, (max-width: 1280px) 33vw, 382px"
                 quality="high"
               />
             ) : (

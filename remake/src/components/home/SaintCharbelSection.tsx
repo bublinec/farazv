@@ -18,7 +18,7 @@ export function SaintCharbelSection() {
         <div className={styles.portrait}>
           <MediaImage
             image={saintCharbel.portrait}
-            sizes="(max-width: 550px) 140px, (max-width: 760px) 150px, 220px"
+            sizes="(max-width: 550px) 90px, (max-width: 760px) 150px, 220px"
             fit="contain"
             quality="high"
           />

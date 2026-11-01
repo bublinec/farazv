@@ -26,7 +26,7 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
         </div>
         <div>
           <h3>Naša farnosť</h3>
-          <ul>
+          <ul className={styles.parishLinks}>
             <li>
               <Link href="/farnost/o-farnosti">O farnosti</Link>
             </li>

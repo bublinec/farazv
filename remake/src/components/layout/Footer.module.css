@@ -198,8 +198,31 @@
     margin-bottom: 0;
   }
   .hours li {
-    flex-direction: row;
-    gap: 15px;
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 8px;
+  }
+  .parishLinks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 16px;
+  }
+  .parishLinks li {
+    margin: 0;
+  }
+  .parishLinks a,
+  .contact a,
+  .more,
+  .bottom a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .contact li:has(a) {
+    align-items: center;
+  }
+  .contact li:has(a) svg {
+    margin-top: 0;
   }
   .main h3 {
     margin-bottom: 20px;

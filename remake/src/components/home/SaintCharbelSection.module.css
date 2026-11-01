@@ -130,13 +130,40 @@
 
 @media (max-width: 550px) {
   .inner {
-    grid-template-columns: 1fr;
-    gap: 28px;
+    grid-template-columns: 90px minmax(0, 1fr);
+    gap: 18px 24px;
   }
 
   .portrait {
-    width: 140px;
+    grid-column: 1;
+    grid-row: 1;
     margin: 0;
+  }
+
+  .content {
+    display: contents;
+  }
+
+  .content h2 {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    margin: 0;
+  }
+
+  .content > :not(h2) {
+    grid-column: 1 / -1;
+  }
+
+  .content > p,
+  .content .schedule,
+  .content .note {
+    margin: 0;
+  }
+
+  .intentionLink {
+    justify-content: space-between;
+    padding-inline: 14px;
   }
 
   .background {

@@ -16,9 +16,11 @@
   transition: box-shadow 180ms ease, transform 180ms ease;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 28px rgb(46 82 104 / 8%);
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgb(46 82 104 / 8%);
+  }
 }
 
 .link {
@@ -43,8 +45,11 @@
   object-fit: cover;
   transition: transform 350ms ease;
 }
-.link:hover .image img {
-  transform: scale(1.025);
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover .image img {
+    transform: scale(1.025);
+  }
 }
 .content {
   display: flex;

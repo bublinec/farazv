@@ -370,6 +370,7 @@
 }
 
 .priestCard > div {
+  min-width: 0;
   padding: 25px;
 }
 
@@ -480,14 +481,13 @@
 
   .priestCard {
     display: grid;
-    grid-template-columns: minmax(105px, 0.7fr) minmax(0, 1fr);
+    grid-template-columns: minmax(110px, 0.55fr) minmax(0, 1fr);
   }
 
   .priestCard > img,
   .priestPlaceholder {
     height: auto;
-    min-height: 280px;
-    align-self: stretch;
+    align-self: start;
   }
 
   .priestCard > div {
@@ -576,6 +576,24 @@
   .resourceLink {
     padding: 18px;
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .priestGrid {
+    gap: 16px;
+  }
+
+  .priestCard {
+    grid-template-columns: 100px minmax(0, 1fr);
+  }
+
+  .priestCard > div {
+    padding: 16px 14px;
+  }
+
+  .priestRole {
+    margin-bottom: 8px;
   }
 }
 
