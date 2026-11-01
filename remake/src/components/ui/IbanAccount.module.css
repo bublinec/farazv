@@ -18,14 +18,21 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .number strong {
+  min-width: 0;
   font-size: 1.2rem;
   letter-spacing: 0.025em;
   color: var(--account-color, var(--blue));
   font-variant-numeric: tabular-nums;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+}
+
+.group {
+  white-space: nowrap;
 }
 
 .number button {

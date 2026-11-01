@@ -1,5 +1,4 @@
 .sacramentLayout,
-.churchLayout,
 .communityLayout,
 .resourceLayout {
   display: grid;
@@ -25,79 +24,6 @@
 
 .sacramentSidebar .pageLinks {
   margin-top: 0;
-}
-
-.churchReadingLayout {
-  grid-template-areas: "reading timeline";
-  row-gap: 32px;
-}
-
-.churchReadingLayout > .sacramentContent {
-  grid-area: reading;
-}
-
-.churchReadingLayout > .churchSidebar {
-  grid-area: timeline;
-}
-
-.churchSidebar {
-  display: grid;
-  gap: 32px;
-  min-width: 0;
-}
-
-.churchNote {
-  --prose-font-size: 0.9rem;
-  --prose-line-height: 1.65;
-  --prose-paragraph-gap: 0;
-  --prose-h2-size: 1.1rem;
-  --prose-heading-margin: 0 0 14px;
-  --prose-heading-color: var(--blue);
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
-}
-
-.churchNote ul {
-  margin: 0;
-}
-
-.patron {
-  width: 100%;
-  max-width: 320px;
-  justify-self: center;
-  margin: 0;
-  background: var(--paper);
-  border-bottom: 2px solid var(--gold);
-}
-
-.patron > img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.patron figcaption {
-  padding: 16px;
-  text-align: center;
-  line-height: 1.5;
-}
-
-.patron figcaption > span {
-  display: block;
-  color: var(--ink);
-  font-size: 1.1rem;
-}
-
-.patron small {
-  display: block;
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: var(--text-caption);
-}
-
-.patron a {
-  color: inherit;
-  text-underline-offset: 3px;
 }
 
 .officeAside {
@@ -310,70 +236,6 @@
   text-underline-offset: 5px;
 }
 
-.timeline {
-  border-left: 1px solid #d7c9ac;
-  padding-left: 26px;
-  margin-top: 8px;
-}
-
-.timeline > h2 {
-  font-size: 1.15rem;
-  line-height: 1.35;
-  font-weight: 500;
-  color: var(--blue);
-  margin: 0 0 24px;
-}
-
-.timelineEvent {
-  position: relative;
-  margin-bottom: 32px;
-}
-
-.timelineEvent:last-child {
-  margin-bottom: 0;
-}
-
-.timelineEvent::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  position: absolute;
-  left: -30px;
-  top: 6px;
-  background: var(--gold);
-  border-radius: 50%;
-}
-
-.timelineYear {
-  display: block;
-  margin-bottom: 4px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  line-height: 1.4;
-  color: var(--gold-dark);
-}
-
-.timelineEvent h3 {
-  font-size: 1.05rem;
-  line-height: 1.35;
-  color: var(--blue);
-  margin: 0 0 6px;
-  font-weight: 500;
-}
-
-.timelineEvent p {
-  line-height: 1.65;
-  color: var(--muted);
-  font-size: 0.9rem;
-  margin: 0;
-}
-
-.credit {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: var(--muted);
-}
-
 .communityAside {
   border-top: 3px solid var(--gold);
   padding: 28px;
@@ -582,7 +444,6 @@
 
 @media (max-width: 1000px) {
   .sacramentLayout,
-  .churchLayout,
   .communityLayout,
   .resourceLayout {
     grid-template-columns: minmax(0, 1fr) 280px;
@@ -602,14 +463,16 @@
   }
 }
 
-@media (max-width: 760px) {
-  .churchReadingLayout {
-    grid-template-areas:
-      "reading"
-      "timeline";
-    grid-template-rows: auto;
+@media (max-width: 850px) {
+  .sacramentLayout,
+  .communityLayout,
+  .resourceLayout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
   }
+}
 
+@media (max-width: 760px) {
   .priestGrid {
     grid-template-columns: 1fr;
     gap: 22px;
@@ -649,16 +512,6 @@
   }
 
   .sacramentLayout,
-  .churchLayout,
-  .communityLayout,
-  .resourceLayout,
-  .schoolLayout {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .sacramentLayout,
-  .churchLayout,
   .communityLayout,
   .resourceLayout,
   .schoolLayout {
@@ -695,16 +548,8 @@
     padding-bottom: 0;
   }
 
-  .timeline {
-    margin-top: 0;
-    padding-left: 25px;
-  }
-
-  .timelineEvent::before {
-    left: -29px;
-  }
-
   .schoolLayout {
+    grid-template-columns: minmax(0, 1fr);
     gap: 28px;
   }
 

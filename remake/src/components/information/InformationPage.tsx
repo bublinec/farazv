@@ -3,12 +3,8 @@ import { ContactPage } from "./ContactPage";
 import { SacramentPage } from "./SacramentPage";
 import { ParishPage } from "./ParishPage";
 import { SaintElizabethChurchPage } from "./SaintElizabethChurchPage";
-import {
-  ChurchPage,
-  CommunityPage,
-  SchoolPage,
-  ResourcePage
-} from "./ParishPages";
+import { ChurchPage } from "./ChurchPage";
+import { CommunityPage, SchoolPage, ResourcePage } from "./ParishPages";
 
 export function InformationPage({ page }: { page: InformationPageDefinition }) {
   switch (page.kind) {

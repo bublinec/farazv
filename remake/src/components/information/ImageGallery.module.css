@@ -29,10 +29,6 @@
   cursor: pointer;
   overflow: hidden;
 }
-.thumbnail:nth-child(2),
-.thumbnail:nth-child(5) {
-  aspect-ratio: 1.18;
-}
 .thumbnail img {
   height: 100%;
   width: 100%;
@@ -154,10 +150,6 @@
     gap: 12px;
   }
   .thumbnail {
-    aspect-ratio: 0.88;
-  }
-  .thumbnail:nth-child(2),
-  .thumbnail:nth-child(5) {
     aspect-ratio: 0.88;
   }
   .lightbox {

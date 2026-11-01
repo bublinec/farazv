@@ -1,6 +1,6 @@
 import "server-only";
 import type { RichTextDocument } from "./documents";
-import type { MediaAsset } from "./types";
+import type { HistoryMilestone, MediaAsset } from "./types";
 import { publishedInformationContent } from "./information-content";
 import { churchHistory } from "./church-history";
 
@@ -51,7 +51,7 @@ interface InformationPageLayout {
   };
   links?: InformationLink[];
   patron?: { name: string; image: MediaAsset; sourceHref: string };
-  timeline?: { year: string; title: string; text: string }[];
+  timeline?: HistoryMilestone[];
   credit?: string;
 }
 

@@ -8,6 +8,7 @@
 }
 
 .card {
+  min-width: 0;
   border: 1px solid var(--line);
   background: #fff;
   border-radius: 3px;
@@ -50,6 +51,7 @@
   flex: 1;
   flex-direction: column;
   align-items: flex-start;
+  min-width: 0;
   padding: 1.25rem;
 }
 .metadata {
@@ -69,6 +71,7 @@
   line-height: 1.3;
   letter-spacing: -0.02em;
   margin: 0.6rem 0;
+  overflow-wrap: anywhere;
 }
 .content p {
   display: -webkit-box;
@@ -79,6 +82,7 @@
   font-size: 0.94rem;
   line-height: 1.7;
   margin: 0 0 0.9rem;
+  overflow-wrap: anywhere;
 }
 .readMore {
   display: flex;
@@ -93,6 +97,7 @@
   border-top: 1px solid var(--line);
 }
 .readMore > span {
+  flex-shrink: 0;
   font-size: 1.25rem;
   font-weight: 400;
 }
@@ -140,7 +145,6 @@
 
 .postCard .content {
   justify-content: center;
-  min-width: 0;
   padding: clamp(24px, 3vw, 40px);
 }
 

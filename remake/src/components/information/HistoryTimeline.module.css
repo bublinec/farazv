@@ -1,0 +1,102 @@
+.timeline > h2 {
+  font-size: 1.15rem;
+  line-height: 1.35;
+  font-weight: 500;
+  color: var(--blue);
+  margin: 0 0 24px;
+}
+
+.events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.event {
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.event:last-child {
+  margin-bottom: 0;
+}
+
+.event::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  left: -30px;
+  top: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+.year {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--gold-dark);
+}
+
+.event h3 {
+  font-size: 1.05rem;
+  line-height: 1.35;
+  color: var(--blue);
+  margin: 0 0 6px;
+  font-weight: 500;
+}
+
+.event p {
+  line-height: 1.65;
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.credit {
+  margin: 32px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.headingLine {
+  border-left: 1px solid #d7c9ac;
+  padding-left: 26px;
+  margin-top: 8px;
+}
+
+.eventLine .events {
+  margin-left: 6px;
+  border-left: 1px solid var(--gold);
+}
+
+.eventLine .event {
+  padding: 0 0 24px 24px;
+  margin: 0;
+}
+
+.eventLine .event:last-child {
+  padding-bottom: 0;
+}
+
+.eventLine .event::before {
+  top: 8px;
+  left: -5px;
+  width: 9px;
+  height: 9px;
+}
+
+@media (max-width: 760px) {
+  .headingLine {
+    margin-top: 0;
+    padding-left: 25px;
+  }
+
+  .headingLine .event::before {
+    left: -29px;
+  }
+}

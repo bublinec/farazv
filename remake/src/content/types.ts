@@ -8,6 +8,12 @@ export interface MediaAsset {
   caption?: string;
 }
 
+export interface HistoryMilestone {
+  year: string;
+  title: string;
+  text: string;
+}
+
 export type ContentBlock =
   | { type: "paragraph"; text: string }
   | { type: "heading"; text: string }

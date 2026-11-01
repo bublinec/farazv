@@ -1,0 +1,91 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: clamp(32px, 6vw, 92px);
+  padding-block: clamp(40px, 6vw, 80px);
+  align-items: start;
+}
+
+.reading {
+  min-width: 0;
+}
+
+.sidebar {
+  display: grid;
+  gap: 32px;
+  min-width: 0;
+}
+
+.note {
+  --prose-font-size: 0.9rem;
+  --prose-line-height: 1.65;
+  --prose-paragraph-gap: 0;
+  --prose-h2-size: 1.1rem;
+  --prose-heading-margin: 0 0 14px;
+  --prose-heading-color: var(--blue);
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.note ul {
+  margin: 0;
+}
+
+.patron {
+  width: 100%;
+  max-width: 320px;
+  justify-self: center;
+  margin: 0;
+  background: var(--paper);
+  border-bottom: 2px solid var(--gold);
+}
+
+.patron > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.patron figcaption {
+  padding: 16px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.patron figcaption > span {
+  display: block;
+  color: var(--ink);
+  font-size: 1.1rem;
+}
+
+.patron small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: var(--text-caption);
+}
+
+.patron a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 35px;
+  }
+}
+
+@media (max-width: 850px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+}
+
+@media (max-width: 760px) {
+  .layout {
+    padding-block: 36px 45px;
+  }
+}

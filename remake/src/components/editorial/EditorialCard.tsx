@@ -4,6 +4,16 @@ import { editorialPath, formatEditorialDate } from "@/lib/editorial";
 import type { EditorialKind, EditorialSummary } from "@/lib/editorial";
 import styles from "./EditorialCard.module.css";
 
+const imageSlots = {
+  article: "(max-width: 600px) 100vw, (max-width: 980px) 50vw, 33vw",
+  post: "(max-width: 600px) 90vw, 260px",
+  articlePair: "(max-width: 600px) 100vw, (max-width: 1280px) 50vw, 590px",
+  articleGrid:
+    "(max-width: 600px) 100vw, (max-width: 980px) 50vw, (max-width: 1150px) 33vw, 25vw",
+  compactPost: "(max-width: 600px) 100vw, 260px",
+  featuredPost: "(max-width: 600px) 100vw, (max-width: 1100px) 260px, 320px"
+};
+
 interface EditorialCardProps {
   entry: EditorialSummary;
   kind: EditorialKind;
@@ -12,6 +22,7 @@ interface EditorialCardProps {
 
 export function EditorialCard({ entry, kind, imageSizes }: EditorialCardProps) {
   const isPost = kind === "news";
+  const defaultImageSizes = isPost ? imageSlots.post : imageSlots.article;
 
   return (
     <article
@@ -24,12 +35,7 @@ export function EditorialCard({ entry, kind, imageSizes }: EditorialCardProps) {
           <div className={styles.image}>
             <MediaImage
               image={entry.cover}
-              sizes={
-                imageSizes ??
-                (isPost
-                  ? "(max-width: 600px) 90vw, 260px"
-                  : "(max-width: 600px) 100vw, (max-width: 980px) 50vw, 33vw")
-              }
+              sizes={imageSizes ?? defaultImageSizes}
               fit="cover"
               quality={isPost ? "high" : "standard"}
             />
@@ -60,25 +66,23 @@ export function EditorialGrid({
   kind: EditorialKind;
   compact?: boolean;
 }) {
-  const isPair = kind === "article" && entries.length === 2;
-  const hasFeaturedPost =
-    compact && kind === "news" && entries.length % 2 === 1;
-  const imageSizes = isPair
-    ? "(max-width: 600px) 100vw, (max-width: 1280px) 50vw, 590px"
-    : kind === "article" && entries.length >= 4
-    ? "(max-width: 600px) 100vw, (max-width: 980px) 50vw, (max-width: 1150px) 33vw, 25vw"
-    : compact && kind === "news" && entries.length > 1
-    ? "(max-width: 600px) 100vw, 260px"
-    : undefined;
+  const isPost = kind === "news";
+  const hasFeaturedPost = compact && isPost && entries.length % 2 === 1;
+  const classes = [isPost ? styles.postGrid : styles.grid];
+  let imageSizes: string | undefined;
+
+  if (isPost) {
+    if (compact) classes.push(styles.compactPosts);
+    if (compact && entries.length > 1) imageSizes = imageSlots.compactPost;
+  } else if (entries.length === 2) {
+    classes.push(styles.pair);
+    imageSizes = imageSlots.articlePair;
+  } else if (entries.length >= 4) {
+    imageSizes = imageSlots.articleGrid;
+  }
 
   return (
-    <div
-      className={
-        kind === "news"
-          ? `${styles.postGrid} ${compact ? styles.compactPosts : ""}`
-          : `${styles.grid} ${isPair ? styles.pair : ""}`
-      }
-    >
+    <div className={classes.join(" ")}>
       {entries.map((entry, index) => (
         <EditorialCard
           key={entry.id}
@@ -86,7 +90,7 @@ export function EditorialGrid({
           kind={kind}
           imageSizes={
             hasFeaturedPost && index === 0
-              ? "(max-width: 600px) 100vw, (max-width: 1100px) 260px, 320px"
+              ? imageSlots.featuredPost
               : imageSizes
           }
         />

@@ -81,65 +81,6 @@
   min-width: 0;
 }
 
-.timeline h2 {
-  margin: 0 0 24px;
-  color: var(--blue);
-  font-size: 1.15rem;
-  font-weight: 500;
-  line-height: 1.35;
-}
-
-.timeline ol {
-  margin: 0 0 0 6px;
-  padding: 0;
-  list-style: none;
-  border-left: 1px solid var(--gold);
-}
-
-.timeline li {
-  position: relative;
-  padding: 0 0 24px 24px;
-}
-
-.timeline li:last-child {
-  padding-bottom: 0;
-}
-
-.timeline li::before {
-  content: "";
-  position: absolute;
-  top: 8px;
-  left: -5px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--gold);
-}
-
-.period {
-  display: block;
-  margin-bottom: 4px;
-  color: var(--gold-dark);
-  font-size: 0.85rem;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-.timeline h3 {
-  margin: 0 0 6px;
-  color: var(--blue);
-  font-size: 1.05rem;
-  font-weight: 500;
-  line-height: 1.35;
-}
-
-.timeline p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.65;
-}
-
 .visit {
   overflow: hidden;
   background: var(--paper);

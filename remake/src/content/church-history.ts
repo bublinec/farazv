@@ -1,3 +1,5 @@
+import type { HistoryMilestone } from "./types";
+
 /** Researched 1 November 2026. Keep church history separate from parish history. */
 export const churchHistory = {
   href: "/farnost/kostol-sv-alzbety",
@@ -22,38 +24,36 @@ export const churchHistory = {
   },
   timeline: [
     {
-      period: "1244 – 1250",
+      year: "1244 – 1250",
       title: "Vznik kostola",
-      description: "Počiatky neskororománskej a ranogotickej stavby na námestí."
+      text: "Počiatky neskororománskej a ranogotickej stavby na námestí."
     },
     {
-      period: "1380 – 1390",
+      year: "1380 – 1390",
       title: "Gotická prestavba",
-      description:
-        "Z tohto obdobia sa zachovali klenby, empora aj kamenný portál."
+      text: "Z tohto obdobia sa zachovali klenby, empora aj kamenný portál."
     },
     {
-      period: "1548 – 1551",
+      year: "1548 – 1551",
       title: "Výstavba veže",
-      description:
-        "Zvonica slúžila aj na stráženie mesta a odovzdávanie signálov."
+      text: "Zvonica slúžila aj na stráženie mesta a odovzdávanie signálov."
     },
     {
-      period: "17. storočie",
+      year: "17. storočie",
       title: "Mariánska kaplnka",
-      description: "Prestavby dotvárali kaplnku na južnej strane kostola."
+      text: "Prestavby dotvárali kaplnku na južnej strane kostola."
     },
     {
-      period: "1709",
+      year: "1709",
       title: "Požiar a obnova",
-      description: "Po požiari bola kostolná veža nadstavená."
+      text: "Po požiari bola kostolná veža nadstavená."
     },
     {
-      period: "2017 – 2019",
+      year: "2017 – 2019",
       title: "Obnova veže",
-      description: "Oprava priestorov a schodiska umožnila návrat návštevníkov."
+      text: "Oprava priestorov a schodiska umožnila návrat návštevníkov."
     }
-  ],
+  ] satisfies HistoryMilestone[],
   sections: [
     {
       title: "Stredoveké začiatky",

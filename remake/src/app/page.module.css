@@ -103,6 +103,10 @@
     border-right: 0;
   }
 
+  .community:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
   .community:not(:last-child) {
     border-bottom: 1px solid var(--line);
   }

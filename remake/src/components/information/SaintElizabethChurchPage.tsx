@@ -14,6 +14,7 @@ import { Icon } from "@/components/ui/Icon";
 import { ImageGallery } from "./ImageGallery";
 import { ParishHistoryBanner } from "./ParishHistoryBanner";
 import { HistoricalChurchGallery } from "./HistoricalChurchGallery";
+import { HistoryTimeline } from "./HistoryTimeline";
 import styles from "./SaintElizabethChurchPage.module.css";
 
 function galleryGroups() {
@@ -101,21 +102,12 @@ export function SaintElizabethChurchPage({
           ))}
         </div>
         <div className={styles.sidebar}>
-          <aside
-            className={styles.timeline}
-            aria-labelledby="kostol-timeline-heading"
-          >
-            <h2 id="kostol-timeline-heading">Časová os kostola</h2>
-            <ol>
-              {churchHistory.timeline.map((milestone) => (
-                <li key={milestone.period}>
-                  <span className={styles.period}>{milestone.period}</span>
-                  <h3>{milestone.title}</h3>
-                  <p>{milestone.description}</p>
-                </li>
-              ))}
-            </ol>
-          </aside>
+          <HistoryTimeline
+            events={churchHistory.timeline}
+            title="Časová os kostola"
+            headingId="kostol-timeline-heading"
+            lineStart="events"
+          />
           <aside className={styles.visit} aria-label="Kostol sv. Alžbety">
             <MediaImage
               image={churchDetails.nave}
