@@ -16,7 +16,8 @@ import { getEditorRole } from "./editor-access";
 export { AccessError } from "@/lib/auth-policy";
 export type AuthorizedEditor = EditorIdentity & { role: EditorRole };
 
-export const SESSION_MAX_AGE = 60 * 60 * 8;
+// Keep the persistent session and its encrypted cookie valid for six months.
+export const SESSION_MAX_AGE = 60 * 60 * 24 * 180;
 export const SESSION_COOKIE_VERSION = "parish-editor-v1";
 
 function authConfiguration() {

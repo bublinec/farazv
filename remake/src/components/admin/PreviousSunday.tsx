@@ -86,13 +86,17 @@ export function PreviousSunday({
     publishedDay?.status === "unpublished" ? undefined : publishedDay;
   const draft = record?.draft.days.find((day) => day.date === sunday);
   const draftChanged =
+    !loading &&
+    !error &&
     draft &&
     (draft.status !== publishedDay?.status ||
       (draft.liturgy ?? "") !== (publishedDay?.liturgy ?? "") ||
       !sameMasses(draft.masses, publishedDay?.masses));
 
   const importedDiffers = Boolean(
-    importedDay &&
+    !loading &&
+      !error &&
+      importedDay &&
       ((importedDay.liturgy && importedDay.liturgy !== published?.liturgy) ||
         ((importedDay.masses.length || importedDay.status === "no-masses") &&
           (importedDay.status !== published?.status ||
@@ -100,9 +104,16 @@ export function PreviousSunday({
   );
 
   return (
-    <aside className={weekly.previousSunday} aria-label="Úvodná nedeľa rozpisu">
-      <div>
-        <strong>Nedeľa {formatRecordDate(sunday)}</strong>
+    <details className={weekly.previousSunday}>
+      <summary>
+        <strong>Úvodná nedeľa {formatRecordDate(sunday)}</strong>
+        {loading ? (
+          <span>Načítavam…</span>
+        ) : error || importedDiffers || draftChanged ? (
+          <span>Skontrolovať</span>
+        ) : null}
+      </summary>
+      <div className={weekly.previousSundayContent}>
         <p>
           {loading
             ? "Načítavam rozpis…"
@@ -112,40 +123,51 @@ export function PreviousSunday({
             ? summarize(published)
             : "Použijú sa pravidelné časy, ak sú nastavené."}
         </p>
-      </div>
-      {error ? <TechnicalSupport /> : null}
-      {importedDiffers && onEditImportedSunday ? (
-        <button
-          type="button"
-          className={styles.secondary}
-          disabled={disabled || loading}
-          onClick={onEditImportedSunday}
-        >
-          Upraviť nedeľu v novom okne ↗
-        </button>
-      ) : record ? (
-        <Link
-          href={`/admin/records/${encodeURIComponent(record.id)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Upraviť nedeľu v novom okne ↗
-        </Link>
-      ) : null}
-      {importedDiffers ? (
-        <p className={weekly.warnings} role="alert">
-          Dokument uvádza iný rozpis tejto nedele. Patrí do predchádzajúceho
-          týždňa; tu sa nemení.
-        </p>
-      ) : null}
-      {draftChanged ? (
-        <details>
-          <summary>Predchádzajúci týždeň má nezverejnené zmeny</summary>
-          <p>
-            Koncept: {summarize(draft)}. Na webe sa použije zverejnená verzia.
+        {error ? (
+          <>
+            <TechnicalSupport />
+            <Link
+              href="/admin?section=archive"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Otvoriť archív oznamov ↗
+            </Link>
+          </>
+        ) : null}
+        {!loading && !error && importedDiffers && onEditImportedSunday ? (
+          <button
+            type="button"
+            className={styles.secondary}
+            disabled={disabled || loading}
+            onClick={onEditImportedSunday}
+          >
+            Upraviť nedeľu v novom okne ↗
+          </button>
+        ) : !loading && !error && record ? (
+          <Link
+            href={`/admin/records/${encodeURIComponent(record.id)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Upraviť nedeľu v novom okne ↗
+          </Link>
+        ) : null}
+        {importedDiffers ? (
+          <p className={weekly.warnings} role="alert">
+            Dokument uvádza iný rozpis tejto nedele. Patrí do predchádzajúceho
+            týždňa; tu sa nemení.
           </p>
-        </details>
-      ) : null}
-    </aside>
+        ) : null}
+        {draftChanged ? (
+          <details>
+            <summary>Predchádzajúci týždeň má nezverejnené zmeny</summary>
+            <p>
+              Koncept: {summarize(draft)}. Na webe sa použije zverejnená verzia.
+            </p>
+          </details>
+        ) : null}
+      </div>
+    </details>
   );
 }

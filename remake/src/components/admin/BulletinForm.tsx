@@ -30,9 +30,17 @@ export function BulletinForm({
 }) {
   const imported = useBulletinImport(document, onChange, !disabled);
   const uploader = useRef<HTMLDetailsElement>(null);
+  const importReview = useRef<HTMLDetailsElement>(null);
   const [parsing, setParsing] = useState(false);
   const [navigationError, setNavigationError] = useState("");
   const working = imported.opening || parsing;
+
+  function reviewImport() {
+    if (!importReview.current) return;
+    importReview.current.open = true;
+    importReview.current.scrollIntoView({ block: "start", behavior: "smooth" });
+    importReview.current.querySelector<HTMLElement>("summary")?.focus();
+  }
 
   useEffect(() => {
     onBusyChange?.(working);
@@ -72,15 +80,6 @@ export function BulletinForm({
       className={`${styles.disabled} ${weekly.editor}`}
       disabled={disabled || imported.opening}
     >
-      <details className={styles.disclosure} ref={uploader}>
-        <summary>Načítať {imported.result ? "iný " : ""}dokument</summary>
-        <BulletinImport
-          weekStart={document.weekStart}
-          onApply={imported.apply}
-          onBusyChange={setParsing}
-          disabled={disabled || imported.opening}
-        />
-      </details>
       {navigationError ? (
         <p className={styles.error} role="alert">
           {navigationError}
@@ -88,17 +87,17 @@ export function BulletinForm({
         </p>
       ) : null}
       <fieldset className={styles.disabled} disabled={disabled || working}>
-        {imported.result ? (
-          <div className={weekly.importReceipt}>
-            <BulletinImportPreview
-              result={imported.result}
-              weekStart={document.weekStart}
-              pending={imported.pending}
-              disabled={disabled || working}
-              onApply={imported.applyCurrentWeek}
-              onTargetWeek={openImportedWeek}
-            />
-          </div>
+        {imported.pending ? (
+          <p className={weekly.pendingImport} role="status">
+            Dokument ešte nie je vložený do formulára.{" "}
+            <button
+              type="button"
+              className={styles.quietLink}
+              onClick={reviewImport}
+            >
+              Skontrolovať import
+            </button>
+          </p>
         ) : null}
         <section
           className={`${styles.panel} ${weekly.panel}`}
@@ -108,7 +107,6 @@ export function BulletinForm({
           <h2>
             Týždeň od{" "}
             {formatRecordDate(document.weekStart, {
-              weekday: "long",
               day: "numeric",
               month: "long",
               year: "numeric"
@@ -135,6 +133,7 @@ export function BulletinForm({
             <details
               className={`${styles.day} ${weekly.day}`}
               key={day.date}
+              open
               data-field={`days.${index}`}
             >
               <summary>
@@ -324,7 +323,40 @@ export function BulletinForm({
             + Pridať dar alebo zbierku
           </button>
         </details>
+        {imported.result ? (
+          <details className={weekly.importReceipt} ref={importReview}>
+            <summary>
+              Import dokumentu
+              <span>
+                {imported.result.filename}
+                {imported.result.warnings.length
+                  ? ` · Upozornenia: ${imported.result.warnings.length}`
+                  : ""}
+                {imported.result.unassigned.length
+                  ? ` · Nezaradené časti: ${imported.result.unassigned.length}`
+                  : ""}
+              </span>
+            </summary>
+            <BulletinImportPreview
+              result={imported.result}
+              weekStart={document.weekStart}
+              pending={imported.pending}
+              disabled={disabled || working}
+              onApply={imported.applyCurrentWeek}
+              onTargetWeek={openImportedWeek}
+            />
+          </details>
+        ) : null}
       </fieldset>
+      <details className={styles.disclosure} ref={uploader}>
+        <summary>Načítať {imported.result ? "iný " : ""}dokument</summary>
+        <BulletinImport
+          weekStart={document.weekStart}
+          onApply={imported.apply}
+          onBusyChange={setParsing}
+          disabled={disabled || imported.opening}
+        />
+      </details>
     </fieldset>
   );
 }
