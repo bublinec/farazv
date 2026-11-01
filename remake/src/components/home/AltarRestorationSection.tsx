@@ -21,8 +21,8 @@ export function AltarRestorationSection({
     >
       <div className={styles.background} aria-hidden="true">
         <MediaImage
-          image={{ ...altarRestoration.photograph, alt: "" }}
-          sizes="(max-width: 760px) 100vw, 55vw"
+          image={{ ...altarRestoration.homepagePhotograph, alt: "" }}
+          sizes="(max-width: 760px) 100vw, 72vw"
           quality="high"
         />
       </div>
@@ -38,22 +38,24 @@ export function AltarRestorationSection({
               <span>Cieľ zbierky na oltár sv. Jozefa</span>
               <strong>{altarRestoration.goal}</strong>
             </p>
-            <IbanAccount
-              iban={altarRestoration.iban}
-              label="Transparentný účet na obnovu oltárov"
-            />
-            <p className={styles.bank}>
-              UniCredit Bank · Prispieť môžete aj osobne.
-            </p>
+            <div className={styles.account}>
+              <IbanAccount
+                iban={altarRestoration.iban}
+                label="Transparentný účet na obnovu oltárov"
+              />
+              <p className={styles.bank}>Prispieť môžete aj osobne.</p>
+            </div>
           </div>
           <p className={styles.benefactors}>
             Každého <strong>17. v mesiaci</strong> sa v Kostole sv. Alžbety
             modlíme za našich dobrodincov a obetujeme za nich svätú omšu.
           </p>
-          <Link href={altarRestoration.href} className={styles.more}>
-            Podrobnosti a príhovor <Icon name="arrow-right" size={18} />
-          </Link>
-          <p className={styles.thanks}>Pán Boh vám zaplať a požehnaj!</p>
+          <div className={styles.footer}>
+            <Link href={altarRestoration.href} className={styles.more}>
+              Zobraziť viac <Icon name="arrow-right" size={18} />
+            </Link>
+            <p className={styles.thanks}>Pán Boh vám zaplať a požehnaj!</p>
+          </div>
         </div>
       </div>
     </section>

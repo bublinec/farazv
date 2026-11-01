@@ -74,7 +74,7 @@ export function EditorialDetail({
     <MediaImage
       image={entry.cover}
       priority
-      sizes="(max-width: 1200px) 100vw, 1160px"
+      sizes="(max-width: 720px) 100vw, 720px"
       fit="contain"
     />
   ) : null;
@@ -119,7 +119,7 @@ export function EditorialDetail({
               </p>
             ) : null}
             {entry.body ? (
-              <RichText document={entry.body} />
+              <RichText document={entry.body} className={styles.richText} />
             ) : (
               <ContentRenderer blocks={entry.blocks} />
             )}

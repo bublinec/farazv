@@ -41,7 +41,7 @@ const cachedSettings = unstable_cache(
 
 const cachedPage = unstable_cache(
   store.getPublishedEditorialPage,
-  ["parish-editorial-v4", cacheNamespace],
+  ["parish-editorial-v5", cacheNamespace],
   { tags: ["parish-published"], revalidate: 300 }
 );
 
@@ -95,7 +95,7 @@ export async function getPublicEditorialPage(
   activeOn?: CalendarDate
 ) {
   if (isFixtureMode())
-    return editorialPage(fixtureEditorialEntries(kind, activeOn), cursor);
+    return editorialPage(fixtureEditorialEntries(kind, activeOn), cursor, kind);
   return read(() => cachedPage(kind, cursor, activeOn));
 }
 

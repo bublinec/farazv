@@ -111,15 +111,17 @@
   border-top: 1px solid #d7cbb633;
   padding-top: 23px;
   padding-bottom: 25px;
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 16px 28px;
   font-size: var(--text-caption);
   color: #b6c4ca;
 }
-.bottom > div {
+.bottomLinks {
   display: flex;
-  gap: 30px;
+  justify-content: flex-end;
+  gap: 12px 24px;
   flex-wrap: wrap;
 }
 .bottom a {
@@ -131,6 +133,20 @@
 }
 .bottom a:hover {
   color: #fff;
+}
+.credit {
+  margin: 0;
+  text-align: center;
+}
+.credit a {
+  color: #e7e7dc;
+  text-decoration: underline;
+  text-decoration-color: #e0c99480;
+  text-underline-offset: 4px;
+}
+.credit a:hover {
+  color: var(--gold-light);
+  text-decoration-color: currentColor;
 }
 
 .footer::before {
@@ -153,6 +169,13 @@
     grid-template-columns: 1fr 1fr;
     gap: 35px 60px;
   }
+  .bottom {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .credit {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
 }
 @media (max-width: 550px) {
   .main {
@@ -172,10 +195,14 @@
     margin-bottom: 20px;
   }
   .bottom {
+    display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 17px;
+    text-align: center;
   }
-  .bottom > div {
+  .bottomLinks {
+    justify-content: center;
     gap: 15px;
   }
 

@@ -64,6 +64,7 @@ export default async function BulletinPage() {
         phone={settings?.phone}
         fixture={isFixtureMode()}
       />
+
       {settings ? (
         <DonationSection iban={settings.iban} qr={settings.donationQr} />
       ) : null}

@@ -1,12 +1,12 @@
 .hero {
-  /* The schedule keeps its original dark church-photo palette. */
+  /* Warm charcoal over the original church photograph. */
   --gold: #bfa169;
   --gold-light: #e0c994;
   display: flex;
   height: min(800px, max(0px, calc(100dvh - var(--site-header-height, 88px))));
   position: relative;
   isolation: isolate;
-  background: #29362e;
+  background: #2b2721;
   color: white;
 }
 .background {
@@ -22,8 +22,8 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(90deg, #142e38b5, #29241b99 55%, #302416a8),
-    linear-gradient(0deg, #172e39c9, transparent 60%);
+  background: linear-gradient(90deg, #26221eb5, #30271f99 55%, #35291fa8),
+    linear-gradient(0deg, #211d19c9, transparent 60%);
 }
 .inner {
   min-width: 0;
@@ -49,14 +49,22 @@
 .content > * {
   flex-shrink: 0;
 }
+
+.liturgyHeading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .hero .content h1 {
   font-family: var(--font-display);
-  max-width: 34ch;
+  max-width: 28ch;
   text-wrap: balance;
   margin: 0;
   font-size: clamp(1.75rem, 3vw, 2.5rem);
   line-height: 1.25;
-  font-weight: 400;
+  font-weight: 450;
   text-transform: none;
   letter-spacing: -0.02em;
 }
@@ -73,11 +81,12 @@
   background: var(--gold);
   opacity: 0.85;
 }
-.date {
+.rank {
+  margin: 8px 0 0;
   color: var(--gold-light);
-  font-size: 0.95rem;
-  margin-bottom: 12px;
-  text-transform: none;
+  font-size: 1.05rem;
+  font-weight: 450;
+  line-height: 1.45;
 }
 .masses {
   display: flex;
@@ -96,7 +105,7 @@
   flex-direction: column;
   align-items: center;
 }
-.location {
+.designation {
   text-transform: none;
   font-size: 0.85rem;
   letter-spacing: 0.01em;
@@ -218,10 +227,6 @@
   .hero .content h1 {
     font-size: clamp(1.65rem, 5.5vw, 2rem);
   }
-  .date {
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-  }
   .masses {
     gap: 9px;
   }
@@ -233,7 +238,7 @@
   .mass strong {
     font-size: 1.5rem;
   }
-  .location {
+  .designation {
     font-size: 0.85rem;
     letter-spacing: 0.03em;
   }
@@ -293,9 +298,6 @@
   }
   .divider {
     margin-bottom: 10px;
-  }
-  .date {
-    margin-bottom: 8px;
   }
   .mass {
     padding-block: 10px 12px;

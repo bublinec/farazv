@@ -117,7 +117,9 @@
 
 .mass {
   display: grid;
-  grid-template-columns: 7rem minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2fr) 44px;
+  grid-template-columns: 7rem minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2fr) var(
+      --icon-button-size
+    );
   align-items: start;
   gap: 0.5rem;
   padding-block: 0.55rem;
@@ -160,9 +162,9 @@
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  padding: 0;
+  width: var(--icon-button-size);
+  height: var(--icon-button-size);
+  padding: var(--icon-button-padding);
   border: 0;
   border-radius: 5px;
   background: transparent;
@@ -200,7 +202,7 @@
 
 .noticeRow {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 44px;
+  grid-template-columns: minmax(0, 1fr) var(--icon-button-size);
   align-items: start;
   gap: 0.4rem;
   margin-bottom: 0.6rem;
@@ -264,7 +266,9 @@
 
 @media (max-width: 1000px) {
   .mass {
-    grid-template-columns: 7rem minmax(0, 1fr) minmax(0, 1fr) 44px;
+    grid-template-columns: 7rem minmax(0, 1fr) minmax(0, 1fr) var(
+        --icon-button-size
+      );
   }
 
   .mass > :nth-child(4) {

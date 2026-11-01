@@ -18,8 +18,9 @@ export function SaintCharbelSection() {
         <div className={styles.portrait}>
           <MediaImage
             image={saintCharbel.portrait}
-            sizes="280px"
+            sizes="(max-width: 550px) 140px, (max-width: 760px) 150px, 220px"
             fit="contain"
+            quality="high"
           />
         </div>
         <div className={styles.content}>
@@ -27,10 +28,6 @@ export function SaintCharbelSection() {
           <p className={styles.schedule}>
             <strong>Každého 22. v mesiaci</strong> po večernej svätej omši o
             18:00.
-          </p>
-          <p className={styles.location}>
-            <Icon name="church" size={20} />
-            Kostol sv. Alžbety vo Zvolene
           </p>
           <p>
             Pobožnosť je spojená s pomazaním olejom a prosbami za uzdravenie.
@@ -48,8 +45,8 @@ export function SaintCharbelSection() {
             <span className="srOnly"> (otvorí sa v novom okne)</span>
           </a>
           <p className={styles.note}>
-            Ak 22. deň pripadne na nedeľu, pobožnosť sa koná v predvečer — v
-            sobotu.
+            Ak 22. deň pripadne na nedeľu, pobožnosť sa koná v predvečer —
+            v&nbsp;sobotu.
           </p>
         </div>
       </div>

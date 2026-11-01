@@ -13,6 +13,20 @@
   min-width: 0;
 }
 
+.sacramentLayout {
+  padding-top: clamp(48px, 6vw, 80px);
+}
+
+.sacramentSidebar {
+  display: grid;
+  gap: 24px;
+  min-width: 0;
+}
+
+.sacramentSidebar .pageLinks {
+  margin-top: 0;
+}
+
 .churchReadingLayout {
   grid-template-areas: "reading timeline";
   row-gap: 32px;
@@ -22,8 +36,68 @@
   grid-area: reading;
 }
 
-.churchReadingLayout > .timeline {
+.churchReadingLayout > .churchSidebar {
   grid-area: timeline;
+}
+
+.churchSidebar {
+  display: grid;
+  gap: 32px;
+  min-width: 0;
+}
+
+.churchNote {
+  --prose-font-size: 0.9rem;
+  --prose-line-height: 1.65;
+  --prose-paragraph-gap: 0;
+  --prose-h2-size: 1.1rem;
+  --prose-heading-margin: 0 0 14px;
+  --prose-heading-color: var(--blue);
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.churchNote ul {
+  margin: 0;
+}
+
+.patron {
+  width: 100%;
+  max-width: 320px;
+  justify-self: center;
+  margin: 0;
+  background: var(--paper);
+  border-bottom: 2px solid var(--gold);
+}
+
+.patron > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.patron figcaption {
+  padding: 16px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.patron figcaption > span {
+  display: block;
+  color: var(--ink);
+  font-size: 1.1rem;
+}
+
+.patron small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: var(--text-caption);
+}
+
+.patron a {
+  color: inherit;
+  text-underline-offset: 3px;
 }
 
 .officeAside {
@@ -243,7 +317,7 @@
 }
 
 .timeline > h2 {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1.35;
   font-weight: 500;
   color: var(--blue);
@@ -271,20 +345,24 @@
 }
 
 .timelineYear {
-  font-size: 0.9rem;
-  color: #876d3f;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--gold-dark);
 }
 
 .timelineEvent h3 {
-  font-size: 19px;
-  line-height: 1.3;
+  font-size: 1.05rem;
+  line-height: 1.35;
   color: var(--blue);
-  margin: 0 0 9px;
+  margin: 0 0 6px;
   font-weight: 500;
 }
 
 .timelineEvent p {
-  line-height: 1.75;
+  line-height: 1.65;
   color: var(--muted);
   font-size: 0.9rem;
   margin: 0;
@@ -585,6 +663,10 @@
   .resourceLayout,
   .schoolLayout {
     padding-block: 36px 45px;
+  }
+
+  .sacramentLayout {
+    padding-top: 44px;
   }
 
   .officeAside {

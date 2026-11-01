@@ -10,6 +10,29 @@ import { Icon } from "@/components/ui/Icon";
 import { LiturgyQuote } from "./LiturgyQuote";
 import styles from "./MassHero.module.css";
 
+/** Separate an imported liturgical rank from the celebration's name. */
+function liturgicalHeading(day: ScheduleDay) {
+  const original = day.isRegular
+    ? "Rozpis svätých omší"
+    : (day.liturgy || "Sväté omše v našej farnosti")
+        .replace(/\s+/g, " ")
+        .trim();
+  const rank = original.match(
+    /(?:\s*[·,;–—-]\s*|\s+)(prikázaná slávnosť|ľubovoľná spomienka|spomienka|sviatok|slávnosť)\s*$/iu
+  );
+  const name = rank ? original.slice(0, rank.index).trim() : original;
+
+  return {
+    // This imported all-caps celebration has no personal names to recase.
+    // Keep other names as entered rather than guessing their capitalization.
+    title: /^všetkých svätých$/iu.test(name) ? "Všetkých svätých" : name,
+    rank: rank
+      ? rank[1][0].toLocaleUpperCase("sk") +
+        rank[1].slice(1).toLocaleLowerCase("sk")
+      : undefined
+  };
+}
+
 function MassTimes({ day }: { day: ScheduleDay }) {
   if (day.status === "no-masses")
     return (
@@ -22,9 +45,7 @@ function MassTimes({ day }: { day: ScheduleDay }) {
     <div className={styles.masses}>
       {day.masses.map((mass, index) => (
         <div className={styles.mass} key={`${mass.time}-${index}`}>
-          <span className={styles.location}>
-            {getMassLabel(mass) || "Sv. Alžbeta"}
-          </span>
+          <span className={styles.designation}>{getMassLabel(mass)}</span>
           <strong>{mass.time}</strong>
           <span className={styles.celebrant}>
             {formatCelebrantName(mass.celebrant) || "Svätá omša"}
@@ -152,6 +173,7 @@ export function MassHero({
   const day = days[index];
 
   if (!day) return null;
+  const heading = liturgicalHeading(day);
 
   const move = (offset: number) => {
     const next = days[index + offset];
@@ -191,21 +213,22 @@ export function MassHero({
         }}
       >
         <div className={styles.content} aria-live="polite" aria-atomic="true">
-          <p className={styles.date}>
-            <time dateTime={day.date}>
-              {formatDate(day.date, {
-                weekday: "long",
-                day: "numeric",
-                month: "long",
-                year: "numeric"
-              })}
-            </time>
-          </p>
-          <h1>
-            {day.isRegular
-              ? "Rozpis svätých omší"
-              : day.liturgy || "Sväté omše v našej farnosti"}
-          </h1>
+          <header className={styles.liturgyHeading}>
+            <p className="srOnly">
+              <time dateTime={day.date}>
+                {formatDate(day.date, {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric"
+                })}
+              </time>
+            </p>
+            <h1>{heading.title}</h1>
+            {heading.rank ? (
+              <p className={styles.rank}>{heading.rank}</p>
+            ) : null}
+          </header>
           <LiturgyQuote date={day.date} liturgy={day.liturgy} />
           <div className={styles.divider} aria-hidden="true">
             <span />

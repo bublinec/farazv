@@ -38,25 +38,18 @@
 }
 
 .portrait {
-  position: relative;
   width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 419 / 595;
   overflow: hidden;
-  border-radius: 50%;
+  border-radius: 8px;
   border: 1px solid #bfa16980;
   box-shadow: 0 0 0 8px #bfa16910;
 }
 
-/* Frame the 565 px portrait in the original 691 px canvas; its printed caption
-   is replaced by accessible page text rather than repeated inside the image. */
 .portrait img {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: calc(100% * 691 / 565);
-  max-width: none;
-  height: auto;
-  transform: translateX(-50%);
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .content h2 {
@@ -85,16 +78,6 @@
   color: var(--gold-light);
 }
 
-.content .location {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  margin-bottom: 18px;
-  color: #d6d5c8;
-  font-size: 0.9rem;
-}
-
-.location svg,
 .intentionLink svg {
   flex-shrink: 0;
 }
@@ -129,6 +112,7 @@
   border-top: 1px solid #bfa16945;
   font-size: 0.85rem;
   line-height: 1.6;
+  text-wrap: pretty;
   color: #d4d2c6;
 }
 

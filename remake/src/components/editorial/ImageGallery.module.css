@@ -8,6 +8,8 @@
 }
 .grid.single {
   grid-template-columns: minmax(0, 1fr);
+  width: min(100%, 36rem);
+  margin-inline: auto;
 }
 .grid figure {
   margin: 0;
@@ -31,8 +33,11 @@
   object-fit: cover;
 }
 .single button img {
+  width: auto;
+  max-width: 100%;
   aspect-ratio: auto;
-  max-height: 48rem;
+  max-height: min(55svh, 24rem);
+  margin-inline: auto;
   object-fit: contain;
 }
 .grid figcaption {

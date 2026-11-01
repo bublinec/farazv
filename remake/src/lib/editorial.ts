@@ -13,6 +13,11 @@ export interface EditorialPage {
 export const INITIAL_EDITORIAL_COUNT = 10;
 export const MORE_EDITORIAL_COUNT = 6;
 
+export function editorialPageSize(kind: EditorialKind, hasCursor: boolean) {
+  if (kind === "article") return 16;
+  return hasCursor ? MORE_EDITORIAL_COUNT : INITIAL_EDITORIAL_COUNT;
+}
+
 interface EditorialCursor {
   date: string;
   id: string;
@@ -83,10 +88,11 @@ export function summarizeEditorial(
 
 export function editorialPage(
   entries: readonly EditorialEntry[],
-  cursor?: string | null
+  cursor?: string | null,
+  kind: EditorialKind = "news"
 ): EditorialPage {
   const after = cursor ? decodeCursor(cursor) : undefined;
-  const limit = after ? MORE_EDITORIAL_COUNT : INITIAL_EDITORIAL_COUNT;
+  const limit = editorialPageSize(kind, Boolean(after));
   const sorted = allEditorialSummaries(entries);
   const remaining = after
     ? sorted.filter((entry) => compareEntries(entry, after) > 0)

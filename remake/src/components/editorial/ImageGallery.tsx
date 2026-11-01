@@ -33,7 +33,7 @@ export function ImageGallery({ images }: { images: MediaAsset[] }) {
                 image={image}
                 sizes={
                   images.length === 1
-                    ? "(max-width: 800px) 100vw, 760px"
+                    ? "(max-width: 650px) 100vw, 650px"
                     : "(max-width: 760px) 50vw, 190px"
                 }
                 fit={images.length === 1 ? "contain" : "cover"}

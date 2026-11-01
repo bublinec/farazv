@@ -1,5 +1,3 @@
-import { churchDetails } from "./church-details";
-
 /** Researched 1 November 2026. Keep church history separate from parish history. */
 export const churchHistory = {
   href: "/farnost/kostol-sv-alzbety",
@@ -22,6 +20,40 @@ export const churchHistory = {
       href: "https://www.zvolen.sk/oplati-sa-vidiet.html"
     }
   },
+  timeline: [
+    {
+      period: "1244 – 1250",
+      title: "Vznik kostola",
+      description: "Počiatky neskororománskej a ranogotickej stavby na námestí."
+    },
+    {
+      period: "1380 – 1390",
+      title: "Gotická prestavba",
+      description:
+        "Z tohto obdobia sa zachovali klenby, empora aj kamenný portál."
+    },
+    {
+      period: "1548 – 1551",
+      title: "Výstavba veže",
+      description:
+        "Zvonica slúžila aj na stráženie mesta a odovzdávanie signálov."
+    },
+    {
+      period: "17. storočie",
+      title: "Mariánska kaplnka",
+      description: "Prestavby dotvárali kaplnku na južnej strane kostola."
+    },
+    {
+      period: "1709",
+      title: "Požiar a obnova",
+      description: "Po požiari bola kostolná veža nadstavená."
+    },
+    {
+      period: "2017 – 2019",
+      title: "Obnova veže",
+      description: "Oprava priestorov a schodiska umožnila návrat návštevníkov."
+    }
+  ],
   sections: [
     {
       title: "Stredoveké začiatky",
@@ -58,18 +90,52 @@ export const churchHistory = {
       sources: ["monuments", "register", "tower"] as const
     }
   ],
+  // Original gallery's panoramas 1–4 and 6; the penultimate castle view is omitted.
+  panoramas: [
+    {
+      title: "Kostol sv. Alžbety",
+      href: "https://wonderful360world.eu/pano360/katolicky_kostol_zvolen/index.html"
+    },
+    {
+      title: "Schodisko veže",
+      href: "https://wonderful360world.eu/pano360/schody_veza/index.html"
+    },
+    {
+      title: "Kostolná veža",
+      href: "https://wonderful360world.eu/virtualtour/kostolna_veza/index.html"
+    },
+    {
+      title: "Kostolný zvon",
+      href: "https://wonderful360world.eu/pano360/katolicky_kostol_zvon/index.html"
+    },
+    {
+      title: "Kostol za súmraku",
+      href: "https://wonderful360world.eu/pano360/zvolen_vecer_kat_kostol/index.html"
+    }
+  ],
+  // Local previews are the thumbnails supplied by these exact Sketchfab models.
   tours: [
     {
       title: "Mariánska kaplnka v 3D",
       description: "Prezrite si priestor kaplnky zo všetkých strán.",
       href: "https://sketchfab.com/3d-models/kaplnka-ba87a3588d624facabb1bb8ef27a786e",
-      image: churchDetails.chapel
+      image: {
+        src: "/media/chapel-3d-preview.jpg",
+        width: 1024,
+        height: 576,
+        alt: "Náhľad 3D modelu Mariánskej kaplnky"
+      }
     },
     {
       title: "Oltár v 3D",
       description: "Pozrite sa bližšie na tvar a detaily oltára.",
       href: "https://sketchfab.com/3d-models/oltar-v-kostole-sv-alzbety-vo-zvolene-e182d079f96641f49d876abdd4735f3d",
-      image: churchDetails.interior
+      image: {
+        src: "/media/altar-3d-preview.jpg",
+        width: 1024,
+        height: 576,
+        alt: "Náhľad 3D modelu oltára v Kostole sv. Alžbety vo Zvolene"
+      }
     }
   ]
 };

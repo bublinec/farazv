@@ -64,57 +64,82 @@ export function SaintElizabethChurchPage({
       />
       <section className={`container ${styles.history}`}>
         <div className={styles.reading}>
-          <SectionHeading title="Kostol v premenách storočí" />
-          {churchHistory.sections.map((section) => (
-            <section className={styles.chapter} key={section.title}>
-              <h3>{section.title}</h3>
-              {section.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-              <p className={styles.sources}>
-                Pramene:{" "}
-                {section.sources.map((key, index) => {
-                  const source = churchHistory.sources[key];
-                  return (
-                    <span key={key}>
-                      {index ? " · " : ""}
+          <SectionHeading
+            title="Kostol v premenách storočí"
+            action={
+              <details className={styles.sourceDetails}>
+                <summary>
+                  Pramene <Icon name="chevron" size={15} />
+                </summary>
+                <ul>
+                  {Object.values(churchHistory.sources).map((source) => (
+                    <li key={source.href}>
                       <a
                         href={source.href}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         {source.label}
+                        <span className="srOnly">
+                          {" "}
+                          (otvorí sa v novom okne)
+                        </span>
                       </a>
-                    </span>
-                  );
-                })}
-              </p>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            }
+          />
+          {churchHistory.sections.map((section) => (
+            <section className={styles.chapter} key={section.title}>
+              <h3>{section.title}</h3>
+              {section.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </section>
           ))}
         </div>
-        <aside className={styles.visit} aria-label="Kostol sv. Alžbety">
-          <MediaImage
-            image={churchDetails.nave}
-            sizes="(max-width: 850px) 90vw, 320px"
-            quality="high"
-          />
-          <div>
-            <h2>Náš farský kostol</h2>
-            <p>
-              Na Námestí SNP vo Zvolene. Miesto modlitby a slávenia sviatostí,
-              ktoré spája generácie farníkov.
-            </p>
-            <Link href="/farnost/farske-oznamy" className="textLink">
-              Rozpis svätých omší <Icon name="arrow-right" size={17} />
-            </Link>
-            <Link href="/kontakt" className="textLink">
-              Kontakt na farnosť <Icon name="arrow-right" size={17} />
-            </Link>
-            <Link href={churchHistory.parishHref} className="textLink">
-              O farnosti a jej dejinách <Icon name="arrow-right" size={17} />
-            </Link>
-          </div>
-        </aside>
+        <div className={styles.sidebar}>
+          <aside
+            className={styles.timeline}
+            aria-labelledby="kostol-timeline-heading"
+          >
+            <h2 id="kostol-timeline-heading">Časová os kostola</h2>
+            <ol>
+              {churchHistory.timeline.map((milestone) => (
+                <li key={milestone.period}>
+                  <span className={styles.period}>{milestone.period}</span>
+                  <h3>{milestone.title}</h3>
+                  <p>{milestone.description}</p>
+                </li>
+              ))}
+            </ol>
+          </aside>
+          <aside className={styles.visit} aria-label="Kostol sv. Alžbety">
+            <MediaImage
+              image={churchDetails.nave}
+              sizes="(max-width: 850px) 90vw, 320px"
+              quality="high"
+            />
+            <div>
+              <h2>Náš farský kostol</h2>
+              <p>
+                Na Námestí SNP vo Zvolene. Miesto modlitby a slávenia sviatostí,
+                ktoré spája generácie farníkov.
+              </p>
+              <Link href="/farnost/farske-oznamy" className="textLink">
+                Rozpis svätých omší <Icon name="arrow-right" size={17} />
+              </Link>
+              <Link href="/kontakt" className="textLink">
+                Kontakt na farnosť <Icon name="arrow-right" size={17} />
+              </Link>
+              <Link href={churchHistory.parishHref} className="textLink">
+                O farnosti a jej dejinách <Icon name="arrow-right" size={17} />
+              </Link>
+            </div>
+          </aside>
+        </div>
       </section>
       <HistoricalChurchGallery />
       <section
@@ -143,7 +168,7 @@ export function SaintElizabethChurchPage({
               aria-labelledby={`galeria-${group.id}`}
             >
               <h3 id={`galeria-${group.id}`}>{group.title}</h3>
-              <ImageGallery images={group.images} initialCount={8} />
+              <ImageGallery images={group.images} initialCount={16} />
             </section>
           ))}
         </div>
@@ -154,9 +179,41 @@ export function SaintElizabethChurchPage({
         aria-label="Virtuálna prehliadka a 3D modely"
       >
         <SectionHeading
-          title="Virtuálna prehliadka a 3D modely"
-          description="Kaplnku a oltár si môžete prezrieť aj zblízka v trojrozmernom priestore."
+          title="Virtuálna prehliadka"
+          description="Prezrite si náš kostol, jeho vežu a detaily v panoramatických pohľadoch."
         />
+        <ul className={styles.panoramas}>
+          {churchHistory.panoramas.map((panorama) => (
+            <li key={panorama.href}>
+              <a
+                className={styles.panorama}
+                href={panorama.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className={styles.panoramaMark} aria-hidden="true">
+                  360°
+                </span>
+                <div>
+                  <h3>{panorama.title}</h3>
+                  <span className={styles.panoramaLink}>
+                    Otvoriť 360° prehliadku <Icon name="external" size={15} />
+                    <span className="srOnly"> (otvorí sa v novom okne)</span>
+                  </span>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p className={styles.tourCredit}>
+          360° prehliadky: Pavol Albert / ArtSohl.
+        </p>
+        <div className={styles.modelHeading}>
+          <SectionHeading
+            title="3D modely"
+            description="Kaplnku a oltár si môžete prezrieť aj zblízka v trojrozmernom priestore."
+          />
+        </div>
         <div className={styles.tourGrid}>
           {churchHistory.tours.map((tour) => (
             <a
@@ -170,6 +227,7 @@ export function SaintElizabethChurchPage({
                 <MediaImage
                   image={{ ...tour.image, alt: "" }}
                   sizes="(max-width: 650px) 90vw, 45vw"
+                  fit="contain"
                 />
               </div>
               <div className={styles.tourCopy}>

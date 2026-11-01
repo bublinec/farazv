@@ -126,7 +126,9 @@
 
 .menuButton {
   display: none;
-  padding: 10px;
+  min-width: var(--icon-button-size);
+  min-height: var(--icon-button-size);
+  padding: var(--icon-button-padding);
   background: none;
   border: 0;
   color: var(--blue);
@@ -169,7 +171,9 @@
 }
 
 .mobileTop button {
-  padding: 8px;
+  min-width: var(--icon-button-size);
+  min-height: var(--icon-button-size);
+  padding: var(--icon-button-padding);
   background: transparent;
   border: 1px solid var(--line);
   color: var(--blue);

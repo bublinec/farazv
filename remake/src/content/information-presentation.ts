@@ -16,9 +16,11 @@ interface SectionPresentation {
   expectedOpening: string;
   hide?: boolean;
   hideOpening?: boolean;
+  hideImages?: boolean;
   openingLevel?: number;
   subtopicOffset?: number;
   headingLevel?: number;
+  paragraphStarts?: string[];
   headings?: Record<string, { level?: number; collapsed?: boolean }>;
 }
 
@@ -27,15 +29,41 @@ const pagePresentation: Record<string, Record<string, SectionPresentation>> = {
   "farnost/o-farnosti": {
     "components_sections_text-101": {
       expectedOpening: "História farnosti",
-      subtopicOffset: 1
+      subtopicOffset: 1,
+      paragraphStarts: ["Títo benediktíni", "Aj pomenovanie fara"]
     },
     "components_sections_images_text_grids-2": {
       expectedOpening: "Veľkomoravské osídlenie a prvý kostol",
-      headingLevel: 3
+      hideImages: true,
+      headingLevel: 3,
+      paragraphStarts: [
+        "Prvý kostol vo Zvolene",
+        "Sv. Alžbeta patrí",
+        "Kostol sv. Mikuláša aj mesto",
+        "Okolo kostola",
+        "Terajšia veža",
+        "Protestantské hnutie",
+        "O sto rokov v r. 1673"
+      ]
     },
     "components_sections_text-100": {
       expectedOpening: "Duchovný život",
-      subtopicOffset: 1
+      subtopicOffset: 1,
+      paragraphStarts: [
+        "Remeselníci nevstávali",
+        "V 20. storočí sa Zvolen stal",
+        "Po zániku Uhorska",
+        "Tiež propagovali úctu",
+        "V tejto situácii vznikla",
+        "Vo Zvolene tak pracovali",
+        "Po Nežnej revolúcii prišli",
+        "Potom to boli",
+        "Po r. 1950",
+        "Po Nežnej revolúcii sa do Zvolena vrátili",
+        "Po r. 2010",
+        "Robia tak aj mnohí študujúci",
+        "V\u00a0liturgii účinkujú"
+      ]
     }
   },
   "farnost/kostol-sv-jana-pavla-v-lieskovci": {
@@ -124,6 +152,44 @@ export function isInformationCredit(node: RichTextNode) {
   );
 }
 
+/** Add paragraph boundaries while retaining every source character and mark. */
+function splitReadingParagraph(node: RichTextNode, starts: string[]) {
+  if (node.type !== "paragraph" || !node.content?.length) return [node];
+
+  const paragraphs: RichTextNode[][] = [[]];
+
+  for (const child of node.content) {
+    if (child.type !== "text" || !child.text) {
+      paragraphs[paragraphs.length - 1].push(child);
+      continue;
+    }
+
+    const text = child.text;
+    const breaks = [...new Set(starts.map((start) => text.indexOf(start)))]
+      .filter((index) => index >= 0)
+      .sort((left, right) => left - right);
+    let offset = 0;
+
+    for (const boundary of breaks) {
+      if (boundary > offset)
+        paragraphs[paragraphs.length - 1].push({
+          ...child,
+          text: text.slice(offset, boundary)
+        });
+
+      if (paragraphs[paragraphs.length - 1].length) paragraphs.push([]);
+      offset = boundary;
+    }
+
+    paragraphs[paragraphs.length - 1].push({
+      ...child,
+      text: text.slice(offset)
+    });
+  }
+
+  return paragraphs.map((content) => ({ ...node, content }));
+}
+
 /** Presentation only: preserve source copy, links, images and heading anchors. */
 export function getInformationReadingNodes(
   section: PublishedInformationSection,
@@ -161,7 +227,11 @@ export function getInformationReadingNodes(
     )
       return [];
 
-    if (section.kind === "slides" && node.type === "image") return [];
+    if (
+      node.type === "image" &&
+      (section.kind === "slides" || rule?.hideImages)
+    )
+      return [];
 
     if (isInformationCredit(node)) {
       const credit = normalize(value.replace(/^autor(?:ka)?:\s*/i, ""));
@@ -183,12 +253,14 @@ export function getInformationReadingNodes(
       node = { ...node, attrs: { ...node.attrs, level } };
     }
 
-    return [
-      {
-        node,
-        headingOrdinal,
-        ...(headingRule?.collapsed ? { collapsed: true } : {})
-      }
-    ];
+    const presentedNodes = rule?.paragraphStarts
+      ? splitReadingParagraph(node, rule.paragraphStarts)
+      : [node];
+
+    return presentedNodes.map((presented) => ({
+      node: presented,
+      headingOrdinal,
+      ...(headingRule?.collapsed ? { collapsed: true } : {})
+    }));
   });
 }

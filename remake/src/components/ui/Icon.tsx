@@ -17,6 +17,7 @@ export type IconName =
   | "external"
   | "image"
   | "copy"
+  | "lock"
   | "check";
 
 const paths: Record<IconName, React.ReactNode> = {
@@ -83,6 +84,12 @@ const paths: Record<IconName, React.ReactNode> = {
     <>
       <rect x="8" y="8" width="12" height="13" rx="2" />
       <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" />
+    </>
+  ),
+  lock: (
+    <>
+      <rect x="5" y="10" width="14" height="11" rx="2" />
+      <path d="M8 10V7a4 4 0 0 1 8 0v3" />
     </>
   ),
   check: <path d="m5 12 4 4L19 6" />

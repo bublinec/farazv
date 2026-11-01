@@ -103,8 +103,8 @@ export default async function HomePage() {
       <section id="novinky" className={`section ${styles.posts}`}>
         <div id="vyveska" className="container">
           <SectionHeading
-            title="Zo života našej farnosti"
-            description="Aktuálne oznamy, pozvánky na podujatia a správy z farského života."
+            title="Výveska"
+            description="Aktuálne oznamy a pozvánky na podujatia z farského života."
           />
           {recentNews?.length ? (
             <EditorialGrid entries={recentNews} kind="news" compact />
@@ -115,24 +115,11 @@ export default async function HomePage() {
           )}
         </div>
       </section>
-      <section className={`section ${styles.services}`}>
-        <div className="container">
-          <SectionHeading title="Zapoj sa do života našej farnosti" />
-          <div className={styles.communities}>
-            {parishServices.map(({ title, description, href }) => (
-              <Link href={href} className={styles.community} key={href}>
-                <h3>{title}</h3>
-                <p>{description}</p>
-                <span className="textLink">
-                  Zistiť viac
-                  <Icon name="arrow-right" size={16} />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section
+
+      <SaintCharbelSection />
+
+      {/* Keep this here in case we have new articles */}
+      {/* <section
         id="spolocenstvo"
         className={`section ${styles.posts} ${styles.magazine}`}
       >
@@ -156,14 +143,36 @@ export default async function HomePage() {
             <Unavailable compact />
           )}
         </div>
-      </section>
-      <AltarRestorationSection article={restorationArticle} />
+      </section> */}
+
       <HospitalMinistrySection />
-      <SaintCharbelSection />
+
+      <section className={`section ${styles.services}`}>
+        <div className="container">
+          <SectionHeading title="Zapoj sa do života našej farnosti" />
+          <div className={styles.communities}>
+            {parishServices.map(({ title, description, href }) => (
+              <Link href={href} className={styles.community} key={href}>
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <span className="textLink">
+                  Zistiť viac
+                  <Icon name="arrow-right" size={16} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <AltarRestorationSection article={restorationArticle} />
+
+      <div className={styles.feedback}>
+        <FeedbackInvite />
+      </div>
       {settings ? (
         <DonationSection iban={settings.iban} qr={settings.donationQr} />
       ) : null}
-      <FeedbackInvite />
     </div>
   );
 }

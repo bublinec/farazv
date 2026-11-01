@@ -50,6 +50,7 @@ interface InformationPageLayout {
     contact?: { name: string; phone: string };
   };
   links?: InformationLink[];
+  patron?: { name: string; image: MediaAsset; sourceHref: string };
   timeline?: { year: string; title: string; text: string }[];
   credit?: string;
 }
@@ -187,6 +188,44 @@ const pageDefinitions: InformationPageConfiguration[] = [
     // The original church page contains the complete parish history. Keep its
     // source record intact while presenting it at the more appropriate route.
     sourceRoute: "/farnost/kostol-sv-alzbety",
+    // Milestones summarize the existing parish history and Lieskovec church text.
+    timeline: [
+      {
+        year: "9. storočie",
+        title: "Veľkomoravské korene",
+        text: "Farská história pripomína osídlenie Zvolena a jeho okolia v období Veľkej Moravy."
+      },
+      {
+        year: "13. storočie",
+        title: "Patrónka sv. Alžbeta",
+        text: "Život farnosti sa spája s kostolom zasväteným sv. Alžbete na dnešnom námestí."
+      },
+      {
+        year: "1573 – 1673",
+        title: "Obdobie reformácie",
+        text: "Kostol spravovali protestanti; v roku 1673 bol prinavrátený katolíkom."
+      },
+      {
+        year: "Po roku 1918",
+        title: "Spolkový život",
+        text: "Rozvíjali sa charita, divadlo a spoločné pobožnosti."
+      },
+      {
+        year: "1950 – 1989",
+        title: "Tajná Cirkev",
+        text: "Duchovný život pokračoval aj počas obmedzovania náboženskej slobody."
+      },
+      {
+        year: "Po roku 1989",
+        title: "Nové obdobie",
+        text: "Do Zvolena prišli dominikáni a postupne sa utvorili viaceré farnosti."
+      },
+      {
+        year: "2011",
+        title: "Kostol v Lieskovci",
+        text: "19. novembra bol konsekrovaný Kostol sv. Jána Pavla II."
+      }
+    ],
     links: [
       { label: "Kostol sv. Alžbety", href: churchHistory.href },
       {
@@ -207,6 +246,17 @@ const pageDefinitions: InformationPageConfiguration[] = [
     introduction:
       "Miesto modlitby a stretnutia v Lieskovci, zasvätené svätému Jánovi Pavlovi II., apoštolovi Božieho milosrdenstva.",
     contentSource: "published",
+    patron: {
+      name: "Sv. Ján Pavol II.",
+      image: {
+        src: "/media/john-paul-ii.jpg",
+        width: 1187,
+        height: 1188,
+        alt: "Svätý Ján Pavol II. žehná so svojím pastierskym krížom v ruke."
+      },
+      sourceHref:
+        "https://hips.hearstapps.com/hmg-prod/images/pope-john-paul-ii-at-cardiff-airport-on-his-visit-to-wales-news-photo-1677775827.jpg?crop=0.800xw:0.545xh;0.119xw,0.00471xh&resize=1200:*"
+    },
     timeline: [
       {
         year: "1998",

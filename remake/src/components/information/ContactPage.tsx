@@ -205,7 +205,7 @@ export async function ContactPage({
                 </dl>
                 <div className={contact.links}>
                   <a href={mapHref}>
-                    Nájsť cestu na mape <Arrow diagonal />
+                    Navigovať <Arrow diagonal />
                   </a>
                 </div>
               </section>
@@ -218,7 +218,7 @@ export async function ContactPage({
           <Unavailable title="Kontaktné údaje sú dočasne nedostupné." />
         </div>
       )}
-      <FeedbackInvite divided />
+      <FeedbackInvite />
       <PartnerLinks page={page} />
       {settings ? (
         <DonationSection iban={settings.iban} qr={settings.donationQr} />

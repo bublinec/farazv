@@ -2,10 +2,10 @@ import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 import styles from "./FeedbackInvite.module.css";
 
-export function FeedbackInvite({ divided = false }: { divided?: boolean }) {
+export function FeedbackInvite() {
   return (
     <section
-      className={`container ${styles.invite} ${divided ? styles.divided : ""}`}
+      className={`container ${styles.invite}`}
       aria-labelledby="feedback-invite-heading"
     >
       <div>

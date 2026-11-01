@@ -412,8 +412,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
+  width: var(--icon-button-size);
+  height: var(--icon-button-size);
   border: 1px solid #cba098;
   border-radius: 5px;
   cursor: pointer;
@@ -421,7 +421,7 @@
   font-size: 0.8rem;
   color: #8c3025;
   background: #f8e7e3;
-  padding: 0;
+  padding: var(--icon-button-padding);
 }
 .remove:hover:not(:disabled) {
   border-color: #b57f74;

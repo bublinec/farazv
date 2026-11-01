@@ -18,6 +18,7 @@ export function PageHero({
   const cover = route ? getPageCover(route) : undefined;
   const photograph = cover?.image ?? image;
   const crop = cover?.crop;
+  const split = cover?.layout === "split";
   const cropStyle = crop
     ? ({
         "--cover-image-width": `${crop.desktopScale * 100}%`,
@@ -29,9 +30,18 @@ export function PageHero({
     <section
       className={`pageHero ${styles.hero} ${
         photograph ? styles.photographic : styles.decorative
-      }`}
+      } ${split ? styles.split : ""}`}
       style={cropStyle}
     >
+      {split && photograph ? (
+        <div className={styles.splitBackdrop} aria-hidden="true">
+          <MediaImage
+            image={{ ...photograph, alt: "" }}
+            quality="high"
+            sizes="720px"
+          />
+        </div>
+      ) : null}
       {photograph ? (
         <MediaImage
           image={{ ...photograph, alt: "" }}
@@ -39,7 +49,9 @@ export function PageHero({
           quality="high"
           className={styles.image}
           sizes={
-            crop
+            split
+              ? "(max-width: 700px) 100vw, (max-width: 1360px) 50vw, 680px"
+              : crop
               ? `(max-width: 700px) 100vw, ${crop.desktopScale * 100}vw`
               : "100vw"
           }

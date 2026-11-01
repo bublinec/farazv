@@ -4,12 +4,6 @@ export interface ChurchQuotation {
   href: string;
 }
 
-const choirQuotation: ChurchQuotation = {
-  text: "Hudobná tradícia všeobecnej Cirkvi je poklad neoceniteľnej hodnoty. Vyniká nad ostatné umelecké prejavy najmä preto, že ako posvätný spev spojený so slovami je potrebnou alebo integrálnou súčasťou slávnostnej liturgie.",
-  attribution: "Katechizmus Katolíckej cirkvi 1156",
-  href: "https://dkc.kbs.sk/dkc.php?in=kkc1156"
-};
-
 const missalSource =
   "https://liturgia.kbs.sk/uploads/kcfinder/files/V%C5%A1eobecn%C3%A9%20smernice%20R%C3%ADmskeho%20mis%C3%A1la.pdf#page=19";
 
@@ -21,7 +15,11 @@ export const serviceQuotations: Record<string, ChurchQuotation | undefined> = {
       "Direktórium pre omše za účasti detí 55 · preklad z angličtiny",
     href: "https://www.liturgyoffice.org.uk/SOS/DCM.pdf#page=14"
   },
-  "spolocenstva/mladeznicky-zbor": choirQuotation,
+  "spolocenstva/mladeznicky-zbor": {
+    text: "Jazyk hudby je aj pastoračným zdrojom, ktorý má osobitný vplyv zvlášť na liturgiu a jej obnovu. Spev môže byť veľkým stimulom pre cestu mladých životom.",
+    attribution: "pápež František, Christus vivit 226",
+    href: "https://www.kbs.sk/pdf/FR01/FR01ChristusVivit.pdf#page=45"
+  },
   "spolocenstva/ministranti": {
     text: "Aj miništranti, lektori, komentátori a členovia speváckeho zboru konajú opravdivú liturgickú službu. Preto nech plnia svoju úlohu s úprimnou nábožnosťou a náležite, […] ako si to Boží ľud od nich právom žiada.",
     attribution: "Sacrosanctum concilium 29",

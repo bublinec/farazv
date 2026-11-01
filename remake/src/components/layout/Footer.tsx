@@ -99,14 +99,23 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
         <span>
           © {new Date().getFullYear()} {siteConfig.name}
         </span>
-        <div>
+        <p className={styles.credit}>
+          Vytvorené s láskou ·{" "}
+          <a
+            href="https://www.linkedin.com/in/juraj-bublinec"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Juraj Bublinec
+          </a>
+        </p>
+        <div className={styles.bottomLinks}>
           <a href="https://gdpr.kbs.sk/" target="_blank" rel="noreferrer">
             Ochrana osobných údajov
           </a>
-          <a href={siteConfig.sourceUrl} target="_blank" rel="noreferrer">
-            Otvorený kód pre farnosti <Icon name="external" size={12} />
-          </a>
-          <Link href="/admin">Admin</Link>
+          <Link href="/admin">
+            <Icon name="lock" size={14} /> Admin
+          </Link>
         </div>
       </div>
     </footer>

@@ -32,18 +32,22 @@ export function SacramentPage({ page }: { page: InformationPageDefinition }) {
           }
         />
       ) : null}
-      {isAnointing ? <HospitalMinistrySection /> : null}
       <div className={`container ${styles.sacramentLayout}`}>
         <div className={styles.sacramentContent}>
-          <PageLinks page={page} />
           <ReadingCopy page={page} omitSectionId={openingQuotation?.id} />
         </div>
-        <OfficeAside
-          preparationType={preparationType}
-          title={page.aside?.title}
-          description={page.aside?.description}
-        />
+        <div className={styles.sacramentSidebar}>
+          <PageLinks page={page} />
+          <OfficeAside
+            preparationType={preparationType}
+            title={page.aside?.title}
+            description={page.aside?.description}
+          />
+        </div>
       </div>
+
+      {isAnointing ? <HospitalMinistrySection /> : null}
+
       <SacramentsSection />
     </>
   );

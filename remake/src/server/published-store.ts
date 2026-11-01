@@ -23,8 +23,7 @@ import { addDays, getMonday } from "@/lib/calendar";
 import {
   decodeCursor,
   encodeCursor,
-  INITIAL_EDITORIAL_COUNT,
-  MORE_EDITORIAL_COUNT,
+  editorialPageSize,
   type EditorialPage,
   type EditorialSummary
 } from "@/lib/editorial";
@@ -73,7 +72,7 @@ export async function getPublishedEditorialPage(
   cursor?: string | null,
   activeOn?: CalendarDate
 ): Promise<EditorialPage> {
-  const limit = cursor ? MORE_EDITORIAL_COUNT : INITIAL_EDITORIAL_COUNT;
+  const limit = editorialPageSize(kind, Boolean(cursor));
   const rows = await getEditorialSummaries(kind, cursor, activeOn, limit + 1);
   const items = rows.slice(0, limit);
   return {

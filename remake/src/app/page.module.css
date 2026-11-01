@@ -16,6 +16,10 @@
   border-top: 1px solid var(--line);
 }
 
+.feedback {
+  padding-block: clamp(24px, 3vw, 40px);
+}
+
 .magazine {
   position: relative;
   isolation: isolate;

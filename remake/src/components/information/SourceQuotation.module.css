@@ -4,7 +4,7 @@
   --prose-paragraph-gap: 0;
   --prose-width: none;
   margin: 0;
-  padding-block: clamp(36px, 4vw, 56px);
+  padding-block: clamp(28px, 3vw, 42px);
   background: color-mix(in srgb, var(--blue) 7%, var(--white));
   border-bottom: 1px solid var(--line);
   color: var(--muted);
@@ -65,8 +65,8 @@
   --prose-font-size: 0.8rem;
   display: grid;
   justify-items: center;
-  gap: 16px;
-  margin-top: 24px;
+  gap: 10px;
+  margin-top: 18px;
   font-size: 0.8rem;
   line-height: 1.5;
 }
@@ -100,11 +100,31 @@
   color: var(--blue);
 }
 
+.band.compact {
+  padding-block: clamp(24px, 2.5vw, 32px);
+}
+
+.compact .quotation {
+  max-width: 1100px;
+  grid-template-columns: 40px minmax(0, 1fr) 40px;
+  gap: 18px;
+}
+
+.compact .openMark,
+.compact .closeMark {
+  font-size: 96px;
+}
+
+.compact .attribution {
+  margin-top: 14px;
+  gap: 8px;
+}
+
 @media (max-width: 550px) {
   .band {
     --prose-font-size: 1rem;
     font-size: 1rem;
-    padding-block: 32px;
+    padding-block: 26px;
   }
 
   .quotation {
@@ -115,5 +135,19 @@
   .openMark,
   .closeMark {
     font-size: 76px;
+  }
+
+  .band.compact {
+    padding-block: 20px;
+  }
+
+  .compact .quotation {
+    grid-template-columns: 28px minmax(0, 1fr) 28px;
+    gap: 8px;
+  }
+
+  .compact .openMark,
+  .compact .closeMark {
+    font-size: 64px;
   }
 }

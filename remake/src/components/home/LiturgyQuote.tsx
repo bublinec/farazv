@@ -7,6 +7,7 @@ import {
   type GospelVerse
 } from "@/content/liturgy";
 import type { CalendarDate } from "@/content/types";
+import { formatDate } from "@/lib/calendar";
 import styles from "./LiturgyQuote.module.css";
 
 function normalizedTitle(value: string) {
@@ -89,28 +90,45 @@ export function LiturgyQuote({
   const verse = current ? selectVerse(current.verses, liturgy) : undefined;
   if (current && !verse) return null;
 
+  const calendarLabel = `Liturgický kalendár · ${formatDate(date, {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  })}`;
+
   return (
     <div className={styles.space}>
       {verse ? (
-        <figure className={styles.quote}>
-          <span className={styles.mark} aria-hidden="true">
-            “
+        <a
+          className={styles.calendarLink}
+          href={liturgySourceUrl(date)}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={calendarLabel}
+        >
+          <figure className={styles.quote}>
+            <blockquote cite={liturgySourceUrl(date)}>
+              <span
+                className={`${styles.mark} ${styles.openMark}`}
+                aria-hidden="true"
+              >
+                “
+              </span>
+              <p>{verse.text}</p>
+              <span
+                className={`${styles.mark} ${styles.closeMark}`}
+                aria-hidden="true"
+              >
+                ”
+              </span>
+            </blockquote>
+            {verse.variant ? <figcaption>{verse.variant}</figcaption> : null}
+          </figure>
+          <span className="srOnly">
+            {calendarLabel} (otvorí sa v novom okne)
           </span>
-          <blockquote cite={liturgySourceUrl(date)}>
-            <p>{verse.text}</p>
-          </blockquote>
-          <figcaption>
-            {verse.variant ? <span>{verse.variant} · </span> : null}
-            <a
-              href={liturgySourceUrl(date)}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Liturgický kalendár
-              <span className="srOnly"> (otvorí sa v novom okne)</span>
-            </a>
-          </figcaption>
-        </figure>
+        </a>
       ) : null}
     </div>
   );

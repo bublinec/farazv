@@ -8,14 +8,20 @@ import styles from "./SourceQuotation.module.css";
 function QuotationBand({
   quotation,
   attribution,
-  id
+  id,
+  compact = false
 }: {
   quotation: ReactNode;
   attribution: ReactNode;
   id?: string;
+  compact?: boolean;
 }) {
   return (
-    <figure className={styles.band} id={id} tabIndex={id ? -1 : undefined}>
+    <figure
+      className={`${styles.band} ${compact ? styles.compact : ""}`}
+      id={id}
+      tabIndex={id ? -1 : undefined}
+    >
       <div className={`container ${styles.quotation}`}>
         <span className={styles.openMark} aria-hidden="true">
           “
@@ -42,6 +48,7 @@ export function ServiceQuotation({
 }) {
   return (
     <QuotationBand
+      compact
       quotation={<p>{quotation.text}</p>}
       attribution={<a href={quotation.href}>— {quotation.attribution}</a>}
     />
