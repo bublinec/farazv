@@ -84,7 +84,7 @@
   gap: 8px;
 }
 .accountNumber strong {
-  font-size: 0.94rem;
+  font-size: 1.2rem;
   letter-spacing: 0.025em;
   color: var(--blue);
   font-variant-numeric: tabular-nums;

@@ -2,20 +2,11 @@
 
 import { useState } from "react";
 import type { SettingsDocument } from "@/content/documents";
-import { Field, MassFields } from "./Fields";
+import { Field } from "./Fields";
 import { ImageField } from "./MediaPicker";
+import { Icon } from "@/components/ui/Icon";
 import styles from "./Admin.module.css";
 import formStyles from "./AdminForms.module.css";
-
-const weekdays = [
-  { key: 1, name: "Pondelok" },
-  { key: 2, name: "Utorok" },
-  { key: 3, name: "Streda" },
-  { key: 4, name: "Štvrtok" },
-  { key: 5, name: "Piatok" },
-  { key: 6, name: "Sobota" },
-  { key: 0, name: "Nedeľa" }
-];
 
 type Priest = NonNullable<SettingsDocument["priests"]>[number];
 
@@ -85,8 +76,14 @@ function PriestEditor({
             />
           </div>
         </div>
-        <button type="button" className={styles.remove} onClick={onRemove}>
-          Odobrať kontakt
+        <button
+          type="button"
+          className={styles.remove}
+          onClick={onRemove}
+          title="Odobrať kontakt"
+          aria-label={`Odobrať kontakt ${priest.name || index + 1}`}
+        >
+          <Icon name="minus" size={17} />
         </button>
       </div>
     </details>
@@ -138,13 +135,6 @@ export function SettingsForm({
             value={document.ico}
             path="ico"
             onChange={(value) => update("ico", value)}
-          />
-          <Field
-            label="Odkaz na mapu"
-            value={document.mapLink}
-            path="mapLink"
-            onChange={(value) => update("mapLink", value)}
-            wide
           />
           <Field
             label="Poznámka ku kontaktom"
@@ -209,6 +199,8 @@ export function SettingsForm({
             <button
               className={styles.remove}
               type="button"
+              title="Odobrať úradné hodiny"
+              aria-label={`Odobrať úradné hodiny ${row.day || index + 1}`}
               onClick={() =>
                 update(
                   "officeHours",
@@ -216,7 +208,7 @@ export function SettingsForm({
                 )
               }
             >
-              Odobrať
+              <Icon name="minus" size={17} />
             </button>
           </div>
         ))}
@@ -270,6 +262,8 @@ export function SettingsForm({
             <button
               className={styles.remove}
               type="button"
+              title="Odobrať náuku"
+              aria-label={`Odobrať náuku ${row.name || index + 1}`}
               onClick={() =>
                 update(
                   "preparationMeetings",
@@ -277,7 +271,7 @@ export function SettingsForm({
                 )
               }
             >
-              Odobrať
+              <Icon name="minus" size={17} />
             </button>
           </div>
         ))}
@@ -351,41 +345,6 @@ export function SettingsForm({
           path="donationQr"
           onChange={(image) => update("donationQr", image)}
         />
-      </section>
-      <section className={styles.panel}>
-        <h2>Pravidelná šablóna svätých omší</h2>
-        <p className={styles.hint}>
-          Použije sa pre nové týždne. Existujúce oznamy sa nemenia.
-        </p>
-        {weekdays.map(({ key, name }) => (
-          <details
-            className={styles.day}
-            key={key}
-            data-field={`regularSchedule.${key}`}
-          >
-            <summary>
-              {name}{" "}
-              <span className={styles.badge}>
-                {document.regularSchedule?.[key]
-                  ?.map((mass) => mass.time)
-                  .join(" · ") || "Časy nie sú nastavené"}
-              </span>
-            </summary>
-            <div className={styles.dayContent}>
-              <MassFields
-                template
-                path={`regularSchedule.${key}`}
-                masses={document.regularSchedule?.[key] ?? []}
-                onChange={(masses) =>
-                  update("regularSchedule", {
-                    ...document.regularSchedule,
-                    [key]: masses
-                  })
-                }
-              />
-            </div>
-          </details>
-        ))}
       </section>
     </>
   );

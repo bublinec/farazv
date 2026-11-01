@@ -89,8 +89,7 @@ export function RecordEditor({
     conflict,
     cacheWarning,
     saveRecord,
-    publishRecord,
-    unpublishRecord,
+    setPublished,
     retryCacheRefresh,
     reloadLatest
   } = useRecordEditor(initialRecord);
@@ -103,6 +102,9 @@ export function RecordEditor({
   const publicPath = publicRecordPath(record);
   const unpublishedChanges = hasUnpublishedChanges(record);
   const stateLabel = recordStateLabel(record);
+  const needsSave =
+    dirty || unpublishedChanges || (isSettings && !record.published);
+  const mustSaveBeforePublishing = !record.published && dirty;
   useAdminSection(record.kind);
 
   useEffect(() => {
@@ -119,9 +121,7 @@ export function RecordEditor({
   const status = formBusy
     ? "Načítavam dokument alebo týždeň…"
     : operation !== "idle"
-    ? isSettings && operation === "publishing"
-      ? "Ukladám…"
-      : operationLabels[operation]
+    ? operationLabels[operation]
     : dirty
     ? "Neuložené zmeny"
     : message || (isSettings ? "Uložené" : stateLabel);
@@ -155,15 +155,6 @@ export function RecordEditor({
               : record.title || "Nový koncept"}
           </h1>
         </div>
-        {!isSettings ? (
-          <span
-            className={`${styles.badge} ${
-              record.published && !unpublishedChanges ? styles.published : ""
-            }`}
-          >
-            {stateLabel}
-          </span>
-        ) : null}
       </div>
 
       {record.readOnly ? (
@@ -187,7 +178,7 @@ export function RecordEditor({
         noValidate
         onSubmit={(event) => {
           event.preventDefault();
-          if (!editorBusy) void (isSettings ? publishRecord() : saveRecord());
+          if (!editorBusy && needsSave) void saveRecord();
         }}
       >
         {error ? (
@@ -243,9 +234,33 @@ export function RecordEditor({
         ) : null}
 
         <div className={layout.actionBar}>
-          <p className={layout.status} role="status" aria-live="polite">
-            {status}
-          </p>
+          <div className={layout.publicationControls}>
+            {!isSettings && !record.readOnly ? (
+              <div className={layout.visibility}>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={!!record.published}
+                  aria-label="Zverejnenie na webe"
+                  className={layout.visibilitySwitch}
+                  disabled={editorBusy || mustSaveBeforePublishing}
+                  title={
+                    mustSaveBeforePublishing
+                      ? "Najprv uložte zmeny, potom obsah zverejnite."
+                      : undefined
+                  }
+                  onClick={() => void setPublished(!record.published)}
+                >
+                  <span aria-hidden="true" />
+                </button>
+                <span>Na webe</span>
+                {mustSaveBeforePublishing ? <small>Najprv uložiť</small> : null}
+              </div>
+            ) : null}
+            <p className={layout.status} role="status" aria-live="polite">
+              {status}
+            </p>
+          </div>
           <div className={styles.actions}>
             {!isSettings ? (
               <button
@@ -259,34 +274,13 @@ export function RecordEditor({
               </button>
             ) : null}
             {!record.readOnly ? (
-              <>
-                {!isSettings ? (
-                  <button
-                    className={styles.secondary}
-                    type="submit"
-                    disabled={editorBusy || !dirty}
-                  >
-                    Uložiť koncept
-                  </button>
-                ) : null}
-                <button
-                  className={styles.button}
-                  type={isSettings ? "submit" : "button"}
-                  disabled={
-                    editorBusy ||
-                    (isSettings
-                      ? !dirty && !unpublishedChanges && !!record.published
-                      : !!record.published && !unpublishedChanges)
-                  }
-                  onClick={isSettings ? undefined : () => void publishRecord()}
-                >
-                  {isSettings
-                    ? "Uložiť"
-                    : record.published
-                    ? "Zverejniť zmeny"
-                    : "Zverejniť"}
-                </button>
-              </>
+              <button
+                className={styles.button}
+                type="submit"
+                disabled={editorBusy || !needsSave}
+              >
+                Uložiť
+              </button>
             ) : null}
           </div>
         </div>
@@ -322,16 +316,6 @@ export function RecordEditor({
                     ? "Verejné oznamy ↗"
                     : "Verejná stránka ↗"}
                 </a>
-              ) : null}
-              {record.published && !record.readOnly ? (
-                <button
-                  className={styles.danger}
-                  type="button"
-                  disabled={editorBusy}
-                  onClick={() => void unpublishRecord()}
-                >
-                  Stiahnuť z webu
-                </button>
               ) : null}
             </div>
             <dl className={layout.metadata}>

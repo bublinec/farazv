@@ -13,6 +13,7 @@ import { addDays } from "@/lib/calendar";
 import { BulletinImportPreview } from "./BulletinImportPreview";
 import { PreviousSunday } from "./PreviousSunday";
 import { useBulletinImport } from "./hooks/useBulletinImport";
+import { Icon } from "@/components/ui/Icon";
 import styles from "./Admin.module.css";
 import weekly from "./WeeklyWorkspace.module.css";
 
@@ -68,7 +69,7 @@ export function BulletinForm({
 
   return (
     <fieldset
-      className={styles.disabled}
+      className={`${styles.disabled} ${weekly.editor}`}
       disabled={disabled || imported.opening}
     >
       <details className={styles.disclosure} ref={uploader}>
@@ -99,7 +100,11 @@ export function BulletinForm({
             />
           </div>
         ) : null}
-        <section className={styles.panel} id="bulletin-week" tabIndex={-1}>
+        <section
+          className={`${styles.panel} ${weekly.panel}`}
+          id="bulletin-week"
+          tabIndex={-1}
+        >
           <h2>
             Týždeň od{" "}
             {formatRecordDate(document.weekStart, {
@@ -128,9 +133,8 @@ export function BulletinForm({
           />
           {document.days.map((day, index) => (
             <details
-              className={styles.day}
+              className={`${styles.day} ${weekly.day}`}
               key={day.date}
-              open={index === 0}
               data-field={`days.${index}`}
             >
               <summary>
@@ -160,7 +164,7 @@ export function BulletinForm({
                   </span>
                 </span>
               </summary>
-              <div className={styles.dayContent}>
+              <div className={`${styles.dayContent} ${weekly.dayContent}`}>
                 {imported.result?.warnings.some(
                   (warning) => warning.date === day.date
                 ) ? (
@@ -174,7 +178,7 @@ export function BulletinForm({
                       ))}
                   </ul>
                 ) : null}
-                <div className={styles.fields}>
+                <div className={weekly.dayFields}>
                   <Field
                     label="Liturgia dňa"
                     path={`days.${index}.liturgy`}
@@ -220,7 +224,10 @@ export function BulletinForm({
             </details>
           ))}
         </section>
-        <section className={styles.panel} data-field="announcements">
+        <section
+          className={`${styles.panel} ${weekly.panel}`}
+          data-field="announcements"
+        >
           <h2>Farské oznamy</h2>
           <StringList
             label="Oznam"
@@ -231,7 +238,7 @@ export function BulletinForm({
           />
         </section>
         <details
-          className={`${styles.panel} ${styles.disclosure}`}
+          className={`${styles.panel} ${styles.disclosure} ${weekly.panel}`}
           open={Boolean(document.donations?.length)}
         >
           <summary>
@@ -288,6 +295,8 @@ export function BulletinForm({
               <button
                 type="button"
                 className={styles.remove}
+                title="Odobrať dar alebo zbierku"
+                aria-label={`Odobrať dar alebo zbierku ${index + 1}`}
                 onClick={() =>
                   onChange({
                     ...document,
@@ -295,7 +304,7 @@ export function BulletinForm({
                   })
                 }
               >
-                Odobrať
+                <Icon name="minus" size={17} />
               </button>
             </div>
           ))}

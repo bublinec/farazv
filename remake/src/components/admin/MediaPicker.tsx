@@ -8,6 +8,7 @@ import { MediaImage } from "@/components/ui/MediaImage";
 import { useMediaLibrary } from "./hooks/useMediaLibrary";
 import { useImageUpload } from "./hooks/useImageUpload";
 import { useFieldError } from "./EditorValidation";
+import { Icon } from "@/components/ui/Icon";
 import styles from "./Admin.module.css";
 import formStyles from "./AdminForms.module.css";
 
@@ -208,7 +209,7 @@ export function MediaPicker({
                 Zopakovať potvrdenie obrázka
               </button>
               <button
-                className={styles.remove}
+                className={styles.quietLink}
                 type="button"
                 disabled={busy}
                 onClick={() => imageUpload.discardPending()}
@@ -354,9 +355,11 @@ export function ImageField({
           <button
             className={styles.remove}
             type="button"
+            title="Odobrať obrázok z obsahu"
+            aria-label={`Odobrať obrázok: ${label}`}
             onClick={() => onChange(undefined)}
           >
-            Odobrať z obsahu
+            <Icon name="minus" size={17} />
           </button>
         ) : null}
       </div>

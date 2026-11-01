@@ -30,6 +30,72 @@
   line-height: 1.5;
 }
 
+.publicationControls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 1rem;
+}
+
+.visibility {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  color: var(--blue-deep);
+  font-size: 0.85rem;
+}
+
+.visibility small {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.visibilitySwitch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 48px;
+  height: 44px;
+  padding: 0 3px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.visibilitySwitch::before {
+  content: "";
+  position: absolute;
+  inset: 10px 0;
+  border-radius: 20px;
+  background: #b4bec2;
+  transition: background 150ms ease;
+}
+
+.visibilitySwitch > span {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 1px 3px #173c4b30;
+  transition: transform 150ms ease;
+}
+
+.visibilitySwitch[aria-checked="true"]::before {
+  background: var(--blue);
+}
+
+.visibilitySwitch[aria-checked="true"] > span {
+  transform: translateX(24px);
+}
+
+.visibilitySwitch:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .recordFooter {
   padding-top: 0.5rem;
   margin-top: 1rem;
@@ -87,7 +153,17 @@
   }
 
   .status {
-    flex-basis: 100%;
     font-size: 0.8rem;
+  }
+
+  .publicationControls {
+    flex-basis: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visibilitySwitch::before,
+  .visibilitySwitch > span {
+    transition: none;
   }
 }

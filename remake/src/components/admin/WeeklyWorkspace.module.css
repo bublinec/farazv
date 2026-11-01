@@ -1,3 +1,49 @@
+.editor .panel {
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.editor .panel h2 {
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.editor .day {
+  margin-bottom: 0.4rem;
+  border-radius: 5px;
+}
+
+.editor .day > summary {
+  min-height: 44px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.editor .dayContent {
+  padding: 0 0.75rem 0.65rem;
+}
+
+.dayFields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 13rem;
+  gap: 0.6rem;
+  padding-bottom: 0.4rem;
+}
+
+.dayFields > label {
+  gap: 0.2rem;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.dayFields > label > input,
+.dayFields > label > select {
+  min-height: 44px;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
 .weekCards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -28,8 +74,8 @@
 }
 
 .importReceipt {
-  padding: 1rem 1.2rem;
-  margin-block: 1rem;
+  padding: 0.65rem 0.85rem;
+  margin-block: 0.6rem;
   border: 1px solid var(--admin-border);
   border-radius: 8px;
   background: white;
@@ -75,8 +121,8 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 0.25rem 1rem;
-  padding: 0 0 1rem;
-  margin-bottom: 1rem;
+  padding: 0 0 0.6rem;
+  margin-bottom: 0.6rem;
   border-bottom: 1px solid var(--admin-border);
   font-size: 0.85rem;
   line-height: 1.6;
@@ -125,5 +171,15 @@
   .times {
     white-space: normal;
     text-align: right;
+  }
+}
+
+@media (max-width: 600px) {
+  .dayFields {
+    grid-template-columns: 1fr;
+  }
+
+  .editor .panel {
+    padding: 0.8rem;
   }
 }

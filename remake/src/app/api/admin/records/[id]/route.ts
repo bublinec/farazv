@@ -1,6 +1,7 @@
 import { adminResponse, readJson } from "@/server/admin-http";
 import { getRecord, updateRecord } from "@/server/content-store";
 import { ContentError } from "@/server/errors";
+import { publicationResponse } from "@/server/publication-cache";
 interface Context {
   params: Promise<{ id: string }>;
 }
@@ -18,11 +19,14 @@ export function PUT(request: Request, context: Context) {
     const body = await readJson(request);
     if (body.document === undefined)
       throw new ContentError(400, "Chýba obsah formulára.", "INVALID_BODY");
-    return updateRecord(
-      (await context.params).id,
+    const record = await updateRecord(
+      (
+        await context.params
+      ).id,
       body.version as number,
       body.document,
       "save"
     );
+    return record.published ? publicationResponse(record) : record;
   });
 }

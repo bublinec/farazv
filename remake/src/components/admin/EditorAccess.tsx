@@ -5,6 +5,7 @@ import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 import { useEffect, useRef, useState } from "react";
 import type { EditorAccessList } from "@/content/editor-access";
 import { readAdminJson } from "./admin-api";
+import { Icon } from "@/components/ui/Icon";
 import styles from "./Admin.module.css";
 import accessStyles from "./EditorAccess.module.css";
 
@@ -156,11 +157,14 @@ export function EditorAccess({
                 </div>
                 <button
                   type="button"
-                  className={styles.danger}
+                  className={styles.remove}
                   disabled={!!busy}
+                  title="Odobrať prístup"
+                  aria-label={`Odobrať prístup účtu ${editor.email}`}
+                  aria-busy={busy === editor.email}
                   onClick={() => void update("DELETE", editor.email)}
                 >
-                  {busy === editor.email ? "Odoberám…" : "Odobrať prístup"}
+                  <Icon name="minus" size={17} />
                 </button>
               </li>
             ))}

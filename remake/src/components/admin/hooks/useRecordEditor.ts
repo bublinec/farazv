@@ -20,8 +20,8 @@ const mutationOperations = {
 } as const;
 
 const mutationMessages = {
-  save: "Koncept je uložený. Verejná verzia sa nezmenila.",
-  unpublish: "Stiahnuté z webu. Koncept ostáva zachovaný."
+  save: "Uložené. Obsah zostáva súkromný.",
+  unpublish: "Obsah je súkromný."
 };
 
 /** Own the draft and optimistic version together; a failed write keeps both intact. */
@@ -55,13 +55,6 @@ export function useRecordEditor(initialRecord: ContentRecord) {
 
   async function mutate(action: RecordMutation): Promise<ContentRecord | null> {
     if (record.readOnly || operationRef.current !== "idle") return null;
-    if (
-      action === "unpublish" &&
-      !window.confirm(
-        "Stiahnuť zverejnenú verziu z webu? Koncept a história zostanú zachované."
-      )
-    )
-      return null;
     if (!beginOperation(mutationOperations[action])) return null;
 
     setError("");
@@ -78,7 +71,7 @@ export function useRecordEditor(initialRecord: ContentRecord) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           version: record.version,
-          ...(action !== "unpublish" ? { document: record.draft } : {})
+          ...(action === "save" ? { document: record.draft } : {})
         })
       });
       const data = await response.json();
@@ -97,7 +90,7 @@ export function useRecordEditor(initialRecord: ContentRecord) {
       const savedRecord = data as ContentRecord;
       setCacheWarning(data.cacheWarning ?? "");
       if (action === "unpublish") {
-        // Removing the public snapshot must not discard an unsaved local draft.
+        // Turning visibility off preserves unsaved local edits.
         setRecord((current) => ({
           ...current,
           published: null,
@@ -107,12 +100,18 @@ export function useRecordEditor(initialRecord: ContentRecord) {
         }));
       } else {
         setRecord(savedRecord);
-        setSaved(JSON.stringify(savedRecord.draft));
       }
+      setSaved(JSON.stringify(savedRecord.draft));
       setMessage(
-        action === "publish"
+        savedRecord.kind === "settings"
           ? publicationMessage(savedRecord)
-          : mutationMessages[action]
+          : action === "unpublish"
+          ? mutationMessages.unpublish
+          : savedRecord.published
+          ? `${action === "save" ? "Uložené. " : ""}${publicationMessage(
+              savedRecord
+            )}`
+          : mutationMessages.save
       );
       return savedRecord;
     } catch (error) {
@@ -204,8 +203,13 @@ export function useRecordEditor(initialRecord: ContentRecord) {
     conflict,
     cacheWarning,
     saveRecord: () => mutate("save"),
-    publishRecord: () => mutate("publish"),
-    unpublishRecord: () => mutate("unpublish"),
+    setPublished: (published: boolean) => {
+      if (record.kind === "settings" || published === !!record.published)
+        return;
+      // Enabling visibility must never silently save the local form.
+      if (published && dirty) return;
+      return mutate(published ? "publish" : "unpublish");
+    },
     retryCacheRefresh,
     reloadLatest
   };

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
+import { MediaImage } from "@/components/ui/MediaImage";
+import { Icon } from "@/components/ui/Icon";
 import type { AdminListSection } from "@/content/posts";
 import styles from "./Admin.module.css";
 import formStyles from "./AdminForms.module.css";
@@ -136,19 +138,35 @@ function RecordListContents({ section }: { section: AdminListSection }) {
           <Link
             key={item.id}
             href={`/admin/records/${encodeURIComponent(item.id)}`}
-            className={styles.record}
+            className={`${styles.record} ${
+              kind !== "bulletin" ? styles.editorialRecord : ""
+            }`}
             onClick={list.remember}
           >
-            <div>
-              <strong>{item.title || "Koncept bez názvu"}</strong>
-              <small>
-                {item.weekStart ? `Týždeň od ${item.weekStart} · ` : ""}
-                Upravené{" "}
-                {new Intl.DateTimeFormat("sk-SK", {
-                  dateStyle: "medium",
-                  timeZone: "Europe/Bratislava"
-                }).format(new Date(item.updatedAt))}
-              </small>
+            <div className={styles.recordContent}>
+              {kind !== "bulletin" ? (
+                <div className={styles.recordThumbnail} aria-hidden="true">
+                  {item.cover ? (
+                    <MediaImage
+                      image={{ ...item.cover, alt: "" }}
+                      sizes="72px"
+                    />
+                  ) : (
+                    <Icon name="image" size={21} />
+                  )}
+                </div>
+              ) : null}
+              <div className={styles.recordCopy}>
+                <strong>{item.title || "Koncept bez názvu"}</strong>
+                <small>
+                  {item.weekStart ? `Týždeň od ${item.weekStart} · ` : ""}
+                  Upravené{" "}
+                  {new Intl.DateTimeFormat("sk-SK", {
+                    dateStyle: "medium",
+                    timeZone: "Europe/Bratislava"
+                  }).format(new Date(item.updatedAt))}
+                </small>
+              </div>
             </div>
             <div className={styles.recordMeta}>
               <span

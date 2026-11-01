@@ -3,6 +3,7 @@
 import { useId, type ReactNode } from "react";
 import type { Mass } from "@/content/types";
 import { getMassLabel } from "@/lib/mass";
+import { Icon } from "@/components/ui/Icon";
 import { useFieldError } from "./EditorValidation";
 import styles from "./Admin.module.css";
 import formStyles from "./AdminForms.module.css";
@@ -15,6 +16,7 @@ export function Field({
   hint,
   wide = false,
   multiline = false,
+  rows,
   maxLength,
   path,
   readOnly = false,
@@ -28,6 +30,7 @@ export function Field({
   hint?: ReactNode;
   wide?: boolean;
   multiline?: boolean;
+  rows?: number;
   maxLength?: number;
   path?: string;
   readOnly?: boolean;
@@ -49,6 +52,7 @@ export function Field({
       {label}
       {multiline ? (
         <textarea
+          rows={rows}
           value={value ?? ""}
           onChange={(e) => onChange(e.target.value)}
           maxLength={maxLength}
@@ -84,12 +88,10 @@ export function Field({
 export function MassFields({
   masses,
   onChange,
-  template = false,
   path
 }: {
   masses: Mass[];
   onChange: (value: Mass[]) => void;
-  template?: boolean;
   path?: string;
 }) {
   function update(index: number, key: keyof Mass, value: string) {
@@ -114,43 +116,39 @@ export function MassFields({
           role="group"
           aria-label={`Svätá omša ${index + 1}`}
         >
-          <div className={formStyles.massMain}>
-            <Field
-              label="Čas"
-              type="time"
-              value={mass.time}
-              onChange={(value) => update(index, "time", value)}
-              path={path ? `${path}.${index}.time` : undefined}
-            />
-            <Field
-              label="Označenie"
-              value={getMassLabel(mass)}
-              onChange={(value) => update(index, "label", value)}
-              path={path ? `${path}.${index}.label` : undefined}
-            />
-          </div>
-          {!template ? (
-            <div className={formStyles.massDetails}>
-              <Field
-                label="Celebrant"
-                value={mass.celebrant}
-                onChange={(value) => update(index, "celebrant", value)}
-                path={path ? `${path}.${index}.celebrant` : undefined}
-              />
-              <Field
-                label="Úmysel"
-                value={mass.intention}
-                onChange={(value) => update(index, "intention", value)}
-                path={path ? `${path}.${index}.intention` : undefined}
-                multiline
-              />
-            </div>
-          ) : null}
+          <Field
+            label="Čas"
+            type="time"
+            value={mass.time}
+            onChange={(value) => update(index, "time", value)}
+            path={path ? `${path}.${index}.time` : undefined}
+          />
+          <Field
+            label="Označenie"
+            value={getMassLabel(mass)}
+            onChange={(value) => update(index, "label", value)}
+            path={path ? `${path}.${index}.label` : undefined}
+          />
+          <Field
+            label="Celebrant"
+            value={mass.celebrant}
+            onChange={(value) => update(index, "celebrant", value)}
+            path={path ? `${path}.${index}.celebrant` : undefined}
+          />
+          <Field
+            label="Úmysel"
+            value={mass.intention}
+            onChange={(value) => update(index, "intention", value)}
+            path={path ? `${path}.${index}.intention` : undefined}
+            multiline
+            rows={1}
+          />
           <div className={formStyles.rowActions}>
             {index > 0 ? (
               <button
                 type="button"
-                className={styles.quietLink}
+                className={formStyles.rowAction}
+                title="Posunúť vyššie"
                 aria-label={`Posunúť svätú omšu ${index + 1} vyššie`}
                 onClick={() => {
                   const items = [...masses];
@@ -161,16 +159,17 @@ export function MassFields({
                   onChange(items);
                 }}
               >
-                ↑ Posunúť
+                <span aria-hidden="true">↑</span>
               </button>
             ) : null}
             <button
               type="button"
-              className={styles.remove}
+              className={`${formStyles.rowAction} ${formStyles.removeAction}`}
+              title="Odobrať svätú omšu"
               aria-label={`Odobrať svätú omšu ${index + 1}`}
               onClick={() => onChange(masses.filter((_, i) => i !== index))}
             >
-              Odobrať
+              <Icon name="minus" size={17} />
             </button>
           </div>
         </div>
@@ -198,13 +197,16 @@ export function StringList({
   return (
     <div>
       {values.map((value, index) => (
-        <div key={index} className={styles.inlineRow}>
-          <label
-            className={`${styles.field} ${styles.wide}`}
-            style={{ gridColumn: "1 / 3" }}
-          >
-            {label} {index + 1}
+        <div key={index} className={formStyles.noticeRow}>
+          <label className={formStyles.noticeLabel}>
+            <span className={formStyles.noticeNumber} aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span className="srOnly">
+              {label} {index + 1}
+            </span>
             <textarea
+              rows={2}
               value={value}
               onChange={(event) =>
                 onChange(
@@ -217,10 +219,12 @@ export function StringList({
           </label>
           <button
             type="button"
-            className={styles.remove}
+            className={`${formStyles.rowAction} ${formStyles.removeAction}`}
+            title={`Odobrať ${label.toLocaleLowerCase("sk")} ${index + 1}`}
+            aria-label={`Odobrať ${label.toLocaleLowerCase("sk")} ${index + 1}`}
             onClick={() => onChange(values.filter((_, i) => i !== index))}
           >
-            Odobrať
+            <Icon name="minus" size={17} />
           </button>
         </div>
       ))}

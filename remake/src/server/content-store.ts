@@ -12,6 +12,7 @@ import type {
 } from "@/content/documents";
 import { postRecordKinds } from "@/content/posts";
 import { siteConfig } from "@/content/site";
+import type { MediaAsset } from "@/content/types";
 import { addDays, getMonday, getLocalDate } from "@/lib/calendar";
 import { getDb } from "./db";
 import { contentRecords } from "./db/schema";
@@ -112,6 +113,7 @@ export async function listRecords(
       readOnly: contentRecords.readOnly,
       isPublished,
       hasUnpublishedChanges: sql<boolean>`${contentRecords.published} is not null and ${contentRecords.draft} <> ${contentRecords.published}`,
+      cover: sql<MediaAsset | null>`${contentRecords.draft}->'cover'`,
       weekStart: sql<string | null>`${contentRecords.draft}->>'weekStart'`
     })
     .from(contentRecords)
@@ -161,6 +163,7 @@ export async function listRecords(
   const items = rows.slice(0, ADMIN_PAGE_SIZE).map((row) => ({
     ...row,
     kind: row.kind as RecordKind,
+    cover: row.cover ?? undefined,
     weekStart: row.weekStart ?? undefined
   })) as AdminRecordSummary[];
   const last = items.at(-1);
@@ -389,6 +392,13 @@ export async function updateRecord(
       "Základné nastavenia farnosti nemožno zrušiť.",
       "SETTINGS_REQUIRED"
     );
+  // Saving follows the persisted visibility. Private drafts stay private;
+  // published content and parish settings update the public snapshot atomically.
+  const publishing =
+    action === "publish" ||
+    (action === "save" &&
+      (current.published !== null || current.kind === "settings"));
+
   // These fixed identity fields have no editor controls. Repair older empty
   // setup drafts using the parish identity while preserving existing names.
   let editableInput = input ?? current.draft;
@@ -410,7 +420,7 @@ export async function updateRecord(
   const document =
     action === "unpublish"
       ? current.draft
-      : validateDocument(current.kind, editableInput, action === "publish");
+      : validateDocument(current.kind, editableInput, publishing);
   if ("id" in document) document.id = id;
   // The parser above selected its document family from this envelope's kind.
   // Keep that correlation at this write boundary for the remaining operations.
@@ -430,7 +440,7 @@ export async function updateRecord(
   if (
     current.kind === "settings" &&
     edited.kind === "settings" &&
-    action === "publish" &&
+    publishing &&
     current.published
   ) {
     const previous = current.published;
@@ -455,7 +465,7 @@ export async function updateRecord(
         ...identity,
         updatedAt: new Date().toISOString(),
         version: sql`${contentRecords.version} + 1`,
-        ...(action === "publish"
+        ...(publishing
           ? {
               published: document,
               publicSlug: identity.slug,

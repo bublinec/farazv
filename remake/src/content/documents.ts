@@ -103,4 +103,5 @@ export interface AdminRecordSummary
   isPublished: boolean;
   hasUnpublishedChanges?: boolean;
   weekStart?: string;
+  cover?: MediaAsset;
 }
