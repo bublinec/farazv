@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     template: "%s | Farnosť Zvolen – mesto"
   },
   description: siteConfig.description,
+  applicationName: `${siteConfig.name} · ${siteConfig.city}`,
   robots: {
     index:
       process.env.SITE_INDEXING_ENABLED === "true" &&
@@ -35,9 +36,7 @@ export default async function RootLayout({
   return (
     <html lang="sk" data-scroll-behavior="smooth">
       <body>
-        <SiteShell
-          footer={<Footer settings={settings} />}
-        >
+        <SiteShell footer={<Footer settings={settings} />}>
           {children}
         </SiteShell>
       </body>

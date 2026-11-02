@@ -41,7 +41,7 @@ const cachedSettings = unstable_cache(
 
 const cachedPage = unstable_cache(
   store.getPublishedEditorialPage,
-  ["parish-editorial-v5", cacheNamespace],
+  ["parish-editorial-v6", cacheNamespace],
   { tags: ["parish-published"], revalidate: 300 }
 );
 

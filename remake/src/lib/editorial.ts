@@ -14,7 +14,7 @@ export const INITIAL_EDITORIAL_COUNT = 10;
 export const MORE_EDITORIAL_COUNT = 6;
 
 export function editorialPageSize(kind: EditorialKind, hasCursor: boolean) {
-  if (kind === "article") return 16;
+  if (kind === "article") return 12;
   return hasCursor ? MORE_EDITORIAL_COUNT : INITIAL_EDITORIAL_COUNT;
 }
 

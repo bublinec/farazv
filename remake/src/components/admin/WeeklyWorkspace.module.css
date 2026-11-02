@@ -62,6 +62,45 @@
   background: white;
 }
 
+.weekCard[data-pending="true"] {
+  border-color: #d3b77f;
+  background: #fffaf0;
+}
+
+.weekCard > div {
+  min-width: 0;
+}
+
+.weekStatus {
+  display: inline-block;
+  padding: 0.3rem 0.55rem;
+  margin-top: 0.3rem;
+  border-radius: 4px;
+  background: #eff2f3;
+  color: #4e626b;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.weekStatus[data-tone="pending"] {
+  background: #f5e7c9;
+  color: #74521c;
+}
+
+.weekStatus[data-tone="ready"] {
+  background: #e6f2e9;
+  color: #27613a;
+}
+
+.weekPublication {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
 .weekCard h2 {
   margin: 0;
   font-size: 1rem;

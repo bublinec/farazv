@@ -8,8 +8,6 @@ const imageSlots = {
   article: "(max-width: 600px) 100vw, (max-width: 980px) 50vw, 33vw",
   post: "(max-width: 600px) 90vw, 260px",
   articlePair: "(max-width: 600px) 100vw, (max-width: 1280px) 50vw, 590px",
-  articleGrid:
-    "(max-width: 600px) 100vw, (max-width: 980px) 50vw, (max-width: 1150px) 33vw, 25vw",
   compactPost: "(max-width: 600px) 100vw, 260px",
   featuredPost: "(max-width: 600px) 100vw, (max-width: 1100px) 260px, 320px"
 };
@@ -77,8 +75,6 @@ export function EditorialGrid({
   } else if (entries.length === 2) {
     classes.push(styles.pair);
     imageSizes = imageSlots.articlePair;
-  } else if (entries.length >= 4) {
-    imageSizes = imageSlots.articleGrid;
   }
 
   return (
