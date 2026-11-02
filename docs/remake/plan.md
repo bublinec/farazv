@@ -433,3 +433,24 @@ Verification is pending integration. Record formatting/type/build, source-conten
 and browser checks, representative desktop/mobile crops and accessibility results
 here after they complete. No commit, hosted import, upload, deployment or DNS
 change is part of this pass.
+
+### 2026-11-02 — Verify visitor analytics and remove the admin statistics link
+
+Read-only Vercel CLI checks confirmed that `farazv.vercel.app` now targets a
+READY Production deployment of `ec7dd6b`, superseding the earlier preview-alias
+description for that hostname. Web Analytics is enabled and the project API
+reports `hasData: true`. Both the public insights script and the configured
+generated script returned 200. An isolated browser loaded the configured script
+without console errors; its headless/WebDriver exclusion intentionally prevented
+an automated page-view submission. No synthetic analytics event was sent.
+
+The existing package, Next integration, production gate and public-path privacy
+filter need no change. Removed the external “Štatistiky ↗” link from the admin
+navigation as requested. This source change has not been deployed.
+
+Verification: the edited TSX file passes Prettier, TypeScript passes, and
+`git diff --check` passes. The ordinary formatting command also scans ignored
+generated `.next-preview` output and fails there. The unit suite has 73 passes,
+one opt-in database skip and three failures in the unchanged information-content
+tests (`information-updates.test.ts` and `information.test.ts`). No content,
+provider settings, deployment or DNS changes were made during this check.
