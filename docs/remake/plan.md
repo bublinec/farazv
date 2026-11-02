@@ -473,3 +473,19 @@ copied the expected IBAN, kept private draft text out of HTML, and had no runtim
 errors or horizontal overflow. Screenshots were visually checked. Tests used
 owned processes and disposable local PostgreSQL databases, all cleaned up;
 hosted data and provider settings were not changed.
+
+### 2026-11-02 — Preserve the complete altar appeal on its detailed page
+
+The user supplied the complete “Poďakovanie a forma pomoci” letter for permanent
+public display, including Jozef Kraus's signature. The detailed restoration page
+now renders that approved text from [the restoration content](../../remake/src/content/altar-restoration.ts)
+with paragraph breaks and the existing donation sidebar. It no longer depends
+on a legacy article being published or available. The homepage appeal and its
+detail link remain unchanged; database records and raw source content are untouched.
+
+The production build (including TypeScript), scoped formatting and diff checks
+passed. Browser verification at 1440 px and 390 px matched the entire rendered
+letter to the user's supplied text after whitespace normalization, found the
+heading exactly once, followed the homepage detail link successfully, and found
+no runtime errors or horizontal overflow. Desktop/mobile screenshots were
+visually checked. The owned fixture server and browser were cleaned up.

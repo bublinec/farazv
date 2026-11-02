@@ -1,16 +1,7 @@
 import type { Metadata } from "next";
 import { altarRestoration } from "@/content/altar-restoration";
-import type { EditorialDocument, RichTextDocument } from "@/content/documents";
-import { getPublicEntry } from "@/server/public-content";
-import {
-  contentBlocksToRichText,
-  richTextToPlainText,
-  withoutRichTextMedia
-} from "@/lib/rich-text";
 import { PageHero } from "@/components/ui/PageHero";
 import { IbanAccount } from "@/components/ui/IbanAccount";
-import { Unavailable } from "@/components/ui/Unavailable";
-import { RichText } from "@/components/editorial/RichText";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -37,32 +28,7 @@ export const metadata: Metadata = {
   }
 };
 
-export default async function AltarRestorationPage() {
-  let article: EditorialDocument | null = null;
-  let letterUnavailable = false;
-
-  try {
-    article = await getPublicEntry("news", altarRestoration.postSlug);
-  } catch {
-    letterUnavailable = true;
-  }
-
-  let letter: RichTextDocument | null = null;
-
-  if (article) {
-    const original = withoutRichTextMedia(
-      article.body ?? contentBlocksToRichText(article.blocks)
-    );
-    const [opening, ...content] = original.content;
-    // The page supplies a readable heading; keep the complete published speech.
-    letter =
-      opening?.type === "heading" &&
-      richTextToPlainText({ type: "doc", content: [opening] }).trim() ===
-        "Poďakovanie a forma pomoci"
-        ? { ...original, content }
-        : original;
-  }
-
+export default function AltarRestorationPage() {
   return (
     <>
       <PageHero
@@ -70,20 +36,23 @@ export default async function AltarRestorationPage() {
         description="Pomôžme dokončiť obnovu posledného z trojice oltárov nášho farského kostola."
         image={altarRestoration.photograph}
       />
-      <div
-        className={`container ${styles.layout} ${
-          !letter ? styles.withoutLetter : ""
-        }`}
-      >
-        {letter ? (
-          <article className={styles.letter} aria-labelledby="prihovor-heading">
-            <header>
-              <h2 id="prihovor-heading">Príhovor a poďakovanie dobrodincom</h2>
-              <span className="headingRule" aria-hidden="true" />
-            </header>
-            <RichText document={letter} className={styles.reading} />
-          </article>
-        ) : null}
+      <div className={`container ${styles.layout}`}>
+        <article className={styles.letter} aria-labelledby="prihovor-heading">
+          <header>
+            <h2 id="prihovor-heading">{altarRestoration.letter.title}</h2>
+            <span className="headingRule" aria-hidden="true" />
+          </header>
+          <div className={`prose ${styles.reading}`}>
+            {altarRestoration.letter.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+            <p>
+              {altarRestoration.letter.closing}
+              <br />
+              {altarRestoration.letter.signature}
+            </p>
+          </div>
+        </article>
         <aside className={styles.appeal} aria-labelledby="zbierka-heading">
           <h2 id="zbierka-heading">Zbierka na posledný oltár</h2>
           <p>
@@ -107,9 +76,6 @@ export default async function AltarRestorationPage() {
           </p>
           <p className={styles.thanks}>Pán Boh vám zaplať a požehnaj!</p>
         </aside>
-        {letterUnavailable ? (
-          <Unavailable title="Príhovor je dočasne nedostupný." compact />
-        ) : null}
       </div>
     </>
   );
