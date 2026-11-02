@@ -1,10 +1,12 @@
 import type { InformationPageDefinition } from "@/content/information";
+import { sacramentPreparation } from "@/content/sacrament-preparation";
 import { PageHero } from "@/components/ui/PageHero";
 import { SacramentsSection } from "@/components/home/SacramentsSection";
 import { HospitalMinistrySection } from "@/components/home/HospitalMinistrySection";
 import { ReadingCopy, PageLinks } from "./PageSections";
 import { OfficeAside } from "./OfficeAside";
 import { SourceQuotation } from "./SourceQuotation";
+import { PreparationTimeline } from "./PreparationTimeline";
 import styles from "./InformationPage.module.css";
 
 export function SacramentPage({ page }: { page: InformationPageDefinition }) {
@@ -13,6 +15,7 @@ export function SacramentPage({ page }: { page: InformationPageDefinition }) {
     firstSection?.kind === "quotation_sections" ? firstSection : undefined;
   const isEucharist = page.slug === "sviatosti/sviatost-eucharistie";
   const isAnointing = page.slug === "sviatosti/sviatost-pomazania-chorych";
+  const preparation = sacramentPreparation[page.slug];
   let preparationType: "baptism" | "marriage" | undefined;
   if (page.slug.endsWith("sviatost-krstu")) preparationType = "baptism";
   if (page.slug.endsWith("sviatost-manzelstva")) preparationType = "marriage";
@@ -34,6 +37,9 @@ export function SacramentPage({ page }: { page: InformationPageDefinition }) {
       ) : null}
       <div className={`container ${styles.sacramentLayout}`}>
         <div className={styles.sacramentContent}>
+          {preparation ? (
+            <PreparationTimeline preparation={preparation} />
+          ) : null}
           <ReadingCopy page={page} omitSectionId={openingQuotation?.id} />
         </div>
         <div className={styles.sacramentSidebar}>

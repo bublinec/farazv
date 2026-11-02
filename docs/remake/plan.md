@@ -489,3 +489,29 @@ letter to the user's supplied text after whitespace normalization, found the
 heading exactly once, followed the homepage detail link successfully, and found
 no runtime errors or horizontal overflow. Desktop/mobile screenshots were
 visually checked. The owned fixture server and browser were cleaned up.
+
+### 2026-11-02 — Sacrament preparation timelines
+
+Added numbered preparation timelines for baptism of a child, First Communion,
+confirmation and marriage. [The timeline summaries](../../remake/src/content/sacrament-preparation.ts)
+use the existing published guidance and reviewed corrections, including the
+existing advance notice and document deadlines. They introduce no new dates or
+requirements. Baptism and First Communion explicitly distinguish the child
+process from the adult guidance below. Reconciliation and anointing remain
+without timelines because their source describes availability or eligibility
+rather than a preparation sequence.
+
+The shared timeline appears before each page's full reading and links to the
+existing detailed-guidance anchor. All source content, quotations, attributions,
+documents, photographs and office contacts are preserved. Raw source records and
+the independent content baseline were not modified.
+
+The production build including TypeScript, scoped Prettier and diff checks
+passed. Twelve route/viewport browser checks (six sacraments at 1440 px and
+390 px) preserved all 92 reading blocks per viewport, verified one quotation band
+per page and found no runtime errors or horizontal overflow. Eight WCAG A/AA
+timeline scans passed; all detail links preserved the target scroll and focus.
+Representative desktop/mobile screenshots were visually reviewed. The owned
+fixture server and browser were cleaned up. The ordinary check still encounters
+generated `.next-preview` formatting, and the unit suite retains the same three
+pre-existing content-test failures (73 passed, one opt-in database skip).
