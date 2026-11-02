@@ -4,6 +4,7 @@ import type {
   RegularSchedule,
   ScheduleDay
 } from "@/content/types";
+import { splitLiturgy } from "./liturgy-day";
 
 export const PARISH_TIME_ZONE = "Europe/Bratislava";
 export const BULLETIN_SWITCH_HOUR = 20;
@@ -137,6 +138,7 @@ export function getPublicWeek(
     // Defensively ignore masses attached to an explicit no-Mass day.
     return {
       ...day,
+      ...splitLiturgy(day.liturgy, day.liturgyType),
       masses:
         day.status === "no-masses"
           ? []

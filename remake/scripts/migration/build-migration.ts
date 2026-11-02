@@ -16,6 +16,7 @@ import type {
   ScheduleDay
 } from "../../src/content/types";
 import { addDays, getLocalDate, getMonday } from "../../src/lib/calendar";
+import { splitLiturgy } from "../../src/lib/liturgy-day";
 import { migrationExcerpt } from "./excerpt";
 import {
   documentToBlocks,
@@ -625,7 +626,7 @@ export function buildMigration(source: DumpSource): MigrationResult {
       });
       days.push({
         date,
-        ...(clean(day.liturgy) ? { liturgy: clean(day.liturgy) } : {}),
+        ...splitLiturgy(clean(day.liturgy)),
         masses,
         status: masses.length ? "scheduled" : "no-masses"
       });

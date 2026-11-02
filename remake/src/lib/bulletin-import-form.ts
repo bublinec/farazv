@@ -2,6 +2,7 @@ import type { BulletinDocument } from "@/content/documents";
 import type { BulletinImportResult } from "@/content/bulletin-import";
 import { sameMasses } from "./mass";
 import { formatDate } from "./calendar";
+import { splitLiturgy } from "./liturgy-day";
 
 function sameDonations(
   left: BulletinDocument["donations"] = [],
@@ -34,7 +35,11 @@ export function bulletinImportReplacements(
       (day.masses.length > 0 || day.status === "no-masses") &&
       (day.status !== imported.status ||
         !sameMasses(day.masses, imported.masses));
-    const replacesLiturgy = day.liturgy && day.liturgy !== imported.liturgy;
+    const before = splitLiturgy(day.liturgy, day.liturgyType);
+    const after = splitLiturgy(imported.liturgy, imported.liturgyType);
+    const replacesLiturgy =
+      (before.liturgy && before.liturgy !== after.liturgy) ||
+      (before.liturgyType && before.liturgyType !== after.liturgyType);
     if (replacesMasses || replacesLiturgy)
       replacements.push(
         `Rozpis ${formatDate(day.date)}${
@@ -74,9 +79,16 @@ export function applyBulletinImport(
       );
       if (!found) return day;
 
+      const liturgy = splitLiturgy(found.liturgy, found.liturgyType);
+
       return {
         ...day,
-        ...(found.liturgy ? { liturgy: found.liturgy } : {}),
+        ...splitLiturgy(day.liturgy, day.liturgyType),
+        ...(liturgy.liturgy
+          ? { liturgy: liturgy.liturgy, liturgyType: liturgy.liturgyType ?? "" }
+          : liturgy.liturgyType
+          ? { liturgyType: liturgy.liturgyType }
+          : {}),
         ...(found.masses.length || found.status === "no-masses"
           ? { masses: found.masses, status: found.status }
           : {})

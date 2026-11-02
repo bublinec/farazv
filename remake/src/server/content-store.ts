@@ -14,6 +14,7 @@ import { postRecordKinds } from "@/content/posts";
 import { siteConfig } from "@/content/site";
 import type { MediaAsset } from "@/content/types";
 import { addDays, getMonday, getLocalDate } from "@/lib/calendar";
+import { splitLiturgy } from "@/lib/liturgy-day";
 import { getDb } from "./db";
 import { contentRecords } from "./db/schema";
 import { ContentError } from "./errors";
@@ -21,6 +22,27 @@ import { isCalendarDate, recordKinds, validateDocument } from "./validation";
 
 type DbRow = typeof contentRecords.$inferSelect;
 const ADMIN_PAGE_SIZE = 10;
+
+/** Read old mixed labels without rewriting preserved snapshots or validating history. */
+function readBulletinLiturgy(document: ContentDocument): ContentDocument {
+  const bulletin = document as BulletinDocument;
+  if (!Array.isArray(bulletin?.days)) return document;
+
+  return {
+    ...bulletin,
+    days: bulletin.days.map((day) => {
+      if (
+        !day ||
+        (day.liturgy !== undefined && typeof day.liturgy !== "string") ||
+        (day.liturgyType !== undefined && typeof day.liturgyType !== "string")
+      )
+        return day;
+
+      return { ...day, ...splitLiturgy(day.liturgy, day.liturgyType) };
+    })
+  };
+}
+
 function toRecord(row: DbRow): ContentRecord {
   if (!recordKinds.includes(row.kind as RecordKind))
     throw new Error("Stored content has an unknown record kind.");
@@ -32,8 +54,11 @@ function toRecord(row: DbRow): ContentRecord {
     kind: row.kind as RecordKind,
     title: row.title,
     slug: row.slug,
-    draft: row.draft,
-    published: row.published,
+    draft: row.kind === "bulletin" ? readBulletinLiturgy(row.draft) : row.draft,
+    published:
+      row.kind === "bulletin" && row.published
+        ? readBulletinLiturgy(row.published)
+        : row.published,
     version: row.version,
     publishedAt: row.publishedAt,
     createdAt: row.createdAt,
@@ -249,6 +274,7 @@ export async function openBulletinWeek(
         return {
           date,
           liturgy: "",
+          liturgyType: "",
           masses,
           status: masses.length
             ? ("scheduled" as const)

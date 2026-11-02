@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { CalendarDate, ScheduleDay } from "@/content/types";
 import { formatDate } from "@/lib/calendar";
+import { splitLiturgy } from "@/lib/liturgy-day";
 import { getMassLabel } from "@/lib/mass";
 import { Icon } from "@/components/ui/Icon";
 import styles from "./WeeklySchedule.module.css";
@@ -44,6 +45,7 @@ export function WeeklySchedule({
       <div className={styles.days}>
         {days.map((day) => {
           const open = expanded.includes(day.date);
+          const liturgy = splitLiturgy(day.liturgy, day.liturgyType);
           return (
             <section
               key={day.date}
@@ -83,8 +85,13 @@ export function WeeklySchedule({
                         ? day.masses.length
                           ? "Pravidelné časy · rozpis nie je zverejnený"
                           : "Rozpis nie je zverejnený"
-                        : day.liturgy || "Liturgia dňa"}
+                        : liturgy.liturgy || "Liturgia dňa"}
                     </small>
+                    {!day.isRegular && liturgy.liturgyType ? (
+                      <small className={styles.liturgyType}>
+                        {liturgy.liturgyType}
+                      </small>
+                    ) : null}
                   </span>
                   <span className={styles.times}>
                     {day.status === "no-masses"

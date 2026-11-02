@@ -53,6 +53,7 @@ export function isBulletinImportResult(
         object(day) &&
         date(day.date) &&
         optionalText(day.liturgy) &&
+        optionalText(day.liturgyType) &&
         ["scheduled", "no-masses", "unpublished"].includes(
           day.status as string
         ) &&

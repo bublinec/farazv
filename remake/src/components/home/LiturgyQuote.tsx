@@ -22,7 +22,7 @@ function normalizedTitle(value: string) {
 function selectVerse(verses: GospelVerse[], liturgy?: string) {
   const title = normalizedTitle(liturgy ?? "");
   // Prefer the parish's celebration when KBS offers optional memorials.
-  // Otherwise use the first appointed set, keeping its variant in the credit.
+  // Otherwise use the first appointed set.
   return (
     (title &&
       verses.find((verse) => {
@@ -123,7 +123,6 @@ export function LiturgyQuote({
                 ”
               </span>
             </blockquote>
-            {verse.variant ? <figcaption>{verse.variant}</figcaption> : null}
           </figure>
           <span className="srOnly">
             {calendarLabel} (otvorí sa v novom okne)

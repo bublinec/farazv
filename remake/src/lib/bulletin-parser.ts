@@ -4,6 +4,7 @@ import {
 } from "@/content/bulletin-import";
 import type { CalendarDate, Mass, ScheduleDay } from "@/content/types";
 import { addDays, getMonday } from "./calendar";
+import { splitLiturgy } from "./liturgy-day";
 import { getMassLabel } from "./mass";
 
 type Warning = BulletinImportResult["warnings"][number];
@@ -557,7 +558,7 @@ function parseDay(
   return {
     day: {
       date,
-      ...(liturgy.length ? { liturgy: liturgy.join(" · ") } : {}),
+      ...splitLiturgy(liturgy.join(" · ")),
       masses,
       status: masses.length
         ? "scheduled"
@@ -661,6 +662,13 @@ function warnAboutDraftLimits(
         code: "draft-limit-liturgy",
         message:
           "Názov liturgie presahuje 1 000 znakov. Text zostal zachovaný; pred uložením ho skráťte.",
+        date: day.date
+      });
+    if ((day.liturgyType?.length ?? 0) > 300)
+      warn({
+        code: "draft-limit-liturgy-type",
+        message:
+          "Typ liturgického dňa presahuje 300 znakov. Text zostal zachovaný; pred uložením ho skráťte.",
         date: day.date
       });
     if (
@@ -840,6 +848,14 @@ export function parseBulletinText(
           duplicate.liturgy = [duplicate.liturgy, parsed.day.liturgy]
             .filter(Boolean)
             .join(" · ");
+        if (parsed.day.liturgyType)
+          duplicate.liturgyType = [
+            ...new Set(
+              [duplicate.liturgyType, parsed.day.liturgyType]
+                .filter(Boolean)
+                .flatMap((value) => value!.split(" · "))
+            )
+          ].join(" · ");
         duplicate.status = duplicate.masses.length
           ? "scheduled"
           : noMasses

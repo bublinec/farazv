@@ -1,5 +1,6 @@
 import type { BulletinImportResult } from "@/content/bulletin-import";
 import type { ScheduleDay } from "@/content/types";
+import { splitLiturgy } from "@/lib/liturgy-day";
 import { Field, MassFields } from "./Fields";
 import { formatRecordDate } from "./admin-format";
 import styles from "./Admin.module.css";
@@ -25,6 +26,7 @@ export function BulletinDayFields({
   onChange: (patch: Partial<ScheduleDay>) => void;
 }) {
   const path = `days.${index}`;
+  const liturgy = splitLiturgy(day.liturgy, day.liturgyType);
   const dayWarnings = warnings.filter((warning) => warning.date === day.date);
 
   function updateStatus(status: ScheduleDay["status"]) {
@@ -53,8 +55,13 @@ export function BulletinDayFields({
             })}
           </strong>
           <small>
-            {day.liturgy || "Liturgia nie je vyplnená"}
+            {liturgy.liturgy || "Liturgia nie je vyplnená"}
             {dayWarnings.length ? " · Skontrolovať" : ""}
+            {liturgy.liturgyType ? (
+              <span className={weekly.dayLiturgyType}>
+                {liturgy.liturgyType}
+              </span>
+            ) : null}
           </small>
           <span className={weekly.times}>{scheduleSummary(day)}</span>
         </span>
@@ -71,8 +78,20 @@ export function BulletinDayFields({
           <Field
             label="Liturgia dňa"
             path={`${path}.liturgy`}
-            value={day.liturgy}
-            onChange={(liturgy) => onChange({ liturgy })}
+            value={liturgy.liturgy}
+            onChange={(value) =>
+              onChange({ liturgy: value, liturgyType: liturgy.liturgyType })
+            }
+          />
+          <Field
+            label="Typ liturgického dňa"
+            path={`${path}.liturgyType`}
+            value={liturgy.liturgyType}
+            placeholder="Spomienka · Prvý piatok"
+            maxLength={300}
+            onChange={(value) =>
+              onChange({ liturgy: liturgy.liturgy, liturgyType: value })
+            }
           />
           <label className={styles.field} data-field={`${path}.status`}>
             Stav rozpisu

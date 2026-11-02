@@ -4,32 +4,24 @@ import { useRef, useState } from "react";
 import type { CalendarDate, MediaAsset, ScheduleDay } from "@/content/types";
 import { bulletinPendingMessage } from "@/content/bulletin-messages";
 import { formatDate } from "@/lib/calendar";
+import { splitLiturgy } from "@/lib/liturgy-day";
 import { formatCelebrantName, getMassLabel } from "@/lib/mass";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { Icon } from "@/components/ui/Icon";
 import { LiturgyQuote } from "./LiturgyQuote";
 import styles from "./MassHero.module.css";
 
-/** Separate an imported liturgical rank from the celebration's name. */
 function liturgicalHeading(day: ScheduleDay) {
-  const original = day.isRegular
+  const liturgy = splitLiturgy(day.liturgy, day.liturgyType);
+  const name = day.isRegular
     ? "Rozpis svätých omší"
-    : (day.liturgy || "Sväté omše v našej farnosti")
-        .replace(/\s+/g, " ")
-        .trim();
-  const rank = original.match(
-    /(?:\s*[·,;–—-]\s*|\s+)(prikázaná slávnosť|ľubovoľná spomienka|spomienka|sviatok|slávnosť)\s*$/iu
-  );
-  const name = rank ? original.slice(0, rank.index).trim() : original;
+    : liturgy.liturgy || "Sväté omše v našej farnosti";
 
   return {
     // This imported all-caps celebration has no personal names to recase.
     // Keep other names as entered rather than guessing their capitalization.
     title: /^všetkých svätých$/iu.test(name) ? "Všetkých svätých" : name,
-    rank: rank
-      ? rank[1][0].toLocaleUpperCase("sk") +
-        rank[1].slice(1).toLocaleLowerCase("sk")
-      : undefined
+    liturgyType: day.isRegular ? undefined : liturgy.liturgyType
   };
 }
 
@@ -232,11 +224,11 @@ export function MassHero({
               </time>
             </p>
             <h1>{heading.title}</h1>
-            {heading.rank ? (
-              <p className={styles.rank}>{heading.rank}</p>
+            {heading.liturgyType ? (
+              <p className={styles.liturgyType}>{heading.liturgyType}</p>
             ) : null}
           </header>
-          <LiturgyQuote date={day.date} liturgy={day.liturgy} />
+          <LiturgyQuote date={day.date} liturgy={heading.title} />
           <div className={styles.divider} aria-hidden="true">
             <span />
             <Icon name="cross" size={25} />

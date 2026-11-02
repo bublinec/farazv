@@ -18,6 +18,7 @@ export function Field({
   multiline = false,
   rows,
   maxLength,
+  placeholder,
   path,
   readOnly = false,
   autoCapitalize,
@@ -32,6 +33,7 @@ export function Field({
   multiline?: boolean;
   rows?: number;
   maxLength?: number;
+  placeholder?: string;
   path?: string;
   readOnly?: boolean;
   autoCapitalize?: string;
@@ -56,6 +58,7 @@ export function Field({
           value={value ?? ""}
           onChange={(e) => onChange(e.target.value)}
           maxLength={maxLength}
+          placeholder={placeholder}
           readOnly={readOnly}
           autoCapitalize={autoCapitalize}
           spellCheck={spellCheck}
@@ -68,6 +71,7 @@ export function Field({
           value={value ?? ""}
           onChange={(e) => onChange(e.target.value)}
           maxLength={maxLength}
+          placeholder={placeholder}
           readOnly={readOnly}
           autoCapitalize={autoCapitalize}
           spellCheck={spellCheck}

@@ -80,6 +80,12 @@
   margin-top: 6px;
   max-width: 32ch;
 }
+.dayName .liturgyType {
+  margin-top: 2px;
+  color: var(--gold-dark);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
 .dayName em {
   font-size: 0.7rem;
   text-transform: uppercase;

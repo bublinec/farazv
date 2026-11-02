@@ -81,12 +81,14 @@
   background: var(--gold);
   opacity: 0.85;
 }
-.rank {
+.liturgyType {
   margin: 8px 0 0;
   color: var(--gold-light);
   font-size: 1.05rem;
   font-weight: 450;
   line-height: 1.45;
+  max-width: 45ch;
+  text-wrap: balance;
 }
 .masses {
   display: flex;

@@ -31,7 +31,11 @@ export function BulletinImportPreview({
   );
   const weekEnd = addDays(weekStart, 6);
   const recognizedDays = result.days.filter(
-    (day) => day.liturgy || day.masses.length || day.status === "no-masses"
+    (day) =>
+      day.liturgy ||
+      day.liturgyType ||
+      day.masses.length ||
+      day.status === "no-masses"
   );
   const daysInWeek = recognizedDays.filter(
     (day) => day.date >= weekStart && day.date <= weekEnd

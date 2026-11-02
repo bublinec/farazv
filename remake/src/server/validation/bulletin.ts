@@ -1,6 +1,7 @@
 import type { BulletinDocument } from "@/content/documents";
 import type { CalendarDate } from "@/content/types";
 import { addDays, getMonday } from "@/lib/calendar";
+import { splitLiturgy } from "@/lib/liturgy-day";
 import {
   asArray,
   asObject,
@@ -44,8 +45,20 @@ export function parseBulletinDraft(
     )
       fail("Skontrolujte stav každého dňa.");
     optionalText(day.liturgy, 1000, "Skontrolujte názov liturgie.");
+    optionalText(
+      day.liturgyType,
+      300,
+      "Typ liturgického dňa môže mať najviac 300 znakov."
+    );
+    Object.assign(
+      day,
+      splitLiturgy(
+        day.liturgy as string | undefined,
+        day.liturgyType as string | undefined
+      )
+    );
     draftMasses(day.masses);
-    keepFields(day, ["date", "status", "liturgy", "masses"]);
+    keepFields(day, ["date", "status", "liturgy", "liturgyType", "masses"]);
   });
 
   for (const value of asArray(

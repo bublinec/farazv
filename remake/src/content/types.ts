@@ -55,6 +55,8 @@ export interface Mass {
 export interface ScheduleDay {
   date: CalendarDate;
   liturgy?: string;
+  /** Liturgical rank or observance, separate from the celebration's name. */
+  liturgyType?: string;
   masses: Mass[];
   status: "scheduled" | "no-masses" | "unpublished";
   isRegular?: boolean;
