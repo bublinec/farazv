@@ -9,8 +9,7 @@ import {
   getPublicSettings,
   getPublicBulletins,
   getPublicActivePosts,
-  getPublicEditorialPage,
-  getPublicEntry
+  getPublicEditorialPage
 } from "@/server/public-content";
 import { Unavailable } from "@/components/ui/Unavailable";
 import { getLocalDate, getPublicWeek } from "@/lib/calendar";
@@ -39,19 +38,13 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const now = getPreviewNow();
   const today = getLocalDate(now);
-  const [
-    settingsResult,
-    bulletinResult,
-    newsResult,
-    articlesResult,
-    restorationResult
-  ] = await Promise.allSettled([
-    getPublicSettings(),
-    getPublicBulletins(today),
-    getPublicActivePosts(today),
-    getPublicEditorialPage("article"),
-    getPublicEntry("news", altarRestoration.postSlug)
-  ]);
+  const [settingsResult, bulletinResult, newsResult, articlesResult] =
+    await Promise.allSettled([
+      getPublicSettings(),
+      getPublicBulletins(today),
+      getPublicActivePosts(today),
+      getPublicEditorialPage("article")
+    ]);
   const settings =
     settingsResult.status === "fulfilled" ? settingsResult.value : null;
   const publicWeek =
@@ -63,13 +56,9 @@ export default async function HomePage() {
         )
       : null;
   const days = publicWeek?.days;
-  const restorationArticle =
-    restorationResult.status === "fulfilled" ? restorationResult.value : null;
   const permanentPostPaths = [
     editorialRecordPath("news", hospitalMinistry.serviceRosterSlug),
-    ...(restorationArticle
-      ? [editorialRecordPath("news", altarRestoration.postSlug)]
-      : [])
+    editorialRecordPath("news", altarRestoration.postSlug)
   ];
   const recentNews =
     newsResult.status === "fulfilled"
@@ -166,7 +155,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <AltarRestorationSection article={restorationArticle} />
+      <AltarRestorationSection />
 
       <div className={styles.feedback}>
         <FeedbackInvite />

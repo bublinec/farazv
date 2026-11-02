@@ -6,6 +6,11 @@
   padding-block: clamp(36px, 5vw, 64px);
 }
 
+.layout.withoutLetter {
+  grid-template-columns: minmax(0, 640px);
+  justify-content: center;
+}
+
 .letter {
   min-width: 0;
 }

@@ -454,3 +454,22 @@ generated `.next-preview` output and fails there. The unit suite has 73 passes,
 one opt-in database skip and three failures in the unchanged information-content
 tests (`information-updates.test.ts` and `information.test.ts`). No content,
 provider settings, deployment or DNS changes were made during this check.
+
+### 2026-11-02 — Restore the altar donation section without its legacy article
+
+The homepage appeal depended on the presence of a published legacy news article,
+although it used none of that article's content. The hosted detail destination
+returned 404 when the article was absent. Removed that visibility gate and the
+homepage's unnecessary article query. The permanent appeal now always renders
+from its existing approved content; its detail page keeps the donation details
+available, displays a letter only when published, and reports letter-read errors
+without hiding the appeal. Existing St. Joseph wording, photographs, goal and
+dedicated account remain unchanged; no draft content is made public.
+
+The production build, TypeScript, scoped Prettier and diff checks passed. Six browser cases passed at
+1440 px and 390 px with an absent published article, a published test letter and
+a database outage. Each returned 200 for home and detail, showed the appeal,
+copied the expected IBAN, kept private draft text out of HTML, and had no runtime
+errors or horizontal overflow. Screenshots were visually checked. Tests used
+owned processes and disposable local PostgreSQL databases, all cleaned up;
+hosted data and provider settings were not changed.

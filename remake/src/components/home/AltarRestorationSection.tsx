@@ -1,18 +1,11 @@
 import Link from "next/link";
-import type { EditorialDocument } from "@/content/documents";
 import { altarRestoration } from "@/content/altar-restoration";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { IbanAccount } from "@/components/ui/IbanAccount";
 import { Icon } from "@/components/ui/Icon";
 import styles from "./AltarRestorationSection.module.css";
 
-export function AltarRestorationSection({
-  article
-}: {
-  article: EditorialDocument | null;
-}) {
-  if (!article) return null;
-
+export function AltarRestorationSection() {
   return (
     <section
       id={altarRestoration.sectionId}

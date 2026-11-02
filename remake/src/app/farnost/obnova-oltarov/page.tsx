@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { altarRestoration } from "@/content/altar-restoration";
+import type { EditorialDocument, RichTextDocument } from "@/content/documents";
 import { getPublicEntry } from "@/server/public-content";
 import {
   contentBlocksToRichText,
@@ -38,29 +38,30 @@ export const metadata: Metadata = {
 };
 
 export default async function AltarRestorationPage() {
-  let article;
+  let article: EditorialDocument | null = null;
+  let letterUnavailable = false;
+
   try {
     article = await getPublicEntry("news", altarRestoration.postSlug);
   } catch {
-    return (
-      <section className="container section">
-        <Unavailable title="Informácie o obnove sú dočasne nedostupné." />
-      </section>
-    );
+    letterUnavailable = true;
   }
-  if (!article) notFound();
 
-  const original = withoutRichTextMedia(
-    article.body ?? contentBlocksToRichText(article.blocks)
-  );
-  const [opening, ...content] = original.content;
-  // The page supplies a readable heading; keep the complete published speech.
-  const letter =
-    opening?.type === "heading" &&
-    richTextToPlainText({ type: "doc", content: [opening] }).trim() ===
-      "Poďakovanie a forma pomoci"
-      ? { ...original, content }
-      : original;
+  let letter: RichTextDocument | null = null;
+
+  if (article) {
+    const original = withoutRichTextMedia(
+      article.body ?? contentBlocksToRichText(article.blocks)
+    );
+    const [opening, ...content] = original.content;
+    // The page supplies a readable heading; keep the complete published speech.
+    letter =
+      opening?.type === "heading" &&
+      richTextToPlainText({ type: "doc", content: [opening] }).trim() ===
+        "Poďakovanie a forma pomoci"
+        ? { ...original, content }
+        : original;
+  }
 
   return (
     <>
@@ -69,14 +70,20 @@ export default async function AltarRestorationPage() {
         description="Pomôžme dokončiť obnovu posledného z trojice oltárov nášho farského kostola."
         image={altarRestoration.photograph}
       />
-      <div className={`container ${styles.layout}`}>
-        <article className={styles.letter} aria-labelledby="prihovor-heading">
-          <header>
-            <h2 id="prihovor-heading">Príhovor a poďakovanie dobrodincom</h2>
-            <span className="headingRule" aria-hidden="true" />
-          </header>
-          <RichText document={letter} className={styles.reading} />
-        </article>
+      <div
+        className={`container ${styles.layout} ${
+          !letter ? styles.withoutLetter : ""
+        }`}
+      >
+        {letter ? (
+          <article className={styles.letter} aria-labelledby="prihovor-heading">
+            <header>
+              <h2 id="prihovor-heading">Príhovor a poďakovanie dobrodincom</h2>
+              <span className="headingRule" aria-hidden="true" />
+            </header>
+            <RichText document={letter} className={styles.reading} />
+          </article>
+        ) : null}
         <aside className={styles.appeal} aria-labelledby="zbierka-heading">
           <h2 id="zbierka-heading">Zbierka na posledný oltár</h2>
           <p>
@@ -100,6 +107,9 @@ export default async function AltarRestorationPage() {
           </p>
           <p className={styles.thanks}>Pán Boh vám zaplať a požehnaj!</p>
         </aside>
+        {letterUnavailable ? (
+          <Unavailable title="Príhovor je dočasne nedostupný." compact />
+        ) : null}
       </div>
     </>
   );
