@@ -50,6 +50,15 @@ export function AdminNavigation({
             {link.id === "feedback" ? <FeedbackUnreadBadge /> : null}
           </Link>
         ))}
+      {canManageAccess ? (
+        <a
+          href="https://vercel.com/bublinecs-projects/farazv/analytics"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Štatistiky ↗
+        </a>
+      ) : null}
     </nav>
   );
 }

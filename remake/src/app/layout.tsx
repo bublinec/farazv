@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/layout/Footer";
 import { SiteShell } from "@/components/layout/SiteShell";
+import { VisitorAnalytics } from "@/components/layout/VisitorAnalytics";
 import { getPublicSettings } from "@/server/public-content";
 import { siteConfig } from "@/content/site";
 import "./globals.css";
@@ -39,6 +40,7 @@ export default async function RootLayout({
         <SiteShell footer={<Footer settings={settings} />}>
           {children}
         </SiteShell>
+        {process.env.VERCEL_ENV === "production" ? <VisitorAnalytics /> : null}
       </body>
     </html>
   );
