@@ -7,28 +7,23 @@ export function PreparationTimeline({
   preparation: SacramentPreparation;
 }) {
   return (
-    <section
+    <aside
       id="priprava"
       className={styles.timeline}
       aria-labelledby="priprava-heading"
     >
       <h2 id="priprava-heading">{preparation.title}</h2>
-      <p className={styles.introduction}>{preparation.introduction}</p>
       <ol className={styles.steps} role="list">
-        {preparation.steps.map((step, index) => (
+        {preparation.steps.map((step) => (
           <li className={styles.step} key={step.title}>
-            <span className={styles.number} aria-hidden="true">
-              {index + 1}
-            </span>
             <span className={styles.when}>{step.when}</span>
             <h3>{step.title}</h3>
-            <p>{step.description}</p>
           </li>
         ))}
       </ol>
       <a href="#informacie-2" className={styles.details}>
-        Podrobné podmienky a ďalšie možnosti <span aria-hidden="true">↓</span>
+        Podrobné podmienky
       </a>
-    </section>
+    </aside>
   );
 }

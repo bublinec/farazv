@@ -37,12 +37,12 @@ export function SacramentPage({ page }: { page: InformationPageDefinition }) {
       ) : null}
       <div className={`container ${styles.sacramentLayout}`}>
         <div className={styles.sacramentContent}>
-          {preparation ? (
-            <PreparationTimeline preparation={preparation} />
-          ) : null}
           <ReadingCopy page={page} omitSectionId={openingQuotation?.id} />
         </div>
         <div className={styles.sacramentSidebar}>
+          {preparation ? (
+            <PreparationTimeline preparation={preparation} />
+          ) : null}
           <PageLinks page={page} />
           <OfficeAside
             preparationType={preparationType}

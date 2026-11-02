@@ -515,3 +515,20 @@ Representative desktop/mobile screenshots were visually reviewed. The owned
 fixture server and browser were cleaned up. The ordinary check still encounters
 generated `.next-preview` formatting, and the unit suite retains the same three
 pre-existing content-test failures (73 passed, one opt-in database skip).
+
+### 2026-11-02 — Compact preparation timelines in the right sidebar
+
+The user requested a quieter supporting timeline, consistent with other pages.
+Moved the four preparation timelines into the existing right sidebar and replaced
+the large numbered markers and repeated paragraphs with small gold dots, timing
+notes and short step labels. The complete instructions remain in the main
+reading column. The sidebar stacks after that reading on mobile; its detailed
+conditions link still scrolls to and focuses the original content.
+
+The production build including TypeScript, scoped formatting and diff checks
+passed. Twelve browser/accessibility cases (four pages at 1440, 980 and 390 px)
+confirmed right-side alignment on larger screens, mobile stacking, working
+44 px detail links, a single quotation band, no overflow and no runtime errors.
+Timelines measure 346 px for the four-step guides and 478 px for marriage in
+these checks. Desktop/mobile screenshots were visually reviewed. The owned local
+fixture server and browser were cleaned up.
