@@ -532,3 +532,17 @@ confirmed right-side alignment on larger screens, mobile stacking, working
 Timelines measure 346 px for the four-step guides and 478 px for marriage in
 these checks. Desktop/mobile screenshots were visually reviewed. The owned local
 fixture server and browser were cleaned up.
+
+### 2026-11-02 — Supporting timelines below the contact card
+
+The user requested the compact timeline below the card. The sacrament sidebar
+now keeps resource links and the existing office/contact card first, followed by
+the preparation timeline. Follow-up requests removed the extra detailed-conditions
+link and added one brief explanatory sentence to each step. The main reading,
+quotation bands and existing contact cards remain unchanged.
+
+The production build including TypeScript, scoped formatting and diff checks
+passed. Eight desktop/mobile browser and WCAG A/AA checks verified placement
+directly below the office card, one concise sentence per item, no timeline links,
+no overflow and no runtime errors. Representative screenshots were visually
+reviewed. The owned fixture server and browser were cleaned up.

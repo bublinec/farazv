@@ -18,12 +18,10 @@ export function PreparationTimeline({
           <li className={styles.step} key={step.title}>
             <span className={styles.when}>{step.when}</span>
             <h3>{step.title}</h3>
+            <p>{step.description}</p>
           </li>
         ))}
       </ol>
-      <a href="#informacie-2" className={styles.details}>
-        Podrobné podmienky
-      </a>
     </aside>
   );
 }

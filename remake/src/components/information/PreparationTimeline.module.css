@@ -55,14 +55,9 @@
   font-weight: 500;
   line-height: 1.4;
 }
-
-.details {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  margin-top: 8px;
-  color: var(--blue);
+.step p {
+  margin: 5px 0 0;
+  color: var(--muted);
   font-size: 0.85rem;
-  line-height: 1.5;
-  text-underline-offset: 4px;
+  line-height: 1.6;
 }
