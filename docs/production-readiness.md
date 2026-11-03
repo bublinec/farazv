@@ -3,8 +3,8 @@
 Production: https://farazv.sk · [Operations](operations.md) · [Verification history](remake/plan.md)
 
 The repository implements the technical SEO foundations and production controls below.
-The 3 November readiness changes are on `feat/production-readiness`; merge/release
-and a successful live production smoke check are separate from local/branch CI.
+Release status and dated verification are recorded in the [plan](remake/plan.md).
+Local and branch CI checks are separate from live production verification.
 Search Console ownership, unattended backups and continuous alerting remain
 unverified. The owner confirmed on 3 November that Search Console and automated
 backups may not be configured. A successful deployment alone does not complete

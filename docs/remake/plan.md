@@ -737,3 +737,21 @@ those authenticated actions were not performed by this verification.
 - Prepared a separate two-page private handover document with service ownership,
   supplied contacts and fields for registrar recovery. It is stored outside the
   repository and is intentionally excluded from this commit.
+
+
+### Final release review — 3 November 2026
+
+- The full GitHub suite passed for `b070b99`, including formatting/types/unit tests,
+  the production build, public/accessibility checks, PostgreSQL integration and
+  authenticated admin flows: [run 41622246099](https://github.com/bublinec/farazv/actions/runs/41622246099).
+- Reviewed the complete pending merge against `origin/main`, including canonical
+  redirects, sitemap filtering, safe structured data and publication boundaries.
+  No additional application changes were required. Main's existing merge commit
+  has the same tree as the shared branch base; no divergent implementation needs
+  reconciliation. The owner explicitly requested merging this release to main.
+- Confirmed Vercel project `farazv` under `bublinecs-projects`, repository-root
+  Next.js build, Node 22, `npm ci` and `npm run build`.
+- Removed the unused local `.next` build output and browser results after confirming
+  no application server was running, reclaiming approximately 206 MiB. Dependencies,
+  legacy sources, private exports, credentials and the external handover document
+  were preserved. Build again before running `npm start` locally.
