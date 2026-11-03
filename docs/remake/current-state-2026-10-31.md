@@ -1,6 +1,6 @@
 # Current state and next steps
 
-[Overview](README.md) · [Plan and evidence](plan.md) · [Operations](../../remake/docs/operations.md)
+[Overview](README.md) · [Plan and evidence](plan.md) · [Operations](../operations.md)
 
 Reviewed **31 October 2026**, after the parish design and detail passes, and
 updated for the user's choice of v2 with the original v1 homepage hero. These
@@ -43,7 +43,7 @@ See [verification scope](plan.md#verification-record) and
    and a workflow definition are separate evidence. The latest preview predates
    the locally recorded refactor/design/detail work.
 2. **The production design switch is real work.**
-   [`resolvePublicDesign`](../../remake/src/content/design.ts) explicitly forces
+   [`resolvePublicDesign`](../../src/content/design.ts) explicitly forces
    v1 in production. The user has chosen v2 with the original hero; promotion
    still needs a small default change and a focused regression check. Keep the
    immutable v1 archive; simplify the temporary design branching after promotion.
@@ -80,7 +80,7 @@ See [verification scope](plan.md#verification-record) and
 Keep legacy services until a successful real weekly publishing cycle is complete.
 Rollback must account for edits made in the new admin; reverting a deployment
 alone does not restore data. The detailed procedure remains in
-[operations](../../remake/docs/operations.md#release-and-rollback).
+[operations](../operations.md#release-and-rollback).
 
 The visual composition is now settled by [D30](decisions.md#d30--keep-v2-with-the-original-homepage-hero-31-october-2026).
 The next bounded release-preparation run should cover its explicit default change,

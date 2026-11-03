@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_contact_office_hours",
+  "info": {
+    "name": "officeHours",
+    "icon": "hourglass-half",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "officeDay": {
+      "type": "component",
+      "repeatable": true,
+      "component": "contact.office-day"
+    },
+    "infoNote": {
+      "type": "string"
+    }
+  }
+}

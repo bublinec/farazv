@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_image_paragraphs",
+  "info": {
+    "name": "ImageParagraph",
+    "icon": "indent"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "richtext"
+    },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "weekly_announcements",
+  "info": {
+    "name": "WeeklyAnnouncements",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "monday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "annoucnements.day"
+    },
+    "tuesday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "annoucnements.day"
+    },
+    "wednesday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "annoucnements.day"
+    },
+    "thursday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "annoucnements.day"
+    },
+    "friday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "annoucnements.day"
+    },
+    "saturday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "annoucnements.day"
+    },
+    "sunday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "annoucnements.day"
+    },
+    "announcements": {
+      "type": "component",
+      "repeatable": true,
+      "component": "annoucnements.announcements"
+    },
+    "donations": {
+      "type": "component",
+      "repeatable": false,
+      "component": "annoucnements.donations"
+    }
+  }
+}

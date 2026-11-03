@@ -5,7 +5,7 @@ with the implementation and discussion on **31 October 2026**.
 
 ## Status and goals
 
-The integrated [Next.js application](../../remake/README.md) is implemented:
+The integrated [Next.js application](../../README.md) is implemented:
 public layouts, a Slovak editor admin, PostgreSQL/Drizzle persistence, private
 previews, publication, Google allowlist guards, Cloudinary uploads and the full
 local migration. The four review records remain useful evidence; their earlier inter-stage pauses
@@ -15,27 +15,28 @@ The local and hosted databases contain 414 content records, all 146 magazine
 articles public, 1,081 media records and 30 static provenance records, of which 29
 were published. The free Neon resource `farazv` is provisioned in Frankfurt on
 PostgreSQL 18.6; hosted import counts were verified against the local database.
-The new Vercel project `farazv` is linked to the owner's personal team with
-`rootDirectory=remake` and Node 22. The stable [preview deployment](https://farazv-preview-bublinecs-projects.vercel.app)
-is running with Vercel protection enabled; `farazv.vercel.app` is an additional alias.
-**Live `farazv.sk`, its legacy stack and DNS are unchanged; production cutover
-has not occurred.** The root Gatsby site and legacy backend remain available.
+As of **3 November 2026**, the production site is https://farazv.sk on Vercel,
+with `www.farazv.sk` redirecting to the apex. Google credentials are configured
+and the owner confirmed the production callback; a full live login still needs
+acceptance. The Next.js app now lives at the repository root. Legacy sources
+are preserved in `old/client/` and `old/admin/` as ordinary tracked folders.
+The repository cleanup updates Vercel's build root to match; dated verification
+is recorded in [the plan](plan.md).
 
 The remake preserves familiar parish photography and Slovak routes, makes Masses
 and notices easier to find on mobile, and replaces the general CMS with a small
 editorial admin. Informational pages use ordinary React layouts. The application
-stays in `remake/`; Vercel can deploy that directory without moving or deleting
-legacy source.
+runs from the root; Vercel excludes the archived legacy sources from uploads.
 
 ## Reading order
 
 For the immediate priorities, read [the current-state assessment and next steps](current-state-2026-10-31.md).
 
-1. [Contributor setup](../../remake/README.md) and [route/content map](../../remake/docs/routes.md).
+1. [Contributor setup](../../README.md) and [route/content map](../routes.md).
 2. [Architecture](architecture.md) and [decision log](decisions.md).
 3. [Plan, review records and evidence](plan.md).
-4. [Migration details](../../remake/docs/migration.md), [operations](../../remake/docs/operations.md)
-   and [Slovak editor guide](../../remake/docs/editor-guide.md).
+4. [Migration details](../migration.md), [operations](../operations.md)
+   and [Slovak editor guide](../editor-guide.md).
 5. [Implementation review and completed refactor](refactor-plan.md): priorities,
    readable code conventions and behavior-preserving implementation passes.
 
@@ -79,7 +80,7 @@ They are references/metadata, not an image-byte backup. Availability checks foun
 unreferenced PDFs (401). Recovery remains unresolved; the private 76-row support
 CSV is prepared and has not been sent. No previously public editorial record or
 published static source page uses the failed assets; some newly published
-magazine content does. See [media recovery evidence](../../remake/docs/migration.md#verification-and-release-limits).
+magazine content does. See [media recovery evidence](../migration.md#verification-and-release-limits).
 
 ## Verification records
 
@@ -88,7 +89,7 @@ hosted and provider evidence, including the refactor regression run. The
 [refactor record](refactor-plan.md#completion-record) maps each review finding to
 its final owner. Automated checks do not imply product acceptance, live Google
 login or production cutover. Accessibility/performance methods and their limits
-are in [the quality audit](../../remake/docs/quality-audit.md).
+are in [the quality audit](../quality-audit.md).
 
 The existing local and hosted backup/restore drills passed; they do not establish
 an ongoing off-device backup schedule. Activate and assign cadence, retention and
@@ -98,7 +99,7 @@ private storage ownership before release.
 
 | Requirement            | Current state / remaining action                                                                                                                                                                                                          |
 | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Google OAuth           | Credentials absent. Register the intended fixed preview callback and eventual production callback; verify allowed/rejected accounts, sign-out and recovery. See [operations](../../remake/docs/operations.md#google-access-and-recovery). |
+| Google OAuth           | Credentials absent. Register the intended fixed preview callback and eventual production callback; verify allowed/rejected accounts, sign-out and recovery. See [operations](../operations.md#google-access-and-recovery). |
 | Hosted database        | Free Frankfurt Neon PostgreSQL 18.6 and verified import are running. Hosted backup/restore drill passed; activate ongoing encrypted off-device backups, retention and recovery ownership.                                                 |
 | Final source freshness | Not established. The authorized read-only legacy check timed out without results or changes. Obtain a fresh private export, compare/reconcile and freeze editing before cutover.                                                          |
 | Media recovery         | 76 missing originals remain unresolved. Preserve recovery evidence and resolve the owner recovery/acceptance decision; keep restrictions on the five PDFs.                                                                                |

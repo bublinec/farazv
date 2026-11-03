@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_sections_announcements_sections",
+  "info": {
+    "name": "AnnouncementsSection",
+    "icon": "newspaper",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "useMostRecent": {
+      "type": "boolean",
+      "default": true
+    },
+    "announcements": {
+      "collection": "announcement"
+    },
+    "backgroundImage": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": ["images"],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.text"
+    }
+  }
+}

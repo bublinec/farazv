@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_annoucnements_single_donations",
+  "info": {
+    "name": "SingleDonation",
+    "icon": "user"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "default": "bohuznáma"
+    },
+    "amount": {
+      "type": "decimal",
+      "default": 50
+    }
+  }
+}

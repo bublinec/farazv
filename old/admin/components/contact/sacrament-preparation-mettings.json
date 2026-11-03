@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_contact_sacrament_preparation_mettings",
+  "info": {
+    "name": "Sacrament Preparation Mettings",
+    "icon": "dove",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "meeting": {
+      "type": "component",
+      "repeatable": true,
+      "component": "contact.meeting"
+    },
+    "infoNote": {
+      "type": "string"
+    }
+  }
+}

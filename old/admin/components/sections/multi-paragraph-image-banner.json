@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_sections_multi_paragraph_image_banners",
+  "info": {
+    "name": "MultiParagraphImageBanner",
+    "icon": "grip-horizontal",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "paragraphs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.icon-content"
+    },
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.text"
+    },
+    "backgroundImage": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "configuration": {
+      "type": "enumeration",
+      "enum": [
+        "sacraments",
+        "groups",
+        "custom"
+      ],
+      "default": "custom"
+    }
+  }
+}

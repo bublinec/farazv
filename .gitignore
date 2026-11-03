@@ -1,27 +1,23 @@
-# project dependencies
-.cache
-node_modules
+# Dependencies and generated output, including archived applications.
+node_modules/
+.cache/
+.next/
+.next-preview/
+next-env.d.ts
+out/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
 yarn-error.log
+/old/client/public/
 
-# build directory
-/public/
-
-# generated folders
-coverage
-
-# OS generated files
-.DS_Store
-
-design-reference
-
-# browser automation logs
-.playwright-mcp/*.log
-
-# private database backups
-db-backup/
-/.vercel/
-
-# Local service credentials, including retained legacy environments
-.env
-.env.*
+# Local credentials, provider links and private source exports.
+.env*
 !.env.example
+.vercel/
+.private/
+db-backup/
+design-reference/
+.playwright-mcp/
+.DS_Store

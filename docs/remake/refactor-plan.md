@@ -1,6 +1,6 @@
 # Implementation review and refactor record
 
-[Overview](README.md) · [Architecture](architecture.md) · [Implementation history](plan.md) · [Content preservation](../../remake/docs/static-content-review.md)
+[Overview](README.md) · [Architecture](architecture.md) · [Implementation history](plan.md) · [Content preservation](../static-content-review.md)
 
 Reviewed and implemented **31 October 2026** after the user requested the
 refactor. **Status: implemented locally; integrated verification passed.**
@@ -17,7 +17,7 @@ contain legitimate content or forms; line count alone is not a reason to split t
 
 ### R1 — Import updates can overwrite a concurrent editor save
 
-**P1, correctness.** [migration/apply-import.ts](../../remake/scripts/migration/apply-import.ts),
+**P1, correctness.** [migration/apply-import.ts](../../scripts/migration/apply-import.ts),
 lines 31–101, reads existing versions, checks conflicts in memory, then updates
 by ID alone. Its advisory lock serializes importers; editor saves do not take
 that lock. If an editor commits after the import's read, an import of changed
@@ -30,7 +30,7 @@ after successful writes, and continue importing unrelated records as the current
 contract permits. Handle a concurrent same-ID insert without replacing it.
 Keep the transaction, importer lock, stable slugs and existing conflict policy.
 
-The [integration test](../../remake/tests/content-store.integration.test.ts),
+The [integration test](../../tests/content-store.integration.test.ts),
 lines 364–375, checks an edit completed **before** import begins. Add a deterministic
 race test using coordinated transactions, without timing sleeps. Verify the
 editor's draft, published snapshot, version and provenance survive.
@@ -38,7 +38,7 @@ editor's draft, published snapshot, version and provenance survive.
 ### R2 — Real settings creation depends on demo settings
 
 **P2, boundary and default behavior.**
-[content-store.ts](../../remake/src/server/content-store.ts), lines 23 and 174,
+[content-store.ts](../../src/server/content-store.ts), lines 23 and 174,
 initializes a new real settings record using fixture contacts, hours and payment
 details. This concerns initialization of an empty database; existing imported
 settings are not implicated.
@@ -52,10 +52,10 @@ the explicit fixture adapter. Do not alter current parish facts or database rows
 ### R3 — Static pages retain a second, unused version of their body copy
 
 **P2, content fidelity and navigation.**
-[information.ts](../../remake/src/content/information.ts), lines 53–700, mixes
+[information.ts](../../src/content/information.ts), lines 53–700, mixes
 layout metadata and abridged fallback prose. **23 of 24** page definitions use
 published source, so their `sections` prose is unreachable through
-[ReadingCopy](../../remake/src/components/information/InformationPage.tsx).
+[ReadingCopy](../../src/components/information/InformationPage.tsx).
 Only `objav-krista` currently uses the curated fallback.
 
 Remove only proven-unused body sections. Keep rendered titles, gentle intros,
@@ -64,20 +64,20 @@ curated fallback explicitly; a missing expected source must fail a check instead
 of silently choosing different prose.
 
 First make the approved **24 routes / 230 reading blocks** check portable.
-[information.test.ts](../../remake/tests/information.test.ts) currently protects
+[information.test.ts](../../tests/information.test.ts) currently protects
 structure, gallery counts, safety and excluded SEO fields; the complete rendered
 comparison is only in a private audit artifact. Add a reviewed public-content
 baseline for text/order, citations, credits, captions, asset references and link
 destinations. Keep the private dump out of tests/CI. The generator must not
 silently regenerate the approval baseline together with its output.
 
-The 8,760-line [information-content.ts](../../remake/src/content/information-content.ts)
+The 8,760-line [information-content.ts](../../src/content/information-content.ts)
 is generated data. Preserve all **29 exported records**, including records not
 directly represented by the 24 static layouts. Do not manually reorganize its prose.
 
 ### R4 — Record types allow mismatched kinds and documents
 
-**P2, type clarity.** [documents.ts](../../remake/src/content/documents.ts),
+**P2, type clarity.** [documents.ts](../../src/content/documents.ts),
 line 71, gives `kind` and `draft/published` independent unions. Components and
 storage consequently repeat assertions such as `as BulletinDocument` after
 checking `kind`.
@@ -90,7 +90,7 @@ do not run it through strict new-publication rules during deserialization.
 
 ### R5 — Draft parsing and publication validation repeat structural rules
 
-**P2, policy drift.** [validation.ts](../../remake/src/server/validation.ts),
+**P2, policy drift.** [validation.ts](../../src/server/validation.ts),
 line 410, normalizes a draft, then repeats many shape checks while publishing.
 For example, address allows 1,000 characters in draft parsing (line 263), but
 publication uses the default 500-character limit (line 462). Poster destinations
@@ -105,10 +105,10 @@ Keep the current validator approach; adding a schema library is unnecessary.
 ### R6 — Editor and media-picker behavior is difficult to trace in one view
 
 **P2, state ownership.**
-[RecordEditor.tsx](../../remake/src/components/admin/RecordEditor.tsx) combines
+[RecordEditor.tsx](../../src/components/admin/RecordEditor.tsx) combines
 navigation protection, document/saved state, several mutations, conflict recovery,
 cache retry, form dispatch and layout in 461 lines.
-[MediaPicker.tsx](../../remake/src/components/admin/MediaPicker.tsx) combines modal
+[MediaPicker.tsx](../../src/components/admin/MediaPicker.tsx) combines modal
 lifecycle, library paging/search and two-phase upload recovery in 446 lines.
 
 Extract focused hooks, keeping UI markup close to the screen:
@@ -148,7 +148,7 @@ to remain recognizable.
 ### R8 — Contributor commands and records need one predictable path
 
 **P2/P3, reproducibility and instructions.**
-[package.json](../../remake/package.json) has no remake-owned pinned formatter or
+[package.json](../../package.json) has no remake-owned pinned formatter or
 format check; previous formatting used the Gatsby root's installed tool/config.
 Local typecheck is `tsc`, while CI separately runs Next route type generation.
 This is check drift, not an established clean-checkout compiler failure.
@@ -163,7 +163,7 @@ Run full regeneration comparisons only when an authorized private export is
 supplied; CI checks the committed public data against its approved baseline.
 
 Replace historical blanket implementation authorization in
-[AGENTS.md](../../remake/AGENTS.md), line 14, with durable boundaries and links to
+[AGENTS.md](../../AGENTS.md), line 14, with durable boundaries and links to
 the latest content rule. Preserve the generated Next guidance. Keep current
 status/launch requirements in the overview, detailed dated evidence in its owning
 record, and setup commands in the application README. Link instead of repeating
@@ -246,7 +246,7 @@ must not require the private dump, real provider secrets or remote writes.
 
 Do not rerun live Cloudinary uploads, provision databases, import hosted data or
 deploy merely to verify formatting/file moves. Full provider/cutover acceptance
-remains in [operations](../../remake/docs/operations.md). Earlier baseline results and the new regression results are recorded in
+remains in [operations](../operations.md). Earlier baseline results and the new regression results are recorded in
 [implementation evidence](plan.md#verification-record). The importer races now
 have deterministic real-PostgreSQL reproduction coverage.
 

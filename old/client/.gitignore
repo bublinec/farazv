@@ -1,0 +1,27 @@
+# project dependencies
+.cache
+node_modules
+yarn-error.log
+
+# build directory
+/public/
+
+# generated folders
+coverage
+
+# OS generated files
+.DS_Store
+
+design-reference
+
+# browser automation logs
+.playwright-mcp/*.log
+
+# private database backups
+db-backup/
+/.vercel/
+
+# Local service credentials, including retained legacy environments
+.env
+.env.*
+!.env.example

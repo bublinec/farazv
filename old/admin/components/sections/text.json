@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_sections_text",
+  "info": {
+    "name": "Text",
+    "icon": "text-height",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "superscript": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "info": {
+      "type": "string"
+    }
+  }
+}

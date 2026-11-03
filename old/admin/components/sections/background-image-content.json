@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_sections_background_image_contents",
+  "info": {
+    "name": "BackgroundImageContent",
+    "icon": "image",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "backgroundImage": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true,
+      "pluginOptions": {}
+    },
+    "imageParagraph": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.image-paragraph"
+    }
+  }
+}

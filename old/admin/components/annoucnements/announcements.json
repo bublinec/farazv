@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_annoucnements_announcements",
+  "info": {
+    "name": "announcements",
+    "icon": "list-ul"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

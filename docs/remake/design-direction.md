@@ -47,7 +47,7 @@ homepage hero and admin. Source Serif has a restrained book-like character that
 leaves room for the existing art.
 Its normal/italic variable files are self-hosted; Slovak letters and quotation
 marks were checked in both binaries. Provenance, license and exact file details
-are in [the font record](../../remake/public/fonts/README.md), with
+are in [the font record](../../public/fonts/README.md), with
 [Adobe's specimen](https://adobe-fonts.github.io/source-serif/) and
 [pinned release](https://github.com/adobe-fonts/source-serif/releases/tag/4.005R).
 Lora would be a more calligraphic alternative, but richer letterforms would

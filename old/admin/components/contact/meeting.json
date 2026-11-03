@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_contact_meetings",
+  "info": {
+    "name": "meeting",
+    "icon": "address-card"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "time": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_annoucnements_masses",
+  "info": {
+    "name": "Mass",
+    "icon": "school",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "intention": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "priest": {
+      "model": "priest"
+    },
+    "otherPriests": {
+      "type": "string"
+    },
+    "time": {
+      "type": "time"
+    }
+  }
+}

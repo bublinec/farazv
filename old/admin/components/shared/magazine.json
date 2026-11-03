@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_magazines",
+  "info": {
+    "name": "Magazine",
+    "icon": "file-image"
+  },
+  "options": {},
+  "attributes": {
+    "Month": {
+      "type": "string"
+    },
+    "pdf": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files"
+      ],
+      "plugin": "upload",
+      "required": true,
+      "pluginOptions": {}
+    }
+  }
+}

@@ -1,10 +1,10 @@
+# Preserve the last legacy deployment as a migration fallback.
+# The active website is built and deployed by Vercel from the repository root.
 [build]
-  # Keep Netlify's automatic dependency installer separate from the app.
-  # The shared build script installs the exact toolchain and builds at repo root.
-  base = "netlify-build"
+  base = "old/client/netlify-build"
   command = "bash ../scripts/netlify-build.sh"
   publish = "../public"
+  ignore = "exit 0"
 
 [build.environment]
-  # This Gatsby site is fully static; no generated API, SSR or DSG functions.
   NETLIFY_SKIP_GATSBY_BUILD_PLUGIN = "true"

@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_sections_events_sections",
+  "info": {
+    "name": "EventsSection",
+    "icon": "calendar-check",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "events": {
+      "collection": "event"
+    },
+    "useMostRecent": {
+      "type": "boolean"
+    },
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.text"
+    }
+  }
+}

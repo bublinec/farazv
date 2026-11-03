@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_sections_partners_sections",
+  "info": {
+    "name": "PartnersSection",
+    "icon": "user-plus"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.text"
+    },
+    "useGlobalConfiguration": {
+      "type": "boolean"
+    },
+    "partners": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.image-link"
+    }
+  }
+}
