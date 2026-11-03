@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { findInformationPage, informationPages } from "@/content/information";
 import { InformationPage } from "@/components/information/InformationPage";
-import { siteConfig } from "@/content/site";
+import { pageMetadata } from "@/lib/seo";
 import { getPageCover } from "@/content/page-photographs";
 
 interface PageProps {
@@ -25,31 +25,12 @@ export async function generateMetadata({
   if (!page) return {};
   const cover = getPageCover(`/${page.slug}`)?.image;
 
-  return {
+  return pageMetadata({
     title: page.title,
     description: page.introduction,
-    alternates: { canonical: `/${page.slug}` },
-    openGraph: {
-      title: page.title,
-      description: page.introduction,
-      url: `/${page.slug}`,
-      siteName: siteConfig.name,
-      locale: "sk_SK",
-      type: "website",
-      ...(cover
-        ? {
-            images: [
-              {
-                url: cover.src,
-                width: cover.width,
-                height: cover.height,
-                alt: cover.alt || page.title
-              }
-            ]
-          }
-        : {})
-    }
-  };
+    path: `/${page.slug}`,
+    image: cover
+  });
 }
 
 export default async function Page({ params }: PageProps) {

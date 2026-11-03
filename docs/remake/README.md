@@ -30,7 +30,8 @@ runs from the root; Vercel excludes the archived legacy sources from uploads.
 
 ## Reading order
 
-For the immediate priorities, read [the current-state assessment and next steps](current-state-2026-10-31.md).
+For current production priorities, read [production readiness](../production-readiness.md).
+The [31 October assessment](current-state-2026-10-31.md) remains historical context.
 
 1. [Contributor setup](../../README.md) and [route/content map](../routes.md).
 2. [Architecture](architecture.md) and [decision log](decisions.md).
@@ -99,14 +100,14 @@ private storage ownership before release.
 
 | Requirement            | Current state / remaining action                                                                                                                                                                                                          |
 | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Google OAuth           | Credentials absent. Register the intended fixed preview callback and eventual production callback; verify allowed/rejected accounts, sign-out and recovery. See [operations](../operations.md#google-access-and-recovery). |
+| Google OAuth           | Production credentials are configured and the owner confirmed the callback. Verify real allowed/rejected accounts, sign-out and recovery. See [operations](../operations.md#google-access-and-recovery). |
 | Hosted database        | Free Frankfurt Neon PostgreSQL 18.6 and verified import are running. Hosted backup/restore drill passed; activate ongoing encrypted off-device backups, retention and recovery ownership.                                                 |
 | Final source freshness | Not established. The authorized read-only legacy check timed out without results or changes. Obtain a fresh private export, compare/reconcile and freeze editing before cutover.                                                          |
 | Media recovery         | 76 missing originals remain unresolved. Preserve recovery evidence and resolve the owner recovery/acceptance decision; keep restrictions on the five PDFs.                                                                                |
 | Parish facts           | Confirm contacts, dated course/event details, donor-category presentation and actual recurring Mass times. The imported regular template is empty.                                                                                        |
 | Release evidence       | Final build, 12 real-data accessibility cases, six local production measurements and route/privacy/pagination/outage checks passed. Complete live Google and manual acceptance; local timings do not establish hosted Core Web Vitals.    |
 | Ongoing operations     | Assign and activate backup cadence, retention, off-device storage and recovery ownership; retain old services through a successful real weekly cycle.                                                                                     |
-| Deployment/domain      | A Vercel preview is running with hosted content. Verify the real callback/app/data configuration before a production deployment, enabling indexing or switching DNS.                                                                      |
+| Deployment/domain      | Production is on Vercel at farazv.sk, with WWW redirecting to the apex. Verify propagation and production smoke checks; nameservers are already delegated to Vercel.                                                                      |
 
 ## Source roles and private inputs
 

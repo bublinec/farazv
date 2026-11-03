@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { ContentBlock, EditorialEntry } from "@/content/types";
-import { siteConfig } from "@/content/site";
+import { pageMetadata } from "@/lib/seo";
+import { editorialStructuredData } from "@/lib/structured-data";
+import { StructuredData } from "@/components/ui/StructuredData";
 import type { EditorialDocument } from "@/content/documents";
 import type { EditorialSummary } from "@/lib/editorial";
 import { RichText } from "./RichText";
@@ -61,12 +63,14 @@ export function EditorialDetail({
   entry,
   kind,
   related = [],
-  preview = false
+  preview = false,
+  notice = false
 }: {
   entry: EditorialDocument;
   kind: EditorialKind;
   related?: EditorialSummary[];
   preview?: boolean;
+  notice?: boolean;
 }) {
   const listingHref =
     kind === "article" ? "/farnost/nase-spolocenstvo" : "/#vyveska";
@@ -80,6 +84,16 @@ export function EditorialDetail({
   ) : null;
   return (
     <>
+      {!preview && (
+        <StructuredData
+          data={editorialStructuredData(
+            entry,
+            notice
+              ? `/vyveska/${encodeURIComponent(entry.slug)}`
+              : editorialPath(entry, kind)
+          )}
+        />
+      )}
       <article className={styles.article}>
         <div className="container">
           <header className={styles.header}>
@@ -173,30 +187,11 @@ export function editorialMetadata(
   const path = notice
     ? `/vyveska/${encodeURIComponent(entry.slug)}`
     : editorialPath(entry, kind);
-  const canonical = new URL(path, siteConfig.url).href;
-  return {
+  return pageMetadata({
     title: entry.title,
     description: entry.excerpt,
-    alternates: { canonical },
-    openGraph: {
-      title: entry.title,
-      description: entry.excerpt,
-      type: "article" as const,
-      url: canonical,
-      publishedTime: entry.date,
-      ...(entry.author ? { authors: [entry.author] } : {}),
-      ...(entry.cover
-        ? {
-            images: [
-              {
-                url: entry.cover.src,
-                width: entry.cover.width,
-                height: entry.cover.height,
-                alt: entry.cover.alt
-              }
-            ]
-          }
-        : {})
-    }
-  };
+    path,
+    image: entry.cover,
+    article: { publishedTime: entry.date, author: entry.author }
+  });
 }

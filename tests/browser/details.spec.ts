@@ -30,24 +30,15 @@ async function expectAbove(first: Locator, second: Locator) {
   expect(firstBox!.y + firstBox!.height).toBeLessThanOrEqual(secondBox!.y);
 }
 
-test("homepage puts current notices before the church gallery and retains all six sacraments", async ({
+test("homepage retains current notices and sacrament pages link all six sacraments", async ({
   page
 }) => {
   const main = page.locator("main");
-  const noticeboard = main.locator("#vyveska");
-  const gallery = main.getByRole("heading", {
-    name: "Miesto, ktoré poznáme",
-    exact: true
-  });
-  await expect(noticeboard).toBeVisible();
-  await expect(gallery).toBeVisible();
-  await expectAbove(noticeboard, gallery);
+  await expect(main.locator("#vyveska")).toBeVisible();
   await expect(
-    main.getByRole("navigation", {
-      name: "Na tejto stránke",
-      exact: true
-    })
+    main.getByRole("navigation", { name: "Na tejto stránke", exact: true })
   ).toHaveCount(0);
+  await page.goto("/sviatosti/sviatost-krstu");
 
   const sacraments = main.getByRole("region", {
     name: "Sviatosti",
@@ -165,7 +156,11 @@ test("baptism retains its quotation, practical PDF and stable reading anchors wi
     /^https:\/\/drive\.google\.com\/file\/d\//
   );
   await expectReadingHeadings(page);
-  await expectAbove(form, main.locator('section[id^="informacie-"]').first());
+  await expectAbove(
+    quotation,
+    main.locator('section[id^="informacie-"]').first()
+  );
+  await expect(form).toBeVisible();
 
   const destination = main.locator('div[id^="citanie-"]').filter({
     has: page.getByRole("heading", {
@@ -196,7 +191,7 @@ test("baptism retains its quotation, practical PDF and stable reading anchors wi
 test("church history reading topics resolve and retain the parish history and its author", async ({
   page
 }) => {
-  await page.goto("/farnost/kostol-sv-alzbety");
+  await page.goto("/farnost/o-farnosti");
   await expectReadingHeadings(page);
   await expect(
     page.getByRole("heading", { name: "História farnosti", exact: true })

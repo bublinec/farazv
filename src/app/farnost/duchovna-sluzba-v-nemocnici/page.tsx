@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import type { EditorialDocument } from "@/content/documents";
 import { hospitalMinistry } from "@/content/hospital-ministry";
 import { churchDetails } from "@/content/church-details";
@@ -12,11 +12,12 @@ export const dynamic = "force-dynamic";
 const description =
   "Sväté omše, prijímanie na izbách, spoveď a pomazanie chorých v Nemocnici AGEL Zvolen. Kontakty na kňazov a plán areálu.";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: hospitalMinistry.title,
-  description,
-  alternates: { canonical: hospitalMinistry.href }
-};
+  description: description,
+  path: hospitalMinistry.href,
+  image: churchDetails.chapel
+});
 
 export default async function HospitalMinistryPage() {
   let article: EditorialDocument | null = null;

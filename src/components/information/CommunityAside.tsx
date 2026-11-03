@@ -39,12 +39,16 @@ export function CommunityAside({ page }: { page: InformationPageDefinition }) {
         <div className={styles.asideContact}>
           <h3>Kontakt</h3>
           <p>{contact.name}</p>
-          <a
-            className={styles.officePhone}
-            href={`tel:${contact.phone.replace(/\s/g, "")}`}
-          >
-            {contact.phone}
-          </a>
+          {contact.phones.map((phone) => (
+            <div key={phone}>
+              <a
+                className={styles.officePhone}
+                href={`tel:${phone.replace(/\s/g, "")}`}
+              >
+                {phone}
+              </a>
+            </div>
+          ))}
         </div>
       ) : (
         <Link className={styles.textLink} href="/kontakt">

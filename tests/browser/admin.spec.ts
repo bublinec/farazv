@@ -199,25 +199,23 @@ test.describe("Local authenticated editorial administration", () => {
     await body.click();
     await page.keyboard.press("ControlOrMeta+End");
     await page.keyboard.type(" Doplnený text.");
-    await page
-      .getByRole("button", { name: "Uložiť koncept", exact: true })
-      .click();
-    await expect(page.getByRole("status")).toContainText("Koncept je uložený");
-    await page
-      .getByRole("button", { name: "Súkromný náhľad", exact: true })
-      .click();
-    await expect(page).toHaveURL(`/admin/preview/${record.id}`);
+    await page.getByRole("button", { name: "Uložiť", exact: true }).click();
+    await expect(page.getByRole("status")).toContainText(
+      "Uložené. Obsah zostáva súkromný."
+    );
+    await page.getByRole("button", { name: "Náhľad", exact: true }).click();
+    await expect(page).toHaveURL(`/admin/records/${record.id}`);
     await expect(
-      page.getByText("Doplnený text.", { exact: false })
+      page.getByRole("article").getByText("Doplnený text.", { exact: false })
     ).toBeVisible();
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
       "content",
       /noindex/
     );
     await page
-      .getByRole("link", { name: "Späť na úpravu", exact: false })
+      .getByRole("button", { name: "Späť na úpravu", exact: true })
       .click();
-    await page.getByRole("button", { name: /^Zverejniť(?: zmeny)?$/ }).click();
+    await page.getByRole("switch", { name: "Zverejnenie na webe" }).click();
     await expect(page.getByRole("status")).toContainText("Zverejnené");
     const latest: ContentRecord = await (
       await page.request.get(`/api/admin/records/${record.id}`)
@@ -228,11 +226,8 @@ test.describe("Local authenticated editorial administration", () => {
     const publicPage = await page.request.get(publicUrl);
     expect(publicPage.status()).toBe(200);
     expect(await publicPage.text()).toContain("Doplnený text.");
-    page.once("dialog", (dialog) => dialog.accept());
-    await page
-      .getByRole("button", { name: "Stiahnuť z webu", exact: true })
-      .click();
-    await expect(page.getByRole("status")).toContainText("Stiahnuté z webu");
+    await page.getByRole("switch", { name: "Zverejnenie na webe" }).click();
+    await expect(page.getByRole("status")).toContainText("Obsah je súkromný.");
     const after: ContentRecord = await (
       await page.request.get(`/api/admin/records/${record.id}`)
     ).json();
@@ -242,7 +237,7 @@ test.describe("Local authenticated editorial administration", () => {
       `${record.title} upravený`
     );
   });
-  test("dirty preview saves first and a dirty unpublish preserves the local draft", async ({
+  test("inline preview keeps edits local and unpublishing preserves unsaved text", async ({
     page
   }) => {
     let record = await article(page);
@@ -250,35 +245,36 @@ test.describe("Local authenticated editorial administration", () => {
     await page
       .getByLabel("Názov", { exact: true })
       .fill("E2E uložiť pred náhľadom");
-    await page
-      .getByRole("button", { name: "Uložiť a otvoriť náhľad", exact: true })
-      .click();
-    await expect(page).toHaveURL(`/admin/preview/${record.id}`);
     await expect(
-      page.getByRole("heading", {
-        name: "E2E uložiť pred náhľadom",
-        exact: true
-      })
-    ).toBeVisible();
+      page.getByRole("switch", { name: "Zverejnenie na webe" })
+    ).toBeDisabled();
+    await page.getByRole("button", { name: "Náhľad", exact: true }).click();
+    await expect(page).toHaveURL(`/admin/records/${record.id}`);
+    await expect(page.locator("main")).toContainText(
+      "E2E uložiť pred náhľadom"
+    );
+    const beforeSave = await (
+      await page.request.get(`/api/admin/records/${record.id}`)
+    ).json();
+    expect(beforeSave.draft.title).toBe(record.title);
+    expect(beforeSave.version).toBe(record.version);
+    await page
+      .getByRole("button", { name: "Späť na úpravu", exact: true })
+      .click();
+    await page.getByRole("button", { name: "Uložiť", exact: true }).click();
+    await expect(page.getByRole("status")).toContainText(
+      "Uložené. Obsah zostáva súkromný."
+    );
     record = await (
       await page.request.get(`/api/admin/records/${record.id}`)
     ).json();
-    expect((record.draft as EditorialDocument).title).toBe(
-      "E2E uložiť pred náhľadom"
-    );
-
     record = await write(page.request, record, record.draft, "publish");
     await page.goto(`/admin/records/${record.id}`);
     await page
       .getByLabel("Názov", { exact: true })
       .fill("E2E neuložený koncept po stiahnutí");
-    page.once("dialog", (dialog) => dialog.accept());
-    await page
-      .getByRole("button", { name: "Stiahnuť z webu", exact: true })
-      .click();
-    await expect(page.getByRole("status")).toContainText(
-      "Máte neuložené zmeny"
-    );
+    await page.getByRole("switch", { name: "Zverejnenie na webe" }).click();
+    await expect(page.getByRole("status")).toContainText("Neuložené zmeny");
     await expect(page.getByLabel("Názov", { exact: true })).toHaveValue(
       "E2E neuložený koncept po stiahnutí"
     );
@@ -288,10 +284,10 @@ test.describe("Local authenticated editorial administration", () => {
     expect(unpublished.published).toBeNull();
     expect(unpublished.draft.title).toBe("E2E uložiť pred náhľadom");
 
-    await page
-      .getByRole("button", { name: "Uložiť koncept", exact: true })
-      .click();
-    await expect(page.getByRole("status")).toContainText("Koncept je uložený");
+    await page.getByRole("button", { name: "Uložiť", exact: true }).click();
+    await expect(page.getByRole("status")).toContainText(
+      "Uložené. Obsah zostáva súkromný."
+    );
     const saved = await (
       await page.request.get(`/api/admin/records/${record.id}`)
     ).json();
@@ -311,9 +307,7 @@ test.describe("Local authenticated editorial administration", () => {
       ...record.draft,
       title: "E2E iný editor"
     });
-    await page
-      .getByRole("button", { name: "Uložiť koncept", exact: true })
-      .click();
+    await page.getByRole("button", { name: "Uložiť", exact: true }).click();
     await expect(page.locator("main").getByRole("alert")).toContainText(
       "medzitým"
     );
@@ -333,7 +327,10 @@ test.describe("Local authenticated editorial administration", () => {
     await page.goto(`/admin/records/${record.id}`);
     await page.getByLabel("Názov", { exact: true }).fill("E2E neodchádzať");
     page.once("dialog", (dialog) => dialog.dismiss());
-    await page.getByRole("link", { name: "Späť na prehľad" }).click();
+    await page
+      .locator("main")
+      .getByRole("link", { name: "← Naše spoločenstvo", exact: true })
+      .click();
     await expect(page).toHaveURL(`/admin/records/${record.id}`);
     await expect(page.getByLabel("Názov", { exact: true })).toHaveValue(
       "E2E neodchádzať"
@@ -404,12 +401,18 @@ test.describe("Local authenticated editorial administration", () => {
       .locator("details")
       .filter({ has: page.locator("summary", { hasText: "utorok" }) })
       .first();
-    await tuesday.locator("summary").click();
+    await expect(tuesday).toHaveAttribute("open", "");
     await tuesday.getByLabel("Stav rozpisu").selectOption("no-masses");
     await page
       .getByRole("button", { name: "Pridať oznam", exact: false })
       .click();
-    await page.getByLabel("Oznam 1", { exact: true }).fill("E2E farský oznam");
+    await page
+      .getByRole("textbox", { name: "Oznam 1", exact: true })
+      .fill("E2E farský oznam");
+    await page
+      .locator("summary")
+      .filter({ hasText: "Pridať dary a zbierky" })
+      .click();
     await page
       .getByRole("button", { name: "Pridať dar alebo zbierku", exact: false })
       .click();
@@ -421,8 +424,12 @@ test.describe("Local authenticated editorial administration", () => {
         () => document.documentElement.scrollWidth <= window.innerWidth
       )
     ).toBe(true);
-    await page.getByRole("button", { name: /^Zverejniť(?: zmeny)?$/ }).click();
-    await expect(page.getByRole("status")).toContainText("Zverejnené");
+    await page.getByRole("button", { name: "Uložiť", exact: true }).click();
+    await expect(page.getByRole("status")).toContainText("Uložené");
+    await page.getByRole("switch", { name: "Zverejnenie na webe" }).click();
+    await expect(page.getByRole("status")).toContainText(
+      "Zverejnenie je naplánované"
+    );
     const latest: ContentRecord = await (
       await page.request.get(`/api/admin/records/${record.id}`)
     ).json();
@@ -441,12 +448,10 @@ test.describe("Local authenticated editorial administration", () => {
       amount: "25 €",
       category: "Na charitu"
     });
-    await page
-      .getByRole("button", { name: "Súkromný náhľad", exact: true })
-      .click();
-    await expect(page.getByText("Na charitu:", { exact: true })).toBeVisible();
+    await page.getByRole("button", { name: "Náhľad", exact: true }).click();
+    await expect(page.getByText("Na charitu", { exact: true })).toBeVisible();
   });
-  test("settings expose contacts, Náuky, donations and a recurring template without a JSON editor", async ({
+  test("settings save contacts and preserve the recurring template without a JSON editor", async ({
     page
   }) => {
     let record = await create(page.request, "settings");
@@ -456,26 +461,24 @@ test.describe("Local authenticated editorial administration", () => {
     };
     record = await write(page.request, record, {
       ...previousSettings,
-      regularSchedule: { ...previousSettings.regularSchedule, 1: [] }
+      regularSchedule: {
+        ...previousSettings.regularSchedule,
+        1: [{ time: "06:30", location: "Kostol" }]
+      }
     });
     await page.goto(`/admin/records/${record.id}`);
     await expect(
-      page.getByRole("heading", { name: "Náuky a prípravné stretnutia" })
+      page.getByRole("heading", { name: "Náuky", exact: true })
     ).toBeVisible();
     await page
       .getByLabel("Telefón farského úradu", { exact: true })
       .fill("+421 900 123 456");
-    const monday = page
-      .locator("details")
-      .filter({ has: page.locator("summary", { hasText: "Pondelok" }) })
-      .first();
-    await monday.locator("summary").click();
-    await monday.getByRole("button", { name: "Pridať svätú omšu" }).click();
-    await monday.getByLabel("Čas", { exact: true }).last().fill("06:30");
-    await page.getByRole("button", { name: /^Zverejniť(?: zmeny)?$/ }).click();
-    await expect(page.getByRole("status")).toContainText("Zverejnené");
+    await page.getByRole("button", { name: "Uložiť", exact: true }).click();
+    await expect(page.getByRole("status")).toContainText(
+      "Nastavenia sú uložené"
+    );
     await expect(
-      page.getByRole("button", { name: "Stiahnuť z webu" })
+      page.getByRole("switch", { name: "Zverejnenie na webe" })
     ).toHaveCount(0);
     const latest: ContentRecord = await (
       await page.request.get(`/api/admin/records/${record.id}`)
@@ -596,17 +599,19 @@ test.describe("Local authenticated editorial administration", () => {
     await expect(dialog.getByRole("alert")).toContainText(
       "Dočasná chyba potvrdenia"
     );
-    await dialog.getByLabel("Opis nového obrázka").fill("Pohľad na kostol");
+
     await dialog
       .getByRole("button", { name: "Zavrieť knižnicu obrázkov" })
       .click();
     await page
       .getByRole("button", { name: "Vybrať obrázok", exact: true })
       .click();
-    await expect(dialog.getByLabel("Opis nového obrázka")).toHaveValue(
-      "Pohľad na kostol"
-    );
-    await dialog.getByLabel("Opis nového obrázka").press("Enter");
+    await expect(
+      dialog.getByRole("button", { name: "Zopakovať potvrdenie obrázka" })
+    ).toBeVisible();
+    await dialog
+      .getByRole("textbox", { name: "Hľadať obrázky" })
+      .press("Enter");
     await page.evaluate(
       () =>
         new Promise<void>((resolve) =>
@@ -622,16 +627,34 @@ test.describe("Local authenticated editorial administration", () => {
     expect(signCalls).toBe(1);
     expect(providerCalls).toBe(1);
     expect(completeCalls).toBe(2);
-    await expect(page.getByLabel("Opis obrázka", { exact: true })).toHaveValue(
-      "Pohľad na kostol"
-    );
+    await expect(
+      page.locator('fieldset[aria-label="Obsah záznamu"] img').first()
+    ).toHaveAttribute("alt", record.title);
   });
-  test("news, event and notice publication preserve route families and poster expiry", async ({
+  test("new posts share one kind while historical route families and poster expiry remain supported", async ({
     page
   }) => {
     const entries: ContentRecord[] = [];
     for (const kind of ["news", "event", "notice"] as const) {
       let record = await create(page.request, kind);
+      expect(record.kind).toBe("news");
+      // Seed the two historical categories directly in this isolated database.
+      // The public creation API intentionally normalizes all new posts to news.
+      if (kind !== "news") {
+        const database = new Client({
+          connectionString: process.env.DATABASE_URL
+        });
+        await database.connect();
+        try {
+          await database.query(
+            "update content_records set kind = $1 where id = $2",
+            [kind, record.id]
+          );
+          record = { ...record, kind };
+        } finally {
+          await database.end();
+        }
+      }
       const slug = `e2e-${kind}-${Date.now()}`;
       const document = {
         ...record.draft,
@@ -660,7 +683,10 @@ test.describe("Local authenticated editorial administration", () => {
       const href =
         kind === "notice" ? `/vyveska/${slug}` : `/prispevky/${slug}`;
       const detail = await page.request.get(href);
-      expect(detail.status()).toBe(200);
+      expect(
+        detail.status(),
+        `${kind}: ${href}; published ${record.slug}`
+      ).toBe(200);
       expect(await detail.text()).toContain(`E2E verejný text ${kind}`);
     }
     const feed = await (await page.request.get("/api/news")).json();
@@ -742,6 +768,10 @@ test.describe("Local authenticated editorial administration", () => {
       await client.end();
     }
     await page.goto(`/admin/records/${id}`);
+    await page
+      .locator("summary")
+      .filter({ hasText: "Poznámky k pôvodnému importu" })
+      .click();
     await expect(
       page.getByText("E2E neplatný pôvodný dátum – zachovaný", { exact: true })
     ).toBeVisible();
@@ -749,7 +779,7 @@ test.describe("Local authenticated editorial administration", () => {
       page.locator("summary").filter({ hasText: "2034-02-31" })
     ).toBeVisible();
     await expect(
-      page.getByRole("button", { name: "Uložiť koncept", exact: true })
+      page.getByRole("button", { name: "Uložiť", exact: true })
     ).toHaveCount(0);
     expect(
       (
@@ -759,9 +789,9 @@ test.describe("Local authenticated editorial administration", () => {
         })
       ).status()
     ).toBe(403);
-    await page.getByRole("link", { name: "Súkromný náhľad histórie" }).click();
+    await page.goto(`/admin/preview/${id}`);
     await expect(
-      page.getByRole("heading", { name: "2034-02-31", exact: true })
+      page.getByRole("heading", { name: "Náhľad histórie", exact: true })
     ).toBeVisible();
     await expect(page.getByText("25 €", { exact: true })).toBeVisible();
   });
@@ -791,7 +821,7 @@ test.describe("Local authenticated editorial administration", () => {
         body: JSON.stringify({ ok: true })
       });
     });
-    await page.getByRole("button", { name: "Zverejniť", exact: true }).click();
+    await page.getByRole("switch", { name: "Zverejnenie na webe" }).click();
     const warning = page.locator("main").getByRole("alert");
     await expect(warning).toContainText("Obsah je uložený");
     await page
@@ -840,10 +870,10 @@ test.describe("Local authenticated editorial administration", () => {
     await editor.locator("p").last().click();
     await page.keyboard.press("End");
     await page.keyboard.type(" doplnený");
-    await page
-      .getByRole("button", { name: "Uložiť koncept", exact: true })
-      .click();
-    await expect(page.getByRole("status")).toContainText("Koncept je uložený");
+    await page.getByRole("button", { name: "Uložiť", exact: true }).click();
+    await expect(page.getByRole("status")).toContainText(
+      "Uložené. Obsah zostáva súkromný."
+    );
     const latest = await (
       await page.request.get(`/api/admin/records/${record.id}`)
     ).json();
@@ -874,7 +904,7 @@ test.describe("Local authenticated editorial administration", () => {
     await page.route("**/api/admin/records?**", async (route) => {
       const url = new URL(route.request().url());
       const kind = url.searchParams.get("kind");
-      if (kind === "bulletin" && url.searchParams.has("cursor")) {
+      if (kind === "article" && url.searchParams.has("cursor")) {
         await held;
         return route.fulfill({
           contentType: "application/json",
@@ -889,7 +919,7 @@ test.describe("Local authenticated editorial administration", () => {
       return route.fulfill({
         contentType: "application/json",
         body: JSON.stringify(
-          kind === "news"
+          kind === "posts"
             ? {
                 items: [
                   summary("current-news", "news", "E2E aktuálna novinka")
@@ -906,23 +936,19 @@ test.describe("Local authenticated editorial administration", () => {
       });
     });
     try {
-      await page.goto("/admin");
+      await page.goto("/admin?section=article");
       await expect(
         page.getByRole("link", { name: "E2E prvý týždeň", exact: false })
       ).toBeVisible();
       await page
         .getByRole("button", { name: "Načítať ďalšie", exact: true })
         .click();
-      await page.getByRole("button", { name: "Novinky", exact: true }).click();
+      await page.getByRole("link", { name: "Výveska", exact: true }).click();
       await expect(
         page.getByRole("link", { name: "E2E aktuálna novinka", exact: false })
       ).toBeVisible();
-      const response = page.waitForResponse(
-        (result) =>
-          new URL(result.url()).searchParams.get("cursor") === "slow-page"
-      );
+      // Switching sections aborts the former request. It may never emit a response.
       release();
-      await (await response).finished();
       await page.evaluate(
         () =>
           new Promise<void>((resolve) =>
@@ -1008,15 +1034,18 @@ test.describe("Local authenticated editorial administration", () => {
       await expect(
         dialog.getByRole("button", { name: "E2E starý obrázok", exact: false })
       ).toHaveCount(0);
-      await expect(
-        dialog.getByLabel("Opis obrázka (alternatívny text)")
-      ).toHaveValue("E2E aktuálny obrázok");
+      await expect(dialog.locator("img").first()).toBeVisible();
       await dialog
         .getByRole("button", { name: "Použiť obrázok", exact: true })
         .click();
-      await expect(
-        page.getByLabel("Opis obrázka", { exact: true })
-      ).toHaveValue("E2E aktuálny obrázok");
+      const selected = page
+        .locator('fieldset[aria-label="Obsah záznamu"] img')
+        .first();
+      await expect(selected).toHaveAttribute("alt", record.title);
+      await expect(selected).toHaveAttribute(
+        "src",
+        new RegExp(currentAsset.src.split("/").at(-1)!.replace(/\./g, "\\."))
+      );
     } finally {
       release();
     }

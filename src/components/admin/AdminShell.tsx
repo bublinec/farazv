@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { siteConfig } from "@/content/site";
 import { ParishLogo } from "@/components/layout/ParishLogo";
 import styles from "./Admin.module.css";
 
@@ -19,11 +18,7 @@ export function AdminShell({
     <AdminSectionProvider>
       <div className={styles.shell}>
         <header className={styles.topbar}>
-          <Link
-            className={styles.brand}
-            href="/admin"
-            aria-label={`${siteConfig.name} — Admin`}
-          >
+          <Link className={styles.brand} href="/admin">
             <ParishLogo />
           </Link>
           {authenticated ? (

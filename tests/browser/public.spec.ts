@@ -111,9 +111,7 @@ test("Mass hero labels today correctly and returns after selecting a different d
   const today = days.getByRole("button", { pressed: true });
   const todayLabel = await today.getAttribute("aria-label");
   await expect(today).toContainText("Dnes");
-  await expect(
-    hero.getByText("Dnešná liturgia", { exact: true })
-  ).toBeVisible();
+  await expect(hero.locator("time")).toHaveAttribute("datetime", "2026-10-31");
   const next = hero.getByRole("button", {
     name: "Nasledujúci deň",
     exact: true
@@ -123,28 +121,27 @@ test("Mass hero labels today correctly and returns after selecting a different d
     await hero
       .getByRole("button", { name: "Predchádzajúci deň", exact: true })
       .click();
-  await expect(hero.getByText("Dnešná liturgia", { exact: true })).toHaveCount(
-    0
+  await expect(hero.locator("time")).not.toHaveAttribute(
+    "datetime",
+    "2026-10-31"
   );
   expect(
     await days.getByRole("button", { pressed: true }).getAttribute("aria-label")
   ).not.toBe(todayLabel);
-  await hero.getByRole("button", { name: "Späť na dnes", exact: true }).click();
-  await expect(
-    hero.getByText("Dnešná liturgia", { exact: true })
-  ).toBeVisible();
+  await days.locator('button[aria-current="date"]').click();
+  await expect(hero.locator("time")).toHaveAttribute("datetime", "2026-10-31");
   await expect(days.getByRole("button", { pressed: true })).toHaveAttribute(
     "aria-label",
     todayLabel!
   );
 });
 
-test("magazine fetches ten then six summaries, finishes without duplicates, and focuses new content", async ({
+test("magazine fetches twelve then the remaining eight summaries, finishes without duplicates, and focuses new content", async ({
   page
 }) => {
   await page.goto("/farnost/nase-spolocenstvo");
   const cards = page.locator("main article");
-  await expect(cards).toHaveCount(10);
+  await expect(cards).toHaveCount(12);
   const firstLinks = await cards
     .locator(":scope > a")
     .evaluateAll((links) => links.map((link) => link.getAttribute("href")));
@@ -159,16 +156,14 @@ test("magazine fetches ten then six summaries, finishes without duplicates, and 
   const response = await responsePromise;
   expect(response.ok()).toBe(true);
   const payload = await response.json();
-  expect(payload.items).toHaveLength(6);
+  expect(payload.items).toHaveLength(8);
   expect(
     payload.items.every(
       (entry: Record<string, unknown>) => !Object.hasOwn(entry, "blocks")
     )
   ).toBe(true);
-  await expect(cards).toHaveCount(16);
-  await expect(cards.nth(10).locator(":scope > a")).toBeFocused();
-  await more.click();
   await expect(cards).toHaveCount(20);
+  await expect(cards.nth(12).locator(":scope > a")).toBeFocused();
   await expect(more).toHaveCount(0);
   await expect(
     page.getByText("Ste na konci. Ďakujeme, že čítate s nami.")
@@ -177,7 +172,7 @@ test("magazine fetches ten then six summaries, finishes without duplicates, and 
     .locator(":scope > a")
     .evaluateAll((links) => links.map((link) => link.getAttribute("href")));
   expect(new Set(allLinks).size).toBe(20);
-  expect(allLinks.slice(0, 10)).toEqual(firstLinks);
+  expect(allLinks.slice(0, 12)).toEqual(firstLinks);
   const invalid = await page.request.get("/api/articles?limit=1000000");
   expect(invalid.status()).toBe(400);
 });
@@ -251,9 +246,9 @@ test("failed article loading preserves the list and can be retried", async ({
   await expect(page.locator("main").getByRole("alert")).toContainText(
     "nepodarilo načítať"
   );
-  await expect(page.locator("main article")).toHaveCount(10);
+  await expect(page.locator("main article")).toHaveCount(12);
   await page.getByRole("button", { name: "Skúsiť znova", exact: true }).click();
-  await expect(page.locator("main article")).toHaveCount(16);
+  await expect(page.locator("main article")).toHaveCount(20);
   await expect(page.locator("main").getByRole("alert")).toHaveCount(0);
 });
 

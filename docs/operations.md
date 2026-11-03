@@ -5,7 +5,7 @@
 This runbook distinguishes implemented controls from hosted configuration still
 requiring verification. Local tests do not establish working Google credentials,
 automatic backups or production cutover. A separate real Cloudinary upload/completion/cleanup check
-has passed; live Google OAuth is still unverified without its credentials.
+has passed; live Google OAuth is still an owner acceptance check.
 
 As of **3 November 2026**, production is https://farazv.sk on the Vercel project
 `farazv`; `www.farazv.sk` redirects to the apex. Production uses database content,
@@ -85,6 +85,15 @@ WCAG rule checks, corrected findings, reproducible local measurements and their
 limits. These checks complement manual keyboard, screen-reader and content
 review; local lab timings do not establish hosted Core Web Vitals.
 
+## Public production checks and search ownership
+
+Run `npm run verify:production` after release, or add `-- --all-pages` to crawl
+every sitemap destination. The [production smoke workflow](../.github/workflows/production-smoke.yml)
+runs these read-only checks after successful main-branch CI, successful
+Production deployment events, and manual dispatch. It requires no production secrets. This is release verification,
+not continuous uptime monitoring. Search Console verification support and the
+remaining backup/monitoring tasks are in [production readiness](production-readiness.md).
+
 ## Google access and recovery
 
 Create a Google OAuth **Web application** client in the owner's Google Cloud
@@ -99,8 +108,9 @@ comma/newline-separated exact email addresses with normalized case, no wildcards
 The intended fixed preview callback is
 `https://farazv-preview-bublinecs-projects.vercel.app/api/auth/callback/google`.
 Use that stable alias as `BETTER_AUTH_URL`; the additional alias does not become
-a callback automatically. Google client credentials are still missing, so neither
-the protected preview nor real-cookie tests establish a completed live login.
+a callback automatically. Production Google credentials are configured and the
+owner confirmed the production callback. The protected preview and local
+real-cookie tests do not establish a completed live Google login.
 
 On Vercel (`VERCEL=1`), GET/HEAD visits to `/admin` and its page descendants on
 another alias redirect temporarily to the configured HTTPS `BETTER_AUTH_URL`,
@@ -113,7 +123,9 @@ and mutations are not redirected; verified sessions and strict same-origin
 checks remain mandatory. After changing aliases, check alternate-host page
 redirects and the canonical login before verifying the real Google callback.
 
-The narrow Next.js server proxy is a navigation aid, not an access boundary.
+The Next.js server proxy also consolidates public production aliases onto
+`SITE_URL` with a permanent redirect, while leaving preview page navigation usable.
+It is a navigation aid, not an access boundary.
 Seven helper/proxy tests verify path/query preservation, invalid configuration,
 no external destination injection, canonical/local behavior and unchanged API
 mutations. References: [Next.js proxy](https://nextjs.org/docs/app/api-reference/file-conventions/proxy),

@@ -9361,10 +9361,9 @@
         "Pridaj sa k nám! Spievame na svätých omšiach o 10.30 vo farskom Kostole sv. Alžbety. Skúšky máme v nedeľu o 9.00 vo farskom klube.",
         "O nás",
         "Spev detí vo veku 4 – 18 rokov okrášľuje najmä detské sv. omše v nedeľu o 10:30 hod. Spoločné nácviky sa začínajú v nedeľu o 9:00 hod vo farskom klube (vchod zo strany od Divadla J. G. Tajovského). Všetky deti sú srdečne pozvané.",
-        "Detský zbor Alžbetka funguje v našej farnosti už desaťročia. Počet členov je rôzny, no zväčša sa pohybuje v rozmedzí 15 – 20 detí či mladých, ktorí sú tiež nápomocní. \nVystriedalo sa pri ňom viacero dirigentiek, posledné roky funguje pod taktovkou Zuzany Vandákovej.",
+        "Detský zbor Alžbetka funguje v našej farnosti už desaťročia. Počet členov je rôzny, no zväčša sa pohybuje v rozmedzí 15 – 20 detí či mladých, ktorí sú tiež nápomocní. \nVystriedalo sa pri ňom viacero dirigentiek. O zbor sa starajú manželia Liečkovci. Dirigujú Miška Rusnáková a Mari Kunštárová.",
         "Okrem toho, že zbor sprevádza svojím spevom a hrou na hudobné nástroje detské nedeľné sväté omše v nedeľu, spoločne sa zúčastňujú jasličkovej pobožnosti, koledovania Dobrej noviny, krížovej cesty v Pôstnom období, koncoročného poďakovania pri spoločnej opekačke či obľúbenom sústredení detského zboru, ktoré sa uskutočňuje každý rok na konci letných prázdnin.",
-        "Srdečne vítame aj nových záujemcov, ktorí sa chcú pridať spevom či hrou na nejaký hudobný nástroj!",
-        "Ak máš bližšie otázky, môžeš nás kontaktovať – Magdaléna Turanská  (0914 189 867)."
+        "Srdečne vítame aj nových záujemcov, ktorí sa chcú pridať spevom či hrou na nejaký hudobný nástroj!"
       ]
     },
     {
@@ -9511,6 +9510,14 @@
         "reason": "Registration belonged to the expired 13/20 June 2026 invitation."
       }
     ],
-    "sourceRecordsUnchanged": true
+    "sourceRecordsUnchanged": true,
+    "subsequentReviews": [
+      {
+        "reviewedAt": "2026-11-03",
+        "route": "/spolocenstva/detsky-spevokol",
+        "scope": "Owner-supplied choir leadership and contact update: replace Zuzana Vandáková with the Liečkovci couple and conductors Miška Rusnáková and Mari Kunštárová; replace Magdaléna Turanská and her phone with the couple's two numbers in the contact card. Raw source records remain unchanged.",
+        "currentReadingBlocks": 223
+      }
+    ]
   }
 }

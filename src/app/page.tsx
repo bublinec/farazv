@@ -1,4 +1,7 @@
-import type { Metadata } from "next";
+import { siteConfig } from "@/content/site";
+import { StructuredData } from "@/components/ui/StructuredData";
+import { websiteStructuredData } from "@/lib/structured-data";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { heroImage } from "@/content/assets";
 import { churchDetails } from "@/content/church-details";
@@ -30,10 +33,12 @@ import { feedbackWelcomeEndsOn } from "@/content/feedback";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = {
-  title: { absolute: "Farnosť sv. Alžbety Zvolen – mesto" },
-  alternates: { canonical: "/" }
-};
+export const metadata = pageMetadata({
+  title: "Farnosť sv. Alžbety Zvolen – mesto",
+  description: siteConfig.description,
+  path: "/",
+  absoluteTitle: true
+});
 
 export default async function HomePage() {
   const now = getPreviewNow();
@@ -74,6 +79,7 @@ export default async function HomePage() {
       : null;
   return (
     <div className={styles.home}>
+      <StructuredData data={websiteStructuredData(settings)} />
       {days ? (
         <MassHero
           key={`${days[0]?.date}:${today}`}

@@ -122,7 +122,7 @@ test(
       await migrate(getDb(), { migrationsFolder: resolve("drizzle") });
 
       await t.test(
-        "draft writes never change public snapshots and optimistic concurrent writes have one winner",
+        "private saves stay private, published saves update the public snapshot and concurrent writes have one winner",
         async () => {
           let record: ContentRecord = await createRecord("article");
           record = await updateRecord(
@@ -150,15 +150,17 @@ test(
             record.version,
             {
               ...record.draft,
-              title: "Private revision",
-              body: body("PRIVATE_DRAFT_SENTINEL")
+              title: "Published revision",
+              body: body("PUBLIC_REVISION_SENTINEL")
             },
             "save"
           );
-          assert.deepEqual(
-            await getPublishedEntry("article", "snapshot-contract"),
-            publicBefore
+          const publicAfter = await getPublishedEntry(
+            "article",
+            "snapshot-contract"
           );
+          assert.equal(publicAfter?.title, "Published revision");
+          assert.notDeepEqual(publicAfter, publicBefore);
           const writes = await Promise.allSettled([
             updateRecord(
               record.id,
@@ -181,9 +183,28 @@ test(
             (result) => result.status === "rejected"
           ) as PromiseRejectedResult;
           assert.equal(status(409)(rejection.reason), true);
-          assert.deepEqual(
+          const winner = writes.find(
+            (result) => result.status === "fulfilled"
+          ) as PromiseFulfilledResult<ContentRecord>;
+          assert.equal(
+            (await getPublishedEntry("article", "snapshot-contract"))?.title,
+            winner.value.title
+          );
+          record = await updateRecord(
+            record.id,
+            winner.value.version,
+            undefined,
+            "unpublish"
+          );
+          await updateRecord(
+            record.id,
+            record.version,
+            { ...record.draft, title: "Private revision after unpublishing" },
+            "save"
+          );
+          assert.equal(
             await getPublishedEntry("article", "snapshot-contract"),
-            publicBefore
+            null
           );
         }
       );
@@ -260,9 +281,9 @@ test(
         async () => {
           let settings: ContentRecord = await createRecord("settings");
           assert.deepEqual(settings.draft, {
-            name: "",
-            shortName: "",
-            location: "",
+            name: "Farnosť sv. Alžbety",
+            shortName: "Farnosť sv. Alžbety",
+            location: "Zvolen – mesto",
             address: "",
             phone: "",
             email: "",
@@ -300,17 +321,6 @@ test(
             updateRecord(settings.id, settings.version, undefined, "unpublish"),
             status(422)
           );
-          const before = await getPublishedSettings();
-          settings = await updateRecord(
-            settings.id,
-            settings.version,
-            {
-              ...template,
-              regularSchedule: { 1: [{ time: "08:00", location: "Kostol" }] }
-            },
-            "save"
-          );
-          assert.deepEqual(await getPublishedSettings(), before);
           let bulletin: ContentRecord = await createRecord(
             "bulletin",
             "2030-01-07"
@@ -319,7 +329,8 @@ test(
           assert.deepEqual(document.days[0].masses, [
             { time: "06:30", location: "Kostol", label: "Ranná" }
           ]);
-          assert.equal(document.days[0].liturgy, "");
+          assert.equal(document.days[0].liturgy ?? "", "");
+          assert.equal(document.days[0].liturgyType ?? "", "");
           assert.deepEqual(document.donations, []);
           assert.equal(
             document.days.some((day) =>
@@ -340,37 +351,21 @@ test(
             (bulletin.published as BulletinDocument).donations,
             donations
           );
-          let duplicate: ContentRecord = await createRecord(
-            "bulletin",
-            "2030-01-07"
-          );
-          await assert.rejects(
-            updateRecord(
-              duplicate.id,
-              duplicate.version,
-              duplicate.draft,
-              "publish"
-            ),
-            status(409)
-          );
-          await updateRecord(
-            bulletin.id,
-            bulletin.version,
-            undefined,
-            "unpublish"
-          );
-          duplicate = await updateRecord(
-            duplicate.id,
-            duplicate.version,
-            duplicate.draft,
-            "publish"
-          );
-          assert.ok(duplicate.published);
+          const sameWeek = await createRecord("bulletin", "2030-01-07");
+          assert.equal(sameWeek.id, bulletin.id);
+          assert.equal(sameWeek.version, bulletin.version);
           settings = await updateRecord(
             settings.id,
             settings.version,
-            settings.draft,
-            "publish"
+            {
+              ...template,
+              regularSchedule: { 1: [{ time: "08:00", location: "Kostol" }] }
+            },
+            "save"
+          );
+          assert.equal(
+            (await getPublishedSettings())?.regularSchedule[1][0].time,
+            "08:00"
           );
           const nextWeek = await createRecord("bulletin", "2030-01-14");
           assert.equal(
@@ -378,7 +373,7 @@ test(
             "08:00"
           );
           assert.equal(
-            (duplicate.published as BulletinDocument).days[0].masses[0].time,
+            (bulletin.published as BulletinDocument).days[0].masses[0].time,
             "06:30"
           );
         }

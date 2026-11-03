@@ -10,6 +10,7 @@ Content inventory and historical launch records are in the [project overview](do
 [Refactor record](docs/remake/refactor-plan.md) ·
 [Decisions](docs/remake/decisions.md) ·
 [Routes](docs/routes.md) · [Migration](docs/migration.md) ·
+[Production readiness](docs/production-readiness.md) ·
 [Operations](docs/operations.md) · [Editor guide](docs/editor-guide.md)
 
 ## Run locally
@@ -57,10 +58,11 @@ are separate.
 ```sh
 npm run check                 # formatting, Next route types, TypeScript, unit/security tests
 npm run build
-npm run test:browser -- tests/browser/public.spec.ts tests/browser/static-content.spec.ts tests/browser/design.spec.ts tests/browser/details.spec.ts
+npm run test:browser -- tests/browser/public.spec.ts tests/browser/static-content.spec.ts tests/browser/design.spec.ts tests/browser/details.spec.ts tests/browser/seo.spec.ts
 npm run test:accessibility
 npm run test:integration
 npm run test:admin
+npm run verify:production     # read-only health/SEO checks against the public site
 ```
 
 `npm run format` applies the pinned formatter. `npm run typecheck` always generates
@@ -74,7 +76,7 @@ an owned compiled server instead:
 
 ```sh
 CONTENT_SOURCE=fixtures npm run start -- --port 3103
-PLAYWRIGHT_BASE_URL=http://127.0.0.1:3103 PLAYWRIGHT_EXTERNAL_SERVER=1 npm run test:browser -- tests/browser/public.spec.ts tests/browser/static-content.spec.ts tests/browser/design.spec.ts tests/browser/details.spec.ts
+PLAYWRIGHT_BASE_URL=http://127.0.0.1:3103 PLAYWRIGHT_EXTERNAL_SERVER=1 npm run test:browser -- tests/browser/public.spec.ts tests/browser/static-content.spec.ts tests/browser/design.spec.ts tests/browser/details.spec.ts tests/browser/seo.spec.ts
 ```
 
 Set `PLAYWRIGHT_OUTPUT_DIR` to a distinct directory when running suites concurrently.

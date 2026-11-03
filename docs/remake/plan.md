@@ -650,3 +650,57 @@ those authenticated actions were not performed by this verification.
   the .sk registry already delegates to the Vercel nameservers.
 - This storage-only cleanup changes no application behavior. Full application
   checks were not repeated; the previously recorded test failures remain open.
+
+### 2026-11-03 — Children's choir leadership and contacts
+
+- Applied the owner's supplied update to `/spolocenstva/detsky-spevokol`:
+  removed Zuzana Vandáková from current leadership copy and replaced Magdaléna
+  Turanská's contact card with “Manželia Liečkovci” and both supplied phone
+  numbers. Each number has its own telephone link. Added the supplied conductors,
+  Miška Rusnáková and Mari Kunštárová, and the WhatsApp communication note.
+- Preserved the existing schedule, history, photographs and raw source records.
+  Deliberately reviewed the choir's public reading baseline and contact
+  expectations; the original source export was not regenerated.
+- `npm run check` passed before and after the change with Node 22.23.4:
+  formatting, generated route types, TypeScript and 81 unit tests passed;
+  one opt-in database test was skipped.
+- The existing browser content check passed across all 22 static layouts,
+  including both new telephone destinations, using an owned fixture server on
+  port 3117 and distinct browser output. No deployment or database change was
+  performed.
+
+### Production readiness and SEO — 3 November 2026
+
+- Added shared public metadata with canonical URLs, page-specific social previews,
+  real church-photo fallback images and nonempty description fallback. Added safe
+  homepage WebSite/Organization and editorial JSON-LD, excluded from private previews.
+- Unified indexing guards across layout, robots and sitemap. Sitemap modification
+  times now follow public snapshots; redirected entries are omitted and destinations
+  deduplicated. Production public aliases redirect permanently to `SITE_URL`; preview
+  navigation and existing admin-origin/API protections are preserved.
+- Added root error recovery, API noindex/anti-framing headers and corrected the
+  admin brand link's accessible name. Added SEO browser checks and a public
+  `verify:production` command with an optional complete sitemap crawl. The new
+  workflow runs after successful main-branch checks or Production deployment events.
+- Reconciled stale regression expectations with previously shipped page moves,
+  pagination and editor behavior (inline preview, visibility switch, published-save
+  semantics, unified new-post category and current media controls). Kept private
+  unpublished-content, authorization, concurrency and original-source checks.
+  The previously reported magazine failures were pagination expectations (12 then
+  8 results), not the `/prispevky` redirect.
+- Included the owner's concurrent choir/contact changes and existing footer commit
+  at their explicit request. Only the separately reviewed choir copy changes the
+  editorial baseline; original raw source records remain identical.
+- Final local verification: formatting, route types and TypeScript passed; unit
+  suite 81 passed/one opt-in database test skipped; isolated PostgreSQL suite seven
+  passed; production build passed; public/SEO/accessibility browser suite 42 passed
+  with one fixture-unavailable historical-image case skipped; authenticated editor
+  browser suite 17 passed. The independent forced-missing-image browser case passed.
+  Test databases/processes were owned and disposable; no parish data was modified.
+- Production dependency audit reported zero vulnerabilities. React changes were
+  checked for server/client boundaries, safe JSON-LD, accessibility and added bundle
+  weight; metadata adds no browser dependency.
+- [Production readiness](../production-readiness.md) records implemented controls
+  and remaining Search Console ownership, off-device scheduled backups, uptime
+  alerting, real Google sign-in and media/source-freshness acceptance. Those external
+  services were not activated or claimed verified by local tests.

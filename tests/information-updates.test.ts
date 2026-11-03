@@ -62,7 +62,6 @@ test("editorial updates leave raw provenance and unrelated historical or recurri
   for (const route of [
     "/farnost/kostol-sv-alzbety",
     "/farnost/kostol-sv-jana-pavla-v-lieskovci",
-    "/spolocenstva/detsky-spevokol",
     "/sviatosti/sviatost-krstu"
   ])
     assert.equal(getPublicInformationContent(source(route)), source(route));

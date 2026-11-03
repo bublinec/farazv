@@ -1,14 +1,11 @@
 import type { MetadataRoute } from "next";
+import { isPublicRelease } from "@/lib/seo";
 import { siteConfig } from "@/content/site";
 export const dynamic = "force-dynamic";
 
-/** This is a design preview; indexing is enabled only at the release checkpoint. */
+/** Index only real content on the explicitly released production deployment. */
 export default function robots(): MetadataRoute.Robots {
-  const publicRelease =
-    process.env.SITE_INDEXING_ENABLED === "true" &&
-    process.env.VERCEL_ENV === "production" &&
-    process.env.CONTENT_SOURCE === "database";
-  return publicRelease
+  return isPublicRelease()
     ? {
         rules: {
           userAgent: "*",

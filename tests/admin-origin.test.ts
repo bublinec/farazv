@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { NextRequest } from "next/server";
+import { unstable_doesMiddlewareMatch } from "next/experimental/testing/server";
 import { canonicalAdminDestination } from "../src/lib/admin-origin";
 import { config, proxy } from "../src/proxy";
 
@@ -162,7 +163,20 @@ test("the page proxy emits an uncached temporary redirect and never redirects AP
   process.env.VERCEL = "1";
   process.env.BETTER_AUTH_URL = canonical;
   try {
-    assert.equal(config.matcher, "/admin/:path*");
+    for (const url of ["/", "/kontakt", "/admin/login"])
+      assert.equal(
+        unstable_doesMiddlewareMatch({ config, nextConfig: {}, url }),
+        true
+      );
+    for (const url of [
+      "/api/admin/content",
+      "/api/auth/callback/google",
+      "/_next/static/app.js"
+    ])
+      assert.equal(
+        unstable_doesMiddlewareMatch({ config, nextConfig: {}, url }),
+        false
+      );
     const response = proxy(
       new NextRequest(
         "https://another-alias.example.test/admin/login?error=access",
