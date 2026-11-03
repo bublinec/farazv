@@ -17,7 +17,8 @@ The Next.js application now lives at the repository root. Vercel must use an
 empty Root Directory, Node 22, `npm ci` and `npm run build`. The previous Gatsby
 client and Strapi admin are archived under `old/`, excluded from active checks
 and deployment uploads. The root Netlify configuration skips automatic builds,
-preserving the previous deployment as a fallback. No DNS change is needed for
+preserving the [previous deployment](https://farazv.netlify.app/) as a historical reference.
+A [fixed build URL](https://6ad71e314cf8202580e1a791--farazv.netlify.app/) is also retained. No DNS change is needed for
 this repository cleanup.
 
 Deploy with an explicit Vercel environment. Preview variables and production
@@ -26,9 +27,10 @@ or credentials. Historical deployment evidence remains in the dated plan.
 
 ## Ownership and configuration
 
-Juraj Bublinec is the selected project owner. Before release, record a backup
+Juraj Bublinec is the selected project owner. Record a backup
 operator, alternate service owner and recovery instructions in the team's private
-password manager. Keep credentials and the editor allowlist out of documentation.
+password manager. Keep credentials and the editor allowlist out of repository documentation.
+Store private handover documents separately from the source tree.
 
 Use separate development, fixed staging and production databases. Staging needs
 a stable domain for its exact Google callback. Production uses
@@ -53,9 +55,10 @@ developer's database-mode `.env.local` cannot silently change that suite.
 For local database-backed checks, provide `TEST_POSTGRES_URL` privately with a
 loopback PostgreSQL connection whose user can create databases. A loopback
 `DATABASE_URL` is accepted as a fallback; remote URLs are refused before contact.
-Stop any existing Next development server before the admin run, because Next
-owns a single `.next/dev/lock`. The test runner never stops or reuses another
-server.
+Next owns a single `.next/dev/lock`. If another development server is running,
+leave it alone: build an owned preview and use
+`ADMIN_E2E_SERVER=production npm run test:admin`. The test runner never stops or
+reuses another server.
 
 ```sh
 npm run test:integration
@@ -126,22 +129,27 @@ redirects and the canonical login before verifying the real Google callback.
 The Next.js server proxy also consolidates public production aliases onto
 `SITE_URL` with a permanent redirect, while leaving preview page navigation usable.
 It is a navigation aid, not an access boundary.
-Seven helper/proxy tests verify path/query preservation, invalid configuration,
+Helper/proxy tests verify path/query preservation, invalid configuration,
 no external destination injection, canonical/local behavior and unchanged API
 mutations. References: [Next.js proxy](https://nextjs.org/docs/app/api-reference/file-conventions/proxy),
 [request headers](https://nextjs.org/docs/app/api-reference/functions/headers).
 
 Better Auth validates Google OAuth and uses encrypted, signed eight-hour sessions
 without an authentication database. Every protected request requires a verified
-email on the current allowlist. Removing an address denies its existing session
-after configuration redeployment. There is no public signup, password or bypass.
+email and a current role. `ADMIN_EMAIL_ALLOWLIST` defines administrators in Vercel
+configuration; changing it requires redeployment. Administrators manage additional
+editors in `/admin/pristupy`, backed by `editor_access`. Grants are checked without
+caching on every request: revocation denies existing editor sessions immediately.
+There is no public signup, local password or access bypass. Private visitor feedback
+and access management are restricted to administrators.
 
-If an editor loses their Google account, the project owner updates the correct
-Vercel environment's allowlist, redeploys and tests the replacement. Recovery when
-all editors are locked out uses the owner's Vercel/Google access, so keep those
-accounts' recovery methods current. Rotating `BETTER_AUTH_SECRET` invalidates all
-sessions. Do not reuse old Strapi credentials. Before launch verify a permitted
-login, rejected account, sign-out and fresh login on staging. References:
+If an editor loses their Google account, an administrator revokes that grant and
+adds the replacement verified Google address. This does not send an invitation
+email. If all administrators are locked out, the project owner updates the correct
+Vercel environment's allowlist and redeploys. Keep Vercel/Google recovery methods
+accessible to a trusted alternate. Rotating `BETTER_AUTH_SECRET` invalidates all
+sessions. Do not reuse old Strapi credentials. Verify a permitted login, rejected
+account, sign-out and fresh login on the intended environment. References:
 [stateless sessions](https://better-auth.com/docs/concepts/session-management#stateless-session-management),
 [Google callbacks](https://better-auth.com/docs/authentication/google).
 

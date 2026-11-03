@@ -704,3 +704,36 @@ those authenticated actions were not performed by this verification.
   and remaining Search Console ownership, off-device scheduled backups, uptime
   alerting, real Google sign-in and media/source-freshness acceptance. Those external
   services were not activated or claimed verified by local tests.
+
+### Final documentation and reference pass — 3 November 2026
+
+- Reconciled contributor, architecture, route and operations documentation with
+  the root application, active parish design, merged routes, magazine/gallery
+  pagination, administrator/editor grants and current seven-table schema.
+  Removed obsolete design-selector commands, missing browser-test references and
+  links to deleted design-history directories. Local links in maintained docs resolve.
+- Rewrote the Slovak editor guide around save behavior, inline preview, the
+  visibility switch, Saturday 20:00 bulletin activation, Word/text import and
+  actual media/settings/access controls. Published saves and settings updates are
+  explicitly documented as public changes.
+- Added the requested footer link to the old Gatsby site at
+  https://farazv.netlify.app/ and documented its fixed deployment reference.
+  Both URLs were verified with HTTP 200; current authoritative nameservers resolve
+  to Vercel. Old services are historical references, not current notice sources.
+- Removed the unused homepage magazine query, commented section and unused CSS.
+  The rendered homepage remains unchanged apart from the requested footer link.
+  Reviewed both TSX edits for server/client boundaries, parallel reads, native link
+  semantics and unnecessary dependencies; no new client code or dependency was added.
+- Verification: `npm run check` passed (81 unit tests, one opt-in database skip),
+  the fixture production build passed, and the public/static/SEO/accessibility
+  browser suite passed 42 tests with one existing media-dependent skip. The footer
+  was separately inspected at 1440 and 390 pixels with the correct destination
+  and no horizontal overflow. The owned test server was stopped afterward.
+- The preceding production-readiness commit passed its full GitHub workflow,
+  including database integration and authenticated admin tests:
+  [run 41620112841](https://github.com/bublinec/farazv/actions/runs/41620112841).
+  This follow-up changes no authentication or persistence code. Changes remain on
+  `feat/production-readiness`; no main merge or production promotion was performed.
+- Prepared a separate two-page private handover document with service ownership,
+  supplied contacts and fields for registrar recovery. It is stored outside the
+  repository and is intentionally excluded from this commit.

@@ -2,11 +2,11 @@
 
 [Overview](README.md) · [Plan and evidence](plan.md) · [Decision log](decisions.md)
 
-The integrated implementation lives in [`remake/`](../../README.md).
+The integrated implementation lives at the [repository root](../../README.md).
 Public and admin flows use the same Next.js application and replacement
 PostgreSQL schema. Local behavioral checks and the hosted Neon import have run;
-a Vercel preview is deployed and hosted recovery was rehearsed. Live Google OAuth and production
-cutover remain separate release work.
+production is deployed on Vercel at https://farazv.sk and hosted recovery was
+rehearsed. Live Google login and ongoing backup scheduling remain acceptance work.
 
 ## System boundary
 
@@ -30,10 +30,9 @@ Node 22.23.4 and npm 10.9.9; exact dependency versions are in its own lockfile.
 CSS Modules share Ubuntu fonts and blue/gold design tokens. Drizzle and `pg`
 manage PostgreSQL; Better Auth supplies stateless Google sessions; Tiptap supplies
 visual editing of a restricted JSON tree. There is no separate backend or
-replacement general CMS. The owner's new Vercel project targets `remake/` on
-Node 22 and runs a preview against the free Frankfurt Neon resource `farazv`.
-Hosted counts match the local import: 414 content, 1,081 media and 30 static
-provenance records. This preview has not replaced the production site or DNS.
+replacement general CMS. The Vercel project `farazv` builds from the repository root on Node 22 and uses
+Neon in Frankfurt. FORPSI remains the registrar; Vercel manages authoritative DNS
+and hosting. The dated migration inventory is in the [overview](README.md).
 
 ## Module map
 
@@ -70,18 +69,23 @@ process-variable precedence. No runtime module imports CLI migration tooling.
 [Shared contracts](../../src/content/documents.ts),
 [database schema](../../src/server/db/schema.ts) and
 [write validation](../../src/server/validation.ts) define the implemented
-model. Four application tables hold content snapshots, media references, static
-source provenance and import runs; Drizzle tracks schema migrations separately.
+model. Seven application tables hold content snapshots, media references, static
+source provenance, import runs, editor grants, visitor feedback and feedback rate
+limits; Drizzle tracks schema migrations separately.
 No old Strapi account/configuration tables or new auth tables are imported.
 
 **Content records** have kinds article, news, notice, event, bulletin and settings.
 Each holds a draft, separate published snapshot, atomic edit version, source
-identity/hash/timestamps, public identity and eligibility/read-only state. Saving
-never changes the public snapshot. Publishing validates and updates it in one
-version-checked write; concurrent stale writes fail without replacing the form.
+identity/hash/timestamps, public identity and eligibility/read-only state. Saving an unpublished record preserves its private draft. Saving an already
+published record or settings validates and updates its public snapshot atomically.
+First publication uses the visibility switch after saving; concurrent stale writes
+fail without replacing the form.
 Published paths stay reserved after unpublication. Uniqueness follows actual
 route families: news/events share `/prispevky/`; articles and notices have their
 own families. Three legacy article/news slug overlaps remain separate records.
+
+New noticeboard records are stored as news; imported notice/event records retain
+their identities and route families.
 
 **Editorial content** has title, stable slug, historical display date, excerpt,
 author text, optional cover and canonical rich-text body. Poster placement,
@@ -107,35 +111,37 @@ history browser or historical-intentions API.
 
 **Settings** are the shared source for parish contacts, mobile/address/IČO,
 contact/office notes, map link, priests, office hours, Náuky, IBAN/QR and recurring
-Mass times. Settings support draft/preview/publication but cannot be unpublished.
+Mass times. Settings support inline preview and publish on save; they cannot be unpublished.
 Changing IBAN requires replacing or removing an unchanged QR reference. Template
 changes affect future weeks/fallback only, never a published week's snapshot.
 The imported recurring template is empty because the source does not confirm it.
-New settings start with blank required facts and empty lists; publication requires
-the real facts to be completed. Demo settings never supply production defaults.
+New settings use only the fixed parish identity from `siteConfig`, with blank
+contact facts and empty lists; publication requires real facts. The regular
+schedule remains in the data contract but has no current settings-form control.
+Demo settings never supply production defaults.
 
 ## Public reading and information layouts
 
 Server-only functions expose published snapshots and bounded summary queries.
-The magazine starts with ten summaries and requests six more per click using
+The magazine starts with twelve summaries and requests twelve more per click using
 stable date/ID cursors. Bodies and private fields do not travel in list responses.
 News, posters, expiry, authors, coverless articles, retries and end states use the
-same content identities. The homepage avoids duplicate poster/news placements.
+same content identities. The homepage loads all active noticeboard posts and avoids duplicating permanent
+hospital/altar announcements. It does not query or render magazine articles.
 
-The 24 informational definitions select purpose-designed sacrament, church,
+The 22 informational definitions select purpose-designed sacrament, church,
 community, school, contact, gallery and resource layouts. Server-only reading
 copy contains the 29 published source pages, preserving ordered text, images,
 collections and credits; the unpublished page stays private. This uses rich text
 inside reading areas without recreating the old page builder. Shared facts come
 from published settings. Static reading-copy/layout changes remain code changes.
 A later user-authorized refresh uses explicit guarded corrections in
-`information-updates.ts`; the raw 29-record source export remains intact. Current
-approved public reading has 224 blocks. See [the editorial record](content-refresh-2026-10-31.md).
+`information-updates.ts`; the raw 29-record source export remains intact. Current reading is protected by a separately reviewed baseline. See [the editorial record](content-refresh-2026-10-31.md).
 Real photograph constants live in `assets.ts`; synthetic examples stay in explicit
 `fixtures.ts`. Each route declares source or curated-fallback ownership; expected
 missing source fails rather than silently showing shortened prose.
 
-The independent baseline protects the raw 29 records, 24 route definitions and
+The independent baseline protects the raw 29 records, current route definitions and
 reviewed current reading. Evergreen/history content stays preserved. The user
 authorized specific expired-guidance corrections; further substantive changes
 require an editorial request. Gentle headings/introductions and layout changes
@@ -144,7 +150,8 @@ or expose legacy SEO/editor-note fields as reading copy. See the earlier
 [content fidelity review](../static-content-review.md).
 
 All 28 fixed legacy paths, dynamic detail families and four `/cms/` redirects are
-mapped. Birmovanci appears under Sviatosti with its path intact. Existing Forms,
+mapped. Gallery and tour paths redirect to church-page sections; `/birmovanci` redirects
+to confirmation guidance. Parish history now lives at `/farnost/o-farnosti`. Existing Forms,
 public PDF, map and safe 3D resources use explicit links/fallbacks. Old tour URLs
 are withheld following the specific unrelated-content finding recorded in the
 [route map](../routes.md#redirects-and-external-resources).
@@ -153,32 +160,34 @@ are withheld following the specific unrelated-content finding recorded in the
 
 Every admin page/read, private preview, mutation and upload endpoint verifies
 Better Auth's signed/encrypted session, verified email, expiry and the current
-exact allowlist. Google is the only provider; email/password signup and account
+administrator allowlist or active database editor grant. Administrator-only access
+management and private feedback use an explicit role check. Editor grants are
+checked uncached, so revocation also blocks existing sessions. Google is the only provider; email/password signup and account
 linking are disabled. Sessions last eight hours without an auth database.
 Configuration is lazy and missing values fail closed. Mutations additionally
 require the configured same origin; admin responses/previews are private,
 uncached and noindex. Page redirects are a convenience, not the access boundary.
 Vercel admin page visits on an alternate alias first redirect to the configured
-HTTPS auth origin with path/query intact. The narrow server proxy handles only
-GET/HEAD `/admin` pages, leaves local development alone unless Vercel mode is
-explicit, and does not redirect APIs or relax trusted origins.
+HTTPS auth origin with path/query intact. The server proxy also permanently redirects public production aliases to
+`SITE_URL`; preview navigation stays available. It does not redirect APIs or
+mutations or relax trusted origins.
 
-The Slovak editor includes rich-text tools, media selection, draft save, private
-preview, publish/unpublish and settings/bulletin forms. Structural validation
+The Slovak editor includes rich-text tools, media selection, save, inline private
+preview, a visibility switch and settings/bulletin forms. Structural validation
 permits incomplete titles/URLs/body drafts while rejecting malformed shapes,
 unsafe links/images and excessive input. Publication requires meaningful content.
 Legacy blocks normalize into the same canonical JSON schema. The server renders
 validated React elements and does not execute source HTML or ship Tiptap to public
 pages. Dirty-navigation warnings, save/error states, version-conflict recovery
 and upload/cache retries retain the editor's values. Retrying cache refresh does
-not republish content. Autosave, roles and approval workflows are outside v1.
+not republish content. Roles are administrator and editor; autosave and approval workflows are not implemented.
 
 ## Dates, caching and failures
 
 Calendar dates and local Mass times use `Europe/Bratislava`. The public view is
 Sunday–Sunday; the preceding Sunday is read from its owning record. Applicable
-windows begin on the preceding Sunday, with the later valid week winning an
-overlap. Unpublishing it permits another valid overlapping week before fallback.
+windows begin on the preceding Saturday at 20:00 Bratislava time, with the later
+valid week winning an overlap. Unpublishing it permits another valid overlapping week before fallback.
 Missing schedules differ from a deliberately confirmed day without Masses.
 Fallback uses only available published regular times, clearly labeled and without
 guessed liturgy, intentions or celebrants.
@@ -186,7 +195,7 @@ guessed liturgy, intentions or celebrants.
 Published reads use tagged five-minute caches scoped to the database connection.
 Publication invalidates the data tag and public layout. Today and poster expiry
 are calculated outside timeless caches; expiry is inclusive of the local date.
-The client refreshes at local midnight and on returning to a background tab,
+The client refreshes at the Saturday transition, local midnight and on returning to a background tab,
 including 23/25-hour DST days. Future weeks activate without another edit/deploy.
 
 Command-line imports write the database directly. Follow the [explicit cache
@@ -238,8 +247,9 @@ Backup/restore, access recovery, monitoring and rollback procedures are in the
 media and parish-confirmation requirements are tracked in the
 [launch checklist](README.md#launch-requirements).
 The authorized legacy read-only check timed out without results or changes;
-it does not confirm snapshot freshness. Local PostgreSQL 14 and hosted
-PostgreSQL 18 recovery drills passed; the hosted archive restored five tables/
+it does not confirm snapshot freshness. Historical local PostgreSQL 14 and hosted
+PostgreSQL 18 recovery drills passed; the then-current hosted archive restored five tables/
 1,530 rows with schema, index and sequence hashes matched and source unchanged.
-Ongoing encrypted off-device scheduling, retention and ownership still require
+Those dated counts predate later schema additions and do not verify the current
+complete schema. Ongoing encrypted off-device scheduling, retention and ownership still require
 activation.

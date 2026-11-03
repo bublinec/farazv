@@ -4,15 +4,13 @@ import { websiteStructuredData } from "@/lib/structured-data";
 import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { heroImage } from "@/content/assets";
-import { churchDetails } from "@/content/church-details";
 import { parishServices } from "@/content/services";
 import { hospitalMinistry } from "@/content/hospital-ministry";
 import { altarRestoration } from "@/content/altar-restoration";
 import {
   getPublicSettings,
   getPublicBulletins,
-  getPublicActivePosts,
-  getPublicEditorialPage
+  getPublicActivePosts
 } from "@/server/public-content";
 import { Unavailable } from "@/components/ui/Unavailable";
 import { getLocalDate, getPublicWeek } from "@/lib/calendar";
@@ -25,7 +23,6 @@ import { HospitalMinistrySection } from "@/components/home/HospitalMinistrySecti
 import { AltarRestorationSection } from "@/components/home/AltarRestorationSection";
 import { EditorialGrid } from "@/components/editorial/EditorialCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { MediaImage } from "@/components/ui/MediaImage";
 import { Icon } from "@/components/ui/Icon";
 import { WelcomeFeedbackBanner } from "@/components/feedback/WelcomeFeedbackBanner";
 import { FeedbackInvite } from "@/components/feedback/FeedbackInvite";
@@ -43,13 +40,13 @@ export const metadata = pageMetadata({
 export default async function HomePage() {
   const now = getPreviewNow();
   const today = getLocalDate(now);
-  const [settingsResult, bulletinResult, newsResult, articlesResult] =
-    await Promise.allSettled([
+  const [settingsResult, bulletinResult, newsResult] = await Promise.allSettled(
+    [
       getPublicSettings(),
       getPublicBulletins(today),
-      getPublicActivePosts(today),
-      getPublicEditorialPage("article")
-    ]);
+      getPublicActivePosts(today)
+    ]
+  );
   const settings =
     settingsResult.status === "fulfilled" ? settingsResult.value : null;
   const publicWeek =
@@ -72,10 +69,6 @@ export default async function HomePage() {
             // Permanent announcements have their own sections below the feed.
             !permanentPostPaths.includes(entry.href ?? "")
         )
-      : null;
-  const recentArticles =
-    articlesResult.status === "fulfilled"
-      ? articlesResult.value.items.slice(0, 3)
       : null;
   return (
     <div className={styles.home}>
@@ -113,33 +106,6 @@ export default async function HomePage() {
       </section>
 
       <SaintCharbelSection />
-
-      {/* Keep this here in case we have new articles */}
-      {/* <section
-        id="spolocenstvo"
-        className={`section ${styles.posts} ${styles.magazine}`}
-      >
-        <div className={styles.magazineBackground} aria-hidden="true">
-          <MediaImage image={{ ...churchDetails.pews, alt: "" }} sizes="55vw" />
-        </div>
-        <div className="container">
-          <SectionHeading
-            title="Naše spoločenstvo"
-            description="Časopis a príbehy ľudí, ktorí tvoria našu farnosť."
-            action={
-              <Link href="/farnost/nase-spolocenstvo" className="textLink">
-                Všetky články
-                <Icon name="arrow-right" size={17} />
-              </Link>
-            }
-          />
-          {recentArticles ? (
-            <EditorialGrid entries={recentArticles} kind="article" />
-          ) : (
-            <Unavailable compact />
-          )}
-        </div>
-      </section> */}
 
       <HospitalMinistrySection />
 

@@ -3,6 +3,9 @@
 The Next.js public site and integrated Slovak admin run from this repository root.
 The production site is https://farazv.sk, hosted on Vercel. The previous Gatsby
 client and Strapi admin are archived in [`old/`](old/README.md).
+The old production site is still available at [farazv.netlify.app](https://farazv.netlify.app/).
+A [fixed Netlify build](https://6ad71e314cf8202580e1a791--farazv.netlify.app/) is also available for reference.
+
 Content inventory and historical launch records are in the [project overview](docs/remake/README.md).
 
 [Architecture](docs/remake/architecture.md) ·
@@ -22,7 +25,7 @@ For a public design demo without private data or service credentials:
 
 ```sh
 npm ci
-CONTENT_SOURCE=fixtures npm run dev -- --port 3100
+CONTENT_SOURCE=fixtures SITE_INDEXING_ENABLED=false npm run dev -- --port 3100
 ```
 
 Open <http://localhost:3100>. Fixture mode contains public article examples,
@@ -47,9 +50,14 @@ accounts. Read [migration behavior](docs/migration.md) before applying a snapsho
 After a CLI import, explicitly refresh the public cache as documented there.
 The shared CLI loader preserves process variables before `.env.local` and `.env`.
 
-For a compiled local preview, run `npm run build`, then
-`npm run start -- --port 3103`. Keep indexing disabled. See
-[Google setup](docs/operations.md#google-access-and-recovery) for the fixed preview
+For a reproducible compiled demo, use the same fixture configuration for both commands:
+
+```sh
+CONTENT_SOURCE=fixtures SITE_INDEXING_ENABLED=false PREVIEW_DATE=2026-10-31 npm run build
+CONTENT_SOURCE=fixtures SITE_INDEXING_ENABLED=false PREVIEW_DATE=2026-10-31 npm run start -- --port 3103
+```
+
+See [Google setup](docs/operations.md#google-access-and-recovery) for the fixed preview
 origin/callback and private configuration; deployment access and editor access
 are separate.
 
@@ -58,7 +66,7 @@ are separate.
 ```sh
 npm run check                 # formatting, Next route types, TypeScript, unit/security tests
 npm run build
-npm run test:browser -- tests/browser/public.spec.ts tests/browser/static-content.spec.ts tests/browser/design.spec.ts tests/browser/details.spec.ts tests/browser/seo.spec.ts
+npm run test:browser -- tests/browser/public.spec.ts tests/browser/static-content.spec.ts tests/browser/details.spec.ts tests/browser/seo.spec.ts
 npm run test:accessibility
 npm run test:integration
 npm run test:admin
@@ -75,8 +83,8 @@ an existing server. If another Next development server owns `.next/dev/lock`, us
 an owned compiled server instead:
 
 ```sh
-CONTENT_SOURCE=fixtures npm run start -- --port 3103
-PLAYWRIGHT_BASE_URL=http://127.0.0.1:3103 PLAYWRIGHT_EXTERNAL_SERVER=1 npm run test:browser -- tests/browser/public.spec.ts tests/browser/static-content.spec.ts tests/browser/design.spec.ts tests/browser/details.spec.ts tests/browser/seo.spec.ts
+CONTENT_SOURCE=fixtures SITE_INDEXING_ENABLED=false PREVIEW_DATE=2026-10-31 npm run start -- --port 3103
+PLAYWRIGHT_BASE_URL=http://127.0.0.1:3103 PLAYWRIGHT_EXTERNAL_SERVER=1 npm run test:browser -- tests/browser/public.spec.ts tests/browser/static-content.spec.ts tests/browser/details.spec.ts tests/browser/seo.spec.ts
 ```
 
 Set `PLAYWRIGHT_OUTPUT_DIR` to a distinct directory when running suites concurrently.
@@ -107,16 +115,14 @@ of all 31 original pages and six representative full-page screenshots. Preserve
 source assets, private configuration, database backups and the local admin Git
 history backup; they are not disposable caches.
 
-## Compare design versions
+## Design references
 
-The original design remains the default. On a running local/nonproduction instance,
-open `/design` for the comparison, `/design/v2` for the warmer parish study, or
-`/design/v1` to return. Selection carries through ordinary public pages in this
-browser; admin stays unchanged. The selector is disabled on Vercel production.
-
-See [the design analysis](docs/remake/design-direction.md) and
-[preserved source/screenshots](docs/remake/design-history/README.md).
-To run public checks in the second variant, set `PLAYWRIGHT_PUBLIC_DESIGN=parish`.
+The current parish design combines the warmer typography and church details with
+the original full-width homepage photograph. The former `/design` selector routes
+redirect to the homepage. Earlier implementations remain in Git history; the
+local offline archive above and the [old production site](https://farazv.netlify.app/)
+provide visual references. See the [design decisions](docs/remake/design-direction.md)
+for historical context.
 
 ## Find the owner of a change
 
@@ -131,6 +137,8 @@ To run public checks in the second variant, set `PLAYWRIGHT_PUBLIC_DESIGN=parish
 | Change public SQL vs cache/error fallback      | `src/server/published-store.ts` vs `public-content.ts`                              |
 | Change media persistence vs provider checks    | `src/server/media-store.ts` vs `uploads.ts`                                         |
 | Change editor/search/upload/navigation state   | `src/components/admin/hooks/`                                                       |
+| Change metadata, indexing and structured data  | `src/lib/seo.ts`, `src/lib/structured-data.ts`                                      |
+| Change administrator/editor grants             | `src/lib/auth-policy.ts`, `src/server/editor-access.ts`                             |
 | Change date/week ownership                     | `src/lib/calendar.ts`                                                               |
 | Change private migration/configuration tooling | `scripts/migration/`, `scripts/environment.ts`                                      |
 
@@ -144,7 +152,7 @@ npm run content:generate -- --dump db-backup/dump.sql --output .private/informat
 Raw source generation and reviewed current-copy corrections have separate owners;
 see [the content refresh](docs/remake/content-refresh-2026-10-31.md).
 The generator never rewrites the independent approved-content baseline. Routine CI
-compares all public records/layout definitions against that committed baseline;
+protects the raw 29 source records and separately reviews current layout/copy adaptations;
 review actual editorial changes before deliberately updating it.
 
 Never commit `.env*` secrets, `.private/`, `db-backup/`, account data or raw exports.
