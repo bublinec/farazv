@@ -1,0 +1,20 @@
+node_modules/
+.next/
+.private/
+test-results/
+playwright-report/
+coverage/
+package-lock.json
+next-env.d.ts
+.vercel/
+.env*
+
+.next-preview/
+old/
+db-backup/
+design-reference/
+.playwright-mcp/
+# Historical implementation records retain their original formatting.
+docs/remake/
+docs/netlify-build-diagnosis.md
+docs/netlify-recovery-plan.md

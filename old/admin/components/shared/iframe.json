@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_iframes",
+  "info": {
+    "name": "Iframe",
+    "icon": "ad",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "url": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

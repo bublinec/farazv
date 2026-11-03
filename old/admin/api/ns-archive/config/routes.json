@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/ns-archive",
+      "handler": "ns-archive.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/ns-archive",
+      "handler": "ns-archive.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/ns-archive",
+      "handler": "ns-archive.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

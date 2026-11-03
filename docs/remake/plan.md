@@ -53,7 +53,7 @@ a larger CMS, role system or unrelated service.
   galleries and safe link fallbacks. Article sources 2–5 have explicit alternate-
   body reconciliation. Incomplete news sources 151/155 are retained privately.
 - All fixed routes and dynamic families remain mapped; four legacy redirects and
-  true 404 behavior have implementation/browser coverage. See [route details](../../remake/docs/routes.md).
+  true 404 behavior have implementation/browser coverage. See [route details](../routes.md).
 - Of 162 source bulletins, 153 valid weeks remain editable and nine anomalous or
   duplicate weeks are read-only/ineligible. Dates/intentions are not silently
   repaired. Empty structural donation containers are omitted; real categories,
@@ -90,7 +90,7 @@ Latest completed checks at this documentation update:
 | Live Cloudinary             | Real signed upload, independent metadata lookup, completion validation and temporary-asset cleanup passed                                                                                                                                                               |
 | Cleanup behavior            | Tracked runners removed owned processes/databases; SIGTERM cleanup verified                                                                                                                                                                                             |
 | CI definition               | YAML/pins reviewed; workflow has no production secrets or deployment step. Hosted CI execution is not claimed                                                                                                                                                           |
-| Local performance           | Six unthrottled production samples: LCP 84–136 ms, CLS 0–0.0002; eight JavaScript files/468–474 KiB decoded, no requested editor runtime, runtime errors, overflow or raw broken images. Local only; [methods/limits](../../remake/docs/quality-audit.md)               |
+| Local performance           | Six unthrottled production samples: LCP 84–136 ms, CLS 0–0.0002; eight JavaScript files/468–474 KiB decoded, no requested editor runtime, runtime errors, overflow or raw broken images. Local only; [methods/limits](../quality-audit.md)               |
 
 Admin browser cookies use the real Better Auth format with test-only local
 provider fields. They do not verify live Google OAuth. The Cloudinary live smoke
@@ -172,10 +172,10 @@ Pagination returned 146 distinct summaries in 24 requests without bodies.
 The cold-database outage test preserved a usable shell and explicit unavailable
 states. The 14 admin flows and an
 additional mobile categorized-donation flow passed. Detailed scope is in the
-verification table and [route record](../../remake/docs/routes.md#local-verification-record).
+verification table and [route record](../routes.md#local-verification-record).
 At that point Google credentials remained absent and the hosted restore drill
 was outstanding; the successful subsequent drill is recorded below. Local lab performance evidence
-belongs in the [quality audit](../../remake/docs/quality-audit.md).
+belongs in the [quality audit](../quality-audit.md).
 
 ### 2026-10-31 — Canonical admin entry across preview aliases
 
@@ -229,7 +229,7 @@ CLS 0–0.0002, with eight JavaScript files/468–474 KiB decoded. None requeste
 editor runtime or showed runtime errors, overflow or raw broken images. A
 representative missing-image page decoded 14 images and showed three explicit
 fallbacks. These local samples are not hosted field Core Web Vitals; exact
-methods and limits are in the [quality audit](../../remake/docs/quality-audit.md).
+methods and limits are in the [quality audit](../quality-audit.md).
 
 The reviewed explicit Preview deployment and both stable aliases passed their
 19 read-only canonical-routing checks and mobile login-page check. Google
@@ -255,7 +255,7 @@ introductory descriptions. Audited all 24 old and local static routes, the legac
 renderers and SQL reading sections. Corrected the baptism-time substitution,
 added archive labels, invented placeholder copy, exposed legacy SEO/editor notes
 and omitted gallery attribution text. All 230 expected reading blocks are present
-in the remake. See the [review record](../../remake/docs/static-content-review.md);
+in the remake. See the [review record](../static-content-review.md);
 this instruction supersedes earlier static-copy presentation assumptions.
 
 ### 2026-10-31 — Implementation review and proposed refactor
@@ -478,7 +478,7 @@ hosted data and provider settings were not changed.
 
 The user supplied the complete “Poďakovanie a forma pomoci” letter for permanent
 public display, including Jozef Kraus's signature. The detailed restoration page
-now renders that approved text from [the restoration content](../../remake/src/content/altar-restoration.ts)
+now renders that approved text from [the restoration content](../../src/content/altar-restoration.ts)
 with paragraph breaks and the existing donation sidebar. It no longer depends
 on a legacy article being published or available. The homepage appeal and its
 detail link remain unchanged; database records and raw source content are untouched.
@@ -493,7 +493,7 @@ visually checked. The owned fixture server and browser were cleaned up.
 ### 2026-11-02 — Sacrament preparation timelines
 
 Added numbered preparation timelines for baptism of a child, First Communion,
-confirmation and marriage. [The timeline summaries](../../remake/src/content/sacrament-preparation.ts)
+confirmation and marriage. [The timeline summaries](../../src/content/sacrament-preparation.ts)
 use the existing published guidance and reviewed corrections, including the
 existing advance notice and document deadlines. They introduce no new dates or
 requirements. Baptism and First Communion explicitly distinguish the child
@@ -546,3 +546,78 @@ passed. Eight desktop/mobile browser and WCAG A/AA checks verified placement
 directly below the office card, one concise sentence per item, no timeline links,
 no overflow and no runtime errors. Representative screenshots were visually
 reviewed. The owned fixture server and browser were cleaned up.
+
+### 2026-11-03 — Vercel prepared for the domain switch
+
+The user authorized Vercel changes and will change nameservers in FORPSI. They
+confirmed that only `farazv.sk` and `www.farazv.sk` are used (no domain email or
+other subdomains), and that the Google OAuth callback
+`https://farazv.sk/api/auth/callback/google` is already registered.
+
+Created the Vercel DNS zone in `bublinecs-projects`, attached both domains to
+project `farazv`, and configured `www.farazv.sk` to redirect permanently (308)
+to `farazv.sk`. Vercel assigns `ns1.vercel-dns.com` and `ns2.vercel-dns.com`.
+Its authoritative servers already answer for both website names. FORPSI
+registration, the existing Netlify delegation, and legacy services were not
+changed. Public checks found no apex MX/TXT or DS records and no DMARC record.
+
+Production `SITE_URL` and `BETTER_AUTH_URL` changed from
+`https://farazv.vercel.app` to `https://farazv.sk`; `SITE_INDEXING_ENABLED`
+changed from `false` to `true`. `CONTENT_SOURCE=database` and preview settings
+were preserved. Redeployed the existing successful production source
+`dpl_96zAVBBjBbWnbaktxA5rLNRUVZAc` as
+`dpl_DiQJCbU7scjhgin7s4ajKNG1Fzmo` (READY), without uploading local source or
+modifying application/database content.
+
+Checks through `farazv.vercel.app` passed for the homepage, database health,
+1–8 November schedule, canonical `farazv.sk` URLs, public robots rules and a
+177-entry sitemap using the new domain. The browser displayed 3 November with
+no broken homepage images. Alternate-host admin navigation redirects to
+`https://farazv.sk/admin/login`. Runtime logs included a PostgreSQL driver SSL
+mode warning and one article database connection timeout; the affected article
+and health endpoint subsequently returned 200 in 0.3s and 0.2s respectively.
+
+At the preparation checkpoint, the DNS cutover was still pending. Direct custom-domain TLS could not yet be
+verified; differing TLS/Host names were rejected with 421. After FORPSI delegates
+to Vercel, verify both hostnames' certificates, the actual www redirect, Google
+sign-in and one editorial publication. Admin navigation now uses the custom
+domain, so complete that verification after the switch. Retain the old Netlify
+deployment during the migration and first successful publishing cycle.
+
+### 2026-11-03 — FORPSI nameserver change accepted; propagation underway
+
+After the user saved the FORPSI change, WHOIS and two authoritative `.sk`
+servers confirmed delegation to `ns1.vercel-dns.com` and `ns2.vercel-dns.com`.
+Vercel verification reported both `farazv.sk` and `www.farazv.sk` configured
+correctly and verified. Requested a Vercel certificate for both names; issuance
+succeeded. HTTPS checks with the real custom hostnames, valid certificate
+verification and an explicit Vercel address passed for the homepage, database
+health, current notices, robots, 177-entry sitemap and admin login page. The
+`www` redirect returned 308 and preserved the path and query string.
+
+At approximately 10:31 Bratislava, Quad9 already resolved the Vercel addresses;
+other checked resolvers and ordinary local requests still used cached Netlify
+addresses. This is a partial propagation result, not proof that every visitor
+has switched. No additional FORPSI changes are needed. Complete a real Google
+sign-in and editorial publication once the user's resolver reaches Vercel;
+those authenticated actions were not performed by this verification.
+
+
+### Repository cleanup — 3 November 2026
+
+- Promoted the Next.js application from `remake/` to the repository root; archived
+  Gatsby at `old/client/` and Strapi at `old/admin/`.
+- Flattened the former admin Git repository into normal tracked source. Preserved
+  its Git metadata in ignored local `.private/legacy-admin-git-backup-2026-11-03`;
+  excluded its existing environment files. All 155 original admin files matched
+  their pre-move hashes before staging (private files remain local only).
+- Updated root CI, TypeScript exclusions, ignore rules and contributor/runbook
+  paths. Preserved the old Netlify deployment by skipping automatic legacy builds.
+- Renamed GitHub `bublinec/farazv-client` to `bublinec/farazv`, preserving repository
+  ID 401754976, and updated the origin remote and public source link.
+- Source-integrity check compared 335 moved app source/assets/tests/scripts/schema
+  files: only the fixture README link changed; the later source-link update is
+  intentional. Formatting, route generation, TypeScript and production build pass.
+- Unit results match the pre-cleanup baseline: 73 pass, three existing static-copy
+  expectation failures, one skipped. The content baseline and public copy were
+  deliberately left unchanged; the combined CI check remains red on those tests.

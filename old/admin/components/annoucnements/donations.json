@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_annoucnements_donations",
+  "info": {
+    "name": "donations",
+    "icon": "hand-holding-usd",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "funerals": {
+      "type": "component",
+      "repeatable": true,
+      "component": "annoucnements.single-donation"
+    },
+    "charity": {
+      "type": "component",
+      "repeatable": true,
+      "component": "annoucnements.single-donation"
+    },
+    "weddings": {
+      "type": "component",
+      "repeatable": true,
+      "component": "annoucnements.single-donation"
+    },
+    "baptism": {
+      "type": "component",
+      "repeatable": true,
+      "component": "annoucnements.single-donation"
+    },
+    "urnBurials": {
+      "type": "component",
+      "repeatable": true,
+      "component": "annoucnements.single-donation"
+    },
+    "other": {
+      "type": "component",
+      "repeatable": true,
+      "component": "annoucnements.single-donation"
+    }
+  }
+}

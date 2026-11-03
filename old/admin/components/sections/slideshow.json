@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_sections_slideshows",
+  "info": {
+    "name": "Slideshow",
+    "icon": "angle-double-right"
+  },
+  "options": {},
+  "attributes": {
+    "useGlogabalConfiguration": {
+      "type": "boolean",
+      "default": true
+    },
+    "slides": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.slide"
+    }
+  }
+}

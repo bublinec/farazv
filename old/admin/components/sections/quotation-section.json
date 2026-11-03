@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_sections_quotation_sections",
+  "info": {
+    "name": "QuotationSection",
+    "icon": "quote-left"
+  },
+  "options": {},
+  "attributes": {
+    "quote": {
+      "type": "text"
+    },
+    "author": {
+      "type": "string"
+    }
+  }
+}

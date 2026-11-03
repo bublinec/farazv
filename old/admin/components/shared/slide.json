@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_shared_slides",
+  "info": {
+    "name": "Slide",
+    "icon": "align-center",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": ["images", "files", "videos"],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "buttons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.buttons"
+    },
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.text"
+    }
+  }
+}

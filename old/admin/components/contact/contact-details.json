@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_contact_contact_details",
+  "info": {
+    "name": "contactDetails",
+    "icon": "align-right",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "phone": {
+      "type": "string",
+      "required": true
+    },
+    "mobil": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "iban": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "ico": {
+      "type": "string"
+    },
+    "googleMapEmbedLink": {
+      "type": "string"
+    },
+    "googleMapLink": {
+      "type": "string"
+    },
+    "infoNote": {
+      "type": "string"
+    }
+  }
+}

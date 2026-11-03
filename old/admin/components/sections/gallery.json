@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_sections_galleries",
+  "info": {
+    "name": "Gallery",
+    "icon": "images",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.text"
+    },
+    "images": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": ["images"],
+      "plugin": "upload",
+      "required": true,
+      "pluginOptions": {}
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.buttons"
+    }
+  }
+}

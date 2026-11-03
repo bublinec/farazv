@@ -252,7 +252,7 @@ history. Layouts may change; titles and introductory descriptions may be gently
 rephrased. Do not rewrite requirements, times, quotations or historical details.
 This supersedes the earlier baptism-time substitution, automatic archive labels
 and invented placeholder-community explanations. Keep legacy SEO/editor notes
-out of reading copy. The [review](../../remake/docs/static-content-review.md)
+out of reading copy. The [review](../static-content-review.md)
 records all 24 route checks and corrections; canonical reading text stays intact.
 
 ## D27 — Refactor around explicit behavior owners (31 October 2026)

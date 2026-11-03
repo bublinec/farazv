@@ -1,0 +1,31 @@
+{
+  "kind": "singleType",
+  "collectionName": "globals",
+  "info": {
+    "name": "Global",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "slideshow": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.slideshow"
+    },
+    "sacraments": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.multi-paragraph-image-banner"
+    },
+    "groups": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.multi-paragraph-image-banner"
+    }
+  }
+}

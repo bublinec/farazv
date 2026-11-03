@@ -1,0 +1,57 @@
+const tca = {
+  primary: "#012A57",
+  secondary: "#303030",
+};
+
+const colors = {
+  black: "#333740",
+  white: "#ffffff",
+  red: "#ff203c",
+  orange: "#ff5d00",
+  lightOrange: "#f64d0a",
+  yellow: "#E5AE49",
+  green: "#6dbb1a",
+  blue: "#012A57",
+  teal: "#5bc0de",
+  pink: "#ff5b77",
+  purple: "#613d7c",
+  gray: "#464a4c",
+  border: "#e3e9f3",
+  "gray-dark": "#292b2c",
+  grayLight: "#727272",
+  "gray-lighter": "#eceeef",
+  "gray-lightest": "#f7f7f9",
+  brightGrey: "#f0f3f8",
+  darkGrey: "#e3e9f3",
+  lightGrey: "#fafafa",
+  lightestGrey: "#fbfbfb",
+  mediumGrey: "#f2f3f4",
+  grey: "#9ea7b8",
+  greyDark: "#292b2c",
+  greyAlpha: "rgba(227, 233, 243, 0.5)",
+  lightestBlue: "#e4f0fc",
+  lightBlue: "#e6f0fb",
+  mediumBlue: "#012A57",
+  darkBlue: "#aed4fb",
+  pale: "#f7f8f8",
+  content: {
+    background: "#fafafb",
+    "background-alpha": "rgba(14, 22, 34, 0.02)",
+  },
+  leftMenu: {
+    "link-hover": "#1a1917",
+    "link-color": "#919bae",
+    "title-color": "#5b626f",
+    "background-header-link": tca.primary,
+  },
+  strapi: {
+    "gray-light": "#eff3f6",
+    gray: "#535f76",
+    "blue-darker": tca.secondary,
+    "blue-dark": "#1a1917",
+    blue: tca.primary,
+  },
+  tca,
+};
+
+export default colors;

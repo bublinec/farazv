@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_sections_images_text_grids",
+  "info": {
+    "name": "ImagesTextGrid",
+    "icon": "grip-vertical",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.text"
+    },
+    "paragraphs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.image-paragraph"
+    }
+  }
+}

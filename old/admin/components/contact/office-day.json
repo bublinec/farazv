@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_contact_office_days",
+  "info": {
+    "name": "officeDay",
+    "icon": "adjust"
+  },
+  "options": {},
+  "attributes": {
+    "openTime": {
+      "type": "string"
+    },
+    "day": {
+      "type": "string"
+    }
+  }
+}

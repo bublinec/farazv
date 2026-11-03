@@ -2,7 +2,7 @@
 
 [Overview](README.md) · [Plan and evidence](plan.md) · [Decision log](decisions.md)
 
-The integrated implementation lives in [`remake/`](../../remake/README.md).
+The integrated implementation lives in [`remake/`](../../README.md).
 Public and admin flows use the same Next.js application and replacement
 PostgreSQL schema. Local behavioral checks and the hosted Neon import have run;
 a Vercel preview is deployed and hosted recovery was rehearsed. Live Google OAuth and production
@@ -37,7 +37,7 @@ provenance records. This preview has not replaced the production site or DNS.
 
 ## Module map
 
-The [contributor task map](../../remake/README.md#find-the-owner-of-a-change)
+The [contributor task map](../../README.md#find-the-owner-of-a-change)
 points to file owners. Runtime queries, commands and private migration tools have
 separate entry points:
 
@@ -67,9 +67,9 @@ process-variable precedence. No runtime module imports CLI migration tooling.
 
 ## Storage and content contracts
 
-[Shared contracts](../../remake/src/content/documents.ts),
-[database schema](../../remake/src/server/db/schema.ts) and
-[write validation](../../remake/src/server/validation.ts) define the implemented
+[Shared contracts](../../src/content/documents.ts),
+[database schema](../../src/server/db/schema.ts) and
+[write validation](../../src/server/validation.ts) define the implemented
 model. Four application tables hold content snapshots, media references, static
 source provenance and import runs; Drizzle tracks schema migrations separately.
 No old Strapi account/configuration tables or new auth tables are imported.
@@ -141,13 +141,13 @@ authorized specific expired-guidance corrections; further substantive changes
 require an editorial request. Gentle headings/introductions and layout changes
 remain allowed. Do not invent current dates, automatically archive old passages,
 or expose legacy SEO/editor-note fields as reading copy. See the earlier
-[content fidelity review](../../remake/docs/static-content-review.md).
+[content fidelity review](../static-content-review.md).
 
 All 28 fixed legacy paths, dynamic detail families and four `/cms/` redirects are
 mapped. Birmovanci appears under Sviatosti with its path intact. Existing Forms,
 public PDF, map and safe 3D resources use explicit links/fallbacks. Old tour URLs
 are withheld following the specific unrelated-content finding recorded in the
-[route map](../../remake/docs/routes.md#redirects-and-external-resources).
+[route map](../routes.md#redirects-and-external-resources).
 
 ## Authentication and editing
 
@@ -190,7 +190,7 @@ The client refreshes at local midnight and on returning to a background tab,
 including 23/25-hour DST days. Future weeks activate without another edit/deploy.
 
 Command-line imports write the database directly. Follow the [explicit cache
-refresh procedure](../../remake/docs/operations.md#refresh-after-a-command-line-import)
+refresh procedure](../operations.md#refresh-after-a-command-line-import)
 before reviewing their public output; a deployment alone can retain cached data.
 
 Database failures remain errors, not empty lists, invented fixture contacts or
@@ -209,7 +209,7 @@ formats and overwrite protection. Provider signatures last one hour, while an
 editor-bound completion ticket lasts five minutes. Completion verifies the
 response signature and independently reads provider metadata before registration.
 Actual bytes must fit the 10 MB limit. Removing a reference does not delete a
-shared original. See [upload constraints and evidence](../../remake/docs/operations.md#cloudinary).
+shared original. See [upload constraints and evidence](../operations.md#cloudinary).
 
 The private importer parses an allowlisted SQL content projection, reconstructs
 ordered component/media relationships and records source hashes/statuses. It is
@@ -220,7 +220,7 @@ conflicts. Same-ID insert races also report a conflict while unrelated imports
 continue. Four alternate article bodies were reconciled without duplicate
 text; donation category/order and genuine unnamed amounts remain intact.
 Public static exports include only published source copy. Detailed evidence is in
-[the migration record](../../remake/docs/migration.md).
+[the migration record](../migration.md).
 
 Missing originals remain a recovery limitation: 76 return 404 and five
 unreferenced PDFs return 401. The public fallback is implemented, but media
@@ -234,7 +234,7 @@ Default previews are noindex with crawling disabled. Production indexing/sitemap
 activation requires explicit production configuration; this never replaces draft
 access control. CI uses only fixture/synthetic data and disposable local databases.
 Backup/restore, access recovery, monitoring and rollback procedures are in the
-[operations runbook](../../remake/docs/operations.md). Current hosted/freshness,
+[operations runbook](../operations.md). Current hosted/freshness,
 media and parish-confirmation requirements are tracked in the
 [launch checklist](README.md#launch-requirements).
 The authorized legacy read-only check timed out without results or changes;

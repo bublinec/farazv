@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_years",
+  "info": {
+    "name": "year",
+    "icon": "calendar-minus"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "magazines": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.magazine"
+    }
+  }
+}

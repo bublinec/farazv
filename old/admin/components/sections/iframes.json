@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_sections_iframes",
+  "info": {
+    "name": "Iframes",
+    "icon": "images",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.text"
+    },
+    "iframes": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.iframe"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.buttons"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_annoucnements_days",
+  "info": {
+    "name": "Day",
+    "icon": "calendar-alt",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "liturgy": {
+      "type": "string"
+    },
+    "date": {
+      "type": "date"
+    },
+    "isMajorFeast": {
+      "type": "boolean",
+      "default": false
+    },
+    "masses": {
+      "type": "component",
+      "repeatable": true,
+      "component": "annoucnements.mass"
+    }
+  }
+}

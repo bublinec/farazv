@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "priests",
+  "info": {
+    "name": "Priest",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "surname": {
+      "type": "string"
+    },
+    "photo": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "richtext"
+    },
+    "guest": {
+      "type": "boolean",
+      "default": true
+    },
+    "role": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}

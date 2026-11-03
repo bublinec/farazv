@@ -1,0 +1,31 @@
+{
+  "kind": "singleType",
+  "collectionName": "contacts",
+  "info": {
+    "name": "ContactDetails",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "contactDetails": {
+      "type": "component",
+      "repeatable": false,
+      "component": "contact.contact-details"
+    },
+    "officeHours": {
+      "type": "component",
+      "repeatable": false,
+      "component": "contact.office-hours"
+    },
+    "SacramentPreparationMettings": {
+      "type": "component",
+      "repeatable": false,
+      "component": "contact.sacrament-preparation-mettings"
+    }
+  }
+}

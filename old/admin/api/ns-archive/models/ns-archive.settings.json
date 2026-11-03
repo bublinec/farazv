@@ -1,0 +1,21 @@
+{
+  "kind": "singleType",
+  "collectionName": "ns_archives",
+  "info": {
+    "name": "NSArchive",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "year": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.year"
+    }
+  }
+}

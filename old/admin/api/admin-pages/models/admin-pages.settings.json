@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "admin_pages",
+  "info": {
+    "name": "AdminPages",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "Nová stránka"
+    },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true,
+      "pluginOptions": {}
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "contentSections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.text",
+        "sections.images-text-grid",
+        "sections.multi-paragraph-image-banner",
+        "sections.background-image-content",
+        "sections.slideshow",
+        "sections.gallery",
+        "sections.iframes",
+        "sections.announcements-section",
+        "sections.events-section",
+        "sections.partners-section",
+        "sections.quotation-section",
+        "sections.banner"
+      ]
+    }
+  }
+}
