@@ -7,8 +7,9 @@
 
 The active Next.js website and its integrated admin live at the repository root.
 These archived applications are excluded from its TypeScript checks, formatting
-and Vercel uploads. Their existing local dependencies, caches and private files
-have been preserved; they are not part of the active application's deployment.
+and Vercel uploads. Source and private configuration are preserved. Legacy
+dependencies, generated public files and build caches were removed during storage
+cleanup; install dependencies again before running an archived application.
 
 Both legacy applications are included in a normal clone; no submodule setup is needed.
 Local environment files and credentials are excluded from version control.

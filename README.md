@@ -92,6 +92,19 @@ Live provider checks, backup/restore and release acceptance are deliberate
 operational commands in [the runbook](docs/operations.md), separate from routine
 regression tests.
 
+## Local storage
+
+The active app's dependencies stay in root `node_modules/`. Legacy applications
+under `old/` retain source and lockfiles; install their dependencies only if needed.
+Build caches (`.next/`, `.next-preview/`, `old/client/.cache/`), legacy generated
+`old/client/public/`, browser results and `.playwright-mcp/` are disposable when no
+app or test server is running. After removing `.next/`, build before using `npm start`.
+
+The ignored local `design-reference/2026-10-20/index.html` retains offline copies
+of all 31 original pages and six representative full-page screenshots. Preserve
+source assets, private configuration, database backups and the local admin Git
+history backup; they are not disposable caches.
+
 ## Compare design versions
 
 The original design remains the default. On a running local/nonproduction instance,
