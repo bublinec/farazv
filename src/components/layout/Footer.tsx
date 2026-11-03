@@ -100,7 +100,7 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
           © {new Date().getFullYear()} {siteConfig.name}
         </span>
         <p className={styles.credit}>
-          Vytvorené s láskou ·{" "}
+          Pre našu farnosť ·{" "}
           <a
             href="https://www.linkedin.com/in/juraj-bublinec"
             target="_blank"
