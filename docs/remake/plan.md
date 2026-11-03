@@ -621,3 +621,9 @@ those authenticated actions were not performed by this verification.
 - Unit results match the pre-cleanup baseline: 73 pass, three existing static-copy
   expectation failures, one skipped. The content baseline and public copy were
   deliberately left unchanged; the combined CI check remains red on those tests.
+- Public browser smoke suite on an owned compiled fixture server: 10 pass, three
+  stale UI assertions fail (old liturgy label and separate magazine-list assumptions).
+  The existing `/prispevky` route already redirected to `/#vyveska` before this move.
+- Vercel Root Directory changed from `remake` to empty. GitHub rename retained the
+  same repository ID and the branch push triggered preview deployment
+  `dpl_6uLhVkTcnp5GFD4W4rTKugZthghJ` from `bublinec/farazv`.
