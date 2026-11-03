@@ -54,6 +54,10 @@
   margin-bottom: 8px;
 }
 
+.identity > div {
+  margin-bottom: 4px;
+}
+
 .details > div:last-child {
   margin-bottom: 0;
 }
@@ -168,18 +172,16 @@
     gap: 8px;
   }
 
-  .address > div:first-child {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 4px;
-  }
-
   .identity > div {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2px;
-    margin-bottom: 14px;
+    grid-template-columns: 64px minmax(0, 1fr);
   }
 
   .identity dt {
     font-size: 0.85rem;
+  }
+
+  .address > div:first-child {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
   }
 }

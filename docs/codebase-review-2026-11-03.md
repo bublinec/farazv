@@ -291,5 +291,8 @@ indexes or replacing the document model. No scale failure was demonstrated.
 - Local fixtures and signed test cookies do not verify live Google OAuth, production
   backup scheduling, account recovery or remote provider configuration.
 
-This branch contains focused fixes and this implementation plan. It does not
-activate new services, change the production database or deploy to production.
+The review was prepared as focused fixes on a separate branch without live
+configuration or database changes. The owner subsequently authorized merging it
+to main, including a small contact-spacing follow-up. See the dated
+[release record](remake/plan.md) for deployment and verification status. Larger
+roadmap items remain separate work.

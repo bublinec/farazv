@@ -798,3 +798,22 @@ those authenticated actions were not performed by this verification.
 - Focused changes stay on the review branch. No main merge, production deployment,
   schema migration, live content change or provider-setting mutation is part of
   this review. Disposable database runners cleaned up their own resources.
+
+
+### Contact spacing and authorized release — 3 November 2026
+
+- The owner requested merging the codebase review to main and tightening the
+  contact page's phone, email and IBAN spacing before release.
+- Contact labels and values now remain beside each other on mobile, with 4 px
+  between rows. The narrow label column retains the small label typography;
+  phone/email links retain a minimum 44 px height. Contact facts are unchanged.
+- Inspected the contact block at 320, 390, 768 and 1440 px: no horizontal overflow,
+  the email remains one line even at 320 px, and the existing contact accessibility
+  check passed. This is a CSS-only follow-up; no new dependency or data migration.
+- Verified Vercel project `farazv`, team `bublinecs-projects`, root directory `.`,
+  production branch `main`, Node 22 and the existing `npm ci` / `npm run build`
+  configuration. The connected MCP returned a project-not-found error; the
+  authenticated CLI confirmed the correct project successfully.
+- Release sequence: final branch CI, merge to main, Git-triggered production build,
+  then read-only production smoke verification. This supersedes the review's earlier
+  preparation-only scope; it does not authorize the larger roadmap items.
