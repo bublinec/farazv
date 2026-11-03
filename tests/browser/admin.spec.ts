@@ -965,6 +965,79 @@ test.describe("Local authenticated editorial administration", () => {
       release();
     }
   });
+  test("media pagination keeps the successful search until a new search succeeds", async ({
+    page
+  }) => {
+    const record = await article(page);
+    const requests: { query: string | null; cursor: string | null }[] = [];
+    await page.route("**/api/admin/media?**", async (route) => {
+      const params = new URL(route.request().url()).searchParams;
+      const query = params.get("query");
+      const cursor = params.get("cursor");
+      requests.push({ query, cursor });
+      if (query === "failed") {
+        await route.fulfill({
+          status: 503,
+          contentType: "application/json",
+          body: JSON.stringify({ error: "E2E search unavailable" })
+        });
+        return;
+      }
+      await route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({
+          items: [
+            {
+              ...heroImage,
+              src: `${heroImage.src}?page=${requests.length}`,
+              alt: `E2E result ${requests.length}`
+            }
+          ],
+          nextCursor: `cursor-${requests.length}`
+        })
+      });
+    });
+    await page.goto(`/admin/records/${record.id}`);
+    await page
+      .getByRole("button", { name: "Vybrať obrázok", exact: true })
+      .click();
+    const dialog = page.getByRole("dialog", { name: "Knižnica obrázkov" });
+    const more = dialog.getByRole("button", {
+      name: "Načítať ďalšie obrázky",
+      exact: true
+    });
+    const search = dialog.getByRole("textbox", { name: "Hľadať obrázky" });
+    await expect(more).toBeEnabled();
+    await search.fill("unsubmitted");
+    await more.click();
+    await expect(
+      dialog.getByRole("button", { name: "E2E result 2", exact: false })
+    ).toBeVisible();
+    expect(requests.at(-1)).toEqual({ query: "", cursor: "cursor-1" });
+    await search.fill("failed");
+    await search.press("Enter");
+    await expect(dialog.getByText("E2E search unavailable")).toBeVisible();
+    await more.click();
+    await expect(
+      dialog.getByRole("button", { name: "E2E result 4", exact: false })
+    ).toBeVisible();
+    expect(requests.at(-1)).toEqual({ query: "", cursor: "cursor-2" });
+    await search.fill("new");
+    await search.press("Enter");
+    await expect(
+      dialog.getByRole("button", { name: "E2E result 5", exact: false })
+    ).toBeVisible();
+    await expect(
+      dialog.getByRole("button", { name: "E2E result 1", exact: false })
+    ).toHaveCount(0);
+    expect(requests.at(-1)).toEqual({ query: "new", cursor: null });
+    await search.fill("another unsubmitted search");
+    await more.click();
+    await expect(
+      dialog.getByRole("button", { name: "E2E result 6", exact: false })
+    ).toBeVisible();
+    expect(requests.at(-1)).toEqual({ query: "new", cursor: "cursor-5" });
+  });
   test("media search ignores an older response and keeps the newest selection", async ({
     page
   }) => {

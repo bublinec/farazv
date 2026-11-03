@@ -163,7 +163,9 @@ Better Auth's signed/encrypted session, verified email, expiry and the current
 administrator allowlist or active database editor grant. Administrator-only access
 management and private feedback use an explicit role check. Editor grants are
 checked uncached, so revocation also blocks existing sessions. Google is the only provider; email/password signup and account
-linking are disabled. Sessions last eight hours without an auth database.
+linking are disabled. Sessions last 180 days with a fixed expiry and no automatic refresh or auth
+database (`SESSION_MAX_AGE` in `src/server/auth.ts`). Role checks remain live;
+individual session tokens cannot be revoked separately.
 Configuration is lazy and missing values fail closed. Mutations additionally
 require the configured same origin; admin responses/previews are private,
 uncached and noindex. Page redirects are a convenience, not the access boundary.

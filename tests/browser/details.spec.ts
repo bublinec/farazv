@@ -256,3 +256,46 @@ test("expired parish-family registration and school welcome are removed without 
     main.getByRole("link", { name: "Navštíviť stránku školy", exact: true })
   ).toHaveAttribute("href", "https://zsdomzv.edupage.org/");
 });
+
+for (const width of [390, 1440]) {
+  test(`article cover reserves its height before image delivery at ${width}px`, async ({
+    page
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    let release: () => void = () => {};
+    const held = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    await page.route(
+      "**/*pexels_cottonbro_6333743_69e895b8f3.jpg",
+      async (route) => {
+        await held;
+        await route.fulfill({
+          contentType: "image/svg+xml",
+          body: '<svg xmlns="http://www.w3.org/2000/svg" width="6494" height="4329"><rect width="100%" height="100%" fill="#ddd"/></svg>'
+        });
+      }
+    );
+    try {
+      await page.goto("/farnost/nase-spolocenstvo/archiv-nase-spolocenstvo", {
+        waitUntil: "domcontentloaded"
+      });
+      await page.evaluate(() => document.fonts.ready);
+      const cover = page
+        .locator("main article > .container > figure > img")
+        .first();
+      await expect(cover).toHaveCount(1);
+      const before = await cover.boundingBox();
+      expect(before).not.toBeNull();
+      expect(before!.height).toBeGreaterThan(200);
+      release();
+      await cover.evaluate((image: HTMLImageElement) => image.decode());
+      const after = await cover.boundingBox();
+      expect(after).not.toBeNull();
+      expect(Math.abs(after!.height - before!.height)).toBeLessThan(1);
+      expect(Math.abs(after!.width - before!.width)).toBeLessThan(1);
+    } finally {
+      release();
+    }
+  });
+}

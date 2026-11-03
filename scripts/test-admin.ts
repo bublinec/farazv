@@ -91,7 +91,7 @@ main().catch((error: unknown) => {
       message
     )
       ? message
-      : "Local admin test setup or cleanup failed. Check local PostgreSQL and stop any existing Next dev server; no connection values were logged."
+      : "Local admin test setup or cleanup failed. Check local PostgreSQL. If a dev-server lock is occupied, build and use ADMIN_E2E_SERVER=production with an owned test server; no connection values were logged."
   );
   process.exitCode ||= 1;
 });

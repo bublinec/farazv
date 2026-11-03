@@ -12,6 +12,7 @@ export function useMediaLibrary() {
   const [operation, setOperation] = useState<MediaLibraryOperation>("idle");
   const [loaded, setLoaded] = useState(false);
   const requestVersion = useRef(0);
+  const loadedQuery = useRef("");
 
   // A previous search or an unmounted dialog cannot overwrite a newer result.
   useEffect(
@@ -27,13 +28,16 @@ export function useMediaLibrary() {
     setError("");
 
     try {
-      const params = new URLSearchParams({ query });
+      // A cursor belongs to the displayed results, not unsent search input.
+      const searchQuery = next ? loadedQuery.current : query;
+      const params = new URLSearchParams({ query: searchQuery });
       if (next) params.set("cursor", next);
       const data = await readAdminJson(
         await fetch(`/api/admin/media?${params}`, { cache: "no-store" })
       );
       if (version !== requestVersion.current) return;
 
+      loadedQuery.current = searchQuery;
       setItems((old) => (next ? [...old, ...data.items] : data.items));
       setCursor(data.nextCursor ?? null);
       setLoaded(true);

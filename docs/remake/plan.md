@@ -2,13 +2,26 @@
 
 [Overview](README.md) · [Architecture](architecture.md) · [Decision log](decisions.md)
 
+## Current status — 3 November 2026
+
+The application now runs from the repository root and is live at
+[farazv.sk](https://farazv.sk/). Release `a691942` was merged to main and deployed.
+The original migration-stage descriptions below are historical; their references
+to `remake/`, a pending domain cutover and an unchanged legacy deployment are not
+current operating instructions. Use the [root README](../../README.md) and
+[operations runbook](../operations.md) for setup and recovery. The new
+[codebase review](../codebase-review-2026-11-03.md) records remaining priorities and
+focused fixes on a separate branch; it does not authorize production deployment.
+
+## Historical migration brief
+
 The user authorized completing all remaining work in one run. The four stages
 remain the implementation/review structure; earlier instructions to pause after
 each checkpoint are superseded. Review records and honest verification still
 matter. A protected hosted preview and Neon import are now available; live Google
 OAuth, source freshness, ongoing backup operations and production cutover remain separate.
 
-## Four stages
+## Original four-stage plan
 
 | Stage                           | Implemented deliverables                                                                                                                                                                       | Review record / outstanding work                                                                                                                                                                                                       |
 | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -755,3 +768,33 @@ those authenticated actions were not performed by this verification.
   no application server was running, reclaiming approximately 206 MiB. Dependencies,
   legacy sources, private exports, credentials and the external handover document
   were preserved. Build again before running `npm start` locally.
+
+
+### Deep codebase review — 3 November 2026
+
+- Started from the deployed `a691942` release on `review/codebase-hardening`.
+  [The review](../codebase-review-2026-11-03.md) records inspected boundaries,
+  reproduced defects, prioritized larger work and acceptance criteria.
+- Fixed media pagination using edited/failed-search input with a previous cursor;
+  exact JSON media-type validation, stream cleanup and oversized-body cancellation;
+  and article covers collapsing to zero height until image delivery. Regression
+  tests failed before each corresponding fix and passed afterward.
+- Corrected the authentication runbook from eight hours to the implemented fixed
+  180-day session lifetime, clarified historical migration status and corrected
+  the admin test-runner guidance about another developer's server.
+- Verification: formatting/types and 83 unit passes (one opt-in DB skip), fixture
+  production builds, seven local PostgreSQL integration passes, 18 authenticated
+  admin browser passes and 44 final public/SEO/accessibility passes (one opt-in
+  historical-image skip). Three affected admin preview/gallery checks passed again
+  after the cover fix. No production provider credentials were used by these tests.
+- Six compiled-fixture performance samples had no page errors, horizontal overflow
+  or detected editor runtime. Contact loaded about 1.59 MB decoded JavaScript with
+  its map; defer map loading as a separate measured UX change. The article sample's
+  layout-shift value fell from 0.1659 to 0.0369 after reserving cover dimensions.
+  These are unthrottled local samples, not field Core Web Vitals.
+- The owner chose to skip the external dependency advisory audit. No current
+  vulnerability result is claimed. Scheduled backups, Search Console, live Google
+  acceptance and platform release gates still need external verification.
+- Focused changes stay on the review branch. No main merge, production deployment,
+  schema migration, live content change or provider-setting mutation is part of
+  this review. Disposable database runners cleaned up their own resources.

@@ -134,8 +134,12 @@ no external destination injection, canonical/local behavior and unchanged API
 mutations. References: [Next.js proxy](https://nextjs.org/docs/app/api-reference/file-conventions/proxy),
 [request headers](https://nextjs.org/docs/app/api-reference/functions/headers).
 
-Better Auth validates Google OAuth and uses encrypted, signed eight-hour sessions
-without an authentication database. Every protected request requires a verified
+Better Auth validates Google OAuth and uses encrypted, signed 180-day sessions
+without an authentication database (`SESSION_MAX_AGE` in `src/server/auth.ts`).
+Expiry is fixed; automatic refresh is disabled. There is no per-session revocation
+store: sign-out clears the browser cookie, while role revocation denies that user
+and secret rotation invalidates all sessions. Review this long-lived identity
+policy before widening editor access. Every protected request requires a verified
 email and a current role. `ADMIN_EMAIL_ALLOWLIST` defines administrators in Vercel
 configuration; changing it requires redeployment. Administrators manage additional
 editors in `/admin/pristupy`, backed by `editor_access`. Grants are checked without
