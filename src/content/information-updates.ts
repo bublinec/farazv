@@ -100,6 +100,12 @@ export function getPublicInformationContent(
       )
         throw new Error("The children's choir invitation has changed.");
 
+      const formerLeadership =
+        "Vystriedalo sa pri ňom viacero dirigentiek, posledné roky funguje pod taktovkou Zuzany Vandákovej.";
+      const choirHistory = nodeText(section.body.content[5]);
+      if (!choirHistory.endsWith(formerLeadership))
+        throw new Error("The children's choir leadership has changed.");
+
       expectNode(section.body.content, 6, "Okrem toho, že zbor");
       expectNode(
         section.body.content,
@@ -109,6 +115,16 @@ export function getPublicInformationContent(
       const updated = updateSection(source, sectionId, (nodes) =>
         nodes.flatMap((node, index) => {
           if (index === 2 || index === 8) return [];
+          // Leadership and contacts reviewed with the owner on 3 November 2026.
+          if (index === 5)
+            return [
+              paragraph(
+                choirHistory.replace(
+                  formerLeadership,
+                  "Vystriedalo sa pri ňom viacero dirigentiek. O zbor sa starajú manželia Liečkovci. Dirigujú Miška Rusnáková a Mari Kunštárová."
+                )
+              )
+            ];
           if (index === 6) return [heading("Naše spoločné chvíle"), node];
           return [node];
         })

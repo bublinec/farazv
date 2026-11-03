@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { altarRestoration } from "@/content/altar-restoration";
 import { PageHero } from "@/components/ui/PageHero";
 import { IbanAccount } from "@/components/ui/IbanAccount";
@@ -9,24 +9,12 @@ export const dynamic = "force-dynamic";
 const description =
   "Pomôžme obnoviť oltár sv. Jozefa, posledný z trojice oltárov Kostola sv. Alžbety vo Zvolene. Informácie o zbierke a príhovor našim dobrodincom.";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: altarRestoration.title,
-  description,
-  alternates: { canonical: altarRestoration.href },
-  openGraph: {
-    title: altarRestoration.title,
-    description,
-    url: altarRestoration.href,
-    images: [
-      {
-        url: altarRestoration.photograph.src,
-        width: altarRestoration.photograph.width,
-        height: altarRestoration.photograph.height,
-        alt: altarRestoration.photograph.alt
-      }
-    ]
-  }
-};
+  description: description,
+  path: altarRestoration.href,
+  image: altarRestoration.photograph
+});
 
 export default function AltarRestorationPage() {
   return (

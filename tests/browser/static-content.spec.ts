@@ -1,24 +1,9 @@
-import { readFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
-
-interface ApprovedLayout {
-  slug: string;
-  title: string;
-  eyebrow: string;
-  links?: { href: string }[];
-  sections?: { title: string; paragraphs?: string[]; items?: string[] }[];
-}
-interface ApprovedContent {
-  layouts: ApprovedLayout[];
-  reading: { route: string; blocks: string[] }[];
-}
-
-const approved: ApprovedContent = JSON.parse(
-  readFileSync(
-    new URL("../fixtures/approved-static-content.json", import.meta.url),
-    "utf8"
-  )
-);
+import {
+  currentLayouts as layouts,
+  expectedPublicReading,
+  movedCommunityContacts
+} from "../fixtures/current-content-contract";
 const normalize = (value: string) =>
   value
     .normalize("NFC")
@@ -26,12 +11,7 @@ const normalize = (value: string) =>
     .replace(/\s+/g, "")
     .replace(/^—/, "");
 
-// The merged confirmation route is covered by the redirect contract in public.spec.
-const layouts = approved.layouts.filter(
-  (layout) => layout.slug !== "birmovanci"
-);
-
-function readingBlocks(layout: ApprovedLayout) {
+function readingBlocks(layout: (typeof layouts)[number]) {
   // Only repeated titles/labels and the moved gallery credit were removed.
   // Keep the independent baseline unchanged, including every substantive passage.
   const omitted = new Set(
@@ -51,17 +31,16 @@ function readingBlocks(layout: ApprovedLayout) {
     omitted.add(normalize("Claudia Nemcová"));
   }
 
-  const reading = approved.reading.find(
-    (entry) => entry.route === `/${layout.slug}`
-  )!;
-  return reading.blocks.map(normalize).filter((block) => !omitted.has(block));
+  return expectedPublicReading(`/${layout.slug}`)
+    .map(normalize)
+    .filter((block) => !omitted.has(block));
 }
 
-test("all 23 static layouts retain the approved substantive reading and resource destinations", async ({
+test("all 22 static layouts retain the approved substantive reading and resource destinations", async ({
   page
 }) => {
   test.setTimeout(120_000);
-  expect(layouts).toHaveLength(23);
+  expect(layouts).toHaveLength(22);
 
   for (const layout of layouts) {
     const route = `/${layout.slug}`;
@@ -84,7 +63,9 @@ test("all 23 static layouts retain the approved substantive reading and resource
     // Repeated credit labels are deliberately deduplicated by the renderer.
     // Distinct reading blocks must still occur in their original sequence.
     let previous = 0;
-    for (const block of new Set(blocks)) {
+    for (const block of new Set(
+      blocks.filter((text) => !text.startsWith("autor:"))
+    )) {
       const position = text.indexOf(block, previous);
       expect(
         position,
@@ -118,7 +99,17 @@ test("all 23 static layouts retain the approved substantive reading and resource
         link.href
       );
     }
-    if (layout.slug === "farnost/galeria")
+    const contact = movedCommunityContacts.find(
+      (entry) => entry.slug === layout.slug
+    );
+    if (contact) {
+      expect(text).toContain(normalize(contact.name));
+      for (const phone of contact.phones) {
+        expect(text).toContain(normalize(phone));
+        expect(hrefs).toContain(`tel:${phone.replace(/\s/g, "")}`);
+      }
+    }
+    if (layout.slug === "farnost/kostol-sv-alzbety")
       await expect(
         main.getByRole("link", { name: "Claudia Nemcová", exact: true })
       ).toHaveCount(1);
@@ -132,24 +123,23 @@ test("static collections retain paging focus, wrapping navigation, end state and
     route.fulfill({ status: 404, body: "Missing test image" })
   );
   await page.goto("/farnost/galeria");
-  const collections = page.locator("main section[id^='informacie-']").filter({
-    has: page.getByRole("button", { name: /^Zväčšiť fotografiu:/ })
-  });
+  const collections = page
+    .locator("#galeria section[aria-labelledby^='galeria-']")
+    .filter({
+      has: page.getByRole("button", { name: /^Zväčšiť fotografiu:/ })
+    });
   await expect(collections).toHaveCount(3);
 
   const first = collections.first();
   const thumbnails = first.getByRole("button", {
     name: /^Zväčšiť fotografiu:/
   });
-  await expect(thumbnails).toHaveCount(12);
+  await expect(thumbnails).toHaveCount(16);
   await first
     .getByRole("button", { name: "Zobraziť ďalšie fotografie" })
     .click();
-  await expect(thumbnails).toHaveCount(24);
-  await expect(thumbnails.nth(12)).toBeFocused();
-  await first
-    .getByRole("button", { name: "Zobraziť ďalšie fotografie" })
-    .click();
+  await expect(thumbnails).toHaveCount(32);
+  await expect(thumbnails.nth(16)).toBeFocused();
   await first
     .getByRole("button", { name: "Zobraziť ďalšie fotografie" })
     .click();

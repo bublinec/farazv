@@ -5,7 +5,7 @@
 This runbook distinguishes implemented controls from hosted configuration still
 requiring verification. Local tests do not establish working Google credentials,
 automatic backups or production cutover. A separate real Cloudinary upload/completion/cleanup check
-has passed; live Google OAuth is still unverified without its credentials.
+has passed; live Google OAuth is still an owner acceptance check.
 
 As of **3 November 2026**, production is https://farazv.sk on the Vercel project
 `farazv`; `www.farazv.sk` redirects to the apex. Production uses database content,
@@ -17,7 +17,8 @@ The Next.js application now lives at the repository root. Vercel must use an
 empty Root Directory, Node 22, `npm ci` and `npm run build`. The previous Gatsby
 client and Strapi admin are archived under `old/`, excluded from active checks
 and deployment uploads. The root Netlify configuration skips automatic builds,
-preserving the previous deployment as a fallback. No DNS change is needed for
+preserving the [previous deployment](https://farazv.netlify.app/) as a historical reference.
+A [fixed build URL](https://6ad71e314cf8202580e1a791--farazv.netlify.app/) is also retained. No DNS change is needed for
 this repository cleanup.
 
 Deploy with an explicit Vercel environment. Preview variables and production
@@ -26,9 +27,10 @@ or credentials. Historical deployment evidence remains in the dated plan.
 
 ## Ownership and configuration
 
-Juraj Bublinec is the selected project owner. Before release, record a backup
+Juraj Bublinec is the selected project owner. Record a backup
 operator, alternate service owner and recovery instructions in the team's private
-password manager. Keep credentials and the editor allowlist out of documentation.
+password manager. Keep credentials and the editor allowlist out of repository documentation.
+Store private handover documents separately from the source tree.
 
 Use separate development, fixed staging and production databases. Staging needs
 a stable domain for its exact Google callback. Production uses
@@ -53,9 +55,10 @@ developer's database-mode `.env.local` cannot silently change that suite.
 For local database-backed checks, provide `TEST_POSTGRES_URL` privately with a
 loopback PostgreSQL connection whose user can create databases. A loopback
 `DATABASE_URL` is accepted as a fallback; remote URLs are refused before contact.
-Stop any existing Next development server before the admin run, because Next
-owns a single `.next/dev/lock`. The test runner never stops or reuses another
-server.
+Next owns a single `.next/dev/lock`. If another development server is running,
+leave it alone: build an owned preview and use
+`ADMIN_E2E_SERVER=production npm run test:admin`. The test runner never stops or
+reuses another server.
 
 ```sh
 npm run test:integration
@@ -85,6 +88,15 @@ WCAG rule checks, corrected findings, reproducible local measurements and their
 limits. These checks complement manual keyboard, screen-reader and content
 review; local lab timings do not establish hosted Core Web Vitals.
 
+## Public production checks and search ownership
+
+Run `npm run verify:production` after release, or add `-- --all-pages` to crawl
+every sitemap destination. The [production smoke workflow](../.github/workflows/production-smoke.yml)
+runs these read-only checks after successful main-branch CI, successful
+Production deployment events, and manual dispatch. It requires no production secrets. This is release verification,
+not continuous uptime monitoring. Search Console verification support and the
+remaining backup/monitoring tasks are in [production readiness](production-readiness.md).
+
 ## Google access and recovery
 
 Create a Google OAuth **Web application** client in the owner's Google Cloud
@@ -99,8 +111,9 @@ comma/newline-separated exact email addresses with normalized case, no wildcards
 The intended fixed preview callback is
 `https://farazv-preview-bublinecs-projects.vercel.app/api/auth/callback/google`.
 Use that stable alias as `BETTER_AUTH_URL`; the additional alias does not become
-a callback automatically. Google client credentials are still missing, so neither
-the protected preview nor real-cookie tests establish a completed live login.
+a callback automatically. Production Google credentials are configured and the
+owner confirmed the production callback. The protected preview and local
+real-cookie tests do not establish a completed live Google login.
 
 On Vercel (`VERCEL=1`), GET/HEAD visits to `/admin` and its page descendants on
 another alias redirect temporarily to the configured HTTPS `BETTER_AUTH_URL`,
@@ -113,23 +126,30 @@ and mutations are not redirected; verified sessions and strict same-origin
 checks remain mandatory. After changing aliases, check alternate-host page
 redirects and the canonical login before verifying the real Google callback.
 
-The narrow Next.js server proxy is a navigation aid, not an access boundary.
-Seven helper/proxy tests verify path/query preservation, invalid configuration,
+The Next.js server proxy also consolidates public production aliases onto
+`SITE_URL` with a permanent redirect, while leaving preview page navigation usable.
+It is a navigation aid, not an access boundary.
+Helper/proxy tests verify path/query preservation, invalid configuration,
 no external destination injection, canonical/local behavior and unchanged API
 mutations. References: [Next.js proxy](https://nextjs.org/docs/app/api-reference/file-conventions/proxy),
 [request headers](https://nextjs.org/docs/app/api-reference/functions/headers).
 
 Better Auth validates Google OAuth and uses encrypted, signed eight-hour sessions
 without an authentication database. Every protected request requires a verified
-email on the current allowlist. Removing an address denies its existing session
-after configuration redeployment. There is no public signup, password or bypass.
+email and a current role. `ADMIN_EMAIL_ALLOWLIST` defines administrators in Vercel
+configuration; changing it requires redeployment. Administrators manage additional
+editors in `/admin/pristupy`, backed by `editor_access`. Grants are checked without
+caching on every request: revocation denies existing editor sessions immediately.
+There is no public signup, local password or access bypass. Private visitor feedback
+and access management are restricted to administrators.
 
-If an editor loses their Google account, the project owner updates the correct
-Vercel environment's allowlist, redeploys and tests the replacement. Recovery when
-all editors are locked out uses the owner's Vercel/Google access, so keep those
-accounts' recovery methods current. Rotating `BETTER_AUTH_SECRET` invalidates all
-sessions. Do not reuse old Strapi credentials. Before launch verify a permitted
-login, rejected account, sign-out and fresh login on staging. References:
+If an editor loses their Google account, an administrator revokes that grant and
+adds the replacement verified Google address. This does not send an invitation
+email. If all administrators are locked out, the project owner updates the correct
+Vercel environment's allowlist and redeploys. Keep Vercel/Google recovery methods
+accessible to a trusted alternate. Rotating `BETTER_AUTH_SECRET` invalidates all
+sessions. Do not reuse old Strapi credentials. Verify a permitted login, rejected
+account, sign-out and fresh login on the intended environment. References:
 [stateless sessions](https://better-auth.com/docs/concepts/session-management#stateless-session-management),
 [Google callbacks](https://better-auth.com/docs/authentication/google).
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { isPublicRelease, pageMetadata } from "@/lib/seo";
 import { Footer } from "@/components/layout/Footer";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { VisitorAnalytics } from "@/components/layout/VisitorAnalytics";
@@ -14,19 +15,15 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: `${siteConfig.name} · ${siteConfig.city}`,
-  robots: {
-    index:
-      process.env.SITE_INDEXING_ENABLED === "true" &&
-      process.env.VERCEL_ENV === "production",
-    follow:
-      process.env.SITE_INDEXING_ENABLED === "true" &&
-      process.env.VERCEL_ENV === "production"
-  },
-  openGraph: {
-    locale: "sk_SK",
-    siteName: "Farnosť Zvolen – mesto",
-    type: "website"
-  }
+  robots: { index: isPublicRelease(), follow: isPublicRelease() },
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
+  openGraph: pageMetadata({
+    title: `${siteConfig.name} ${siteConfig.city}`,
+    description: siteConfig.description,
+    path: "/"
+  }).openGraph
 };
 
 export const dynamic = "force-dynamic";

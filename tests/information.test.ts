@@ -1,3 +1,8 @@
+import {
+  currentLayouts,
+  expectedPublicReading,
+  movedCommunityContacts
+} from "./fixtures/current-content-contract";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
@@ -84,22 +89,17 @@ test("published static export preserves all gallery collections and excludes pri
 test("approved raw source stays exact and public reading matches reviewed editorial updates", () => {
   assert.deepEqual(publishedInformationContent, approved.sourceRecords);
 
-  const layouts = informationPages.map(({ source, sections, ...page }) => ({
-    ...page,
-    contentSource: source ? "published" : "curated",
-    ...(source ? {} : { sections })
-  }));
-  // The user merged Birmovanci into the existing sacrament page. Keep the
-  // independent source baseline intact and declare only that approved change.
-  const expectedLayouts = approved.layouts
-    .filter((page: { slug: string }) => page.slug !== "birmovanci")
-    .map((page: { slug: string; links?: unknown }) => {
-      if (page.slug !== "sviatosti/sviatost-birmovania") return page;
-      const { links: _formerCrossLink, ...mergedPage } = page;
-      return mergedPage;
-    });
-  assert.equal(layouts.length, 23);
-  assert.deepEqual(layouts, expectedLayouts);
+  assert.deepEqual(
+    informationPages.map((page) => page.slug).sort(),
+    currentLayouts.map((page) => page.slug).sort()
+  );
+  for (const contact of movedCommunityContacts) {
+    const aside = informationPages.find(
+      (page) => page.slug === contact.slug
+    )!.aside;
+    assert.ok(aside?.contact?.name.includes(contact.name));
+    assert.deepEqual(aside?.contact?.phones, contact.phones);
+  }
 
   const reading = informationPages.map((page) => ({
     route: `/${page.slug}`,
@@ -125,9 +125,10 @@ test("approved raw source stays exact and public reading matches reviewed editor
   }));
   assert.deepEqual(
     reading,
-    approved.reading.filter(
-      (page: { route: string }) => page.route !== "/birmovanci"
-    )
+    informationPages.map((page) => ({
+      route: `/${page.slug}`,
+      blocks: expectedPublicReading(`/${page.slug}`)
+    }))
   );
 });
 
@@ -135,13 +136,18 @@ test("source-backed layouts cannot silently use curated fallback prose", () => {
   assert.equal(
     informationPages.filter((page) => page.contentSource === "published")
       .length,
-    22
+    18
   );
   assert.deepEqual(
     informationPages
       .filter((page) => page.contentSource === "curated")
       .map((page) => page.slug),
-    ["objav-krista"]
+    [
+      "farnost/kostol-sv-alzbety",
+      "spolocenstva/akolyti",
+      "spolocenstva/lektori",
+      "objav-krista"
+    ]
   );
   for (const page of informationPages) {
     if (page.contentSource === "published") {

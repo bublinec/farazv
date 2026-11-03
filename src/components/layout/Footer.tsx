@@ -110,6 +110,13 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
           </a>
         </p>
         <div className={styles.bottomLinks}>
+          <a
+            href="https://farazv.netlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Pôvodná stránka
+          </a>
           <a href="https://gdpr.kbs.sk/" target="_blank" rel="noreferrer">
             Ochrana osobných údajov
           </a>

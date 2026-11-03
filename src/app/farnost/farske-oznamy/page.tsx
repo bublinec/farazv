@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { aerialImage } from "@/content/assets";
 import type { BulletinDocument } from "@/content/documents";
 import {
@@ -14,12 +14,12 @@ import { BulletinContent } from "@/components/bulletin/BulletinContent";
 import { DonationSection } from "@/components/home/DonationSection";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Farské oznamy",
   description:
     "Rozpis svätých omší a farské oznamy Farnosti sv. Alžbety Zvolen – mesto.",
-  alternates: { canonical: "/farnost/farske-oznamy" }
-};
+  path: "/farnost/farske-oznamy"
+});
 
 export default async function BulletinPage() {
   const now = getPreviewNow();

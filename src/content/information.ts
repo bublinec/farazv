@@ -47,7 +47,7 @@ interface InformationPageLayout {
   aside?: {
     title: string;
     description?: string;
-    contact?: { name: string; phone: string };
+    contact?: { name: string; phones: string[] };
   };
   links?: InformationLink[];
   patron?: { name: string; image: MediaAsset; sourceHref: string };
@@ -309,7 +309,11 @@ const pageDefinitions: InformationPageConfiguration[] = [
     slug: "spolocenstva/detsky-spevokol",
     aside: {
       title: "Pridaj sa k Alžbetke",
-      contact: { name: "Magdaléna Turanská", phone: "0914 189 867" }
+      description: "Zbor komunikuje cez WhatsApp.",
+      contact: {
+        name: "Manželia Liečkovci",
+        phones: ["+421 949 739 289", "+421 949 171 777"]
+      }
     },
     title: "Detský spevokol Alžbetka",
     eyebrow: "Spoločenstvá",
@@ -330,7 +334,7 @@ const pageDefinitions: InformationPageConfiguration[] = [
     slug: "spolocenstva/mladeznicky-zbor",
     aside: {
       title: "Pridaj sa k zboru",
-      contact: { name: "Kristína Považanová", phone: "0944 389 886" }
+      contact: { name: "Kristína Považanová", phones: ["0944 389 886"] }
     },
     title: "Mládežnícky zbor Alžbeta",
     eyebrow: "Spoločenstvá",
@@ -353,7 +357,7 @@ const pageDefinitions: InformationPageConfiguration[] = [
       title: "Chceš miništrovať?",
       contact: {
         name: "Filip Krahulec · hlavný miništrant",
-        phone: "0951 606 212"
+        phones: ["0951 606 212"]
       }
     },
     title: "Miništranti Zvolen-mesto",

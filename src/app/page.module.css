@@ -20,36 +20,6 @@
   padding-block: clamp(24px, 3vw, 40px);
 }
 
-.magazine {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  background: #f0ebe1;
-  border-block: 1px solid #ddd1bb;
-}
-
-.magazineBackground {
-  position: absolute;
-  inset: 0 0 0 auto;
-  z-index: -1;
-  width: 55%;
-  pointer-events: none;
-}
-
-.magazineBackground img {
-  width: 100%;
-  height: 100%;
-  object-position: center 45%;
-  opacity: 0.22;
-}
-
-.magazineBackground::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, #f0ebe1, #f0ebe180 45%, transparent);
-}
-
 .communities {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));

@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { FeedbackForm } from "@/components/feedback/FeedbackForm";
 import styles from "@/components/feedback/Feedback.module.css";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Podnety a nápady",
   description:
     "Pomôžte nám zlepšovať život farnosti aj tento web. Napíšte nám svoj podnet alebo nápad.",
-  alternates: { canonical: "/podnety" }
-};
+  path: "/podnety"
+});
 
 export default async function FeedbackPage({
   searchParams

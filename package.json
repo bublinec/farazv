@@ -28,7 +28,8 @@
     "format:check": "prettier --check .",
     "check": "npm run format:check && npm run typecheck && npm test",
     "content:generate": "node --conditions=react-server --import tsx scripts/migration/export-information.ts",
-    "content:generate:check": "npm run content:generate -- --check"
+    "content:generate:check": "npm run content:generate -- --check",
+    "verify:production": "node scripts/verify-production.mjs"
   },
   "dependencies": {
     "@tiptap/core": "3.32.2",

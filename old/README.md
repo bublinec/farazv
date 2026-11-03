@@ -18,3 +18,11 @@ The root `netlify.toml` skips automatic legacy builds, keeping the last Netlify
 site available during migration. To work on the old frontend, run its commands
 from `old/client/` with its own `.nvmrc` and Yarn version. Use isolated data and
 credentials for legacy development.
+
+## Hosted reference
+
+The old Gatsby production site remains at [farazv.netlify.app](https://farazv.netlify.app/).
+The [saved deployment](https://6ad71e314cf8202580e1a791--farazv.netlify.app/)
+is a fixed build reference. Both returned the Gatsby homepage on 3 November 2026.
+These are historical references, not the source of current parish notices; their
+continued availability depends on the old Netlify account and legacy services.

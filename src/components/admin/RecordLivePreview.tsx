@@ -147,6 +147,7 @@ export function RecordLivePreview({ record }: { record: ContentRecord }) {
     content = (
       <EditorialDetail
         entry={record.draft}
+        preview
         kind={record.kind === "article" ? "article" : "news"}
       />
     );

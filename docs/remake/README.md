@@ -1,7 +1,7 @@
-# Farazv remake
+# Farazv project overview
 
 This is the durable entry point for contributors and AI agents. Last reconciled
-with the implementation and discussion on **31 October 2026**.
+with the implementation and discussion on **3 November 2026**.
 
 ## Status and goals
 
@@ -11,10 +11,11 @@ previews, publication, Google allowlist guards, Cloudinary uploads and the full
 local migration. The four review records remain useful evidence; their earlier inter-stage pauses
 were superseded. The maintainability refactor is implemented and locally verified. No product/design acceptance is implied by passing automated checks.
 
-The local and hosted databases contain 414 content records, all 146 magazine
+The 31 October migration audit verified 414 content records in the local and hosted databases, all 146 magazine
 articles public, 1,081 media records and 30 static provenance records, of which 29
 were published. The free Neon resource `farazv` is provisioned in Frankfurt on
 PostgreSQL 18.6; hosted import counts were verified against the local database.
+This is a dated import inventory; later editor changes can alter those counts.
 As of **3 November 2026**, the production site is https://farazv.sk on Vercel,
 with `www.farazv.sk` redirecting to the apex. Google credentials are configured
 and the owner confirmed the production callback; a full live login still needs
@@ -30,7 +31,8 @@ runs from the root; Vercel excludes the archived legacy sources from uploads.
 
 ## Reading order
 
-For the immediate priorities, read [the current-state assessment and next steps](current-state-2026-10-31.md).
+For current production priorities, read [production readiness](../production-readiness.md).
+The [31 October assessment](current-state-2026-10-31.md) remains historical context.
 
 1. [Contributor setup](../../README.md) and [route/content map](../routes.md).
 2. [Architecture](architecture.md) and [decision log](decisions.md).
@@ -39,15 +41,11 @@ For the immediate priorities, read [the current-state assessment and next steps]
    and [Slovak editor guide](../editor-guide.md).
 5. [Implementation review and completed refactor](refactor-plan.md): priorities,
    readable code conventions and behavior-preserving implementation passes.
-
-6. [Design direction and versions](design-direction.md): familiar parish imagery,
-   typography analysis, preserved v1 and opt-in v2.
-
-7. [Reviewed current-content refresh](content-refresh-2026-10-31.md) and
-   [detail pass](design-history/v2-refined/README.md): expired guidance and clearer tasks.
-
-8. [Restored church details and sacrament sections](design-history/v2-church-details/README.md):
-   original page photographs, the six-sacrament banner and quotation panels.
+6. [Design direction](design-direction.md) and [decisions](decisions.md): historical
+   design exploration and accepted church photographs, typography and sacrament panels.
+7. [Reviewed current-content refresh](content-refresh-2026-10-31.md): approved
+   expired-guidance corrections; later choir changes are recorded in the plan.
+8. [Old website](https://farazv.netlify.app/) and [legacy sources](../../old/README.md).
 
 Check actual code and dated evidence before claiming a service, import, test or
 release step has completed. Update the relevant records when decisions change.
@@ -72,7 +70,8 @@ intentional article-publication override.
 
 The first six rows produce **414 editable/history content records**. Static
 provenance is stored separately. There are 28 legacy fixed paths, including the
-404 design, plus preserved dynamic route families and the additional news list.
+404 design, plus preserved dynamic route families. The current [route map](../routes.md)
+records merged pages, redirects and newer parish pages.
 
 The **1,081 media records** contain 1,075 images, five PDFs and one Word document.
 They are references/metadata, not an image-byte backup. Availability checks found
@@ -93,20 +92,20 @@ are in [the quality audit](../quality-audit.md).
 
 The existing local and hosted backup/restore drills passed; they do not establish
 an ongoing off-device backup schedule. Activate and assign cadence, retention and
-private storage ownership before release.
+private storage ownership as outstanding production work.
 
 ## Launch requirements
 
-| Requirement            | Current state / remaining action                                                                                                                                                                                                          |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Google OAuth           | Credentials absent. Register the intended fixed preview callback and eventual production callback; verify allowed/rejected accounts, sign-out and recovery. See [operations](../operations.md#google-access-and-recovery). |
-| Hosted database        | Free Frankfurt Neon PostgreSQL 18.6 and verified import are running. Hosted backup/restore drill passed; activate ongoing encrypted off-device backups, retention and recovery ownership.                                                 |
-| Final source freshness | Not established. The authorized read-only legacy check timed out without results or changes. Obtain a fresh private export, compare/reconcile and freeze editing before cutover.                                                          |
-| Media recovery         | 76 missing originals remain unresolved. Preserve recovery evidence and resolve the owner recovery/acceptance decision; keep restrictions on the five PDFs.                                                                                |
-| Parish facts           | Confirm contacts, dated course/event details, donor-category presentation and actual recurring Mass times. The imported regular template is empty.                                                                                        |
-| Release evidence       | Final build, 12 real-data accessibility cases, six local production measurements and route/privacy/pagination/outage checks passed. Complete live Google and manual acceptance; local timings do not establish hosted Core Web Vitals.    |
-| Ongoing operations     | Assign and activate backup cadence, retention, off-device storage and recovery ownership; retain old services through a successful real weekly cycle.                                                                                     |
-| Deployment/domain      | A Vercel preview is running with hosted content. Verify the real callback/app/data configuration before a production deployment, enabling indexing or switching DNS.                                                                      |
+| Requirement            | Current state / remaining action                                                                                                                                                                                                                                             |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Google OAuth           | Production credentials are configured and the owner confirmed the callback. Verify real allowed/rejected accounts, sign-out and recovery. See [operations](../operations.md#google-access-and-recovery).                                                                     |
+| Hosted database        | Free Frankfurt Neon PostgreSQL 18.6 and verified import are running. Hosted backup/restore drill passed; activate ongoing encrypted off-device backups, retention and recovery ownership.                                                                                    |
+| Final source freshness | Not established. The authorized read-only legacy check timed out without results or changes. Obtain a fresh private export, compare/reconcile any later legacy edits and retire old editing deliberately.                                                                    |
+| Media recovery         | 76 missing originals remain unresolved. Preserve recovery evidence and resolve the owner recovery/acceptance decision; keep restrictions on the five PDFs.                                                                                                                   |
+| Parish facts           | Confirm contacts, dated course/event details, donor-category presentation and actual recurring Mass times. The imported regular template is empty.                                                                                                                           |
+| Release evidence       | See the dated plan for the current passing local and CI suites. The 12 real-data accessibility cases and six performance measurements are historical 31 October evidence. Complete live Google and manual acceptance; local timings do not establish hosted Core Web Vitals. |
+| Ongoing operations     | Assign and activate backup cadence, retention, off-device storage and recovery ownership; retain old services through a successful real weekly cycle.                                                                                                                        |
+| Deployment/domain      | Production is on Vercel at farazv.sk, with WWW redirecting to the apex. Verify propagation and production smoke checks; nameservers are already delegated to Vercel.                                                                                                         |
 
 ## Source roles and private inputs
 
@@ -119,5 +118,5 @@ later user decisions and authorization take precedence over its tentative plans.
 
 Keep raw exports, credentials, unpublished material and recovery evidence in
 ignored private locations. Public source-controlled informational copy includes
-only published material. Existing [Gatsby instructions](../../README.md) and the
+only published material. Existing [Gatsby instructions](../../old/client/README.md) and the
 [legacy deployment diagnosis](../netlify-build-diagnosis.md) describe the old site.

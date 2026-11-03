@@ -3,47 +3,50 @@
 [Remake setup](../README.md) · [Project plan](remake/plan.md) ·
 [Migration report](migration.md)
 
-The 28 legacy fixed paths remain mapped, including `/404/`. Informational pages
+Legacy paths remain mapped or redirected, including `/404/`. Informational pages
 use distinct React layouts and full published source reading copy. Editorial
 content, settings and schedules use the replacement database. Completing this
 implementation does not establish parish approval of current information or
-authorize production cutover.
+establish live Google login or full operational readiness.
 
 ## Fixed routes
 
-| Public path                                 | Implemented presentation/content                                                                                            | Parish or release review                                                                  |
-| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `/`                                         | Custom homepage; published schedule, posters, news, articles and parish media                                               | Confirm current schedule, placements and shared settings                                  |
-| `/farnost/farske-oznamy`                    | Sunday–Sunday view, announcements and date-based eligibility                                                                | Confirm recurring template; historical anomalies remain quarantined                       |
-| `/farnost/nase-spolocenstvo`                | All 146 articles; ten summaries initially and six per click                                                                 | Review newly published material and missing-image recovery                                |
-| `/farnost/galeria`                          | All three published collections: 44 + 44 + 32 ordered photographs, collection credits and captions                          | Confirm individual rights and recoverable original backups                                |
-| `/farnost/kostol-sv-alzbety`                | Full history, architectural reading copy, 14-photo collection, chronology aside and author credits                          | Review historical copy/attribution                                                        |
-| `/farnost/kostol-sv-jana-pavla-v-lieskovci` | Full history, four-photo collection, chronology aside and author credit                                                     | Review historical copy/attribution                                                        |
-| `/farnost/kostol-sv-matusa-v-zolnej`        | Full history, paintings/conservation copy, eight-photo collection, chronology and credits                                   | Review history; old third-party tour is withheld                                          |
-| `/farnost/cirkevna-skola`                   | Full illustrated school introduction, educational layout and official school link                                           | Original statistical claims retained; confirm current school details                      |
-| `/farnost/kalendar-akcii`                   | Preserved hidden route with current notice/poster destinations                                                              | No additional calendar backend is implied                                                 |
-| `/farnost/virtualna-prehliadka`             | Original safe 3D model links and gallery fallback                                                                           | Confirm third-party resources before embedding                                            |
-| `/sviatosti/sviatost-krstu`                 | Full preparation, documents, godparent and adult guidance; shared office/Náuky card; original PDF                           | Confirm current pastoral instructions and arrangements                                    |
-| `/sviatosti/sviatost-eucharistie`           | Full children/adult preparation, sick visits and catechism quotation                                                        | Parish review                                                                             |
-| `/sviatosti/sviatost-birmovania`            | Full guidance and quotation; original 2021–22 preparation paragraphs retained                                               | Confirm new preparation cycle                                                             |
-| `/sviatosti/sviatost-manzelstva`            | Full preparation, documents and guidance; shared Náuky card; original 2026 course list retained                             | Confirm next courses and detailed requirements                                            |
-| `/sviatosti/sviatost-zmierenia`             | Full confession guidance, quotation and notices link                                                                        | Confirm current extended confession arrangements                                          |
-| `/sviatosti/sviatost-pomazania-chorych`     | Full source pastoral guidance and contact card                                                                              | Parish review                                                                             |
-| `/spolocenstva/detsky-spevokol`             | Full Alžbetka introduction and four-photo collection                                                                        | Confirm rehearsal times and leader contact                                                |
-| `/spolocenstva/mladeznicky-zbor`            | Full Alžbeta introduction and four-photo collection                                                                         | Confirm rehearsal times and leader contact                                                |
-| `/spolocenstva/ministranti`                 | Full service/community introduction and eight-photo collection                                                              | Confirm current meetings and leader contact                                               |
-| `/spolocenstva/reholne-sestry`              | Full congregation/history copy and four-photo collection                                                                    | Confirm current community details                                                         |
-| `/spolocenstva/akolyti`                     | Neutral preparing-content state and office contact                                                                          | Published legacy page contained only placeholder copy; dedicated parish text still needed |
-| `/spolocenstva/lektori`                     | Neutral preparing-content state and office contact                                                                          | Published legacy page contained only placeholder copy; dedicated parish text still needed |
-| `/spolocenstva/ruzencove-bratstvo`          | Neutral preparing-content state and office contact                                                                          | Legacy page requested an editor; dedicated parish text still needed                       |
-| `/birmovanci`                               | Full source requirements and preparation guidance; preserved path and sacrament menu placement                              | Confirm current preparation requirements                                                  |
-| `/kontakt`                                  | Published contacts, mobile, address/IČO, office note/hours, Náuky, all priest cards, map, dynamic QR/IBAN and partner links | Confirm shared settings and contact ownership                                             |
-| `/objav-krista`                             | Original public Form link and office fallback                                                                               | No matching SQL page exists; public archive link retained; confirm active campaign        |
-| `/den-farskej-rodiny`                       | Preserved event/Form destination; original source content retained                                                          | Confirm new event/year before promoting registration                                      |
-| `/404/`                                     | Shared not-found design; unknown paths return a genuine 404                                                                 | Verify deployed status/indexing                                                           |
+| Public path                                 | Implemented presentation/content                                                                                            | Parish or release review                                                                     |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `/`                                         | Published schedule, active noticeboard, St Charbel, hospital, parish services, altar, feedback and donations                | Confirm current schedule, placements and shared settings                                     |
+| `/farnost/farske-oznamy`                    | Sunday–Sunday view, announcements and date-based eligibility                                                                | Confirm recurring template; historical anomalies remain quarantined                          |
+| `/farnost/nase-spolocenstvo`                | Magazine articles; twelve summaries initially and twelve per click                                                          | Review newly published material and missing-image recovery                                   |
+| `/farnost/galeria`                          | 308 redirect to `/farnost/kostol-sv-alzbety#galeria`                                                                        | Confirm individual rights and recoverable original backups                                   |
+| `/farnost/kostol-sv-alzbety`                | Curated church page, galleries, history photographs and safe 3D resources                                                   | Review historical copy/attribution                                                           |
+| `/farnost/kostol-sv-jana-pavla-v-lieskovci` | Full history, four-photo collection, chronology aside and author credit                                                     | Review historical copy/attribution                                                           |
+| `/farnost/kostol-sv-matusa-v-zolnej`        | Full history, paintings/conservation copy, eight-photo collection, chronology and credits                                   | Review history; old third-party tour is withheld                                             |
+| `/farnost/cirkevna-skola`                   | Full illustrated school introduction, educational layout and official school link                                           | Outdated statistical figures removed in the approved refresh; confirm current school details |
+| `/farnost/kalendar-akcii`                   | Preserved hidden route with current notice/poster destinations                                                              | No additional calendar backend is implied                                                    |
+| `/farnost/virtualna-prehliadka`             | 308 redirect to `/farnost/kostol-sv-alzbety#virtualna-prehliadka`                                                           | Confirm third-party resources before embedding                                               |
+| `/sviatosti/sviatost-krstu`                 | Full preparation, documents, godparent and adult guidance; shared office/Náuky card; original PDF                           | Confirm current pastoral instructions and arrangements                                       |
+| `/sviatosti/sviatost-eucharistie`           | Full children/adult preparation, sick visits and catechism quotation                                                        | Parish review                                                                                |
+| `/sviatosti/sviatost-birmovania`            | Guidance and quotation; expired 2021–22 preparation replaced by current contact guidance                                    | Confirm new preparation cycle                                                                |
+| `/sviatosti/sviatost-manzelstva`            | Preparation, documents and guidance; shared Náuky card; expired course list removed                                         | Confirm next courses and detailed requirements                                               |
+| `/sviatosti/sviatost-zmierenia`             | Full confession guidance, quotation and notices link                                                                        | Confirm current extended confession arrangements                                             |
+| `/sviatosti/sviatost-pomazania-chorych`     | Full source pastoral guidance and contact card                                                                              | Parish review                                                                                |
+| `/spolocenstva/detsky-spevokol`             | Full Alžbetka introduction and four-photo collection                                                                        | Confirm rehearsal times and leader contact                                                   |
+| `/spolocenstva/mladeznicky-zbor`            | Full Alžbeta introduction and four-photo collection                                                                         | Confirm rehearsal times and leader contact                                                   |
+| `/spolocenstva/ministranti`                 | Full service/community introduction and eight-photo collection                                                              | Confirm current meetings and leader contact                                                  |
+| `/spolocenstva/reholne-sestry`              | Full congregation/history copy and four-photo collection                                                                    | Confirm current community details                                                            |
+| `/spolocenstva/akolyti`                     | Curated service description and parish contact                                                                              | Confirm current service arrangements                                                         |
+| `/spolocenstva/lektori`                     | Curated service description and parish contact                                                                              | Confirm current service arrangements                                                         |
+| `/spolocenstva/ruzencove-bratstvo`          | Neutral preparing-content state and office contact                                                                          | Legacy page requested an editor; dedicated parish text still needed                          |
+| `/birmovanci`                               | 308 redirect to `/sviatosti/sviatost-birmovania`                                                                            | Confirm current preparation requirements                                                     |
+| `/kontakt`                                  | Published contacts, mobile, address/IČO, office note/hours, Náuky, all priest cards, map, dynamic QR/IBAN and partner links | Confirm shared settings and contact ownership                                                |
+| `/objav-krista`                             | Original public Form link and office fallback                                                                               | No matching SQL page exists; public archive link retained; confirm active campaign           |
+| `/den-farskej-rodiny`                       | Preserved event history; expired registration removed and current contact guidance added                                    | Confirm new event/year before promoting registration                                         |
+| `/404/`                                     | Shared not-found design; unknown paths return a genuine 404                                                                 | Verify deployed status/indexing                                                              |
+
+Additional current routes include `/farnost/o-farnosti` (parish history),
+`/farnost/duchovna-sluzba-v-nemocnici`, `/farnost/obnova-oltarov` and `/podnety` (visitor feedback).
 
 `/farnost`, `/sviatosti` and `/spolocenstva` are menu groups. Unknown children do
-not become generic informational pages. `/prispevky` is the additional news list.
+not become generic informational pages. `/prispevky` redirects permanently to `/#vyveska`.
 
 ## Source-controlled informational content
 
@@ -51,24 +54,26 @@ not become generic informational pages. `/prispevky` is the additional news list
 29 published source pages, with ordered reading sections, captions and media.
 It imports `server-only`; other pages' reading copy is not shipped as a client
 JavaScript bundle. Source page 36 and all private/auth records are excluded. The
-24 purpose-specific definitions in [information.ts](../src/content/information.ts)
+22 purpose-specific definitions in [information.ts](../src/content/information.ts)
 select the sacrament, church, community, school, contact, gallery or resource
 layout. Homepage/listing/bulletin/404 source records do not override their own
 dedicated application routes.
 
-Regenerate from an authorized private export, then review the public diff:
+Check the raw export against an authorized private dump. For regeneration and
+review, follow the contributor README:
 
 ```sh
-node --import tsx scripts/migration/export-information.ts --dump db-backup/dump.sql
+npm run content:generate:check -- --dump db-backup/dump.sql
 ```
 
 Rich text is used inside reading areas; the legacy dynamic-zone page builder is
 not recreated. Old decorative hero/navigation sections map to the new hero and
 related-page cards. Full reading text and collections replace the abridged design
 samples. Source quotations and author/photographer credits remain visible.
-The three placeholder community pages use a neutral preparing-content state,
-with no invented factual guidance. Substantive reading copy, including dated
-preparation details and school statistics, retains its original wording. See the
+Acolytes and lectors now have curated service copy; the rosary community retains
+a neutral preparing-content state. Reviewed expired-guidance and choir corrections
+live in `information-updates.ts`; the original 29-record export stays unchanged.
+See the [approved refresh](remake/content-refresh-2026-10-31.md), dated plan and
 [static content fidelity review](static-content-review.md). Legacy `page.content`
 values were SEO metadata, not visible reading copy; editor notes are excluded.
 
@@ -81,11 +86,11 @@ Static reading-copy changes require a reviewed code change, as planned.
 
 ## Editorial paths and schedule history
 
-| Family                              | Content policy                                           |
-| ----------------------------------- | -------------------------------------------------------- |
-| `/farnost/nase-spolocenstvo/[slug]` | All 146 imported magazine articles are public            |
-| `/prispevky/[slug]`                 | Published news only; 86 source drafts remain private     |
-| `/vyveska/[slug]`                   | Published text notices and preserved detail destinations |
+| Family                              | Content policy                                               |
+| ----------------------------------- | ------------------------------------------------------------ |
+| `/farnost/nase-spolocenstvo/[slug]` | All 146 imported magazine articles are public                |
+| `/prispevky/[slug]`                 | Published news/events only; unpublished records stay private |
+| `/vyveska/[slug]`                   | Published text notices and preserved detail destinations     |
 
 Slugs are scoped to their route family. Article/news slug overlaps never merge
 records. The special `/den-farskej-rodiny` destination remains intact. Historical
@@ -106,8 +111,9 @@ All four legacy `static/_redirects` mappings remain:
 
 Next.js uses permanent 308 redirects and normalizes trailing slashes. Unknown
 paths return 404. Existing Forms, the baptism PDF, maps and Sketchfab models use
-explicit external links. No contact form, PDF processing, third-party tracking,
-calendar backend or automatic iframe embed is introduced.
+explicit external links. The site includes a private visitor-feedback form and Vercel Analytics. The
+admin supports Word/text bulletin import, not PDF parsing. No separate calendar
+backend or automatic legacy-tour iframe is introduced.
 
 On 31 October 2026, bounded read-only requests checked 19 provider URLs. Google
 Forms, the baptism PDF, Google Maps and both Sketchfab models returned HTTP 200
@@ -129,7 +135,8 @@ Nemcová by collection and ArtSohl / Pavol Albert for the third collection. Chur
 histories retain Jozef Kaniansky credits. Source captions remain in the viewer.
 Photography rights remain distinct from the repository's code licence.
 
-Twelve thumbnails per collection render initially, with twelve more per click;
+The main church gallery renders sixteen thumbnails at a time; shared collection
+views default to twelve, with explicit overrides for individual presentations;
 images load lazily. The native modal opens only the selected enlarged image and
 supports Escape, arrows, focus containment and focus return. Thumbnails may crop
 for browsing; the viewer preserves the full image. Delivery checks found no
@@ -139,7 +146,11 @@ report. Current delivery is not a recoverable original backup.
 
 ## Local verification record
 
-The final local production preview was checked against the replacement database
+The following is historical evidence from 31 October 2026; later route moves and
+pagination supersede its exact counts. Current verification is in the
+[dated plan](remake/plan.md#verification-record).
+
+The then-current local production preview was checked against the replacement database
 with a read-only transaction. All 146 article, six news, one notice and one event
 detail paths returned HTTP 200 with one H1. All 28 positive fixed/listing paths
 returned 200; four legacy redirects and six unknown/history path checks passed.
