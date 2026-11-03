@@ -108,6 +108,14 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
           >
             Juraj Bublinec
           </a>
+           ·{" "}
+           <a
+            href="https://www.linkedin.com/in/filipstasek/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Filip Štasek
+          </a>
         </p>
         <div className={styles.bottomLinks}>
           <a
