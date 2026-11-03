@@ -226,6 +226,34 @@ test("weekly bulletin shows Sunday to Sunday and expands days without losing tod
   ).toBeVisible();
 });
 
+test("article pagination waits for client startup before accepting clicks", async ({
+  page
+}) => {
+  let release: () => void = () => {};
+  const held = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route(/\/_next\/static\/.*\.js(?:\?.*)?$/, async (route) => {
+    await held;
+    await route.continue();
+  });
+  try {
+    await page.goto("/farnost/nase-spolocenstvo", { waitUntil: "commit" });
+    const more = page.getByRole("button", {
+      name: "Načítať ďalšie",
+      exact: true
+    });
+    await expect(page.locator("main article")).toHaveCount(12);
+    await expect(more).toBeDisabled();
+    release();
+    await expect(more).toBeEnabled();
+    await more.click();
+    await expect(page.locator("main article")).toHaveCount(20);
+  } finally {
+    release();
+  }
+});
+
 test("failed article loading preserves the list and can be retried", async ({
   page
 }) => {

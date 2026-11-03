@@ -84,6 +84,17 @@ the container and original dimensions. The existing height cap and `contain`
 rendering remain. This reserves the HTML aspect ratio before image delivery and
 does not enlarge small originals. Tests compare dimensions before/after delivery.
 
+### Pagination accepted clicks before client startup
+
+The release CI caught a timing failure in the failed-request/retry flow. A
+controlled delayed-JavaScript regression then demonstrated that the server-rendered
+“load more” button was enabled before its handlers were ready. That test failed
+against the original component. [`EditorialFeed`](../src/components/editorial/EditorialFeed.tsx)
+now keeps pagination disabled until its mount effect runs. Normal pagination,
+delayed startup and failed-request retry all pass locally after this change;
+the full release CI is rerun before merging. This improves actual slow-startup
+behavior rather than adding test sleeps or weakening assertions.
+
 ### Operational documentation disagreed with actual authentication
 
 The runbook and architecture said eight hours; `SESSION_MAX_AGE` actually specifies

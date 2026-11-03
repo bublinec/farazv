@@ -28,6 +28,7 @@ function PaginatedFeed({ initialPage, kind }: Props) {
   const [items, setItems] = useState(initialPage.items);
   const [nextCursor, setNextCursor] = useState(initialPage.nextCursor);
   const [loading, setLoading] = useState(false);
+  const [ready, setReady] = useState(false);
   const [error, setError] = useState(false);
   const [announcement, setAnnouncement] = useState("");
   const pending = useRef(false);
@@ -35,7 +36,11 @@ function PaginatedFeed({ initialPage, kind }: Props) {
   const feed = useRef<HTMLDivElement>(null);
   const focusIndex = useRef<number | null>(null);
 
-  useEffect(() => () => controller.current?.abort(), []);
+  useEffect(() => {
+    // Server-rendered controls must wait until their handlers are active.
+    setReady(true);
+    return () => controller.current?.abort();
+  }, []);
   useEffect(() => {
     if (focusIndex.current !== null) {
       feed.current
@@ -114,7 +119,7 @@ function PaginatedFeed({ initialPage, kind }: Props) {
             type="button"
             className="buttonOutline"
             onClick={loadMore}
-            disabled={loading}
+            disabled={!ready || loading}
             aria-busy={loading}
           >
             {loading ? "Načítavam…" : error ? "Skúsiť znova" : "Načítať ďalšie"}

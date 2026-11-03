@@ -817,3 +817,10 @@ those authenticated actions were not performed by this verification.
 - Release sequence: final branch CI, merge to main, Git-triggered production build,
   then read-only production smoke verification. This supersedes the review's earlier
   preparation-only scope; it does not authorize the larger roadmap items.
+
+- The first final-branch CI run (`41652209329`) passed types/unit/build but failed
+  the public failed-request pagination check. A controlled delayed-JavaScript test
+  reproduced an enabled pagination button before client handlers were ready.
+  Added a mount-readiness guard and regression; normal pagination, delayed startup
+  and failure/retry pass locally. Full CI is required again before merge; the
+  failing assertion was retained and no retry/sleep workaround was added.
