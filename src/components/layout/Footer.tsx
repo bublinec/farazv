@@ -108,7 +108,7 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
           >
             Juraj Bublinec
           </a>
-           ·{" "}
+           {" "}·{" "}
            <a
             href="https://www.linkedin.com/in/filipstasek/"
             target="_blank"
