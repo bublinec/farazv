@@ -46,6 +46,8 @@ test("JSON reader counts streamed UTF-8 bytes and cancels an oversized body", as
 test("JSON reader distinguishes type, absent body and invalid JSON", async () => {
   for (const [input, reason] of [
     [request("{}", "text/plain"), "unsupported-type"],
+    [request("{}", "application/jsonp"), "unsupported-type"],
+    [request("{}", "application/json-invalid"), "unsupported-type"],
     [request(), "missing"],
     [request(""), "invalid-json"],
     [request("{"), "invalid-json"]
@@ -96,4 +98,35 @@ test("admin and upload readers retain their own shape rules, limits and errors",
         error.status === 400
     );
   }
+});
+
+test("JSON reader releases the stream lock after success and malformed input", async () => {
+  const valid = request("{}");
+  await readJsonBody(valid, 100);
+  assert.equal(valid.body?.locked, false);
+  const invalid = request("{");
+  await assert.rejects(readJsonBody(invalid, 100), JsonBodyError);
+  assert.equal(invalid.body?.locked, false);
+});
+
+test("a failed stream cancellation cannot replace the oversized-body error", async () => {
+  const stream = new ReadableStream<Uint8Array>({
+    start(controller) {
+      controller.enqueue(new Uint8Array(10));
+    },
+    cancel() {
+      throw new Error("Transport cancellation failed");
+    }
+  });
+  const input = new Request("http://localhost/api/test", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: stream,
+    duplex: "half"
+  } as RequestInit);
+  await assert.rejects(
+    readJsonBody(input, 5),
+    (error) => error instanceof JsonBodyError && error.reason === "too-large"
+  );
+  assert.equal(input.body?.locked, false);
 });

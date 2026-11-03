@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import type { ContentBlock, EditorialEntry } from "@/content/types";
 import { pageMetadata } from "@/lib/seo";
 import { editorialStructuredData } from "@/lib/structured-data";
@@ -112,7 +113,12 @@ export function EditorialDetail({
             {entry.excerpt && <p className={styles.lead}>{entry.excerpt}</p>}
           </header>
           {entry.cover && (
-            <figure className={styles.cover}>
+            <figure
+              className={styles.cover}
+              style={
+                { "--cover-width": `${entry.cover.width}px` } as CSSProperties
+              }
+            >
               {entry.isPoster ? (
                 <ImageLightbox image={entry.cover} label="Zväčšiť plagát:">
                   {cover}

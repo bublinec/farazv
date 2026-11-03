@@ -22,12 +22,12 @@ export async function readJsonBody(
   request: Request,
   maxBytes: number
 ): Promise<unknown> {
-  if (
-    !request.headers
-      .get("content-type")
-      ?.toLowerCase()
-      .startsWith("application/json")
-  )
+  const mediaType = request.headers
+    .get("content-type")
+    ?.split(";", 1)[0]
+    .trim()
+    .toLowerCase();
+  if (mediaType !== "application/json")
     throw new JsonBodyError("unsupported-type");
 
   const reader = request.body?.getReader();
@@ -35,15 +35,20 @@ export async function readJsonBody(
 
   const chunks: Uint8Array[] = [];
   let bytes = 0;
-  while (true) {
-    const { value, done } = await reader.read();
-    if (done) break;
-    bytes += value.byteLength;
-    if (bytes > maxBytes) {
-      await reader.cancel();
-      throw new JsonBodyError("too-large");
+  try {
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      bytes += value.byteLength;
+      if (bytes > maxBytes) {
+        // A broken transport must not replace or delay the size-limit response.
+        void reader.cancel().catch(() => {});
+        throw new JsonBodyError("too-large");
+      }
+      chunks.push(value);
     }
-    chunks.push(value);
+  } finally {
+    reader.releaseLock();
   }
 
   try {

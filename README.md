@@ -14,6 +14,7 @@ Content inventory and historical launch records are in the [project overview](do
 [Decisions](docs/remake/decisions.md) ·
 [Routes](docs/routes.md) · [Migration](docs/migration.md) ·
 [Production readiness](docs/production-readiness.md) ·
+[Codebase review](docs/codebase-review-2026-11-03.md) ·
 [Operations](docs/operations.md) · [Editor guide](docs/editor-guide.md)
 
 ## Run locally
