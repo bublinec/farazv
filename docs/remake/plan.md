@@ -627,3 +627,26 @@ those authenticated actions were not performed by this verification.
 - Vercel Root Directory changed from `remake` to empty. GitHub rename retained the
   same repository ID and the branch push triggered preview deployment
   `dpl_6uLhVkTcnp5GFD4W4rTKugZthghJ` from `bublinec/farazv`.
+
+
+### Local storage cleanup — 3 November 2026
+
+- Removed legacy Gatsby dependencies (757 MB), cache (6.2 GB), generated public
+  output (351 MB), both inactive Next build directories, browser test artifacts
+  and obsolete tracked Playwright logs/snapshots/Yarn install state.
+- Retained root application dependencies, all active and legacy sources, credentials,
+  database backups, private recovery tooling and the saved admin Git history.
+  Hash verification covered 772 protected files with no changes after deletion.
+- Removed 100 full-page/iteration screenshots. The local original-site archive
+  retains six full-page references, small index thumbnails, all 93 HTML files
+  (31 source + 31 desktop + 31 mobile) and shared assets. Updated its index and
+  notes; every index-local file link resolves.
+- Working folder measured 9,768,400 KiB before cleanup and approximately 892 MiB
+  afterward, before Git object packing; 903,940 KiB (883 MiB) after packing without
+  pruning history. Added ignore coverage for Yarn install state.
+- Prior root-layout production deployment `dpl_92udQ3gxmTnFQ9pCRDAnqo2SzJEn` is READY.
+  Direct Vercel checks returned homepage HTTP 200, health `ok`, and WWW HTTP 308
+  preserving path/query. Some recursive DNS caches still reached the former host;
+  the .sk registry already delegates to the Vercel nameservers.
+- This storage-only cleanup changes no application behavior. Full application
+  checks were not repeated; the previously recorded test failures remain open.
