@@ -53,7 +53,7 @@
 
 .dayToggle {
   display: grid;
-  grid-template-columns: 40px minmax(0, 1fr) 17px;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
   width: 100%;
   text-align: left;
   align-items: center;
@@ -86,27 +86,20 @@
   color: var(--muted);
 }
 
-.weekday {
-  margin-bottom: 5px;
-  font-size: 0.72rem;
-  line-height: 1.2;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
 .dayName {
   min-width: 0;
   overflow-wrap: anywhere;
 }
 
-.liturgyTitle {
+.dayHeading {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 4px 10px;
-  font-size: 1rem;
-  line-height: 1.45;
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.35;
+  text-transform: capitalize;
 }
 
 .dayName small {
@@ -134,9 +127,34 @@
   letter-spacing: 0.04em;
 }
 
-.dayToggle > svg {
-  grid-column: 3;
+.dayName .liturgyTitle {
   color: var(--muted);
+}
+
+.dayEnd {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.times {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(5ch, 1fr));
+  width: calc(3 * 5ch + 2 * 8px);
+  gap: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+
+.times > span {
+  white-space: nowrap;
+}
+
+.dayEnd > svg {
   transition: transform 0.2s;
 }
 
@@ -169,7 +187,7 @@
 .time {
   color: var(--blue);
   font-weight: 500;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-variant-numeric: tabular-nums;
 }
 
@@ -179,7 +197,7 @@
 }
 
 .massName {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   margin: 0 0 4px;
   color: var(--blue);
@@ -187,20 +205,20 @@
 
 .intention {
   color: var(--muted);
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;
 }
 
 .celebrant {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--gold-dark);
   padding-top: 3px;
   overflow-wrap: anywhere;
 }
 
 .empty {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--muted);
 }
 
@@ -213,10 +231,11 @@
   .dayToggle {
     grid-template-columns: 32px minmax(0, 1fr) 17px;
     padding: 13px 12px;
-    gap: 12px;
+    gap: 6px 12px;
   }
 
   .dayNumber {
+    grid-row: 1 / span 2;
     font-size: 1.5rem;
   }
 
@@ -224,8 +243,21 @@
     grid-column: 2;
   }
 
-  .dayToggle > svg {
+  .dayEnd {
+    display: contents;
+  }
+
+  .times {
+    grid-column: 2;
+    grid-row: 2;
+    width: min(100%, calc(3 * 5ch + 2 * 8px));
+  }
+
+  .dayEnd > svg {
     grid-column: 3;
+    grid-row: 1 / span 2;
+    align-self: center;
+    color: var(--muted);
   }
 
   .details {

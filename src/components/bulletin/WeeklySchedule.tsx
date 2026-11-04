@@ -93,16 +93,6 @@ export function WeeklySchedule({
                   aria-controls={`schedule-${day.date}`}
                 >
                   <span className={styles.dayNumber}>
-                    <span className={styles.weekday}>
-                      <span aria-hidden="true">
-                        {formatDate(day.date, {
-                          weekday: "short",
-                          day: undefined,
-                          month: undefined
-                        })}
-                      </span>
-                      <span className="srOnly">{weekday}</span>
-                    </span>
                     {formatDate(day.date, {
                       day: "numeric",
                       month: undefined
@@ -112,10 +102,15 @@ export function WeeklySchedule({
                     </small>
                   </span>
                   <span className={styles.dayName}>
-                    <span className={styles.liturgyTitle}>
-                      {day.isRegular ? weekday : liturgy.liturgy || weekday}
+                    <span className={styles.dayHeading}>
+                      {weekday}
                       {day.date === today ? <em>Dnes</em> : null}
                     </span>
+                    {!day.isRegular && liturgy.liturgy ? (
+                      <small className={styles.liturgyTitle}>
+                        {liturgy.liturgy}
+                      </small>
+                    ) : null}
                     {day.isRegular ? (
                       <small>
                         {day.masses.length
@@ -131,11 +126,25 @@ export function WeeklySchedule({
                       <small>Bez svätej omše</small>
                     ) : null}
                   </span>
-                  <Icon
-                    name="chevron"
-                    size={17}
-                    className={open ? styles.rotated : undefined}
-                  />
+                  <span className={styles.dayEnd}>
+                    {day.status !== "no-masses" && day.masses.length ? (
+                      <span className={styles.times}>
+                        {day.masses.map((mass, index) => (
+                          <span key={`${mass.time}-${index}`}>
+                            <time dateTime={mass.time}>{mass.time}</time>
+                            {index < day.masses.length - 1 ? (
+                              <span className="srOnly">, </span>
+                            ) : null}
+                          </span>
+                        ))}
+                      </span>
+                    ) : null}
+                    <Icon
+                      name="chevron"
+                      size={17}
+                      className={open ? styles.rotated : undefined}
+                    />
+                  </span>
                 </button>
               </h3>
               <div

@@ -881,3 +881,24 @@ those authenticated actions were not performed by this verification.
 - Follow-up at the owner's request: removed the “Dnešné omše” / “Oznamy”
   shortcut navigation and its unused styles, and removed obsolete shortcut-link
   assertions from the existing bulletin test. Section anchor IDs remain valid.
+
+
+### Full weekday headings and quiet time previews — 4 November 2026
+
+- The owner preferred restoring full weekday headings and a smaller time preview
+  near the arrow. Full weekday headings are now 20.7 px, with complete liturgy
+  text at 16.2 px and existing rank/observance text retained. Date abbreviations
+  no longer repeat the weekday.
+- A muted 13.5 px preview sits above the desktop chevron in aligned columns,
+  without separator dots or deduplication. Narrow schedule columns place the
+  preview beneath the liturgy, preserving text width; larger text can reflow to
+  fewer columns. Expanded intentions/designations use 17.1 px, times 18.9 px and
+  celebrants 15.3 px, so the main day heading has a clearer hierarchy.
+- Optional designations still have no location fallback. Full liturgy details,
+  no-Mass/unpublished status, today's initial expansion and the existing page
+  columns are preserved. The removed shortcut links remain absent.
+- Verification: fixture production build, formatter/types and 83 unit passes
+  (one opt-in database skip), plus six focused browser/accessibility passes.
+  Visual checks at 320, 390, 768, 801 and 1440 px and 200% text sizing found no
+  schedule overflow or browser errors. The owned preview used port 3114 and
+  `.next-preview`; no deployment or live content change was performed.

@@ -189,7 +189,8 @@ test("weekly bulletin shows Sunday to Sunday and expands days without losing tod
   await expect(days).toHaveCount(8);
   await expect(days.first()).toHaveAccessibleName(/nedeľa/i);
   await expect(days.last()).toHaveAccessibleName(/nedeľa/i);
-  await expect(days.first()).not.toContainText("07:00");
+  await expect(days.first().getByText("nedeľa", { exact: true })).toBeVisible();
+  await expect(days.first().getByText("07:00", { exact: true })).toBeVisible();
   await expect(days.first()).toContainText("Nedeľa v cezročnom období");
   const saturday = days.filter({
     hasText: "Preblahoslavenej Panny Márie v sobotu"
