@@ -902,3 +902,6 @@ those authenticated actions were not performed by this verification.
   Visual checks at 320, 390, 768, 801 and 1440 px and 200% text sizing found no
   schedule overflow or browser errors. The owned preview used port 3114 and
   `.next-preview`; no deployment or live content change was performed.
+
+- Follow-up: increased the header time preview from 13.5 px to 15.3 px at the
+  owner's request; its aligned grid and muted color are retained.

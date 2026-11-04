@@ -144,7 +144,7 @@
   grid-template-columns: repeat(auto-fit, minmax(5ch, 1fr));
   width: calc(3 * 5ch + 2 * 8px);
   gap: 2px 8px;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 400;
   line-height: 1.45;
   font-variant-numeric: tabular-nums;
