@@ -53,6 +53,10 @@ const SEO: React.FC<SEOProps> = (props) => {
   const siteKeywords = [...keywords, props.keywords].join(",");
   const metaData = [
     {
+      name: "robots",
+      content: "noindex, follow",
+    },
+    {
       name: "canonical",
       content: siteUrl,
     },

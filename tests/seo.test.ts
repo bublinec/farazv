@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { isPublicRelease, pageMetadata } from "../src/lib/seo";
+import {
+  compactSearchDescription,
+  isPublicRelease,
+  pageMetadata
+} from "../src/lib/seo";
 import {
   serializeStructuredData,
   editorialStructuredData,
@@ -37,11 +41,11 @@ test("page sharing has its own canonical, Slovak metadata and image fallback", (
   const metadata = pageMetadata({
     title: "Kontakt",
     description: "Kontakty farnosti",
-    path: "/kontakt"
+    path: "/informacie"
   });
   assert.equal(
     metadata.alternates?.canonical,
-    new URL("/kontakt", siteConfig.url).href
+    new URL("/informacie", siteConfig.url).href
   );
   assert.equal(metadata.openGraph?.title, "Kontakt");
   assert.equal(metadata.twitter?.title, "Kontakt");
@@ -52,6 +56,45 @@ test("page sharing has its own canonical, Slovak metadata and image fallback", (
       .description!,
     /Oznam/
   );
+});
+
+test("search copy describes contact services independently of the visible welcome heading", () => {
+  const metadata = pageMetadata({
+    title: "Sme tu pre vás",
+    description: "Uvítací text",
+    path: "/kontakt"
+  });
+  assert.equal(metadata.title, "Kontakt a úradné hodiny");
+  assert.match(metadata.description!, /Telefón, e-mail/);
+  assert.equal(metadata.openGraph?.title, metadata.title);
+  assert.equal(metadata.twitter?.description, metadata.description);
+});
+
+test("search summaries normalize whitespace and shorten long excerpts at a word boundary", () => {
+  assert.equal(compactSearchDescription("  Krátky\n text.  "), "Krátky text.");
+  const source = "Farský život a spoločné stretnutia vo Zvolene. ".repeat(6);
+  const summary = compactSearchDescription(source);
+  assert.ok(summary.length <= 160);
+  assert.ok(summary.endsWith("…"));
+  assert.ok(source.startsWith(summary.slice(0, -1) + " "));
+  assert.equal(compactSearchDescription(" "), "");
+});
+
+test("recurring magazine headings get distinct search titles without changing entry titles", () => {
+  const input = {
+    title: "Krátke správy",
+    description: "Správy z farnosti"
+  };
+  const metadata = [
+    "kratke-spravy-1",
+    "kratke-spravy-2",
+    "kratke-spravy-3"
+  ].map((slug) =>
+    pageMetadata({ ...input, path: `/farnost/nase-spolocenstvo/${slug}` })
+  );
+  assert.equal(new Set(metadata.map((item) => item.title)).size, 3);
+  assert.equal(input.title, "Krátke správy");
+  assert.ok(metadata.every((item) => item.description!.length <= 160));
 });
 
 test("structured data preserves text while preventing script breakout and invents no author", () => {

@@ -40,6 +40,12 @@ for (const route of [
     );
     await expect(page.locator("main h1")).toHaveCount(1);
     await expect(page.locator("html")).toHaveAttribute("lang", "sk");
+    if (route === "/kontakt") {
+      await expect(page).toHaveTitle(
+        "Kontakt a úradné hodiny | Farnosť Zvolen – mesto"
+      );
+      await expect(page.locator("main h1")).toHaveText("Sme tu pre vás");
+    }
     if (route === "/") {
       const data = await page
         .locator('script[type="application/ld+json"]')

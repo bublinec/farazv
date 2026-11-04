@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { aerialImage } from "@/content/assets";
 import { siteConfig } from "@/content/site";
 import type { MediaAsset } from "@/content/types";
+import { searchMetadataByPath } from "@/content/search-metadata";
 
 type IndexingEnvironment = {
   SITE_INDEXING_ENABLED?: string;
@@ -40,8 +41,17 @@ export function pageMetadata({
   absoluteTitle?: boolean;
 }): Metadata {
   const canonical = new URL(path, siteConfig.url).href;
-  description =
-    description.trim() || `${title} · ${siteConfig.name} ${siteConfig.city}`;
+  const copy = searchMetadataByPath[path];
+  title = copy?.title ?? title;
+  description = compactSearchDescription(
+    copy?.description ||
+      description ||
+      `${title} · ${siteConfig.name} ${siteConfig.city}`
+  );
+  if (!description)
+    description = compactSearchDescription(
+      `${title} · ${siteConfig.name} ${siteConfig.city}`
+    );
   const shareImage = {
     url: image.src,
     width: image.width,
@@ -75,4 +85,16 @@ export function pageMetadata({
       images: [{ url: image.src, alt: image.alt || title }]
     }
   };
+}
+
+/** Keep fallback excerpts concise without cutting a word or changing reading copy. */
+export function compactSearchDescription(value: string): string {
+  const text = value.replace(/\s+/g, " ").trim();
+  if (text.length <= 160) return text;
+
+  const prefix = text.slice(0, 159);
+  const boundary = prefix.lastIndexOf(" ");
+  return `${prefix
+    .slice(0, boundary > 0 ? boundary : prefix.length)
+    .trimEnd()}…`;
 }
