@@ -930,3 +930,10 @@ those authenticated actions were not performed by this verification.
 - Reviewed React effect cleanup, refs, server/client props and keyboard behavior.
   The owned compiled preview used port 3114 and `.next-preview`; other development
   servers, live parish content and provider settings were preserved.
+
+- Typography follow-up: reduced wrapped liturgy-title line height from 1.45 to
+  1.3 and Mass-intention line height from 1.6 to 1.4, keeping existing font sizes
+  and row padding. Checked multi-line liturgy and a temporary long intention in
+  the local browser at 320, 390 and 1440 px without overflow. The fixture build,
+  formatter/types, 83 unit tests (one opt-in skip) and nine focused browser checks
+  passed. No source text, data or application behavior changed.
