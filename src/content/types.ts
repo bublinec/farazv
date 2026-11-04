@@ -47,7 +47,7 @@ export interface Mass {
   time: string;
   celebrant?: string;
   intention?: string;
-  /** Legacy location; merged into the designation in the editor and public display. */
+  /** Legacy location; retained for editing and other schedule views. */
   location?: string;
   label?: string;
 }

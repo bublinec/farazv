@@ -1,15 +1,29 @@
+.schedule {
+  min-width: 0;
+  container-type: inline-size;
+}
+
 .heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px 20px;
-  margin-bottom: 25px;
+  gap: 8px 20px;
+  margin-bottom: 20px;
 }
+
 .heading h2 {
   font-size: 1.85rem;
   margin-bottom: 0;
 }
+
+.weekRange {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 .heading button {
   border: 0;
   background: transparent;
@@ -21,71 +35,87 @@
   padding: 5px 0;
   flex-shrink: 0;
 }
+
 .days {
   border-top: 1px solid var(--line);
 }
+
 .day {
   border: 1px solid var(--line);
   border-top: 0;
+  scroll-margin-top: 24px;
 }
+
 .day h3 {
   margin: 0;
   font-weight: 400;
 }
+
 .dayToggle {
-  display: flex;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) minmax(0, 160px) 17px;
   width: 100%;
   text-align: left;
   align-items: center;
-  gap: 18px;
-  padding: 20px;
+  gap: 16px;
+  padding: 17px 20px;
   background: var(--white);
   color: var(--ink);
   border: 0;
 }
+
 .dayToggle:hover {
   background: var(--paper);
 }
+
 .dayNumber {
   display: flex;
   flex-direction: column;
   text-align: center;
   color: var(--blue);
   font-size: 1.8rem;
-  min-width: 40px;
   line-height: 1.1;
+  font-variant-numeric: tabular-nums;
 }
+
 .dayNumber small {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-top: 7px;
+  margin-top: 5px;
   color: var(--muted);
 }
+
 .dayName {
-  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
+
 .dayName > span {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 4px 10px;
   font-size: 1.05rem;
   text-transform: capitalize;
 }
+
 .dayName small {
   display: block;
   color: var(--muted);
   font-size: 0.9rem;
-  line-height: 1.65;
-  margin-top: 6px;
+  line-height: 1.45;
+  margin-top: 4px;
   max-width: 32ch;
 }
+
 .dayName .liturgyType {
   margin-top: 2px;
   color: var(--gold-dark);
   font-size: 0.8rem;
-  line-height: 1.45;
+  line-height: 1.4;
 }
+
 .dayName em {
   font-size: 0.7rem;
   text-transform: uppercase;
@@ -95,102 +125,147 @@
   padding: 4px 6px;
   letter-spacing: 0.04em;
 }
+
 .times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 7px;
   font-size: 0.9rem;
-  color: var(--muted);
-  max-width: 160px;
-  line-height: 1.8;
+  font-weight: 500;
+  color: var(--blue);
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
 }
-.dayToggle > svg {
+
+.times > span {
+  white-space: nowrap;
+}
+
+.times > span:not(:last-child)::after {
+  content: "·";
+  margin-left: 7px;
   color: var(--muted);
-  flex-shrink: 0;
+}
+
+.times:empty {
+  display: none;
+}
+
+.dayToggle > svg {
+  grid-column: 4;
+  color: var(--muted);
   transition: transform 0.2s;
 }
+
 .rotated {
   transform: rotate(180deg);
 }
+
 .today {
   border-left: 3px solid var(--gold);
 }
+
 .today .dayToggle {
   background: #f9f7f0;
 }
+
 .details {
-  padding: 0 20px 15px 78px;
+  padding: 0 20px 12px 76px;
   background: var(--white);
 }
+
 .mass {
   display: grid;
   grid-template-columns: 68px minmax(0, 1fr) auto;
   align-items: start;
-  gap: 14px;
+  gap: 12px;
   border-top: 1px solid var(--line);
-  padding: 17px 0;
+  padding: 14px 0;
 }
+
 .time {
   color: var(--blue);
   font-weight: 500;
   font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
 }
+
+.massBody {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .massName {
   font-size: 1rem;
-  margin: 0;
+  font-weight: 500;
+  margin: 0 0 4px;
   color: var(--blue);
 }
-.massName > span {
-  color: var(--muted);
-}
+
 .intention {
   color: var(--muted);
   font-size: 1rem;
-  line-height: 1.7;
-  margin-top: 4px;
-  margin-bottom: 0;
+  line-height: 1.6;
+  margin: 0;
 }
+
 .celebrant {
   font-size: 0.9rem;
   color: var(--gold-dark);
   padding-top: 3px;
+  overflow-wrap: anywhere;
 }
+
 .empty {
   font-size: 1rem;
   color: var(--muted);
 }
-@media (max-width: 650px) {
-  .heading {
-    align-items: center;
-  }
+
+/* The schedule also needs its compact layout inside narrow desktop columns. */
+@container (max-width: 560px) {
   .heading h2 {
     font-size: 1.5rem;
   }
-  .heading button {
-    font-size: 0.9rem;
-  }
+
   .dayToggle {
-    padding: 17px 13px;
-    gap: 12px;
-    flex-wrap: wrap;
+    grid-template-columns: 32px minmax(0, 1fr) 17px;
+    padding: 13px 12px;
+    gap: 6px 12px;
+    align-items: start;
   }
+
   .dayNumber {
-    min-width: 32px;
+    grid-row: 1 / span 2;
+    align-self: center;
     font-size: 1.5rem;
   }
+
   .dayName {
-    min-width: 150px;
+    grid-column: 2;
   }
-  .dayName small {
-    max-width: 210px;
-  }
+
   .times {
-    display: none;
+    grid-column: 2;
+    grid-row: 2;
+    line-height: 1.45;
   }
+
+  .dayToggle > svg {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
   .details {
-    padding: 0 14px 8px;
+    padding: 0 12px 6px;
   }
+
   .mass {
-    gap: 8px 12px;
-    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 4px 10px;
+    grid-template-columns: 56px minmax(0, 1fr);
+    padding: 12px 0;
   }
+
   .celebrant {
     grid-column: 2;
     padding-top: 0;

@@ -6,9 +6,25 @@
   padding: 6px 11px;
   white-space: nowrap;
 }
+.jumpLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  margin-bottom: 20px;
+}
+
+.jumpLinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 0.9rem;
+  text-decoration-thickness: 1px;
+}
+
 .layout {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
   gap: 55px;
   align-items: start;
 }
@@ -36,6 +52,7 @@
   line-height: 1.7;
 }
 .aside {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 27px;
@@ -44,30 +61,39 @@
   padding: 32px;
   background: var(--paper);
   border-top: 2px solid var(--gold);
+  scroll-margin-top: 24px;
 }
-.announcements h2 {
+.announcements > h2 {
   font-size: 1.6rem;
   margin-bottom: 25px;
 }
-.announcements ol {
+.announcements > ol {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-.announcements li {
+.announcements > ol > li {
   display: flex;
   align-items: start;
-  gap: 15px;
-  margin-bottom: 24px;
+  gap: 10px;
+  margin-bottom: 28px;
 }
-.announcements li > span {
+.announcements > ol > li > span {
   color: var(--gold-dark);
-  font-size: 0.68rem;
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
   padding-top: 3px;
 }
-.announcements li p {
-  font-size: 0.84rem;
-  line-height: 1.85;
+.announcements > ol > li > div {
+  min-width: 0;
+  --prose-font-size: 0.95rem;
+  --prose-line-height: 1.65;
+  --prose-paragraph-gap: 1rem;
+}
+
+.announcements > ol > li:last-child {
+  margin-bottom: 24px;
 }
 .thanks {
   border-top: 1px solid var(--line);
@@ -92,15 +118,21 @@
   color: var(--muted);
 }
 .contact > a:not(:last-child) {
-  display: block;
-  text-decoration: none;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   font-size: 1.15rem;
   margin-bottom: 20px;
 }
+.contact > a:last-child {
+  min-height: 44px;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 1000px) {
   .layout {
     gap: 30px;
-    grid-template-columns: 1.4fr 1fr;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
   }
   .announcements {
     padding: 24px;
@@ -110,19 +142,21 @@
   .layout {
     grid-template-columns: 1fr;
   }
-  .aside {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    align-items: start;
-  }
 }
 @media (max-width: 550px) {
   .preview {
     font-size: 0.55rem;
     padding: 5px 8px;
   }
-  .aside {
-    display: flex;
+  .section {
+    padding-top: 32px;
+  }
+  .jumpLinks {
+    gap: 4px 18px;
+    margin-bottom: 16px;
+  }
+  .announcements {
+    padding: 22px 18px;
   }
   .contact {
     padding: 25px;

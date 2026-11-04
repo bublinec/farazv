@@ -36,6 +36,7 @@ export default async function BulletinPage() {
           title="Farské oznamy"
           description="Sväté omše, úmysly a aktuálne oznamy na jednom mieste."
           image={aerialImage}
+          compact
         />
         <section className="container section">
           <Unavailable title="Rozpis je dočasne nedostupný." />
@@ -57,6 +58,7 @@ export default async function BulletinPage() {
         title="Farské oznamy"
         description="Sväté omše, úmysly a aktuálne oznamy na jednom mieste."
         image={aerialImage}
+        compact
       />
       <BulletinContent
         days={days}

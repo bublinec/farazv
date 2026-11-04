@@ -8,12 +8,14 @@ export function PageHero({
   route,
   title,
   description,
-  image
+  image,
+  compact = false
 }: {
   route?: string;
   title: string;
   description?: string;
   image?: MediaAsset;
+  compact?: boolean;
 }) {
   const cover = route ? getPageCover(route) : undefined;
   const photograph = cover?.image ?? image;
@@ -30,7 +32,7 @@ export function PageHero({
     <section
       className={`pageHero ${styles.hero} ${
         photograph ? styles.photographic : styles.decorative
-      } ${split ? styles.split : ""}`}
+      } ${split ? styles.split : ""} ${compact ? styles.compact : ""}`}
       style={cropStyle}
     >
       {split && photograph ? (

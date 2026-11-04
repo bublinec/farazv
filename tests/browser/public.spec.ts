@@ -189,6 +189,7 @@ test("weekly bulletin shows Sunday to Sunday and expands days without losing tod
   await expect(days).toHaveCount(8);
   await expect(days.first()).toContainText("nedeľa");
   await expect(days.last()).toContainText("nedeľa");
+  await expect(days.first().getByText("07:00", { exact: true })).toBeVisible();
   const firstDate = (await days.first().getAttribute("aria-controls"))!.replace(
     "schedule-",
     ""
@@ -216,6 +217,22 @@ test("weekly bulletin shows Sunday to Sunday and expands days without losing tod
     .getByRole("button", { name: "Rozbaliť celý týždeň", exact: true })
     .click();
   await expect(expandedDays).toHaveCount(8);
+  const schedulePanels = page.locator('main div[id^="schedule-"]');
+  await expect(schedulePanels.getByText("Detská", { exact: true })).toHaveCount(
+    2
+  );
+  await expect(
+    schedulePanels.getByText("Kostol sv. Alžbety", { exact: true })
+  ).toHaveCount(0);
+  await expect(
+    schedulePanels.getByText("Lieskovec", { exact: true })
+  ).toHaveCount(0);
+  await page.getByRole("link", { name: "Oznamy", exact: true }).click();
+  await expect(page).toHaveURL(/#tyzdenne-oznamy$/);
+  await expect(page.locator("#tyzdenne-oznamy")).toBeFocused();
+  await page.getByRole("link", { name: "Dnešné omše", exact: true }).click();
+  await expect(page).toHaveURL(/#day-\d{4}-\d{2}-\d{2}$/);
+  await expect(page.locator('section[id^="day-"]:focus')).toContainText("Dnes");
   await page
     .getByRole("button", { name: "Zbaliť týždeň", exact: true })
     .click();

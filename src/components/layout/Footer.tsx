@@ -107,9 +107,9 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
             rel="noopener noreferrer"
           >
             Juraj Bublinec
-          </a>
-           {" "}·{" "}
-           <a
+          </a>{" "}
+          ·{" "}
+          <a
             href="https://www.linkedin.com/in/filipstasek/"
             target="_blank"
             rel="noopener noreferrer"

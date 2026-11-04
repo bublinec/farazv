@@ -766,6 +766,7 @@ export function getFixtureBulletins(today: CalendarDate): Bulletin[] {
           status: "scheduled" as const,
           masses: (regularSchedule[weekday] ?? []).map((mass, massIndex) => ({
             ...mass,
+            ...(weekday === 0 && massIndex === 3 ? { label: "Detská" } : {}),
             celebrant: ["Farár", "Kaplán", "Hosť"][massIndex % 3],
             intention: "Za farnosť"
           }))

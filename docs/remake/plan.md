@@ -824,3 +824,33 @@ those authenticated actions were not performed by this verification.
   Added a mount-readiness guard and regression; normal pagination, delayed startup
   and failure/retry pass locally. Full CI is required again before merge; the
   failing assertion was retained and no retry/sleep workaround was added.
+
+
+### Bulletin readability — 4 November 2026
+
+- Preserved the desktop schedule-left / notices-right composition and parish
+  photography, serif type and warm colors. Mobile uses a compact 190 px hero,
+  visible collapsed-day Mass times, a date range and 44 px jump links to today
+  and the notices. Narrow schedule columns adapt through a container query.
+- The owner clarified that Mass designation (označenie) is optional. This bulletin
+  view renders only a supplied nonblank `label`, with no location or church-name
+  fallback and no empty designation row. Other schedule views and saved data are
+  unchanged. The explicitly synthetic demo includes occasional designations.
+- Increased notice prose to 17.1 px, reduced mobile insets and kept the support
+  card below notices through 800 px. Scoped list styles to outer notice rows,
+  preserved nested rich-text lists and gave support links 44 px targets. Editorial
+  announcement text and live records were not rewritten.
+- Verified 320, 390, 551, 768, 801, 1024 and 1440 px layouts without horizontal
+  overflow; both jump links fit one row at 320 px. A 200% text-size check found
+  no overflow in the bulletin content. Existing interaction coverage now checks
+  visible mobile times, optional designations, absence of location/fallback
+  names, jump-link focus and Sunday–Sunday expansion behavior.
+- Verification: formatter/types and 83 unit passes (one opt-in database skip),
+  isolated fixture production build, and 25 public/accessibility browser passes
+  (one opt-in historical-image skip) using the suite's fixed 31 October date.
+  The initial baseline formatter failure in the existing footer was corrected
+  with formatting only. React boundaries, state updates, keys and keyboard
+  behavior were reviewed; no dependencies, schema or provider settings changed.
+- Changes are local implementation work; no commit, push or deployment was
+  performed. The owned preview used port 3114 and `.next-preview`; existing
+  development servers were preserved.

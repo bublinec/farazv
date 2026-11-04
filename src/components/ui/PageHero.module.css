@@ -152,6 +152,11 @@
     padding: 30px 0;
   }
 
+  .photographic.compact {
+    min-height: 190px;
+    padding: 24px 0;
+  }
+
   .image {
     width: 100%;
     object-position: var(--cover-mobile-position, center);

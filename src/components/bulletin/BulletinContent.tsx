@@ -26,9 +26,22 @@ export function BulletinContent({
     bulletin?.donations?.filter((item) => item.label || item.amount) ?? [];
 
   return (
-    <section className="section">
+    <section className={`section ${styles.section}`}>
       <div className="container">
         {fixture ? <p className={styles.preview}>Ukážkový rozpis</p> : null}
+        <nav
+          className={styles.jumpLinks}
+          aria-label="Navigácia vo farských oznamoch"
+        >
+          {days.some((day) => day.date === today) ? (
+            <a href={`#day-${today}`}>
+              Dnešné omše <span aria-hidden="true">↓</span>
+            </a>
+          ) : null}
+          <a href="#tyzdenne-oznamy">
+            Oznamy <span aria-hidden="true">↓</span>
+          </a>
+        </nav>
         <div className={styles.layout}>
           <WeeklySchedule
             key={`${days[0]?.date}:${today}`}
@@ -36,8 +49,13 @@ export function BulletinContent({
             today={today}
           />
           <aside className={styles.aside}>
-            <section className={styles.announcements}>
-              <h2>Oznamy</h2>
+            <section
+              className={styles.announcements}
+              id="tyzdenne-oznamy"
+              aria-labelledby="tyzdenne-oznamy-heading"
+              tabIndex={-1}
+            >
+              <h2 id="tyzdenne-oznamy-heading">Oznamy</h2>
               <ol>
                 {bulletin?.announcements.map((announcement, index) => (
                   <li key={`${index}-${announcement}`}>

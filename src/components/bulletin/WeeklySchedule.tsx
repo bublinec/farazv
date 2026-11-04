@@ -4,7 +4,6 @@ import { useState } from "react";
 import type { CalendarDate, ScheduleDay } from "@/content/types";
 import { formatDate } from "@/lib/calendar";
 import { splitLiturgy } from "@/lib/liturgy-day";
-import { getMassLabel } from "@/lib/mass";
 import { Icon } from "@/components/ui/Icon";
 import styles from "./WeeklySchedule.module.css";
 
@@ -19,7 +18,10 @@ export function WeeklySchedule({
     ? today
     : days[0]?.date ?? today;
   const [expanded, setExpanded] = useState<CalendarDate[]>([initialDay]);
-  const allExpanded = expanded.length === days.length;
+  const allExpanded = days.length > 0 && expanded.length === days.length;
+  const firstDay = days[0];
+  const lastDay = days.at(-1);
+
   function toggle(date: CalendarDate) {
     setExpanded((current) =>
       current.includes(date)
@@ -27,10 +29,30 @@ export function WeeklySchedule({
         : [...current, date]
     );
   }
+
   return (
-    <div>
+    <div className={styles.schedule}>
       <div className={styles.heading}>
-        <h2>Rozpis svätých omší</h2>
+        <div>
+          <h2>Rozpis svätých omší</h2>
+          {firstDay && lastDay ? (
+            <p className={styles.weekRange}>
+              <time dateTime={firstDay.date}>
+                {formatDate(firstDay.date, {
+                  month: "long",
+                  year:
+                    firstDay.date.slice(0, 4) === lastDay.date.slice(0, 4)
+                      ? undefined
+                      : "numeric"
+                })}
+              </time>
+              {" – "}
+              <time dateTime={lastDay.date}>
+                {formatDate(lastDay.date, { month: "long", year: "numeric" })}
+              </time>
+            </p>
+          ) : null}
+        </div>
         <button
           type="button"
           onClick={() =>
@@ -52,7 +74,9 @@ export function WeeklySchedule({
               className={`${styles.day} ${
                 day.date === today ? styles.today : ""
               }`}
+              id={`day-${day.date}`}
               aria-labelledby={`day-heading-${day.date}`}
+              tabIndex={-1}
             >
               <h3 id={`day-heading-${day.date}`}>
                 <button
@@ -96,7 +120,9 @@ export function WeeklySchedule({
                   <span className={styles.times}>
                     {day.status === "no-masses"
                       ? "Bez svätej omše"
-                      : day.masses.map((mass) => mass.time).join(" · ")}
+                      : day.masses.map((mass, index) => (
+                          <span key={`${mass.time}-${index}`}>{mass.time}</span>
+                        ))}
                   </span>
                   <Icon
                     name="chevron"
@@ -118,10 +144,10 @@ export function WeeklySchedule({
                   day.masses.map((mass, index) => (
                     <div className={styles.mass} key={`${mass.time}-${index}`}>
                       <strong className={styles.time}>{mass.time}</strong>
-                      <div>
-                        <p className={styles.massName}>
-                          {getMassLabel(mass) || "Kostol sv. Alžbety"}
-                        </p>
+                      <div className={styles.massBody}>
+                        {mass.label?.trim() ? (
+                          <p className={styles.massName}>{mass.label}</p>
+                        ) : null}
                         {mass.intention ? (
                           <p className={styles.intention}>{mass.intention}</p>
                         ) : null}
