@@ -94,11 +94,11 @@
   margin-bottom: 17px;
 }
 .contact h3 {
-  font-size: 1.07rem;
+  font-size: 1.2rem;
   margin-bottom: 12px;
 }
 .contact p {
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   color: var(--muted);
 }
 .contact > a:not(:last-child) {

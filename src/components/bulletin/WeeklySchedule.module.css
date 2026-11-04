@@ -53,7 +53,7 @@
 
 .dayToggle {
   display: grid;
-  grid-template-columns: 40px minmax(0, 1fr) auto;
+  grid-template-columns: 40px minmax(0, 1fr) 17px;
   width: 100%;
   text-align: left;
   align-items: center;
@@ -131,30 +131,8 @@
   color: var(--muted);
 }
 
-.dayEnd {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
+.dayToggle > svg {
   color: var(--muted);
-}
-
-.times {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(5ch, 1fr));
-  width: calc(3 * 5ch + 2 * 8px);
-  gap: 2px 8px;
-  font-size: 0.85rem;
-  font-weight: 400;
-  line-height: 1.45;
-  font-variant-numeric: tabular-nums;
-}
-
-.times > span {
-  white-space: nowrap;
-}
-
-.dayEnd > svg {
   transition: transform 0.2s;
 }
 
@@ -231,33 +209,15 @@
   .dayToggle {
     grid-template-columns: 32px minmax(0, 1fr) 17px;
     padding: 13px 12px;
-    gap: 6px 12px;
+    gap: 12px;
   }
 
   .dayNumber {
-    grid-row: 1 / span 2;
     font-size: 1.5rem;
   }
 
   .dayName {
     grid-column: 2;
-  }
-
-  .dayEnd {
-    display: contents;
-  }
-
-  .times {
-    grid-column: 2;
-    grid-row: 2;
-    width: min(100%, calc(3 * 5ch + 2 * 8px));
-  }
-
-  .dayEnd > svg {
-    grid-column: 3;
-    grid-row: 1 / span 2;
-    align-self: center;
-    color: var(--muted);
   }
 
   .details {

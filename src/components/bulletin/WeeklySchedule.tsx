@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CalendarDate, ScheduleDay } from "@/content/types";
 import { formatDate } from "@/lib/calendar";
 import { splitLiturgy } from "@/lib/liturgy-day";
@@ -9,10 +9,12 @@ import styles from "./WeeklySchedule.module.css";
 
 export function WeeklySchedule({
   days,
-  today
+  today,
+  scrollToTodayOnMobile = false
 }: {
   days: ScheduleDay[];
   today: CalendarDate;
+  scrollToTodayOnMobile?: boolean;
 }) {
   const initialDay = days.some((day) => day.date === today)
     ? today
@@ -21,6 +23,77 @@ export function WeeklySchedule({
   const allExpanded = days.length > 0 && expanded.length === days.length;
   const firstDay = days[0];
   const lastDay = days.at(-1);
+  const todaySection = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (
+      !scrollToTodayOnMobile ||
+      !window.matchMedia("(max-width: 800px)").matches
+    )
+      return;
+
+    const target = todaySection.current;
+    const hash = window.location.hash;
+    const todayAnchors = [
+      `#day-${today}`,
+      `#day-heading-${today}`,
+      `#schedule-${today}`
+    ];
+    if (!target || (hash && !todayAnchors.includes(hash))) return;
+
+    let cancelled = false;
+    let frame = 0;
+    const cancel = () => {
+      cancelled = true;
+    };
+    const settleAndScroll = () => {
+      void document.fonts.ready.then(() => {
+        if (cancelled) return;
+
+        // Run after native history/hash restoration and the final font layout.
+        frame = window.requestAnimationFrame(() => {
+          frame = window.requestAnimationFrame(() => {
+            if (
+              cancelled ||
+              !target.isConnected ||
+              (window.location.hash &&
+                !todayAnchors.includes(window.location.hash))
+            )
+              return;
+
+            window.scrollTo({
+              top: Math.max(
+                0,
+                target.getBoundingClientRect().top + window.scrollY - 24
+              ),
+              behavior: "instant"
+            });
+          });
+        });
+      });
+    };
+
+    const interactions = [
+      "pointerdown",
+      "touchstart",
+      "wheel",
+      "keydown"
+    ] as const;
+    for (const event of interactions) {
+      window.addEventListener(event, cancel, { once: true, passive: true });
+    }
+
+    if (document.readyState === "complete") settleAndScroll();
+    else window.addEventListener("load", settleAndScroll, { once: true });
+
+    return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("load", settleAndScroll);
+      for (const event of interactions)
+        window.removeEventListener(event, cancel);
+    };
+  }, [scrollToTodayOnMobile, today]);
 
   function toggle(date: CalendarDate) {
     setExpanded((current) =>
@@ -81,6 +154,7 @@ export function WeeklySchedule({
                 day.date === today ? styles.today : ""
               }`}
               id={`day-${day.date}`}
+              ref={day.date === today ? todaySection : undefined}
               aria-labelledby={`day-heading-${day.date}`}
               tabIndex={-1}
             >
@@ -126,25 +200,11 @@ export function WeeklySchedule({
                       <small>Bez svätej omše</small>
                     ) : null}
                   </span>
-                  <span className={styles.dayEnd}>
-                    {day.status !== "no-masses" && day.masses.length ? (
-                      <span className={styles.times}>
-                        {day.masses.map((mass, index) => (
-                          <span key={`${mass.time}-${index}`}>
-                            <time dateTime={mass.time}>{mass.time}</time>
-                            {index < day.masses.length - 1 ? (
-                              <span className="srOnly">, </span>
-                            ) : null}
-                          </span>
-                        ))}
-                      </span>
-                    ) : null}
-                    <Icon
-                      name="chevron"
-                      size={17}
-                      className={open ? styles.rotated : undefined}
-                    />
-                  </span>
+                  <Icon
+                    name="chevron"
+                    size={17}
+                    className={open ? styles.rotated : undefined}
+                  />
                 </button>
               </h3>
               <div

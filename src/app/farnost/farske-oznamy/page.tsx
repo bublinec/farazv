@@ -66,6 +66,7 @@ export default async function BulletinPage() {
         bulletin={bulletin as BulletinDocument | undefined}
         phone={settings?.phone}
         fixture={isFixtureMode()}
+        scrollToTodayOnMobile
       />
 
       {settings ? (

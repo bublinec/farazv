@@ -14,13 +14,15 @@ export function BulletinContent({
   today,
   bulletin,
   phone,
-  fixture = false
+  fixture = false,
+  scrollToTodayOnMobile = false
 }: {
   days: ScheduleDay[];
   today: CalendarDate;
   bulletin?: Pick<BulletinDocument, "announcements" | "donations">;
   phone?: string;
   fixture?: boolean;
+  scrollToTodayOnMobile?: boolean;
 }) {
   const donations =
     bulletin?.donations?.filter((item) => item.label || item.amount) ?? [];
@@ -34,6 +36,7 @@ export function BulletinContent({
             key={`${days[0]?.date}:${today}`}
             days={days}
             today={today}
+            scrollToTodayOnMobile={scrollToTodayOnMobile}
           />
           <aside className={styles.aside}>
             <section

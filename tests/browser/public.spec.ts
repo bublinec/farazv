@@ -190,7 +190,7 @@ test("weekly bulletin shows Sunday to Sunday and expands days without losing tod
   await expect(days.first()).toHaveAccessibleName(/nedeľa/i);
   await expect(days.last()).toHaveAccessibleName(/nedeľa/i);
   await expect(days.first().getByText("nedeľa", { exact: true })).toBeVisible();
-  await expect(days.first().getByText("07:00", { exact: true })).toBeVisible();
+  await expect(days.first()).not.toContainText("07:00");
   await expect(days.first()).toContainText("Nedeľa v cezročnom období");
   const saturday = days.filter({
     hasText: "Preblahoslavenej Panny Márie v sobotu"
@@ -243,6 +243,92 @@ test("weekly bulletin shows Sunday to Sunday and expands days without losing tod
   await expect(
     page.getByRole("heading", { name: "Oznamy", exact: true })
   ).toBeVisible();
+});
+
+async function settleBulletinLayout(page: Page) {
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+      );
+    });
+  });
+}
+
+test("mobile bulletin opening and reload keep today's heading in view", async ({
+  page
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  const today = page.locator('main section[id^="day-"]').filter({
+    has: page.getByText("Dnes", { exact: true })
+  });
+  const top = async () => Math.round((await today.boundingBox())?.y ?? -1);
+
+  await page.goto("/farnost/farske-oznamy");
+  await settleBulletinLayout(page);
+  await expect.poll(top).toBe(24);
+
+  await page.evaluate(() => window.scrollBy({ top: 260, behavior: "instant" }));
+  await expect.poll(top).toBeLessThan(0);
+  await page.reload();
+  await settleBulletinLayout(page);
+  await expect.poll(top).toBe(24);
+
+  const id = await today.getAttribute("id");
+  await page.goto(`/farnost/farske-oznamy#${id}`);
+  await settleBulletinLayout(page);
+  await expect.poll(top).toBe(24);
+  await page.evaluate(() => window.scrollBy({ top: 260, behavior: "instant" }));
+  await page.reload();
+  await settleBulletinLayout(page);
+  await expect.poll(top).toBe(24);
+});
+
+test("bulletin preserves explicit anchors and desktop opening position", async ({
+  page
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/farnost/farske-oznamy#tyzdenne-oznamy");
+  await settleBulletinLayout(page);
+  await expect(page.locator("#tyzdenne-oznamy")).toBeInViewport();
+
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/farnost/farske-oznamy");
+  await settleBulletinLayout(page);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+});
+
+test("bulletin does not override interaction while fonts are loading", async ({
+  page
+}) => {
+  let release: () => void = () => {};
+  const held = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route("**/fonts/source-serif-4-variable.woff2", async (route) => {
+    await held;
+    await route.continue();
+  });
+
+  try {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/farnost/farske-oznamy", {
+      waitUntil: "domcontentloaded"
+    });
+    const earlier = page
+      .locator('main button[aria-controls^="schedule-"][aria-expanded="false"]')
+      .first();
+    await earlier.click();
+    await expect(earlier).toHaveAttribute("aria-expanded", "true");
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+    release();
+    await page.waitForLoadState("load");
+    await settleBulletinLayout(page);
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+  } finally {
+    release();
+  }
 });
 
 test("article pagination waits for client startup before accepting clicks", async ({
