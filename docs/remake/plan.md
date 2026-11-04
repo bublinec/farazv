@@ -905,3 +905,28 @@ those authenticated actions were not performed by this verification.
 
 - Follow-up: increased the header time preview from 13.5 px to 15.3 px at the
   owner's request; its aligned grid and muted color are retained.
+
+
+### Mobile bulletin entry and support text — 4 November 2026
+
+- The owner's latest instruction removes Mass-time previews from collapsed days,
+  superseding the earlier preview adjustments. Full weekday headings, complete
+  liturgy titles/ranks, optional designations and expanded Mass details remain.
+- Public mobile entry aligns today's card 24 px below the viewport top after
+  page/font layout and browser restoration settle. This also covers opening and
+  reloading saved current-day links. Other explicit anchors and desktop opening
+  retain their behavior; visitor interaction cancels pending automatic scrolling.
+  The shared admin preview does not enable this public-entry behavior.
+- Increased the support-card heading from 19.3 to 21.6 px and supporting text from
+  14.4 to 17.1 px. Visual checks at 320, 390, 801 and 1440 px found no horizontal
+  overflow. Contact facts and the desktop left/right layout are unchanged.
+- Verification: isolated fixture production build, formatter/types, 83 unit passes
+  (one opt-in database skip), and nine focused browser/accessibility passes.
+  Browser coverage includes opening/reload, saved day links, notice anchors,
+  desktop entry, interaction during delayed font loading, collapsed-day behavior
+  and four responsive widths. The interaction test keeps a stable day locator
+  after expansion; saved-link entry navigates from another page before checking
+  the initial alignment. No assertions were relaxed or retries added.
+- Reviewed React effect cleanup, refs, server/client props and keyboard behavior.
+  The owned compiled preview used port 3114 and `.next-preview`; other development
+  servers, live parish content and provider settings were preserved.

@@ -276,6 +276,7 @@ test("mobile bulletin opening and reload keep today's heading in view", async ({
   await expect.poll(top).toBe(24);
 
   const id = await today.getAttribute("id");
+  await page.goto("/");
   await page.goto(`/farnost/farske-oznamy#${id}`);
   await settleBulletinLayout(page);
   await expect.poll(top).toBe(24);
@@ -317,8 +318,9 @@ test("bulletin does not override interaction while fonts are loading", async ({
       waitUntil: "domcontentloaded"
     });
     const earlier = page
-      .locator('main button[aria-controls^="schedule-"][aria-expanded="false"]')
+      .locator('main button[aria-controls^="schedule-"]')
       .first();
+    await expect(earlier).toHaveAttribute("aria-expanded", "false");
     await earlier.click();
     await expect(earlier).toHaveAttribute("aria-expanded", "true");
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
