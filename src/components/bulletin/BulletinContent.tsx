@@ -29,19 +29,6 @@ export function BulletinContent({
     <section className={`section ${styles.section}`}>
       <div className="container">
         {fixture ? <p className={styles.preview}>Ukážkový rozpis</p> : null}
-        <nav
-          className={styles.jumpLinks}
-          aria-label="Navigácia vo farských oznamoch"
-        >
-          {days.some((day) => day.date === today) ? (
-            <a href={`#day-${today}`}>
-              Dnešné omše <span aria-hidden="true">↓</span>
-            </a>
-          ) : null}
-          <a href="#tyzdenne-oznamy">
-            Oznamy <span aria-hidden="true">↓</span>
-          </a>
-        </nav>
         <div className={styles.layout}>
           <WeeklySchedule
             key={`${days[0]?.date}:${today}`}

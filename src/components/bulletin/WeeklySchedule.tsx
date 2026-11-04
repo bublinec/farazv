@@ -68,6 +68,12 @@ export function WeeklySchedule({
         {days.map((day) => {
           const open = expanded.includes(day.date);
           const liturgy = splitLiturgy(day.liturgy, day.liturgyType);
+          const weekday = formatDate(day.date, {
+            weekday: "long",
+            day: undefined,
+            month: undefined
+          });
+
           return (
             <section
               key={day.date}
@@ -87,6 +93,16 @@ export function WeeklySchedule({
                   aria-controls={`schedule-${day.date}`}
                 >
                   <span className={styles.dayNumber}>
+                    <span className={styles.weekday}>
+                      <span aria-hidden="true">
+                        {formatDate(day.date, {
+                          weekday: "short",
+                          day: undefined,
+                          month: undefined
+                        })}
+                      </span>
+                      <span className="srOnly">{weekday}</span>
+                    </span>
                     {formatDate(day.date, {
                       day: "numeric",
                       month: undefined
@@ -96,33 +112,24 @@ export function WeeklySchedule({
                     </small>
                   </span>
                   <span className={styles.dayName}>
-                    <span>
-                      {formatDate(day.date, {
-                        weekday: "long",
-                        day: undefined,
-                        month: undefined
-                      })}
+                    <span className={styles.liturgyTitle}>
+                      {day.isRegular ? weekday : liturgy.liturgy || weekday}
                       {day.date === today ? <em>Dnes</em> : null}
                     </span>
-                    <small>
-                      {day.isRegular
-                        ? day.masses.length
+                    {day.isRegular ? (
+                      <small>
+                        {day.masses.length
                           ? "Pravidelné časy · rozpis nie je zverejnený"
-                          : "Rozpis nie je zverejnený"
-                        : liturgy.liturgy || "Liturgia dňa"}
-                    </small>
-                    {!day.isRegular && liturgy.liturgyType ? (
+                          : "Rozpis nie je zverejnený"}
+                      </small>
+                    ) : liturgy.liturgyType ? (
                       <small className={styles.liturgyType}>
                         {liturgy.liturgyType}
                       </small>
                     ) : null}
-                  </span>
-                  <span className={styles.times}>
-                    {day.status === "no-masses"
-                      ? "Bez svätej omše"
-                      : day.masses.map((mass, index) => (
-                          <span key={`${mass.time}-${index}`}>{mass.time}</span>
-                        ))}
+                    {day.status === "no-masses" ? (
+                      <small>Bez svätej omše</small>
+                    ) : null}
                   </span>
                   <Icon
                     name="chevron"

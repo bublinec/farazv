@@ -854,3 +854,30 @@ those authenticated actions were not performed by this verification.
 - Changes are local implementation work; no commit, push or deployment was
   performed. The owned preview used port 3114 and `.next-preview`; existing
   development servers were preserved.
+
+
+### Compact liturgy-first headers — 4 November 2026
+
+- The owner refined the earlier bulletin design: full liturgy names and ranks
+  must remain visible; weekday labels can be abbreviated; Mass times can live
+  inside expanded entries. This supersedes the earlier collapsed-time summary.
+- Replaced the separate full weekday heading with a short date-column label and
+  an accessible full weekday. The complete supplied liturgy becomes the main
+  header text, with its full rank or observance below. No liturgy text is parsed,
+  shortened, hidden or moved into details; missing-title and unpublished-schedule
+  context still use the calendar weekday and existing status messages.
+- Removed the header time column and separators. Expanded Mass rows retain all
+  times, duplicate simultaneous entries, intentions, celebrants and optional
+  designations. Today remains expanded initially; no-Mass status stays visible.
+- Verified the fixture production build, 83 unit passes (one opt-in database
+  skip), six focused browser/accessibility passes, and visual layouts at 320,
+  390, 768, 801 and 1440 px without horizontal overflow or browser errors.
+  A 200% text-size check also fits. The browser regression checks accessible
+  weekday names, full long liturgy text and times appearing after expansion.
+- Changes are local and uncommitted. The owned compiled preview used port 3114
+  and `.next-preview`; no live content, provider settings or other developer
+  processes were changed.
+
+- Follow-up at the owner's request: removed the “Dnešné omše” / “Oznamy”
+  shortcut navigation and its unused styles, and removed obsolete shortcut-link
+  assertions from the existing bulletin test. Section anchor IDs remain valid.

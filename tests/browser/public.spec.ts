@@ -187,9 +187,15 @@ test("weekly bulletin shows Sunday to Sunday and expands days without losing tod
   );
   const days = page.locator('main button[aria-controls^="schedule-"]');
   await expect(days).toHaveCount(8);
-  await expect(days.first()).toContainText("nedeľa");
-  await expect(days.last()).toContainText("nedeľa");
-  await expect(days.first().getByText("07:00", { exact: true })).toBeVisible();
+  await expect(days.first()).toHaveAccessibleName(/nedeľa/i);
+  await expect(days.last()).toHaveAccessibleName(/nedeľa/i);
+  await expect(days.first()).not.toContainText("07:00");
+  await expect(days.first()).toContainText("Nedeľa v cezročnom období");
+  const saturday = days.filter({
+    hasText: "Preblahoslavenej Panny Márie v sobotu"
+  });
+  await expect(saturday).toHaveCount(1);
+  await expect(saturday).toHaveAccessibleName(/sobota/i);
   const firstDate = (await days.first().getAttribute("aria-controls"))!.replace(
     "schedule-",
     ""
@@ -212,6 +218,7 @@ test("weekly bulletin shows Sunday to Sunday and expands days without losing tod
   const panel = page.locator(`#${await earlier.getAttribute("aria-controls")}`);
   await earlier.click();
   await expect(panel).toBeVisible();
+  await expect(panel.getByText("07:00", { exact: true })).toBeVisible();
   await expect(expandedDays).toHaveCount(2);
   await page
     .getByRole("button", { name: "Rozbaliť celý týždeň", exact: true })
@@ -227,12 +234,6 @@ test("weekly bulletin shows Sunday to Sunday and expands days without losing tod
   await expect(
     schedulePanels.getByText("Lieskovec", { exact: true })
   ).toHaveCount(0);
-  await page.getByRole("link", { name: "Oznamy", exact: true }).click();
-  await expect(page).toHaveURL(/#tyzdenne-oznamy$/);
-  await expect(page.locator("#tyzdenne-oznamy")).toBeFocused();
-  await page.getByRole("link", { name: "Dnešné omše", exact: true }).click();
-  await expect(page).toHaveURL(/#day-\d{4}-\d{2}-\d{2}$/);
-  await expect(page.locator('section[id^="day-"]:focus')).toContainText("Dnes");
   await page
     .getByRole("button", { name: "Zbaliť týždeň", exact: true })
     .click();

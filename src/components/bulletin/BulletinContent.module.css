@@ -6,22 +6,6 @@
   padding: 6px 11px;
   white-space: nowrap;
 }
-.jumpLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 24px;
-  margin-bottom: 20px;
-}
-
-.jumpLinks a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  font-size: 0.9rem;
-  text-decoration-thickness: 1px;
-}
-
 .layout {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
@@ -150,10 +134,6 @@
   }
   .section {
     padding-top: 32px;
-  }
-  .jumpLinks {
-    gap: 4px 18px;
-    margin-bottom: 16px;
   }
   .announcements {
     padding: 22px 18px;
