@@ -114,7 +114,7 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Filip Štasek
+            Filip Stašek
           </a>
         </p>
         <div className={styles.bottomLinks}>
