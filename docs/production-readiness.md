@@ -24,6 +24,18 @@ those operational tasks.
 | Accessibility          | Admin brand link derives its accessible name from the visible parish/city text. Existing keyboard, mobile-navigation and image-fallback checks retained.                                                                                                                                 |
 | Release checks         | New SEO browser coverage and `npm run verify:production`. GitHub runs a public health/SEO smoke check after successful main-branch CI or Production deployments, with manual dispatch available.                                                                                         |
 
+The 4 November metadata follow-up adds reviewed search/share copy for 32 routes,
+including practical parish pages and recurring magazine headings. Other long
+excerpts are normalized and shortened at a word boundary to an editorial maximum
+of 160 characters; this is a copy convention, not a Google indexing requirement.
+Visible headings, article bodies and stored excerpts remain unchanged.
+
+The old Netlify reference still permits indexing. Archive-only noindex headers,
+HTML metadata and crawlable robots configuration are prepared in `old/client/`,
+but the owner confirmed Netlify access remains unavailable. A new deployment of
+the preserved output is needed before that protection is live. See the
+[archive handoff](../old/README.md#search-indexing-of-the-reference-site).
+
 The metadata helper adds no new browser dependency. Existing local fonts,
 responsive Cloudinary images, manifest/icons, server-rendered content, authorized
 editor writes, same-origin checks and feedback rate limiting remain in use.

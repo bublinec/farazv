@@ -1,7 +1,7 @@
 const siteTitle = "Farazv";
 const siteDescription = "Our custom in-house starter";
 const siteAuthor = "@jakobrolik";
-const siteUrl = "https://google.com";
+const siteUrl = "https://farazv.netlify.app";
 const siteImage = `${siteUrl}/icons/icon_512x512.png`;
 const siteKeywords = ["gatsby", "typescript", "starter", "javascript", "react"];
 
@@ -20,7 +20,6 @@ module.exports = {
     "gatsby-plugin-react-helmet",
     `gatsby-plugin-image`,
     // "gatsby-plugin-offline",
-    "gatsby-plugin-robots-txt",
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
     "gatsby-plugin-postcss",

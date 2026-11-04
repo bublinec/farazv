@@ -26,3 +26,31 @@ The [saved deployment](https://6ad71e314cf8202580e1a791--farazv.netlify.app/)
 is a fixed build reference. Both returned the Gatsby homepage on 3 November 2026.
 These are historical references, not the source of current parish notices; their
 continued availability depends on the old Netlify account and legacy services.
+
+## Search indexing of the reference site
+
+The archived frontend now supplies `X-Robots-Tag: noindex, follow` through
+[`client/static/_headers`](client/static/_headers), plus an HTML robots meta tag
+in its shared SEO component. Its static `robots.txt` allows crawling so search
+engines can discover the noindex directive. The old robots generator was removed
+because its placeholder configuration advertised google.com as the site/sitemap.
+These files affect a **new deployment only**, not the already-published archive.
+
+As of 4 November 2026, Netlify access is unavailable and automatic legacy builds
+remain disabled. The live reference has **not** received this protection yet.
+An account owner can apply it without rebuilding Gatsby or fetching Railway data:
+
+1. Obtain the complete existing published deploy files from Netlify, preserving
+   all HTML, page data and assets. Keep a backup of that output.
+2. Copy `client/static/_headers` and `client/static/robots.txt` into the root of
+   those deploy files (beside `index.html`). Merge any existing `_headers` rules
+   instead of discarding them.
+3. Publish that complete directory as a new production deploy of the existing
+   `farazv` Netlify project. Do not replace it with only the two configuration files.
+4. Verify the homepage and a deep page still load and return
+   `X-Robots-Tag: noindex, follow`, and that `/robots.txt` allows crawling.
+
+Do not enable automatic legacy builds just to apply these headers. The footer's
+reference link can remain. Historical immutable deploy URLs are separate archives;
+a new production deploy does not change their headers or HTML. Removal from
+search results depends on a search engine revisiting the protected URLs.

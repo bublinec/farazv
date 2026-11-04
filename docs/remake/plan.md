@@ -937,3 +937,34 @@ those authenticated actions were not performed by this verification.
   the local browser at 320, 390 and 1440 px without overflow. The fixture build,
   formatter/types, 83 unit tests (one opt-in skip) and nine focused browser checks
   passed. No source text, data or application behavior changed.
+
+
+### Search metadata and archive indexing — 4 November 2026
+
+- The owner requested implementing metadata improvements and noindex protection
+  for the preserved Netlify site. Added reviewed search/share copy for 32 public
+  routes in `src/content/search-metadata.ts`, separate from visible headings and
+  source reading copy. Contact now uses “Kontakt a úradné hodiny”; recurring
+  magazine titles include a topic or publication period. Other long excerpts
+  become whitespace-normalized, word-boundary summaries up to 160 characters.
+  This editorial length convention is not a Google indexing requirement.
+- Applying the new helper to all 177 currently public sitemap pages produced no
+  duplicate titles or descriptions. The existing source “Kántrové dni” article
+  repeats the Zolná report's body; its distinct description identifies the
+  publication without inventing another event. The duplicated body remains a
+  content-review item; no stored/public article text or unpublished record changed.
+- Prepared archive-only `X-Robots-Tag: noindex, follow`, shared Helmet metadata
+  and a crawlable static robots file. Removed the old robots generator's
+  google.com placeholder output and corrected its site URL. Automatic legacy
+  builds remain disabled. The owner confirmed Netlify access is unavailable;
+  **the live archive remains unprotected until its account owner publishes the
+  prepared headers**. `old/README.md` explains how to overlay the two files onto
+  the complete saved output without rebuilding Gatsby or contacting Railway.
+- Verification: formatter/types, 86 unit passes (one opt-in database skip), fixture
+  production build, eight SEO browser passes, and the all-177-page metadata
+  projection described above. Legacy config loads, the shared SEO component
+  transpiles and archive headers/robots were checked. No legacy dependency
+  installation or full Gatsby build was needed. The owned preview used port 3114
+  and `.next-preview`; existing development processes and provider settings were
+  preserved. Search Console setup and unfinished-page indexing were outside this
+  requested follow-up.
