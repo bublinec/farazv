@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0",
     "build": "next build",
+    "build:vercel": "node --import tsx scripts/vercel-build.ts",
     "start": "next start --hostname 0.0.0.0",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "node --conditions=react-server --import tsx --test tests/*.test.ts",

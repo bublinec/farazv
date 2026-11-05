@@ -1,3 +1,6 @@
+import { mkdir, mkdtemp, writeFile, rm } from "node:fs/promises";
+import { sep } from "node:path";
+import { runSchemaMigrations } from "../scripts/migration/schema-migrations";
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { resolve } from "node:path";
@@ -63,6 +66,104 @@ test(
     assert.ok(["localhost", "127.0.0.1"].includes(target.hostname));
     assert.match(target.pathname, /^\/farazv_remake_store_test_[a-z0-9_]+$/);
     try {
+      await t.test(
+        "deployment migrations serialize concurrent runs, are repeatable and retain existing data",
+        async () => {
+          await Promise.all(
+            [1, 2, 3].map(() =>
+              runSchemaMigrations(process.env.DATABASE_URL!, resolve("drizzle"))
+            )
+          );
+          const before = (
+            await getPool().query(
+              "SELECT count(*)::int AS total, count(DISTINCT hash)::int AS unique FROM drizzle.__drizzle_migrations"
+            )
+          ).rows[0];
+          assert.equal(before.total, 6);
+          assert.equal(before.unique, 6);
+          await getPool().query(
+            "INSERT INTO editor_access(email,granted_by) VALUES ('migration-retained@local-tests.example.test','local-fixture')"
+          );
+          await runSchemaMigrations(
+            process.env.DATABASE_URL!,
+            resolve("drizzle")
+          );
+          assert.equal(
+            (
+              await getPool().query(
+                "SELECT role FROM editor_access WHERE email='migration-retained@local-tests.example.test'"
+              )
+            ).rows[0].role,
+            "editor"
+          );
+          assert.equal(
+            (
+              await getPool().query(
+                "SELECT count(*)::int AS total FROM drizzle.__drizzle_migrations"
+              )
+            ).rows[0].total,
+            6
+          );
+        }
+      );
+      await t.test(
+        "a failed SQL migration rolls back and releases its deployment lock",
+        async () => {
+          const root = resolve(".private");
+          await mkdir(root, { recursive: true });
+          const folder = await mkdtemp(resolve(root, "failed-schema-"));
+          if (!resolve(folder).startsWith(root + sep))
+            throw new Error("Unexpected private fixture path");
+          try {
+            await mkdir(resolve(folder, "meta"));
+            await writeFile(
+              resolve(folder, "meta/_journal.json"),
+              JSON.stringify({
+                version: "7",
+                dialect: "postgresql",
+                entries: [
+                  {
+                    idx: 0,
+                    version: "7",
+                    when: 9000000000000,
+                    tag: "0000_failure",
+                    breakpoints: true
+                  }
+                ]
+              })
+            );
+            await writeFile(
+              resolve(folder, "0000_failure.sql"),
+              "CREATE TABLE migration_rollback_probe(id integer);\n--> statement-breakpoint\nSELECT 1/0;\n"
+            );
+            await assert.rejects(
+              runSchemaMigrations(process.env.DATABASE_URL!, folder)
+            );
+            assert.equal(
+              (
+                await getPool().query(
+                  "SELECT to_regclass('public.migration_rollback_probe') AS probe"
+                )
+              ).rows[0].probe,
+              null
+            );
+            await runSchemaMigrations(
+              process.env.DATABASE_URL!,
+              resolve("drizzle")
+            );
+            assert.equal(
+              (
+                await getPool().query(
+                  "SELECT count(*)::int AS total FROM drizzle.__drizzle_migrations"
+                )
+              ).rows[0].total,
+              6
+            );
+          } finally {
+            await rm(folder, { recursive: true, force: true });
+          }
+        }
+      );
       await migrate(getDb(), { migrationsFolder: resolve("drizzle") });
       await grantEditorAccess(lector, admin, "lektorka");
       await grantEditorAccess(editor, admin);
