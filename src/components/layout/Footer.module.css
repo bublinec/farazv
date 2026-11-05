@@ -246,3 +246,7 @@
     opacity: 0.22;
   }
 }
+
+.lectorLink {
+  grid-column: 1;
+}

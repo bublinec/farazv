@@ -201,3 +201,24 @@ form > .primary {
     max-height: calc(100svh - 24px);
   }
 }
+
+.footerTrigger {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ced7da;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.footerTrigger:hover {
+  color: var(--gold-light);
+  text-decoration: underline;
+}
+.footerTrigger:focus-visible {
+  outline: 3px solid var(--gold-light);
+  outline-offset: 4px;
+}

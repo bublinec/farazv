@@ -1,3 +1,4 @@
+import { LectorScheduleDialog } from "@/components/lectors/LectorScheduleDialog";
 import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 import Link from "next/link";
 import type { SettingsDocument } from "@/content/documents";
@@ -47,6 +48,9 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
             </li>
             <li>
               <Link href="/podnety">Podnety a nápady</Link>
+            </li>
+            <li className={styles.lectorLink}>
+              <LectorScheduleDialog variant="footer" />
             </li>
           </ul>
         </div>

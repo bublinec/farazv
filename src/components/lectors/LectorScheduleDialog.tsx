@@ -1,5 +1,6 @@
 "use client";
 
+import { createPortal } from "react-dom";
 import { useEffect, useId, useRef, useState } from "react";
 import type { LectorSchedule } from "@/content/lector-schedules";
 import { lectorMonthLabel } from "@/lib/lector-schedules";
@@ -9,8 +10,16 @@ import { AdminRequestError, readAdminJson } from "@/components/admin/admin-api";
 import { fetchLectorPdf } from "./pdf-client";
 import styles from "./LectorScheduleDialog.module.css";
 
-export function LectorScheduleDialog() {
+// Browser-only interaction state shared by the two entry points in one tab.
+let tabToken = "";
+
+export function LectorScheduleDialog({
+  variant = "panel"
+}: {
+  variant?: "panel" | "footer";
+}) {
   const id = useId();
+  const [mounted, setMounted] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
@@ -27,8 +36,10 @@ export function LectorScheduleDialog() {
   const [notice, setNotice] = useState("");
 
   useEffect(() => {
+    setMounted(true);
     const clear = () => {
       token.current = "";
+      tabToken = "";
       active.current?.abort();
       active.current = null;
       for (const url of urls.current) URL.revokeObjectURL(url);
@@ -50,6 +61,7 @@ export function LectorScheduleDialog() {
       window.removeEventListener("pageshow", restored);
       active.current?.abort();
       token.current = "";
+      tabToken = "";
       for (const url of urls.current) URL.revokeObjectURL(url);
     };
   }, []);
@@ -82,6 +94,7 @@ export function LectorScheduleDialog() {
     if (controller.signal.aborted) return;
     if (cause instanceof AdminRequestError && cause.status === 401) {
       token.current = "";
+      tabToken = "";
       setHasAccess(false);
       setMonths([]);
     }
@@ -113,6 +126,9 @@ export function LectorScheduleDialog() {
     }
   }
   function open() {
+    token.current = tabToken;
+    setHasAccess(Boolean(tabToken));
+    if (!tabToken) setMonths([]);
     dialog.current?.showModal();
     setError("");
     if (token.current) void refresh();
@@ -133,6 +149,7 @@ export function LectorScheduleDialog() {
       );
       if (controller.signal.aborted) return;
       token.current = result.token;
+      tabToken = result.token;
       setPassword("");
       setShowPassword(false);
       setHasAccess(true);
@@ -152,6 +169,7 @@ export function LectorScheduleDialog() {
     const previous = token.current;
     setNotice("");
     token.current = "";
+    tabToken = "";
     setHasAccess(false);
     setMonths([]);
     setError("");
@@ -198,148 +216,162 @@ export function LectorScheduleDialog() {
       <button
         ref={trigger}
         type="button"
-        className={styles.trigger}
+        className={variant === "footer" ? styles.footerTrigger : styles.trigger}
         onClick={open}
       >
-        <Icon name="calendar" size={21} />
+        {variant === "panel" ? <Icon name="calendar" size={21} /> : null}
         Rozpis lektorov
       </button>
-      <dialog
-        ref={dialog}
-        className={styles.dialog}
-        aria-labelledby={`${id}-title`}
-        aria-describedby={`${id}-description`}
-        onClose={closed}
-        onKeyDown={containDialogFocus}
-      >
-        <header className={styles.header}>
-          <h2 id={`${id}-title`} tabIndex={-1}>
-            Rozpis lektorov
-          </h2>
-          <button
-            type="button"
-            className={styles.close}
-            aria-label="Zatvoriť"
-            onClick={() => dialog.current?.close()}
-          >
-            <Icon name="close" size={24} />
-          </button>
-        </header>
-        <p id={`${id}-description`} className={styles.description}>
-          {hasAccess
-            ? "Vyberte mesiac a otvorte alebo stiahnite PDF rozpis."
-            : "Rozpis obsahuje kontakty na lektorov. Na jeho otvorenie zadajte spoločné heslo."}
-        </p>
-        {error ? (
-          <p className={styles.error} role="alert">
-            {error}
-          </p>
-        ) : null}
-        {!hasAccess ? (
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              void unlock();
-            }}
-          >
-            <label className={styles.field}>
-              Heslo
-              <input
-                ref={passwordInput}
-                autoFocus
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                required
-                minLength={8}
-                maxLength={128}
-                autoComplete="off"
-                autoCapitalize="none"
-                spellCheck={false}
-                disabled={!!busy}
-              />
-            </label>
-            <label className={styles.checkbox}>
-              <input
-                type="checkbox"
-                checked={showPassword}
-                onChange={(event) => setShowPassword(event.target.checked)}
-              />
-              Zobraziť heslo
-            </label>
-            <button type="submit" className={styles.primary} disabled={!!busy}>
-              {busy || "Otvoriť rozpis"}
-            </button>
-            <p className={styles.help}>
-              Ak heslo nepoznáte, obráťte sa na osobu, ktorá pripravuje rozpis.
-            </p>
-          </form>
-        ) : (
-          <>
-            <ul className={styles.months}>
-              {months.map((month, index) => (
-                <li key={month.month}>
-                  <h3 tabIndex={-1}>{lectorMonthLabel(month.month)}</h3>
-                  <p className={styles.monthNote}>
-                    {index === 0 ? "Aktuálny mesiac" : "Nasledujúci mesiac"}
-                  </p>
-                  {month.available ? (
-                    <div className={styles.actions}>
-                      <button
-                        type="button"
-                        className={styles.primary}
-                        disabled={!!busy}
-                        data-lector-pdf
-                        onClick={() => void pdf(month.month, false)}
-                      >
-                        Otvoriť PDF <Icon name="external" size={18} />
-                      </button>
-                      <button
-                        type="button"
-                        className={styles.secondary}
-                        disabled={!!busy}
-                        onClick={() => void pdf(month.month, true)}
-                      >
-                        Stiahnuť PDF
-                      </button>
-                    </div>
-                  ) : (
-                    <p>Rozpis zatiaľ nie je nahraný.</p>
-                  )}
-                </li>
-              ))}
-            </ul>
-            {!months.length ? (
-              <button
-                type="button"
-                className={styles.secondary}
-                disabled={!!busy}
-                onClick={() => void refresh()}
-              >
-                Skúsiť načítať rozpisy znova
-              </button>
-            ) : null}
-            <div className={styles.session}>
-              <p>
-                Po obnovení stránky alebo zatvorení karty bude potrebné zadať
-                heslo znova.
+      {mounted
+        ? createPortal(
+            <dialog
+              ref={dialog}
+              className={styles.dialog}
+              aria-labelledby={`${id}-title`}
+              aria-describedby={`${id}-description`}
+              onClose={closed}
+              onKeyDown={containDialogFocus}
+            >
+              <header className={styles.header}>
+                <h2 id={`${id}-title`} tabIndex={-1}>
+                  Rozpis lektorov
+                </h2>
+                <button
+                  type="button"
+                  className={styles.close}
+                  aria-label="Zatvoriť"
+                  onClick={() => dialog.current?.close()}
+                >
+                  <Icon name="close" size={24} />
+                </button>
+              </header>
+              <p id={`${id}-description`} className={styles.description}>
+                {hasAccess
+                  ? "Vyberte mesiac a otvorte alebo stiahnite PDF rozpis."
+                  : "Rozpis obsahuje kontakty na lektorov. Na jeho otvorenie zadajte spoločné heslo."}
               </p>
-              <button
-                type="button"
-                className={styles.secondary}
-                disabled={!!busy}
-                onClick={lock}
-              >
-                <Icon name="lock" size={18} />
-                Zamknúť rozpisy
-              </button>
-            </div>
-          </>
-        )}
-        <p className={styles.status} role="status" aria-live="polite">
-          {hasAccess ? busy || notice : ""}
-        </p>
-      </dialog>
+              {error ? (
+                <p className={styles.error} role="alert">
+                  {error}
+                </p>
+              ) : null}
+              {!hasAccess ? (
+                <form
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    void unlock();
+                  }}
+                >
+                  <label className={styles.field}>
+                    Heslo
+                    <input
+                      ref={passwordInput}
+                      autoFocus
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(event) => setPassword(event.target.value)}
+                      required
+                      minLength={8}
+                      maxLength={128}
+                      autoComplete="off"
+                      autoCapitalize="none"
+                      spellCheck={false}
+                      disabled={!!busy}
+                    />
+                  </label>
+                  <label className={styles.checkbox}>
+                    <input
+                      type="checkbox"
+                      checked={showPassword}
+                      onChange={(event) =>
+                        setShowPassword(event.target.checked)
+                      }
+                    />
+                    Zobraziť heslo
+                  </label>
+                  <button
+                    type="submit"
+                    className={styles.primary}
+                    disabled={!!busy}
+                  >
+                    {busy || "Otvoriť rozpis"}
+                  </button>
+                  <p className={styles.help}>
+                    Ak heslo nepoznáte, obráťte sa na osobu, ktorá pripravuje
+                    rozpis.
+                  </p>
+                </form>
+              ) : (
+                <>
+                  <ul className={styles.months}>
+                    {months.map((month, index) => (
+                      <li key={month.month}>
+                        <h3 tabIndex={-1}>{lectorMonthLabel(month.month)}</h3>
+                        <p className={styles.monthNote}>
+                          {index === 0
+                            ? "Aktuálny mesiac"
+                            : "Nasledujúci mesiac"}
+                        </p>
+                        {month.available ? (
+                          <div className={styles.actions}>
+                            <button
+                              type="button"
+                              className={styles.primary}
+                              disabled={!!busy}
+                              data-lector-pdf
+                              onClick={() => void pdf(month.month, false)}
+                            >
+                              Otvoriť PDF <Icon name="external" size={18} />
+                            </button>
+                            <button
+                              type="button"
+                              className={styles.secondary}
+                              disabled={!!busy}
+                              onClick={() => void pdf(month.month, true)}
+                            >
+                              Stiahnuť PDF
+                            </button>
+                          </div>
+                        ) : (
+                          <p>Rozpis zatiaľ nie je nahraný.</p>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                  {!months.length ? (
+                    <button
+                      type="button"
+                      className={styles.secondary}
+                      disabled={!!busy}
+                      onClick={() => void refresh()}
+                    >
+                      Skúsiť načítať rozpisy znova
+                    </button>
+                  ) : null}
+                  <div className={styles.session}>
+                    <p>
+                      Po obnovení stránky alebo zatvorení karty bude potrebné
+                      zadať heslo znova.
+                    </p>
+                    <button
+                      type="button"
+                      className={styles.secondary}
+                      disabled={!!busy}
+                      onClick={lock}
+                    >
+                      <Icon name="lock" size={18} />
+                      Zamknúť rozpisy
+                    </button>
+                  </div>
+                </>
+              )}
+              <p className={styles.status} role="status" aria-live="polite">
+                {hasAccess ? busy || notice : ""}
+              </p>
+            </dialog>,
+            document.body
+          )
+        : null}
     </>
   );
 }

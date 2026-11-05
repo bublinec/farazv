@@ -215,6 +215,7 @@ test.describe("Lector administration on an isolated local database", () => {
       (await publicPage.request.get(`/api/lectors/${month}`)).status()
     ).toBe(401);
     await publicPage
+      .locator("aside")
       .getByRole("button", { name: "Rozpis lektorov", exact: true })
       .click();
     const dialog = publicPage.getByRole("dialog");

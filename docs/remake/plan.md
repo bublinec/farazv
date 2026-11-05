@@ -1002,3 +1002,17 @@ those authenticated actions were not performed by this verification.
 - Final lector-only header confirmation passed at 390 and 320 px, including
   the entire PDF/role workflow again on the final compiled build. The previous
   18 existing admin cases are unaffected by this role-scoped layout rule.
+
+### Lector footer entry — 5 November 2026
+
+- Added the explicitly requested footer entry below Podnety a nápady. It opens
+  the existing password dialog directly from every public page. The lector-page
+  and footer entry share only in-memory tab authorization; reload/new-tab denial
+  and all server checks remain intact. The modal uses a body portal to avoid
+  footer colors affecting readable content. No noticeboard or CMS behavior changed.
+- Verification: npm check (92 passes, two opt-in skips), isolated fixture build,
+  14 browser/accessibility passes and one optional historical-image skip. The
+  new footer test was observed failing before implementation. Shared unlocking,
+  keyboard focus, Escape, a new tab and refresh are covered by the browser flow.
+- An owned compiled server used port 3217; the user's existing development server
+  was preserved. Scope and user instructions are recorded in the lector changelog.

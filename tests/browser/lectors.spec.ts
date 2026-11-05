@@ -36,7 +36,7 @@ test("lector modal is keyboard accessible and authorization is lost on refresh a
     await route.fulfill({ json: { months } });
   });
   await page.goto("/spolocenstva/lektori");
-  const trigger = page.getByRole("button", {
+  const trigger = page.locator("aside").getByRole("button", {
     name: "Rozpis lektorov",
     exact: true
   });
@@ -73,6 +73,17 @@ test("lector modal is keyboard accessible and authorization is lost on refresh a
   await page.keyboard.press("Escape");
   await expect(dialog).not.toBeVisible();
   await expect(trigger).toBeFocused();
+  await page
+    .getByRole("contentinfo")
+    .getByRole("button", { name: "Rozpis lektorov", exact: true })
+    .click();
+  await expect(
+    page
+      .getByRole("dialog", { name: "Rozpis lektorov" })
+      .getByRole("button", { name: "Otvoriť PDF", exact: true })
+  ).toBeVisible();
+  expect(unlocks).toBe(2);
+  await page.keyboard.press("Escape");
   await trigger.click();
   await expect(
     dialog.getByRole("button", { name: "Otvoriť PDF", exact: true })
@@ -90,6 +101,7 @@ test("lector modal is keyboard accessible and authorization is lost on refresh a
   const other = await context.newPage();
   await other.goto("/spolocenstva/lektori");
   await other
+    .locator("aside")
     .getByRole("button", { name: "Rozpis lektorov", exact: true })
     .click();
   await expect(
@@ -103,7 +115,7 @@ test("lector button is limited to its page and the mobile password controls fit"
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/spolocenstva/lektori");
-  const trigger = page.getByRole("button", {
+  const trigger = page.locator("aside").getByRole("button", {
     name: "Rozpis lektorov",
     exact: true
   });
@@ -132,6 +144,30 @@ test("lector button is limited to its page and the mobile password controls fit"
   await dialog.getByRole("button", { name: "Zatvoriť", exact: true }).click();
   await page.goto("/spolocenstva/ministranti");
   await expect(
-    page.getByRole("button", { name: "Rozpis lektorov", exact: true })
+    page
+      .locator("aside")
+      .getByRole("button", { name: "Rozpis lektorov", exact: true })
   ).toHaveCount(0);
+});
+
+test("footer opens the password dialog directly on another page", async ({
+  page
+}) => {
+  await page.goto("/kontakt");
+  const footer = page.getByRole("contentinfo");
+  const trigger = footer.getByRole("button", {
+    name: "Rozpis lektorov",
+    exact: true
+  });
+  await expect(trigger).toBeVisible();
+  await trigger.click();
+  await expect(
+    page.getByRole("dialog", { name: "Rozpis lektorov" })
+  ).toBeVisible();
+  await expect(
+    page.getByRole("dialog").getByLabel("Heslo", { exact: true })
+  ).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(trigger).toBeFocused();
+  await expect(page).toHaveURL(/\/kontakt$/);
 });

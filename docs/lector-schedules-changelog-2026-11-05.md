@@ -7,8 +7,7 @@ s Jurajom. Bez zlúčenia do `main`, nasadenia alebo produkčnej migrácie.
 ## Čo pribudlo
 
 - Tlačidlo **Rozpis lektorov** v existujúcom kontaktnom paneli na
-  `/spolocenstva/lektori`, pred odkazom na všetky kontakty. Ostatné podstránky
-  toto tlačidlo nemajú. Nový dialóg podporuje klávesnicu, čítačku obrazovky,
+  `/spolocenstva/lektori`, pred odkazom na všetky kontakty. Na všetkých verejných podstránkach je navyše textový odkaz v päte pod „Podnety a nápady“. Nový dialóg podporuje klávesnicu, čítačku obrazovky,
   zobrazenie hesla a ovládacie prvky s výškou najmenej 44 px.
 - Súkromný mesačný PDF rozpis pre aktuálny a nasledujúci mesiac podľa času
   Bratislavy, aj cez prechod roka. Nasledujúci mesiac možno sprístupniť vopred.
@@ -107,3 +106,14 @@ Zálohy po lokálnom zavedení obsahujú aj súkromné PDF a hash spoločného h
 Aktuálne dátované výsledky a hranice overenia sú zaznamenané v
 [projektovom pláne](remake/plan.md#verification-record). Tento changelog
 opisuje správanie a vlastníkov zmien; nepredstavuje súhlas s nasadením.
+
+## Doplnenie odkazu v päte — 5. november 2026
+
+Textový odkaz Rozpis lektorov priamo otvorí existujúci dialóg bez prechodu na
+inú stránku. Na mobile zostáva pod Podnety a nápady. Oba vstupy na stránke
+lektorov zdieľajú odomknutie iba v pamäti danej karty. Dialóg sa vykresľuje
+na úrovni dokumentu, aby tmavé štýly päty nemenili jeho čitateľnosť.
+Serverové oprávnenia, heslo a ochrana PDF zostávajú nezmenené.
+
+Overenie: npm check (92 úspešných testov, dva opt-in skipy), fixture build,
+14 browser/accessibility kontrol úspešne a jeden opt-in obrázkový skip.
