@@ -36,6 +36,13 @@
       "when": 1793527687086,
       "tag": "0004_visitor_feedback",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1793829675887,
+      "tag": "0005_lector_schedules",
+      "breakpoints": true
     }
   ]
 }

@@ -122,3 +122,12 @@ export function assertSameOrigin(
     );
   }
 }
+
+/** Unknown or revoked roles never acquire capabilities by default. */
+export function canEditContent(role: unknown): boolean {
+  return role === "admin" || role === "editor";
+}
+
+export function canManageLectors(role: unknown): boolean {
+  return role === "admin" || role === "lektorka";
+}

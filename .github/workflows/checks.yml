@@ -68,10 +68,12 @@ jobs:
       - name: Install Chromium
         run: node node_modules/@playwright/test/cli.js install --with-deps chromium
       - name: Public browser flows with explicit fixtures
-        run: npm run test:browser -- tests/browser/public.spec.ts tests/browser/static-content.spec.ts tests/browser/details.spec.ts tests/browser/seo.spec.ts
+        run: npm run test:browser -- tests/browser/public.spec.ts tests/browser/static-content.spec.ts tests/browser/details.spec.ts tests/browser/seo.spec.ts tests/browser/lectors.spec.ts
       - name: Automated accessibility checks with public fixtures
         run: npm run test:accessibility
       - name: Real PostgreSQL publication and import contracts
         run: npm run test:integration
+      - name: Private lector documents and role boundaries
+        run: npm run test:lectors
       - name: Authenticated admin flows in an isolated local database
         run: npm run test:admin

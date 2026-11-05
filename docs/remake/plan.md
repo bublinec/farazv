@@ -968,3 +968,37 @@ those authenticated actions were not performed by this verification.
   and `.next-preview`; existing development processes and provider settings were
   preserved. Search Console setup and unfinished-page indexing were outside this
   requested follow-up.
+
+### Private lector schedules — 5 November 2026
+
+- Added a restricted lector CMS role and private monthly PDF module on the owner's
+  explicitly requested `filip/upravy` branch. Administrator emails remain solely
+  in `ADMIN_EMAIL_ALLOWLIST`; CMS-created accounts can be editor or lector only.
+  Google login, existing publication rules and public source copy remain unchanged.
+- The [lector changelog](../lector-schedules-changelog-2026-11-05.md) owns the
+  implementation map, privacy model, local migration/review steps and rollback caveat.
+  The [editor guide](../editor-guide.md#rozpisy-lektorov) owns user instructions.
+  Passwords are entered once, minimum eight characters, and stored privately as
+  salted hashes; they never become part of public settings snapshots.
+- Verification used Node 22.23.4/npm 10.9.9, public fixtures, an owned compiled
+  `.next-preview` server on port 3197 and disposable loopback PostgreSQL 18.6
+  databases. `npm run check`: 92 passes, two opt-in database skips. Fixture
+  production build passed. Existing content-store integration: seven passes;
+  new lector integration: eleven passes including coordinated password and file races.
+- Public browser/SEO/static-content/accessibility verification: 50 passes and the
+  opt-in unavailable historical-image case skipped because no migrated-image path
+  was supplied. All 22 static layouts retained their approved reading and links.
+  Full authenticated CMS browser suite: 19 passes, covering the 18 existing cases
+  and the new real PDF/role workflow. Auth uses local test-only Better Auth cookies;
+  this does not establish live Google-provider acceptance.
+- A fresh static review checked authorization, secret separation, token revision
+  locks, version tombstones and month rules. The identified focus issue was
+  reproduced and fixed with a browser regression. Desktop/mobile visual inspection
+  also identified a header overlap confined to the new lector role; its targeted
+  wrap adjustment and confirming check are recorded in the implementation ledger.
+- No production migration, deploy, external account edit or main merge was performed.
+  Manual review with Juraj is the next acceptance step. The private PDFs and grant
+  rows used for testing contain only synthetic local data, not parish contacts.
+- Final lector-only header confirmation passed at 390 and 320 px, including
+  the entire PDF/role workflow again on the final compiled build. The previous
+  18 existing admin cases are unaffected by this role-scoped layout rule.

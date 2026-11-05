@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LectorScheduleDialog } from "@/components/lectors/LectorScheduleDialog";
 import type { SettingsDocument } from "@/content/documents";
 import { getPublicSettings } from "@/server/public-content";
 import { Unavailable } from "@/components/ui/Unavailable";
@@ -16,11 +17,13 @@ export async function settingsOrUnavailable(): Promise<SettingsDocument | null> 
 export async function OfficeAside({
   preparationType,
   title = "Farská kancelária",
-  description
+  description,
+  showLectorSchedules = false
 }: {
   preparationType?: "baptism" | "marriage";
   title?: string;
   description?: string;
+  showLectorSchedules?: boolean;
 }) {
   const settings = await settingsOrUnavailable();
 
@@ -28,6 +31,7 @@ export async function OfficeAside({
     return (
       <aside className={styles.officeAside} aria-label="Farská kancelária">
         <Unavailable compact title="Kontaktné údaje sú dočasne nedostupné." />
+        {showLectorSchedules ? <LectorScheduleDialog /> : null}
       </aside>
     );
 
@@ -77,6 +81,7 @@ export async function OfficeAside({
           ) : null}
         </div>
       ) : null}
+      {showLectorSchedules ? <LectorScheduleDialog /> : null}
       <Link href="/kontakt" className={styles.textLink}>
         Všetky kontakty a adresa <Arrow />
       </Link>

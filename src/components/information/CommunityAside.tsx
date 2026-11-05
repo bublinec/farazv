@@ -10,6 +10,7 @@ export function CommunityAside({ page }: { page: InformationPageDefinition }) {
   if (!contact && !page.facts?.length)
     return (
       <OfficeAside
+        showLectorSchedules={page.slug === "spolocenstva/lektori"}
         title={page.aside?.title ?? "Ako sa zapojiť"}
         description={
           page.aside?.description ??

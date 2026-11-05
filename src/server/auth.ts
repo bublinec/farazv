@@ -7,7 +7,9 @@ import {
   AccessError,
   assertGoogleIdentity,
   assertSameOrigin,
-  parseEditorAllowlist
+  parseEditorAllowlist,
+  canEditContent,
+  canManageLectors
 } from "@/lib/auth-policy";
 import type { EditorIdentity } from "@/lib/auth-policy";
 import type { EditorRole } from "@/content/editor-access";
@@ -172,7 +174,7 @@ export async function requireEditor() {
 }
 
 /** Page convenience only: every API still verifies the session independently. */
-export async function requireEditorPage() {
+export async function requireMemberPage() {
   try {
     return await requireEditor();
   } catch (error) {
@@ -186,7 +188,47 @@ export async function requireEditorPage() {
   }
 }
 
+export async function requireEditorPage() {
+  const identity = await requireMemberPage();
+  if (!canEditContent(identity.role)) {
+    const { redirect } = await import("next/navigation");
+    redirect("/admin/lektori");
+  }
+  return identity;
+}
+
+export async function requireLectorPage() {
+  const identity = await requireMemberPage();
+  if (!canManageLectors(identity.role)) {
+    const { redirect } = await import("next/navigation");
+    redirect("/admin");
+  }
+  return identity;
+}
+
 export async function assertEditorRequest(request: Request) {
+  const identity = await assertMemberRequest(request);
+  if (!canEditContent(identity.role))
+    throw new AccessError(
+      403,
+      "Nemáte oprávnenie upravovať obsah webu.",
+      "CONTENT_ROLE_REQUIRED"
+    );
+  return identity;
+}
+
+export async function assertLectorRequest(request: Request) {
+  const identity = await assertMemberRequest(request);
+  if (!canManageLectors(identity.role))
+    throw new AccessError(
+      403,
+      "Nemáte oprávnenie spravovať rozpisy lektorov.",
+      "LECTOR_ROLE_REQUIRED"
+    );
+  return identity;
+}
+
+async function assertMemberRequest(request: Request) {
   const identity = await requireEditorFromHeaders(request.headers);
   assertSameOrigin(request, authConfiguration().origin);
   return identity;

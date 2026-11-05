@@ -70,6 +70,7 @@ npm run build
 npm run test:browser -- tests/browser/public.spec.ts tests/browser/static-content.spec.ts tests/browser/details.spec.ts tests/browser/seo.spec.ts
 npm run test:accessibility
 npm run test:integration
+npm run test:lectors          # private PDFs, role boundaries and password sessions
 npm run test:admin
 npm run verify:production     # read-only health/SEO checks against the public site
 ```
@@ -160,3 +161,7 @@ Never commit `.env*` secrets, `.private/`, `db-backup/`, account data or raw exp
 The [code licence](LICENSE), parish text/photo rights and
 [Ubuntu Font Licence](public/fonts/UFL.txt) are separate. Preserve credits;
 Cloudinary availability is not a licence grant.
+
+The private lector schedule module and local review steps are documented in the
+[lector changelog](docs/lector-schedules-changelog-2026-11-05.md). Administrator
+emails remain environment-managed; CMS grants are editor or lector only.

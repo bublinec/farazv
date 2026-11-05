@@ -69,6 +69,7 @@ async function main() {
         "node_modules/@playwright/test/cli.js",
         "test",
         "tests/browser/admin.spec.ts",
+        "tests/browser/lector-admin.spec.ts",
         ...process.argv.slice(2)
       ],
       environment

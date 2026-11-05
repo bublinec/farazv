@@ -90,3 +90,32 @@ redaktora. Účty správcov sa menia v technickej konfigurácii Vercelu. Súkrom
 
 Po práci sa odhláste, najmä na zdieľanom počítači. Technickú chybu oznámte na
 jurajbublinec@gmail.com spolu s časom a krokom; neposielajte heslá ani export databázy.
+
+## Rozpisy lektorov
+
+Prihlásenie do CMS zostáva cez Google. Správcovia sú naďalej určení existujúcou
+konfiguráciou `ADMIN_EMAIL_ALLOWLIST`; ich účty nemožno v CMS upraviť ani odobrať.
+V **Prístupy** môže správca pridať Google e-mail a vybrať **Redaktor** alebo
+**Lektor / lektorka**, prípadne zmeniť rolu už pridaného účtu. Správcu nemožno
+vytvoriť cez CMS. Zmena roly alebo odobratie platí aj pre už prihlásený účet.
+
+Lektor/lektorka vidí iba **Rozpisy lektorov**. Vyberie PDF do 3 MB v paneli
+aktuálneho alebo nasledujúceho mesiaca a stlačí **Nahrať PDF**. Nahratie je
+hneď dostupné čitateľom so správnym heslom. Rozpis možno skontrolovať cez
+**Otvoriť PDF**, nahradiť alebo odstrániť. Náhrada a odstránenie vyžadujú
+potvrdenie. Ak rozpis medzitým zmenil niekto iný, obnovte zoznam a skontrolujte
+aktuálny súbor. Staršie mesiace zostávajú iba v súkromnej histórii správy.
+
+Správca nastavuje spoločné heslo v **Nastavenia → Heslo k rozpisom lektorov**.
+Zadáva ho raz, má najmenej 8 znakov a najviac 128. Existujúce heslo sa
+nezobrazuje. Uloženie nového hesla zamkne všetky doterajšie odomknutia.
+Toto heslo slúži iba čitateľom PDF; nenahrádza Google prihlásenie do CMS.
+
+Na stránke **Spoločenstvá → Lektori** čitateľ stlačí **Rozpis lektorov**,
+zadá heslo a vyberie **Otvoriť PDF** alebo **Stiahnuť PDF**. Po zatvorení karty,
+obnovení stránky alebo odchode z podstránky heslo zadáva znova. **Zamknúť rozpisy**
+ukončí prístup ihneď. Bez nastaveného hesla sa dokumenty neotvoria.
+Už stiahnutý súbor alebo skopírované kontakty nemožno spätne odvolať.
+
+Technické zmeny, lokálne overenie a migrácia sú v
+[changelogu rozpisov lektorov](lector-schedules-changelog-2026-11-05.md).

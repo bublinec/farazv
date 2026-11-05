@@ -21,6 +21,7 @@
     "db:restore": "node --import tsx scripts/restore.ts",
     "env:check": "node --import tsx scripts/verify-env.ts",
     "test:admin": "node --import tsx scripts/test-admin.ts",
+    "test:lectors": "node --import tsx scripts/test-lectors.ts",
     "test:integration": "node --import tsx scripts/test-integration.ts",
     "media:verify": "node --conditions=react-server --import tsx scripts/verify-cloudinary.ts",
     "test:accessibility": "playwright test tests/browser/accessibility.spec.ts",

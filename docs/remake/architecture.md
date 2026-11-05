@@ -69,9 +69,10 @@ process-variable precedence. No runtime module imports CLI migration tooling.
 [Shared contracts](../../src/content/documents.ts),
 [database schema](../../src/server/db/schema.ts) and
 [write validation](../../src/server/validation.ts) define the implemented
-model. Seven application tables hold content snapshots, media references, static
-source provenance, import runs, editor grants, visitor feedback and feedback rate
-limits; Drizzle tracks schema migrations separately.
+model. Twelve application tables hold content snapshots, media references, static
+source provenance, import runs, editor grants, visitor feedback, grant audit and
+private lector documents/password sessions/rate limits. Drizzle tracks schema
+migrations separately.
 No old Strapi account/configuration tables or new auth tables are imported.
 
 **Content records** have kinds article, news, notice, event, bulletin and settings.
@@ -182,7 +183,10 @@ Legacy blocks normalize into the same canonical JSON schema. The server renders
 validated React elements and does not execute source HTML or ship Tiptap to public
 pages. Dirty-navigation warnings, save/error states, version-conflict recovery
 and upload/cache retries retain the editor's values. Retrying cache refresh does
-not republish content. Roles are administrator and editor; autosave and approval workflows are not implemented.
+not republish content. Administrators still come only from environment
+configuration. CMS grants are editor or lector; the lector role can manage only
+private monthly schedules. See [lector changes](../lector-schedules-changelog-2026-11-05.md).
+Autosave and approval workflows are not implemented.
 
 ## Dates, caching and failures
 

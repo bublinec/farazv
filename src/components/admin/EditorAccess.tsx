@@ -3,7 +3,12 @@
 import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 
 import { useEffect, useRef, useState } from "react";
-import type { EditorAccessList } from "@/content/editor-access";
+import {
+  EDITOR_ROLES,
+  EDITOR_ROLE_LABELS,
+  type EditorAccessList,
+  type EditorGrantRole
+} from "@/content/editor-access";
 import { readAdminJson } from "./admin-api";
 import { Icon } from "@/components/ui/Icon";
 import styles from "./Admin.module.css";
@@ -16,6 +21,7 @@ export function EditorAccess({
 }) {
   const [access, setAccess] = useState(initialAccess);
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState<EditorGrantRole>("editor");
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -23,7 +29,12 @@ export function EditorAccess({
 
   useEffect(() => () => request.current?.abort(), []);
 
-  async function update(method: "GET" | "POST" | "DELETE", value = "") {
+  async function update(
+    method: "GET" | "POST" | "PATCH" | "DELETE",
+    value = "",
+    selectedRole: EditorGrantRole = role,
+    previousRole?: EditorGrantRole
+  ) {
     if (request.current) return;
     const address = value.trim().toLowerCase();
     if (
@@ -51,7 +62,13 @@ export function EditorAccess({
           ? {}
           : {
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email: address })
+              body: JSON.stringify({
+                email: address,
+                ...(method === "POST" || method === "PATCH"
+                  ? { role: selectedRole }
+                  : {}),
+                ...(previousRole ? { previousRole } : {})
+              })
             })
       });
       const next: EditorAccessList = await readAdminJson(response);
@@ -60,6 +77,10 @@ export function EditorAccess({
       if (method === "POST") {
         setEmail("");
         setMessage(`Prístup pridaný: ${address}.`);
+      } else if (method === "PATCH") {
+        setMessage(
+          `Rola účtu ${address} zmenená na ${EDITOR_ROLE_LABELS[selectedRole]}.`
+        );
       } else if (method === "DELETE") {
         setMessage(`Prístup odobratý: ${address}.`);
       } else setMessage("Zoznam prístupov je aktuálny.");
@@ -133,6 +154,22 @@ export function EditorAccess({
               placeholder="meno@gmail.com"
             />
           </label>
+          <label className={styles.field}>
+            Rola nového používateľa
+            <select
+              value={role}
+              onChange={(event) =>
+                setRole(event.target.value as EditorGrantRole)
+              }
+              disabled={!!busy}
+            >
+              {EDITOR_ROLES.map((value) => (
+                <option key={value} value={value}>
+                  {EDITOR_ROLE_LABELS[value]}
+                </option>
+              ))}
+            </select>
+          </label>
           <button
             className={styles.button}
             type="submit"
@@ -155,6 +192,28 @@ export function EditorAccess({
                     }).format(new Date(editor.grantedAt))}
                   </small>
                 </div>
+                <label className={styles.field}>
+                  Rola
+                  <select
+                    aria-label={`Rola účtu ${editor.email}`}
+                    value={editor.role}
+                    disabled={!!busy}
+                    onChange={(event) =>
+                      void update(
+                        "PATCH",
+                        editor.email,
+                        event.target.value as EditorGrantRole,
+                        editor.role
+                      )
+                    }
+                  >
+                    {EDITOR_ROLES.map((value) => (
+                      <option key={value} value={value}>
+                        {EDITOR_ROLE_LABELS[value]}
+                      </option>
+                    ))}
+                  </select>
+                </label>
                 <button
                   type="button"
                   className={styles.remove}
