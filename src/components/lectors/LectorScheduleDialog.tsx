@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { createPortal } from "react-dom";
 import { useEffect, useId, useRef, useState } from "react";
 import type { LectorSchedule } from "@/content/lector-schedules";
@@ -33,6 +34,7 @@ export function LectorScheduleDialog({
   const [months, setMonths] = useState<LectorSchedule[]>([]);
   const [busy, setBusy] = useState("");
   const [error, setError] = useState("");
+  const [passwordNotConfigured, setPasswordNotConfigured] = useState(false);
   const [notice, setNotice] = useState("");
 
   useEffect(() => {
@@ -49,6 +51,7 @@ export function LectorScheduleDialog({
       setPassword("");
       setBusy("");
       setError("");
+      setPasswordNotConfigured(false);
       dialog.current?.close();
     };
     const restored = (event: PageTransitionEvent) => {
@@ -82,6 +85,7 @@ export function LectorScheduleDialog({
     active.current = controller;
     setBusy(label);
     setError("");
+    setPasswordNotConfigured(false);
     return controller;
   }
   function finish(controller: AbortController) {
@@ -98,6 +102,10 @@ export function LectorScheduleDialog({
       setHasAccess(false);
       setMonths([]);
     }
+    setPasswordNotConfigured(
+      cause instanceof AdminRequestError &&
+        cause.code === "LECTOR_NOT_CONFIGURED"
+    );
     setError(
       cause instanceof Error
         ? cause.message
@@ -131,6 +139,7 @@ export function LectorScheduleDialog({
     if (!tabToken) setMonths([]);
     dialog.current?.showModal();
     setError("");
+    setPasswordNotConfigured(false);
     if (token.current) void refresh();
     else passwordInput.current?.focus();
   }
@@ -173,6 +182,7 @@ export function LectorScheduleDialog({
     setHasAccess(false);
     setMonths([]);
     setError("");
+    setPasswordNotConfigured(false);
     for (const url of urls.current) URL.revokeObjectURL(url);
     urls.current.clear();
     if (previous)
@@ -208,6 +218,7 @@ export function LectorScheduleDialog({
     setPassword("");
     setShowPassword(false);
     setError("");
+    setPasswordNotConfigured(false);
     trigger.current?.focus();
   }
 
@@ -221,6 +232,7 @@ export function LectorScheduleDialog({
       >
         {variant === "panel" ? <Icon name="calendar" size={21} /> : null}
         Rozpis lektorov
+        {variant === "footer" ? <Icon name="arrow-right" size={15} /> : null}
       </button>
       {mounted
         ? createPortal(
@@ -252,7 +264,21 @@ export function LectorScheduleDialog({
               </p>
               {error ? (
                 <p className={styles.error} role="alert">
-                  {error}
+                  {passwordNotConfigured ? (
+                    <>
+                      Heslo k rozpisom ešte nie je nastavené. Napíšte nám
+                      pripomienku cez{" "}
+                      <Link
+                        href="/podnety"
+                        onClick={() => dialog.current?.close()}
+                      >
+                        Podnety a nápady
+                      </Link>
+                      .
+                    </>
+                  ) : (
+                    error
+                  )}
                 </p>
               ) : null}
               {!hasAccess ? (

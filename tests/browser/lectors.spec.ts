@@ -171,3 +171,35 @@ test("footer opens the password dialog directly on another page", async ({
   await expect(trigger).toBeFocused();
   await expect(page).toHaveURL(/\/kontakt$/);
 });
+
+test("missing lector password offers the suggestions form", async ({
+  page
+}) => {
+  await page.route("**/api/lectors/unlock", (route) =>
+    route.fulfill({
+      status: 503,
+      json: {
+        error: "Heslo k rozpisom ešte nie je nastavené.",
+        code: "LECTOR_NOT_CONFIGURED"
+      }
+    })
+  );
+  await page.goto("/kontakt");
+  const trigger = page
+    .getByRole("contentinfo")
+    .getByRole("button", { name: "Rozpis lektorov", exact: true });
+  await expect(trigger.locator("svg")).toHaveCount(1);
+  await trigger.click();
+  const dialog = page.getByRole("dialog", { name: "Rozpis lektorov" });
+  await dialog.getByLabel("Heslo", { exact: true }).fill("abcdefgh");
+  await dialog
+    .getByRole("button", { name: "Otvoriť rozpis", exact: true })
+    .click();
+  const help = dialog
+    .getByRole("alert")
+    .getByRole("link", { name: "Podnety a nápady" });
+  await expect(help).toHaveAttribute("href", "/podnety");
+  await help.click();
+  await expect(page).toHaveURL(/\/podnety$/);
+  await expect(dialog).not.toBeVisible();
+});

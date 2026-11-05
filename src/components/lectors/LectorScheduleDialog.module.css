@@ -203,9 +203,12 @@ form > .primary {
 }
 
 .footerTrigger {
+  position: relative;
+  gap: 8px;
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
+  min-height: 0;
+  line-height: inherit;
   padding: 0;
   border: 0;
   background: transparent;
@@ -221,4 +224,20 @@ form > .primary {
 .footerTrigger:focus-visible {
   outline: 3px solid var(--gold-light);
   outline-offset: 4px;
+}
+
+.footerTrigger::before {
+  content: "";
+  position: absolute;
+  inset: min(0px, calc((100% - 44px) / 2)) 0;
+}
+.error a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (max-width: 550px) {
+  .footerTrigger {
+    min-height: 44px;
+  }
 }

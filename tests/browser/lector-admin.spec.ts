@@ -82,6 +82,16 @@ test.describe("Lector administration on an isolated local database", () => {
         })
       ).status()
     ).toBe(409);
+    await page.goto("/admin/lektori");
+    const archive = page.getByRole("region", {
+      name: "Archív rozpisov",
+      exact: true
+    });
+    await expect(archive).toBeVisible();
+    await expect(archive).toContainText(
+      "V archíve zatiaľ nie sú žiadne rozpisy."
+    );
+    await expect(archive).toContainText("až do ručného odstránenia PDF");
     await page.goto("/admin/nastavenia");
     const security = page.getByRole("region", {
       name: "Heslo k rozpisom lektorov"

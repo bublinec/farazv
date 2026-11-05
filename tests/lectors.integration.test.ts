@@ -680,6 +680,40 @@ test(
             req("/api/admin/lectors", "GET", { cookie: lectorCookie })
           );
           assert.equal((await history.json()).history[0].month, "2000-01");
+          const archived = await adminPdf(
+            req("/api/admin/lectors/2000-01", "GET", { cookie: lectorCookie }),
+            context("2000-01")
+          );
+          assert.equal(archived.status, 200);
+          assert.deepEqual(Buffer.from(await archived.arrayBuffer()), pdf);
+          const deleted = await remove(
+            req("/api/admin/lectors/2000-01", "DELETE", {
+              cookie: lectorCookie,
+              "if-match": '"1"'
+            }),
+            context("2000-01")
+          );
+          assert.equal(deleted.status, 200);
+          const remaining = await list(
+            req("/api/admin/lectors", "GET", { cookie: lectorCookie })
+          );
+          assert.equal((await remaining.json()).history.length, 0);
+          assert.equal(
+            (
+              await adminPdf(
+                req("/api/admin/lectors/2000-01", "GET", {
+                  cookie: lectorCookie
+                }),
+                context("2000-01")
+              )
+            ).status,
+            404
+          );
+          const retained = await getPool().query(
+            "SELECT pdf,version FROM lector_schedules WHERE month='2000-01'"
+          );
+          assert.equal(retained.rows[0].pdf, null);
+          assert.equal(retained.rows[0].version, 2);
           await getPool().query(
             "UPDATE lector_sessions SET expires_at=now()-interval '1 second'"
           );

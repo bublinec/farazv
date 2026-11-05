@@ -252,37 +252,39 @@ export function LectorSchedules({
           </section>
         ))}
       </div>
-      {list.history.length ? (
-        <section className={styles.panel}>
-          <h2>Staršie rozpisy</h2>
-          <p className={styles.hint}>
-            Súkromná história. Čitatelia vidia iba aktuálny a nasledujúci
-            mesiac.
-          </p>
-          <ul className={layout.history}>
-            {list.history.map((slot) => (
-              <li key={slot.month}>
-                <strong>{lectorMonthLabel(slot.month)}</strong>
-                {actions(slot)}
-              </li>
-            ))}
-          </ul>
-          {list.nextCursor ? (
-            <button
-              type="button"
-              className={styles.secondary}
-              disabled={!!busy}
-              onClick={() =>
-                void perform("history", (signal) =>
-                  refresh(signal, list.nextCursor!)
-                )
-              }
-            >
-              Načítať staršie rozpisy
-            </button>
-          ) : null}
-        </section>
-      ) : null}
+      <section className={styles.panel} aria-labelledby="lector-archive-title">
+        <h2 id="lector-archive-title">Archív rozpisov</h2>
+        <p className={styles.hint}>
+          Po skončení mesiaca sa rozpis automaticky presunie do tohto súkromného
+          archívu. Zostáva tu až do ručného odstránenia PDF. Čitatelia vidia iba
+          aktuálny a nasledujúci mesiac.
+        </p>
+        {!list.history.length ? (
+          <p>V archíve zatiaľ nie sú žiadne rozpisy.</p>
+        ) : null}
+        <ul className={layout.history}>
+          {list.history.map((slot) => (
+            <li key={slot.month}>
+              <strong>{lectorMonthLabel(slot.month)}</strong>
+              {actions(slot)}
+            </li>
+          ))}
+        </ul>
+        {list.nextCursor ? (
+          <button
+            type="button"
+            className={styles.secondary}
+            disabled={!!busy}
+            onClick={() =>
+              void perform("history", (signal) =>
+                refresh(signal, list.nextCursor!)
+              )
+            }
+          >
+            Načítať staršie rozpisy
+          </button>
+        ) : null}
+      </section>
     </div>
   );
 }

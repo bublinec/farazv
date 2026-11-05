@@ -117,3 +117,18 @@ Serverové oprávnenia, heslo a ochrana PDF zostávajú nezmenené.
 
 Overenie: npm check (92 úspešných testov, dva opt-in skipy), fixture build,
 14 browser/accessibility kontrol úspešne a jeden opt-in obrázkový skip.
+
+## Update lektorov v2 – nahrávanie súborov
+
+- Archív rozpisov v CMS je viditeľný aj prázdny. Po skončení mesiaca sa existujúce
+  PDF zobrazuje v súkromnom archíve; zostáva uložené do ručného odstránenia.
+  Naďalej možno otvoriť PDF, odstrániť ho a postupne načítať staršie mesiace.
+  Verejný modal sprístupňuje iba aktuálny a nasledujúci mesiac.
+- Nenastavené heslo v modale odkazuje na formulár Podnety a nápady.
+- Odkaz Rozpis lektorov vo footeri má rovnaký rozostup ako ostatné položky
+  Naša farnosť a šípku doprava. Mobilné ovládanie zachováva výšku 44 px.
+- Overené 5. novembra 2026: npm check (95 úspešných, dva voliteľné preskočené),
+  produkčný build, 13 integračných testov, lektorský CMS postup a štyri verejné
+  browser testy vrátane prístupnosti. Testy overujú aj otvorenie staršieho PDF,
+  jeho vymazanie a následné zamietnutie prístupu. Vzhľad footeru skontrolovaný
+  pri šírke 1440 a 390 px; desktopové položky majú zhodnú výšku aj rozostupy.

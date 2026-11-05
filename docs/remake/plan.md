@@ -1016,3 +1016,12 @@ those authenticated actions were not performed by this verification.
   keyboard focus, Escape, a new tab and refresh are covered by the browser flow.
 - An owned compiled server used port 3217; the user's existing development server
   was preserved. Scope and user instructions are recorded in the lector changelog.
+### Lector archive and footer refinement — 5 November 2026
+
+- Made the existing private monthly archive discoverable even when empty and
+  explained retention until manual PDF removal. No automatic destructive cleanup
+  was introduced. Added the requested missing-password suggestions link and
+  aligned the footer entry with its sibling links, including a right arrow.
+- Scope and fresh check/build/integration/browser evidence are recorded in the
+  [lector changelog](../lector-schedules-changelog-2026-11-05.md#update-lektorov-v2--nahrávanie-súborov).
+  The owner authorized publishing to filip/upravy first and then main.
