@@ -1035,3 +1035,13 @@ those authenticated actions were not performed by this verification.
 - The [lector changelog](../lector-schedules-changelog-2026-11-05.md) records
   implementation scope and fresh local check/build, 43 public browser,
   14 integration and complete lector administration verification results.
+### Environment-only lector passcode — 5 November 2026
+
+- The owner replaced CMS password management with server-only `LECTOR_PASSCODE`.
+  Removed the password editor and setters; retired the old API with 404.
+  Existing database password settings are ignored. Opaque session lookups now
+  depend on the environment passcode, so changed configuration rejects old tokens.
+- The [lector changelog](../lector-schedules-changelog-2026-11-05.md) and
+  [editor guide](../editor-guide.md) describe the new behavior. Fresh local
+  verification passed: check, production build, 14 integration and all 19 admin
+  browser tests, including ordinary settings saves and the complete lector flow.

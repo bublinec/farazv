@@ -9,9 +9,8 @@ import {
   LECTOR_PDF_MAX_BYTES
 } from "../src/server/lector-validation";
 import {
-  hashLectorPassword,
-  verifyLectorPassword,
-  hashLectorToken
+  verifyLectorPasscode,
+  hashLectorSessionToken
 } from "../src/server/lector-crypto";
 
 export const smallPdf = Buffer.from(
@@ -78,17 +77,20 @@ test("single password accepts eight characters, preserves spaces and Unicode, an
     12345678
   ])
     assert.throws(() => validateLectorPassword(value));
-  const hash = await hashLectorPassword(" lektori ");
-  assert.notEqual(hash, " lektori ");
-  assert.notEqual(hash, await hashLectorPassword(" lektori "));
-  assert.equal(await verifyLectorPassword(" lektori ", hash), true);
-  assert.equal(await verifyLectorPassword("lektori", hash), false);
-  assert.equal(await verifyLectorPassword("wrongpwd", hash), false);
-  assert.equal(await verifyLectorPassword(" lektori ", "corrupt"), false);
-  assert.equal(hashLectorToken("opaque-token").length, 64);
+  assert.equal(verifyLectorPasscode(" lektori ", " lektori "), true);
+  assert.equal(verifyLectorPasscode("lektori", " lektori "), false);
+  assert.equal(verifyLectorPasscode("wrongpwd", " lektori "), false);
+  assert.equal(verifyLectorPasscode(null, "abcdefgh"), false);
+  assert.equal(verifyLectorPasscode("čítanie8", "čítanie8"), true);
+  const tokenHash = hashLectorSessionToken("opaque-token", "passcode1");
+  assert.match(tokenHash, /^[a-f0-9]{64}$/);
   assert.notEqual(
-    hashLectorToken("opaque-token"),
-    hashLectorToken("other-token")
+    tokenHash,
+    hashLectorSessionToken("other-token", "passcode1")
+  );
+  assert.notEqual(
+    tokenHash,
+    hashLectorSessionToken("opaque-token", "passcode2")
   );
 });
 

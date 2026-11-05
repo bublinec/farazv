@@ -50,7 +50,7 @@ test.describe("Lector administration on an isolated local database", () => {
     )
       throw new Error("Disposable local database required");
   });
-  test("Google account roles isolate LEKTORKA; monthly PDFs and one-field password work end to end", async ({
+  test("Google account roles isolate LEKTORKA; monthly PDFs and environment-only passcode work end to end", async ({
     page,
     context,
     browser
@@ -93,37 +93,21 @@ test.describe("Lector administration on an isolated local database", () => {
     );
     await expect(archive).toContainText("až do ručného odstránenia PDF");
     await page.goto("/admin/nastavenia");
-    const security = page.getByRole("region", {
-      name: "Heslo k rozpisom lektorov"
-    });
-    const settingsWidth = await page
-      .locator("main section")
-      .first()
-      .evaluate((panel) => panel.getBoundingClientRect().width);
-    const passwordWidth = await security.evaluate(
-      (panel) => panel.getBoundingClientRect().width
+    await expect(
+      page.getByRole("heading", {
+        name: "Heslo k rozpisom lektorov",
+        exact: true
+      })
+    ).toHaveCount(0);
+    await expect(page.locator('input[type="password"]')).toHaveCount(0);
+    const removedPasswordEditor = await page.request.put(
+      "/api/admin/lectors/password",
+      {
+        headers: { Origin: origin },
+        data: { password: "must-not-change-env", revision: 0 }
+      }
     );
-    expect(Math.abs(settingsWidth - passwordWidth)).toBeLessThan(2);
-    await expect(
-      security.getByLabel("Nové heslo k rozpisom", { exact: true })
-    ).toHaveCount(1);
-    await expect(
-      security.getByLabel("Nové heslo k rozpisom", { exact: true })
-    ).toHaveAttribute("type", "password");
-    await security
-      .getByLabel("Nové heslo k rozpisom", { exact: true })
-      .fill("abcdefgh");
-    expect(await security.locator('input[type="password"]').count()).toBe(1);
-    await security
-      .getByRole("button", { name: "Uložiť heslo k rozpisom" })
-      .click();
-    await expect(security.getByRole("status")).toContainText(
-      "Heslo bolo uložené"
-    );
-    await expect(
-      security.getByLabel("Nové heslo k rozpisom", { exact: true })
-    ).toHaveValue("");
-
+    expect(removedPasswordEditor.ok()).toBe(false);
     const restricted = await browser.newContext({
       baseURL: origin,
       viewport: { width: 1280, height: 900 }
@@ -150,7 +134,7 @@ test.describe("Lector administration on an isolated local database", () => {
     expect((await member.request.get("/api/admin/records")).status()).toBe(403);
     expect(
       (await member.request.get("/api/admin/lectors/password")).status()
-    ).toBe(403);
+    ).toBe(404);
     const [month, next] = lectorMonths();
     for (const value of [month, next]) {
       const panel = member.getByRole("region", {

@@ -21,6 +21,7 @@ try {
       ...process.env,
       DATABASE_URL: database.url,
       LECTOR_INTEGRATION: "1",
+      LECTOR_PASSCODE: "",
       BETTER_AUTH_URL: "http://127.0.0.1:3198",
       SITE_URL: "http://127.0.0.1:3198",
       BETTER_AUTH_SECRET:

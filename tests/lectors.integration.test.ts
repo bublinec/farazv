@@ -15,20 +15,12 @@ import {
 import { createEditorCookieHeader } from "./helpers/editor-session";
 import { getNextLocalMidnight } from "../src/lib/calendar";
 import { lectorMonths } from "../src/lib/lector-schedules";
-import {
-  setLectorPassword,
-  getLectorPasswordStatus
-} from "../src/server/lector-access";
 import { GET as list } from "../src/app/api/admin/lectors/route";
 import {
   GET as adminPdf,
   PUT as upload,
   DELETE as remove
 } from "../src/app/api/admin/lectors/[month]/route";
-import {
-  GET as passwordStatus,
-  PUT as password
-} from "../src/app/api/admin/lectors/password/route";
 import { POST as unlock } from "../src/app/api/lectors/unlock/route";
 import { GET as publicList } from "../src/app/api/lectors/route";
 import { GET as publicPdf } from "../src/app/api/lectors/[month]/route";
@@ -256,26 +248,6 @@ test(
             ).status,
             403
           );
-          assert.equal(
-            (
-              await passwordStatus(
-                req("/api/admin/lectors/password", "GET", {
-                  cookie: lectorCookie
-                })
-              )
-            ).status,
-            403
-          );
-          assert.equal(
-            (
-              await password(
-                req("/api/admin/lectors/password", "PUT", {
-                  cookie: lectorCookie
-                })
-              )
-            ).status,
-            403
-          );
         }
       );
 
@@ -489,19 +461,26 @@ test(
         }
       );
       await t.test(
-        "only administrator can set one eight-character password; tokens protect every PDF and rotate immediately",
+        "server environment is the only passcode source; tokens protect every PDF and rotate immediately",
         async (passwordTest) => {
-          const changed = await password(
-            req(
-              "/api/admin/lectors/password",
-              "PUT",
-              { cookie: adminCookie, "content-type": "application/json" },
-              JSON.stringify({ password: "abcdefgh", revision: 0 })
-            )
+          await getPool().query(
+            "INSERT INTO lector_security(id,password_hash,revision) VALUES ('lectors','unused-legacy-cms-hash',99) ON CONFLICT (id) DO UPDATE SET password_hash=excluded.password_hash, revision=99"
           );
-          assert.equal(changed.status, 200, await changed.text());
-          const status = await getLectorPasswordStatus();
-          assert.deepEqual(status, { configured: true, revision: 1 });
+          for (const invalid of [undefined, "", "short"]) {
+            if (invalid === undefined) delete process.env.LECTOR_PASSCODE;
+            else process.env.LECTOR_PASSCODE = invalid;
+            const missing = await unlock(
+              req(
+                "/api/lectors/unlock",
+                "POST",
+                { "content-type": "application/json" },
+                JSON.stringify({ password: "abcdefgh" })
+              )
+            );
+            assert.equal(missing.status, 503);
+            assert.equal((await missing.json()).code, "LECTOR_NOT_CONFIGURED");
+          }
+          process.env.LECTOR_PASSCODE = "abcdefgh";
           const bad = await unlock(
             req(
               "/api/lectors/unlock",
@@ -643,7 +622,7 @@ test(
             ).status,
             403
           );
-          await setLectorPassword("newpass8", 1, admin);
+          process.env.LECTOR_PASSCODE = "newpass8";
           assert.equal(
             (await publicList(req("/api/lectors", "GET", headers))).status,
             401
@@ -657,7 +636,7 @@ test(
             ).status,
             401
           );
-          await assert.rejects(setLectorPassword("stale888", 1, admin));
+
           const renewed = await unlock(
             req(
               "/api/lectors/unlock",
@@ -683,58 +662,41 @@ test(
       );
 
       await t.test(
-        "a password rotation queued before an old-password unlock cannot mint a new-revision token",
+        "removing the environment secret denies existing sessions despite legacy CMS settings",
         async () => {
-          const blocker = await getPool().connect();
-          let rotation: ReturnType<typeof setLectorPassword> | undefined;
-          let unlocking: Promise<Response> | undefined;
-          const waitForLocks = async (expected: number) => {
-            const deadline = Date.now() + 10000;
-            while (Date.now() < deadline) {
-              const { rows } = await getPool().query(
-                "SELECT count(*)::int AS waiting FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE '%lector_security%' AND pid<>pg_backend_pid()"
-              );
-              if (rows[0].waiting >= expected) return;
-            }
-            assert.fail(
-              "Expected password operations did not reach their coordinated database locks."
-            );
+          const response = await unlock(
+            req(
+              "/api/lectors/unlock",
+              "POST",
+              { "content-type": "application/json" },
+              JSON.stringify({ password: "newpass8" })
+            )
+          );
+          assert.equal(response.status, 200);
+          const headers = {
+            authorization: `Bearer ${(await response.json()).token}`
           };
-          try {
-            await blocker.query("BEGIN");
-            await blocker.query(
-              "SELECT id FROM lector_security WHERE id='lectors' FOR UPDATE"
-            );
-            rotation = setLectorPassword("rotate88", 2, admin);
-            await waitForLocks(1);
-            unlocking = unlock(
-              req(
-                "/api/lectors/unlock",
-                "POST",
-                { "content-type": "application/json" },
-                JSON.stringify({ password: "newpass8" })
+          delete process.env.LECTOR_PASSCODE;
+          assert.equal(
+            (await publicList(req("/api/lectors", "GET", headers))).status,
+            503
+          );
+          assert.equal(
+            (
+              await publicPdf(
+                req(`/api/lectors/${month}`, "GET", headers),
+                context(month)
               )
-            );
-            await waitForLocks(2);
-            await blocker.query("COMMIT");
-            assert.equal((await rotation).revision, 3);
-            assert.equal((await unlocking).status, 401);
-            assert.equal(
-              (
-                await getPool().query(
-                  "SELECT count(*)::int AS count FROM lector_sessions"
-                )
-              ).rows[0].count,
-              0
-            );
-          } finally {
-            await blocker.query("ROLLBACK");
-            blocker.release();
-            await Promise.allSettled([rotation, unlocking].filter(Boolean));
-          }
+            ).status,
+            503
+          );
+          process.env.LECTOR_PASSCODE = "rotate88";
+          assert.equal(
+            (await publicList(req("/api/lectors", "GET", headers))).status,
+            401
+          );
         }
       );
-
       await t.test(
         "expired sessions and older-month files are denied while private history stays manageable",
         async () => {

@@ -44,13 +44,6 @@
   padding: 1rem 0;
   border-bottom: 1px solid var(--admin-border);
 }
-.password {
-  margin-bottom: 1.4rem;
-}
-.password form {
-  max-width: none;
-}
-
 @media (max-width: 700px) {
   .months {
     grid-template-columns: 1fr;

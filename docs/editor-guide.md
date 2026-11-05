@@ -100,22 +100,26 @@ V **Prístupy** môže správca pridať Google e-mail a vybrať **Redaktor** ale
 vytvoriť cez CMS. Zmena roly alebo odobratie platí aj pre už prihlásený účet.
 
 Lektor/lektorka vidí iba **Rozpisy lektorov**. Vyberie PDF do 3 MB v paneli
-aktuálneho alebo nasledujúceho mesiaca a stlačí **Nahrať PDF**. Nahratie je
-hneď dostupné čitateľom so správnym heslom. Rozpis možno skontrolovať cez
-**Otvoriť PDF**, nahradiť alebo odstrániť. Náhrada a odstránenie vyžadujú
-potvrdenie. Ak rozpis medzitým zmenil niekto iný, obnovte zoznam a skontrolujte
-aktuálny súbor. Staršie mesiace zostávajú iba v súkromnej histórii správy.
+aktuálneho alebo nasledujúceho mesiaca a stlačí **Nahrať PDF**. Čitatelia so
+správnym heslom vidia iba aktuálny mesiac; rozpis pripravený dopredu sa
+sprístupní od začiatku príslušného mesiaca podľa času v Bratislave. Predchádzajúci
+mesiac sa od polnoci zobrazuje iba v súkromnom **Archíve rozpisov** až do ručného
+odstránenia. Rozpis možno skontrolovať cez **Otvoriť PDF**, nahradiť alebo odstrániť.
+Náhrada a odstránenie vyžadujú potvrdenie. Ak rozpis medzitým zmenil niekto iný,
+obnovte zoznam a skontrolujte aktuálny súbor.
 
-Správca nastavuje spoločné heslo v **Nastavenia → Heslo k rozpisom lektorov**.
-Zadáva ho raz, má najmenej 8 znakov a najviac 128. Existujúce heslo sa
-nezobrazuje. Uloženie nového hesla zamkne všetky doterajšie odomknutia.
+Spoločné heslo sa nastavuje výhradne serverovou premennou prostredia
+`LECTOR_PASSCODE`, nie v CMS. Musí mať 8 až 128 znakov; medzery sa neodstraňujú.
+Zmena serverovej hodnoty vyžaduje nové nasadenie. V novej konfigurácii sa
+doterajšie prístupové tokeny neprijmú. Heslo nikdy nevkladajte do repozitára,
+verejnej konfigurácie ani premennej s predponou `NEXT_PUBLIC_`.
 Toto heslo slúži iba čitateľom PDF; nenahrádza Google prihlásenie do CMS.
 
-Na stránke **Spoločenstvá → Lektori** čitateľ stlačí **Rozpis lektorov**,
-zadá heslo a vyberie **Otvoriť PDF** alebo **Stiahnuť PDF**. Po zatvorení karty,
-obnovení stránky alebo odchode z podstránky heslo zadáva znova. **Zamknúť rozpisy**
-ukončí prístup ihneď. Bez nastaveného hesla sa dokumenty neotvoria.
-Už stiahnutý súbor alebo skopírované kontakty nemožno spätne odvolať.
-
+Čitateľ otvorí **Rozpis lektorov** na stránke lektorov alebo vo footeri,
+prípadne **Rozpis služieb lektorov** v mobilnom menu. Zadá heslo a vyberie
+**Otvoriť PDF** alebo **Stiahnuť PDF**. Po zatvorení karty alebo obnovení stránky
+heslo zadáva znova. Bez platného serverového hesla sa dokumenty neotvoria;
+modal ponúkne odkaz na **Podnety a nápady**. Už stiahnutý súbor alebo skopírované
+kontakty nemožno spätne odvolať.
 Technické zmeny, lokálne overenie a migrácia sú v
 [changelogu rozpisov lektorov](lector-schedules-changelog-2026-11-05.md).

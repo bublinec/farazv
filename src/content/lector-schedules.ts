@@ -12,8 +12,3 @@ export interface LectorScheduleList {
   history: LectorSchedule[];
   nextCursor: string | null;
 }
-
-export interface LectorPasswordStatus {
-  configured: boolean;
-  revision: number;
-}

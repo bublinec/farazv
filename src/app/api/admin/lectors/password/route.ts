@@ -1,17 +1,11 @@
-import { administratorResponse } from "@/server/admin-http";
-import { readLectorJson } from "@/server/lector-http";
-import {
-  getLectorPasswordStatus,
-  setLectorPassword
-} from "@/server/lector-access";
+import { PRIVATE_RESPONSE_HEADERS } from "@/server/http";
+
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
-export function GET(request: Request) {
-  return administratorResponse(request, () => getLectorPasswordStatus());
+
+// Retire the old CMS URL explicitly; it must never fall through to a month route.
+export function GET() {
+  return new Response(null, { status: 404, headers: PRIVATE_RESPONSE_HEADERS });
 }
-export function PUT(request: Request) {
-  return administratorResponse(request, async (identity) => {
-    const body = await readLectorJson(request);
-    return setLectorPassword(body.password, body.revision, identity.email);
-  });
-}
+
+export const PUT = GET;

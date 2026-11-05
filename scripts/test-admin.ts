@@ -32,6 +32,7 @@ async function main() {
         "local-test-only-google-provider-no-real-credentials",
       ADMIN_EMAIL_ALLOWLIST: "editor@local-tests.example.test",
       ADMIN_TEST_EMAIL: "",
+      LECTOR_PASSCODE: "abcdefgh",
       CLOUDINARY_CLOUD_NAME: "test-only-local",
       CLOUDINARY_API_KEY: "",
       CLOUDINARY_API_SECRET: "",

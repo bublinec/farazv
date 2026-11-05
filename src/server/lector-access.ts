@@ -2,20 +2,14 @@ import "server-only";
 import { createHmac, randomBytes } from "node:crypto";
 import { isIP } from "node:net";
 import { and, eq, gt, lt, sql } from "drizzle-orm";
-import type { LectorPasswordStatus } from "@/content/lector-schedules";
 import { AccessError, assertSameOrigin } from "@/lib/auth-policy";
 import { siteConfig } from "@/content/site";
 import { getDb } from "./db";
-import { lectorSecurity, lectorSessions, lectorRateLimits } from "./db/schema";
+import { lectorSessions, lectorRateLimits } from "./db/schema";
 import { ContentError } from "./errors";
-import {
-  hashLectorPassword,
-  verifyLectorPassword,
-  hashLectorToken
-} from "./lector-crypto";
-import { validateLectorVersion } from "./lector-validation";
+import { verifyLectorPasscode, hashLectorSessionToken } from "./lector-crypto";
+import { validateLectorPassword } from "./lector-validation";
 
-const SECURITY_ID = "lectors";
 const SESSION_HOURS = 12;
 export type LectorTransaction = Parameters<
   Parameters<ReturnType<typeof getDb>["transaction"]>[0]
@@ -37,53 +31,16 @@ export function assertLectorOrigin(request: Request) {
     );
 }
 
-export async function getLectorPasswordStatus(): Promise<LectorPasswordStatus> {
-  const [row] = await getDb()
-    .select({
-      configured: sql<boolean>`${lectorSecurity.passwordHash} is not null`,
-      revision: lectorSecurity.revision
-    })
-    .from(lectorSecurity)
-    .where(eq(lectorSecurity.id, SECURITY_ID));
-  return row ?? { configured: false, revision: 0 };
-}
-
-export async function setLectorPassword(
-  password: unknown,
-  version: unknown,
-  actor: string
-): Promise<LectorPasswordStatus> {
-  const expected = validateLectorVersion(version);
-  const passwordHash = await hashLectorPassword(password);
-  return getDb().transaction(async (tx) => {
-    await tx
-      .insert(lectorSecurity)
-      .values({ id: SECURITY_ID })
-      .onConflictDoNothing();
-    const [current] = await tx
-      .select()
-      .from(lectorSecurity)
-      .where(eq(lectorSecurity.id, SECURITY_ID))
-      .for("update");
-    if (current.revision !== expected)
-      throw new ContentError(
-        409,
-        "Heslo medzičasom zmenil iný správca. Obnovte nastavenia.",
-        "PASSWORD_CONFLICT"
-      );
-
-    await tx
-      .update(lectorSecurity)
-      .set({
-        passwordHash,
-        revision: current.revision + 1,
-        changedBy: actor,
-        changedAt: sql`now()`
-      })
-      .where(eq(lectorSecurity.id, SECURITY_ID));
-    await tx.delete(lectorSessions);
-    return { configured: true, revision: current.revision + 1 };
-  });
+function lectorPasscode(): string {
+  try {
+    return validateLectorPassword(process.env.LECTOR_PASSCODE);
+  } catch {
+    throw new ContentError(
+      503,
+      "Heslo k rozpisom ešte nie je nastavené.",
+      "LECTOR_NOT_CONFIGURED"
+    );
+  }
 }
 
 /** Trust forwarded addresses only on the deployment whose proxy overwrites them. */
@@ -157,18 +114,9 @@ export async function unlockLectorSchedules(
   request: Request
 ) {
   assertLectorOrigin(request);
+  const passcode = lectorPasscode();
   await consumePasswordAttempt(request);
-  const [security] = await getDb()
-    .select()
-    .from(lectorSecurity)
-    .where(eq(lectorSecurity.id, SECURITY_ID));
-  if (!security?.passwordHash)
-    throw new ContentError(
-      503,
-      "Heslo k rozpisom ešte nie je nastavené. Obráťte sa na správcu farnosti.",
-      "LECTOR_NOT_CONFIGURED"
-    );
-  if (!(await verifyLectorPassword(password, security.passwordHash)))
+  if (!verifyLectorPasscode(password, passcode))
     throw new AccessError(
       401,
       "Heslo nie je správne. Skúste ho zadať znova.",
@@ -176,30 +124,15 @@ export async function unlockLectorSchedules(
     );
 
   const token = randomBytes(32).toString("base64url");
-  await getDb().transaction(async (tx) => {
-    // Password rotation takes an exclusive lock on the same row. An old password
-    // cannot mint a session for a new revision, even when scrypt finishes later.
-    const [current] = await tx
-      .select()
-      .from(lectorSecurity)
-      .where(eq(lectorSecurity.id, SECURITY_ID))
-      .for("share");
-    if (
-      !current ||
-      current.revision !== security.revision ||
-      current.passwordHash !== security.passwordHash
-    )
-      throw new AccessError(
-        401,
-        "Heslo sa medzičasom zmenilo. Zadajte aktuálne heslo.",
-        "LECTOR_PASSWORD_CHANGED"
-      );
-    await tx.insert(lectorSessions).values({
-      tokenHash: hashLectorToken(token),
-      revision: current.revision,
+  // The environment secret keys the lookup, so a redeploy with a changed
+  // passcode rejects all tokens from the old configuration without a DB write.
+  await getDb()
+    .insert(lectorSessions)
+    .values({
+      tokenHash: hashLectorSessionToken(token, passcode),
+      revision: 0,
       expiresAt: sql`now() + interval '12 hours'`
     });
-  });
   return { token, expiresIn: SESSION_HOURS * 3600 };
 }
 
@@ -212,7 +145,7 @@ function requestTokenHash(request: Request): string {
       "Na otvorenie rozpisu zadajte heslo.",
       "LECTOR_PASSWORD_REQUIRED"
     );
-  return hashLectorToken(header.slice(7));
+  return hashLectorSessionToken(header.slice(7), lectorPasscode());
 }
 
 export async function withLectorSession<T>(
@@ -224,16 +157,10 @@ export async function withLectorSession<T>(
     const [session] = await tx
       .select({ tokenHash: lectorSessions.tokenHash })
       .from(lectorSessions)
-      .innerJoin(
-        lectorSecurity,
-        and(
-          eq(lectorSecurity.id, SECURITY_ID),
-          eq(lectorSecurity.revision, lectorSessions.revision)
-        )
-      )
       .where(
         and(
           eq(lectorSessions.tokenHash, tokenHash),
+          eq(lectorSessions.revision, 0),
           gt(lectorSessions.expiresAt, sql`now()`)
         )
       )

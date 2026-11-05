@@ -155,3 +155,24 @@ Overenie: npm check (92 úspešných testov, dva opt-in skipy), fixture build,
   testov a celý lektorský CMS postup. Testy zahŕňajú priamy zákaz budúceho PDF,
   presný polnočný prechod, mobilné Tab/Shift+Tab, šírku nastavení a stiahnutie PDF.
   Vizuálne skontrolované šírky 320, 390 a 1440 px bez vodorovného pretečenia.
+
+## Heslo iba cez LECTOR_PASSCODE
+
+- Na výslovnú zmenu zadania je jediným zdrojom spoločného hesla serverová
+  premenná prostredia `LECTOR_PASSCODE`. Heslo má 8 až 128 znakov. Jeho hodnota
+  sa neposiela klientovi, neukladá do repozitára ani nezapisuje do databázy.
+- Odstránený formulár, stavový typ a funkcie na nastavenie hesla cez CMS.
+  Pôvodná adresa zmeny hesla vracia 404 pri čítaní aj zápise; nemôže prepadnúť
+  do routy pre mesiac. Staré databázové nastavenie hesla sa nepoužíva.
+- Porovnanie hesla používa porovnanie digestov v konštantnom čase. Databáza
+  uchováva iba kľúčovaný odtlačok náhodného prístupového tokenu s platnosťou 12 hodín.
+  Token je naviazaný na aktuálne serverové heslo: nasadenie so zmenenou hodnotou
+  odmietne staré prístupy. Obmedzenie pokusov a overovanie každého PDF zostáva.
+- Chýbajúca alebo neplatná konfigurácia odmietne prístup a ponechá odkaz na
+  Podnety a nápady. Google prihlasovanie, oprávnenia a uložené PDF sa nemenia.
+- Prázdny názov premennej je doplnený v .env.example, testovacie spúšťače používajú
+  iba vlastnú syntetickú konfiguráciu. Návod pre redaktorov odráža nové zadanie.
+- Overené 5. novembra 2026: npm check (95 úspešných, dva voliteľné preskočené),
+  produkčný build, 14 integračných a všetkých 19 CMS browser testov. Pokryté je
+  chýbajúce/krátke heslo, ignorovanie starého databázového nastavenia, odmietnutie
+  starých tokenov, uzavreté CMS API, Google roly a nahrávanie/stiahnutie PDF.
