@@ -7,13 +7,15 @@ test("lector modal is keyboard accessible and authorization is lost on refresh a
   page,
   context
 }) => {
-  const months = lectorMonths().map((month, i) => ({
-    month,
-    version: 1,
-    available: i === 0,
-    bytes: 100,
-    updatedAt: null
-  }));
+  const months = lectorMonths()
+    .slice(0, 1)
+    .map((month, i) => ({
+      month,
+      version: 1,
+      available: i === 0,
+      bytes: 100,
+      updatedAt: null
+    }));
   let unlocks = 0;
   await context.route("**/api/lectors/unlock", async (route) => {
     unlocks++;
@@ -40,6 +42,7 @@ test("lector modal is keyboard accessible and authorization is lost on refresh a
     name: "Rozpis lektorov",
     exact: true
   });
+  await expect(trigger).toBeEnabled();
   await trigger.focus();
   await page.keyboard.press("Enter");
   const dialog = page.getByRole("dialog", { name: "Rozpis lektorov" });
@@ -60,13 +63,14 @@ test("lector modal is keyboard accessible and authorization is lost on refresh a
   await expect(
     dialog.getByRole("button", { name: "Otvoriť PDF", exact: true })
   ).toBeFocused();
-  await expect(dialog.getByRole("status")).toContainText(
-    "Rozpisy sú odomknuté"
-  );
+  await expect(dialog.getByRole("status")).toContainText("Rozpis je odomknutý");
   await page.screenshot({ path: "test-results/lectors-dialog-desktop.png" });
   await expect(
-    dialog.getByText("Rozpis zatiaľ nie je nahraný.", { exact: true })
-  ).toBeVisible();
+    dialog.getByText("Nasledujúci mesiac", { exact: true })
+  ).toHaveCount(0);
+  await expect(
+    dialog.getByRole("button", { name: "Zamknúť rozpisy" })
+  ).toHaveCount(0);
   expect(
     (await new AxeBuilder({ page }).include("dialog").analyze()).violations
   ).toEqual([]);
@@ -202,4 +206,78 @@ test("missing lector password offers the suggestions form", async ({
   await help.click();
   await expect(page).toHaveURL(/\/podnety$/);
   await expect(dialog).not.toBeVisible();
+});
+
+test("lector entry waits for client startup before keyboard activation", async ({
+  page
+}) => {
+  let release = () => {};
+  const held = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route(/\/_next\/static\/.*\.js(?:\?.*)?$/, async (route) => {
+    await held;
+    await route.continue();
+  });
+  try {
+    await page.goto("/spolocenstva/lektori", { waitUntil: "commit" });
+    const trigger = page
+      .locator("aside")
+      .getByRole("button", { name: "Rozpis lektorov", exact: true });
+    await expect(trigger).toBeDisabled();
+    release();
+    await expect(trigger).toBeEnabled();
+    await trigger.focus();
+    await page.keyboard.press("Enter");
+    await expect(
+      page.getByRole("dialog", { name: "Rozpis lektorov" })
+    ).toBeVisible();
+  } finally {
+    release();
+  }
+});
+
+test("mobile menu opens lector modal from an outline action and returns focus", async ({
+  page
+}) => {
+  await page.setViewportSize({ width: 320, height: 720 });
+  await page.goto("/kontakt");
+  const menu = page.getByRole("button", { name: "Otvoriť menu", exact: true });
+  await menu.click();
+  const nav = page.getByRole("dialog", { name: "Navigácia", exact: true });
+  const action = nav.getByRole("button", {
+    name: "Rozpis služieb lektorov",
+    exact: true
+  });
+  await expect(action).toBeVisible();
+  expect(
+    await action.evaluate(
+      (element) => getComputedStyle(element).backgroundColor
+    )
+  ).toBe("rgba(0, 0, 0, 0)");
+  await action.click();
+  await expect(nav).not.toBeVisible();
+  const dialog = page.getByRole("dialog", {
+    name: "Rozpis lektorov",
+    exact: true
+  });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByLabel("Heslo", { exact: true })).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(dialog.getByLabel("Zobraziť heslo")).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(dialog.getByLabel("Heslo", { exact: true })).toBeFocused();
+  await expect(
+    dialog.getByRole("button", { name: "Otvoriť rozpis", exact: true })
+  ).toBeInViewport();
+  expect(
+    (await new AxeBuilder({ page }).include("dialog[open]").analyze())
+      .violations
+  ).toEqual([]);
+  await page.keyboard.press("Escape");
+  await expect(menu).toBeFocused();
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await expect(
+    page.getByRole("button", { name: "Rozpis služieb lektorov", exact: true })
+  ).not.toBeVisible();
 });

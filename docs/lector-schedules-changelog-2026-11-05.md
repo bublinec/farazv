@@ -132,3 +132,26 @@ Overenie: npm check (92 úspešných testov, dva opt-in skipy), fixture build,
   browser testy vrátane prístupnosti. Testy overujú aj otvorenie staršieho PDF,
   jeho vymazanie a následné zamietnutie prístupu. Vzhľad footeru skontrolovaný
   pri šírke 1440 a 390 px; desktopové položky majú zhodnú výšku aj rozostupy.
+
+## Mobilné rozpisy a zobrazenie aktuálneho mesiaca
+
+- Verejný modal zobrazuje iba aktuálny mesiac. PDF pripravené dopredu zostáva
+  v CMS; server ho sprístupní až od začiatku príslušného mesiaca v Bratislave.
+  Predchádzajúci mesiac prestane byť dostupný od polnoci a zostáva v súkromnom
+  archíve. Otvorený odomknutý modal kontroluje polnočný prechod aj návrat do karty.
+- Zmenšené nadpisy, odsadenia a tlačidlá modalu pri zachovaní 44 px ovládania.
+  Odstránené tlačidlo Zamknúť rozpisy; overovanie hesla po obnovení stránky,
+  otvorení novej karty a vypršaní prístupu zostáva zachované.
+- Mobilné menu má nové obrysové tlačidlo Rozpis služieb lektorov. Zatvorí menu,
+  otvorí modal a po zavretí vráti fokus na tlačidlo menu. Desktopová navigácia
+  zostáva bez tejto položky. Zachytávanie Tab neprechádza do zavretého menu.
+- Panel hesla používa rovnaký kontajner ako nastavenia farnosti; odstránené jeho
+  samostatné obmedzenie šírky a výšky vstupov.
+- Opravené otvorenie klávesnicou pred dokončením klientského štartu: vstup je
+  povolený až po pripravení modalu. Regresný test s pozdržaným JavaScriptom
+  zlyhal na pôvodnom builde a prešiel po oprave.
+- Overené 5. novembra 2026: produkčný build, npm check (95 úspešných, dva
+  voliteľné preskočené), všetkých 43 verejných CI browser testov, 14 integračných
+  testov a celý lektorský CMS postup. Testy zahŕňajú priamy zákaz budúceho PDF,
+  presný polnočný prechod, mobilné Tab/Shift+Tab, šírku nastavení a stiahnutie PDF.
+  Vizuálne skontrolované šírky 320, 390 a 1440 px bez vodorovného pretečenia.

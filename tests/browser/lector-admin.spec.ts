@@ -96,6 +96,14 @@ test.describe("Lector administration on an isolated local database", () => {
     const security = page.getByRole("region", {
       name: "Heslo k rozpisom lektorov"
     });
+    const settingsWidth = await page
+      .locator("main section")
+      .first()
+      .evaluate((panel) => panel.getBoundingClientRect().width);
+    const passwordWidth = await security.evaluate(
+      (panel) => panel.getBoundingClientRect().width
+    );
+    expect(Math.abs(settingsWidth - passwordWidth)).toBeLessThan(2);
     await expect(
       security.getByLabel("Nové heslo k rozpisom", { exact: true })
     ).toHaveCount(1);
@@ -235,7 +243,7 @@ test.describe("Lector administration on an isolated local database", () => {
       .click();
     await expect(
       dialog.getByRole("button", { name: "Otvoriť PDF", exact: true })
-    ).toHaveCount(2);
+    ).toHaveCount(1);
     const download = publicPage.waitForEvent("download");
     await dialog
       .getByRole("button", { name: "Stiahnuť PDF", exact: true })
@@ -244,7 +252,14 @@ test.describe("Lector administration on an isolated local database", () => {
     expect((await download).suggestedFilename()).toBe(
       `rozpis-lektorov-${month}.pdf`
     );
-    await dialog.getByRole("button", { name: "Zamknúť rozpisy" }).click();
+    await expect(
+      dialog.getByRole("button", { name: "Zamknúť rozpisy" })
+    ).toHaveCount(0);
+    await publicPage.reload();
+    await publicPage
+      .locator("aside")
+      .getByRole("button", { name: "Rozpis lektorov", exact: true })
+      .click();
     await expect(dialog.getByLabel("Heslo", { exact: true })).toBeVisible();
     await visitor.close();
 

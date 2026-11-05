@@ -4,7 +4,8 @@ import Link from "next/link";
 import { createPortal } from "react-dom";
 import { useEffect, useId, useRef, useState } from "react";
 import type { LectorSchedule } from "@/content/lector-schedules";
-import { lectorMonthLabel } from "@/lib/lector-schedules";
+import { getNextLocalMidnight } from "@/lib/calendar";
+import { lectorMonths, lectorMonthLabel } from "@/lib/lector-schedules";
 import { containDialogFocus } from "@/lib/dialog";
 import { Icon } from "@/components/ui/Icon";
 import { AdminRequestError, readAdminJson } from "@/components/admin/admin-api";
@@ -15,9 +16,13 @@ import styles from "./LectorScheduleDialog.module.css";
 let tabToken = "";
 
 export function LectorScheduleDialog({
-  variant = "panel"
+  variant = "panel",
+  onOpen,
+  onReturnFocus
 }: {
-  variant?: "panel" | "footer";
+  variant?: "panel" | "footer" | "navigation";
+  onOpen?: () => void;
+  onReturnFocus?: () => void;
 }) {
   const id = useId();
   const [mounted, setMounted] = useState(false);
@@ -133,10 +138,42 @@ export function LectorScheduleDialog({
       finish(controller);
     }
   }
+  useEffect(() => {
+    if (!hasAccess) return;
+
+    let month = lectorMonths()[0];
+    let timer: ReturnType<typeof setTimeout>;
+    function checkMonth() {
+      const current = lectorMonths()[0];
+      if (current === month) return;
+      month = current;
+      active.current?.abort();
+      active.current = null;
+      setMonths([]);
+      if (dialog.current?.open) void refresh();
+    }
+    function schedule() {
+      timer = setTimeout(() => {
+        checkMonth();
+        schedule();
+      }, getNextLocalMidnight().getTime() - Date.now() + 50);
+    }
+    function visible() {
+      if (!document.hidden) checkMonth();
+    }
+    schedule();
+    document.addEventListener("visibilitychange", visible);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("visibilitychange", visible);
+    };
+  }, [hasAccess]);
+
   function open() {
     token.current = tabToken;
     setHasAccess(Boolean(tabToken));
     if (!tabToken) setMonths([]);
+    onOpen?.();
     dialog.current?.showModal();
     setError("");
     setPasswordNotConfigured(false);
@@ -165,7 +202,7 @@ export function LectorScheduleDialog({
       await readMonths(controller);
       if (!controller.signal.aborted) {
         focusResult.current = true;
-        setNotice("Rozpisy sú odomknuté. Vyberte mesiac.");
+        setNotice("Rozpis je odomknutý.");
       }
     } catch (cause) {
       failure(cause, controller);
@@ -173,25 +210,6 @@ export function LectorScheduleDialog({
     } finally {
       finish(controller);
     }
-  }
-  function lock() {
-    const previous = token.current;
-    setNotice("");
-    token.current = "";
-    tabToken = "";
-    setHasAccess(false);
-    setMonths([]);
-    setError("");
-    setPasswordNotConfigured(false);
-    for (const url of urls.current) URL.revokeObjectURL(url);
-    urls.current.clear();
-    if (previous)
-      void fetch("/api/lectors/session", {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${previous}` },
-        cache: "no-store"
-      }).catch(() => {});
-    window.setTimeout(() => passwordInput.current?.focus(), 0);
   }
   async function pdf(month: string, download: boolean) {
     const controller = begin("Pripravujem PDF…");
@@ -219,7 +237,8 @@ export function LectorScheduleDialog({
     setShowPassword(false);
     setError("");
     setPasswordNotConfigured(false);
-    trigger.current?.focus();
+    if (onReturnFocus) onReturnFocus();
+    else trigger.current?.focus();
   }
 
   return (
@@ -227,12 +246,21 @@ export function LectorScheduleDialog({
       <button
         ref={trigger}
         type="button"
-        className={variant === "footer" ? styles.footerTrigger : styles.trigger}
+        disabled={!mounted}
+        className={
+          variant === "footer"
+            ? styles.footerTrigger
+            : variant === "navigation"
+            ? styles.navigationTrigger
+            : styles.trigger
+        }
         onClick={open}
       >
         {variant === "panel" ? <Icon name="calendar" size={21} /> : null}
-        Rozpis lektorov
-        {variant === "footer" ? <Icon name="arrow-right" size={15} /> : null}
+        {variant === "navigation"
+          ? "Rozpis služieb lektorov"
+          : "Rozpis lektorov"}
+        {variant !== "panel" ? <Icon name="arrow-right" size={15} /> : null}
       </button>
       {mounted
         ? createPortal(
@@ -242,7 +270,10 @@ export function LectorScheduleDialog({
               aria-labelledby={`${id}-title`}
               aria-describedby={`${id}-description`}
               onClose={closed}
-              onKeyDown={containDialogFocus}
+              onKeyDown={(event) => {
+                event.stopPropagation();
+                containDialogFocus(event);
+              }}
             >
               <header className={styles.header}>
                 <h2 id={`${id}-title`} tabIndex={-1}>
@@ -259,7 +290,7 @@ export function LectorScheduleDialog({
               </header>
               <p id={`${id}-description`} className={styles.description}>
                 {hasAccess
-                  ? "Vyberte mesiac a otvorte alebo stiahnite PDF rozpis."
+                  ? "Otvorte alebo stiahnite rozpis na aktuálny mesiac."
                   : "Rozpis obsahuje kontakty na lektorov. Na jeho otvorenie zadajte spoločné heslo."}
               </p>
               {error ? (
@@ -330,14 +361,10 @@ export function LectorScheduleDialog({
               ) : (
                 <>
                   <ul className={styles.months}>
-                    {months.map((month, index) => (
+                    {months.map((month) => (
                       <li key={month.month}>
                         <h3 tabIndex={-1}>{lectorMonthLabel(month.month)}</h3>
-                        <p className={styles.monthNote}>
-                          {index === 0
-                            ? "Aktuálny mesiac"
-                            : "Nasledujúci mesiac"}
-                        </p>
+                        <p className={styles.monthNote}>Aktuálny mesiac</p>
                         {month.available ? (
                           <div className={styles.actions}>
                             <button
@@ -379,15 +406,6 @@ export function LectorScheduleDialog({
                       Po obnovení stránky alebo zatvorení karty bude potrebné
                       zadať heslo znova.
                     </p>
-                    <button
-                      type="button"
-                      className={styles.secondary}
-                      disabled={!!busy}
-                      onClick={lock}
-                    >
-                      <Icon name="lock" size={18} />
-                      Zamknúť rozpisy
-                    </button>
                   </div>
                 </>
               )}

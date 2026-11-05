@@ -45,15 +45,12 @@
   border-bottom: 1px solid var(--admin-border);
 }
 .password {
-  max-width: 1100px;
-  margin: 2rem auto;
+  margin-bottom: 1.4rem;
 }
 .password form {
-  max-width: 38rem;
+  max-width: none;
 }
-.password input {
-  min-height: 48px;
-}
+
 @media (max-width: 700px) {
   .months {
     grid-template-columns: 1fr;

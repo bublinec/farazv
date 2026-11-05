@@ -31,6 +31,22 @@ test("lector months use Bratislava midnight and roll December into the next year
     "2026-04",
     "2026-05"
   ]);
+  assert.equal(
+    lectorMonths(new Date("2026-11-30T22:59:59.999Z"))[0],
+    "2026-11"
+  );
+  assert.equal(
+    lectorMonths(new Date("2026-11-30T23:00:00.000Z"))[0],
+    "2026-12"
+  );
+  assert.equal(
+    lectorMonths(new Date("2026-06-30T21:59:59.999Z"))[0],
+    "2026-06"
+  );
+  assert.equal(
+    lectorMonths(new Date("2026-06-30T22:00:00.000Z"))[0],
+    "2026-07"
+  );
   assert.equal(lectorMonthLabel("2026-11"), "november 2026");
   for (const value of ["2026-00", "2026-13", "2026-1", "../../secret", null])
     assert.throws(() => validateLectorMonth(value));

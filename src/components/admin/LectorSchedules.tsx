@@ -159,7 +159,7 @@ export function LectorSchedules({
           <h1>Rozpisy lektorov</h1>
           <p>
             Nahrajte PDF na aktuálny alebo nasledujúci mesiac. Uložený rozpis je
-            hneď dostupný čitateľom, ktorí poznajú heslo.
+            dostupný čitateľom, ktorí poznajú heslo, až v príslušnom mesiaci.
           </p>
         </div>
         <button
@@ -257,7 +257,7 @@ export function LectorSchedules({
         <p className={styles.hint}>
           Po skončení mesiaca sa rozpis automaticky presunie do tohto súkromného
           archívu. Zostáva tu až do ručného odstránenia PDF. Čitatelia vidia iba
-          aktuálny a nasledujúci mesiac.
+          aktuálny mesiac.
         </p>
         {!list.history.length ? (
           <p>V archíve zatiaľ nie sú žiadne rozpisy.</p>

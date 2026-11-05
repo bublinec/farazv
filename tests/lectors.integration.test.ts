@@ -13,6 +13,7 @@ import {
   getEditorRole
 } from "../src/server/editor-access";
 import { createEditorCookieHeader } from "./helpers/editor-session";
+import { getNextLocalMidnight } from "../src/lib/calendar";
 import { lectorMonths } from "../src/lib/lector-schedules";
 import {
   setLectorPassword,
@@ -489,7 +490,7 @@ test(
       );
       await t.test(
         "only administrator can set one eight-character password; tokens protect every PDF and rotate immediately",
-        async () => {
+        async (passwordTest) => {
           const changed = await password(
             req(
               "/api/admin/lectors/password",
@@ -523,11 +524,97 @@ test(
           const { token } = await success.json();
           assert.match(token, /^[A-Za-z0-9_-]{43}$/);
           assert.equal(success.headers.get("set-cookie"), null);
+          await passwordTest.test(
+            "public PDF access switches at Bratislava month midnight",
+            async (boundaryTest) => {
+              const [year, monthNumber] = month.split("-").map(Number);
+              const boundary = getNextLocalMidnight(
+                new Date(Date.UTC(year, monthNumber, 0, 12))
+              );
+              const saved = await getPool().query(
+                "SELECT pdf FROM lector_schedules WHERE month=$1",
+                [next]
+              );
+              await getPool().query(
+                "UPDATE lector_schedules SET pdf=$1 WHERE month=$2",
+                [pdf, next]
+              );
+              const authorization = { authorization: `Bearer ${token}` };
+              boundaryTest.mock.timers.enable({
+                apis: ["Date"],
+                now: boundary.getTime() - 1
+              });
+              try {
+                assert.equal(
+                  (
+                    await publicPdf(
+                      req(`/api/lectors/${month}`, "GET", authorization),
+                      context(month)
+                    )
+                  ).status,
+                  200
+                );
+                assert.equal(
+                  (
+                    await publicPdf(
+                      req(`/api/lectors/${next}`, "GET", authorization),
+                      context(next)
+                    )
+                  ).status,
+                  404
+                );
+                boundaryTest.mock.timers.setTime(boundary.getTime());
+                const switched = await publicList(
+                  req("/api/lectors", "GET", authorization)
+                );
+                assert.deepEqual(
+                  (await switched.json()).months.map(
+                    (entry: { month: string }) => entry.month
+                  ),
+                  [next]
+                );
+                assert.equal(
+                  (
+                    await publicPdf(
+                      req(`/api/lectors/${month}`, "GET", authorization),
+                      context(month)
+                    )
+                  ).status,
+                  404
+                );
+                assert.equal(
+                  (
+                    await publicPdf(
+                      req(`/api/lectors/${next}`, "GET", authorization),
+                      context(next)
+                    )
+                  ).status,
+                  200
+                );
+              } finally {
+                boundaryTest.mock.timers.reset();
+                await getPool().query(
+                  "UPDATE lector_schedules SET pdf=$1 WHERE month=$2",
+                  [saved.rows[0].pdf, next]
+                );
+              }
+            }
+          );
           const headers = { authorization: `Bearer ${token}` };
           const visible = await publicList(req("/api/lectors", "GET", headers));
           assert.equal(visible.status, 200);
           const data = await visible.json();
-          assert.equal(data.months.length, 2);
+          assert.equal(data.months.length, 1);
+          assert.equal(data.months[0].month, month);
+          assert.equal(
+            (
+              await publicPdf(
+                req(`/api/lectors/${next}`, "GET", headers),
+                context(next)
+              )
+            ).status,
+            404
+          );
           assert.ok(!JSON.stringify(data).includes("passwordHash"));
           assert.ok(!JSON.stringify(data).includes("updatedBy"));
           const file = await publicPdf(

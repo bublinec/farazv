@@ -70,7 +70,7 @@ test("mobile menu contains focus, closes with Escape, and navigates to contact",
   await expect(close).toBeFocused();
   await page.keyboard.press("Shift+Tab");
   await expect(
-    dialog.getByRole("link", { name: "Rozpis svätých omší", exact: true })
+    dialog.getByRole("button", { name: "Rozpis služieb lektorov", exact: true })
   ).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(close).toBeFocused();

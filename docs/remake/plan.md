@@ -1025,3 +1025,13 @@ those authenticated actions were not performed by this verification.
 - Scope and fresh check/build/integration/browser evidence are recorded in the
   [lector changelog](../lector-schedules-changelog-2026-11-05.md#update-lektorov-v2--nahrávanie-súborov).
   The owner authorized publishing to filip/upravy first and then main.
+### Current-month lector access and mobile polish — 5 November 2026
+
+- Public schedule availability now follows the current Bratislava month only;
+  advance uploads and the private archive remain available in CMS. The server
+  denies future PDFs and changes access at month midnight, with an open-modal
+  date refresh. Refined modal scale, mobile outline entry, settings alignment
+  and initial client readiness; removed the requested lock button.
+- The [lector changelog](../lector-schedules-changelog-2026-11-05.md) records
+  implementation scope and fresh local check/build, 43 public browser,
+  14 integration and complete lector administration verification results.

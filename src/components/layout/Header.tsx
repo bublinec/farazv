@@ -7,6 +7,7 @@ import { navigation } from "@/content/navigation";
 import { siteConfig } from "@/content/site";
 import { containDialogFocus } from "@/lib/dialog";
 import { Icon } from "@/components/ui/Icon";
+import { LectorScheduleDialog } from "@/components/lectors/LectorScheduleDialog";
 import { ParishLogo } from "./ParishLogo";
 import styles from "./Header.module.css";
 
@@ -144,7 +145,8 @@ export function Header() {
         onKeyDown={containDialogFocus}
         onClose={() => {
           setMenuOpen(false);
-          menuButton.current?.focus();
+          if (!document.querySelector("dialog[open]"))
+            menuButton.current?.focus();
         }}
         onClick={(event) => {
           if (event.target === event.currentTarget) closeMenu();
@@ -202,6 +204,11 @@ export function Header() {
           Rozpis svätých omší
           <Icon name="arrow-right" size={17} />
         </Link>
+        <LectorScheduleDialog
+          variant="navigation"
+          onOpen={closeMenu}
+          onReturnFocus={() => menuButton.current?.focus()}
+        />
       </dialog>
     </>
   );

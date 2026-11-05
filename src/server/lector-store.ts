@@ -164,7 +164,7 @@ export async function getAdminLectorPdf(monthValue: unknown): Promise<Buffer> {
 
 export async function listPublicLectorSchedules(request: Request) {
   return withLectorSession(request, async (tx) => {
-    const months = lectorMonths();
+    const months = [lectorMonths()[0]];
     const rows = await tx
       .select({
         month: metadata.month,
@@ -185,7 +185,7 @@ export async function getPublicLectorPdf(
 ): Promise<Buffer> {
   return withLectorSession(request, async (tx) => {
     const month = validateLectorMonth(monthValue);
-    if (!lectorMonths().includes(month))
+    if (lectorMonths()[0] !== month)
       throw new ContentError(
         404,
         "Tento rozpis nie je dostupný.",
