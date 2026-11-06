@@ -3,7 +3,8 @@
   --gold: #bfa169;
   --gold-light: #e0c994;
   display: flex;
-  height: min(800px, max(0px, calc(100dvh - var(--site-header-height, 88px))));
+  height: max(0px, calc(100svh - var(--site-header-height, 88px)));
+  height: max(0px, calc(100dvh - var(--site-header-height, 88px)));
   position: relative;
   isolation: isolate;
   background: #2b2721;
@@ -28,19 +29,21 @@
 .inner {
   min-width: 0;
   display: grid;
-  grid-template-rows: minmax(min-content, 1fr) auto;
-  /* Short viewports and larger text can scroll without exceeding the height cap. */
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #e0c99480 transparent;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr) auto;
+  overflow: hidden;
   gap: clamp(20px, 4dvh, 36px);
   padding-top: clamp(24px, 5dvh, 48px);
   padding-bottom: 20px;
   position: relative;
 }
 .content {
-  justify-content: center;
+  justify-content: flex-start;
+  min-width: 0;
   min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #e0c99480 transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,15 +52,19 @@
 .content > * {
   flex-shrink: 0;
 }
+.content > :last-child {
+  margin-bottom: auto;
+}
 
 .liturgyHeading {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  margin-top: auto;
 }
 
-.hero .content h1 {
+.hero .content :is(h1, h2) {
   font-family: var(--font-display);
   max-width: 28ch;
   text-wrap: balance;
@@ -155,8 +162,13 @@
   opacity: 0.3;
 }
 .days {
+  min-width: 0;
+  flex: 1;
   display: grid;
-  grid-template-columns: repeat(8, minmax(44px, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(44px, 1fr);
+  overflow-x: auto;
+  scrollbar-width: none;
   gap: 6px;
 }
 .dayButton {
@@ -206,17 +218,10 @@
 }
 
 @media (max-width: 900px), (pointer: coarse) {
-  .hero {
-    height: auto;
-  }
-
   .inner {
-    grid-template-rows: auto auto;
-    overflow: visible;
-    gap: 20px;
-    padding-top: 24px;
+    gap: 12px;
+    padding-top: 16px;
     padding-bottom: 16px;
-    touch-action: pan-y pinch-zoom;
   }
 }
 
@@ -237,7 +242,7 @@
   }
 }
 @media (max-width: 550px) {
-  .hero .content h1 {
+  .hero .content :is(h1, h2) {
     font-size: clamp(1.65rem, 5.5vw, 2rem);
   }
   .masses {
@@ -246,10 +251,11 @@
   .mass {
     min-width: 0;
     width: calc(33.333% - 6px);
-    padding: 10px 4px;
+    padding: 8px 4px;
   }
   .mass strong {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    line-height: 1.35;
   }
   .designation {
     font-size: 0.85rem;
@@ -263,13 +269,12 @@
   }
   .days {
     width: 100%;
-    justify-content: center;
     gap: 0;
   }
   .dayButton {
-    min-width: 0;
+    min-width: 44px;
     padding-inline: 3px;
-    min-height: 50px;
+    min-height: 44px;
   }
   .dayButton span {
     font-size: 0.85rem;
@@ -288,7 +293,7 @@
 
 @media (max-width: 650px) {
   .days {
-    grid-template-columns: repeat(4, minmax(44px, 1fr));
+    grid-auto-columns: minmax(44px, 1fr);
   }
 
   .dayButton span {
@@ -306,7 +311,7 @@
     padding-top: 20px;
     padding-bottom: 16px;
   }
-  .hero .content h1 {
+  .hero .content :is(h1, h2) {
     font-size: clamp(1.7rem, 2.7vw, 2.2rem);
   }
   .divider {
@@ -314,5 +319,75 @@
   }
   .mass {
     padding-block: 10px 12px;
+  }
+}
+
+.viewport {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
+}
+.content {
+  grid-area: 1 / 1;
+}
+.leaving {
+  pointer-events: none;
+}
+.enterNext {
+  animation: enter-next 300ms ease both;
+}
+.leaveNext {
+  animation: leave-next 300ms ease both;
+}
+.enterPrevious {
+  animation: enter-previous 300ms ease both;
+}
+.leavePrevious {
+  animation: leave-previous 300ms ease both;
+}
+.days::-webkit-scrollbar {
+  display: none;
+}
+@keyframes enter-next {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes leave-next {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes enter-previous {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes leave-previous {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .enterNext,
+  .leaveNext,
+  .enterPrevious,
+  .leavePrevious {
+    animation: none;
   }
 }

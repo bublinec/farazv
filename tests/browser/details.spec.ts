@@ -99,13 +99,10 @@ for (const width of [320, 390, 501]) {
     for (const [index, box] of boxes.entries()) {
       expect(box.width).toBeGreaterThanOrEqual(44);
       expect(box.height).toBeGreaterThanOrEqual(44);
-      expect(box.x).toBeGreaterThanOrEqual(0);
-      expect(box.x + box.width).toBeLessThanOrEqual(width);
+      expect(box.y).toBeCloseTo(boxes[0].y, 1);
       if (index) {
         const previous = boxes[index - 1];
-        expect(box.y).toBeGreaterThanOrEqual(previous.y);
-        if (box.y === previous.y)
-          expect(box.x).toBeGreaterThanOrEqual(previous.x + previous.width);
+        expect(box.x).toBeGreaterThanOrEqual(previous.x + previous.width);
       }
     }
 
@@ -113,6 +110,7 @@ for (const width of [320, 390, 501]) {
     await expect(today).toHaveCount(1);
     await expect(today).toHaveAttribute("aria-pressed", "true");
     await expect(today).toContainText("Dnes");
+    await expect(today).toBeInViewport({ ratio: 1 });
     const todayLabel = await today.getAttribute("aria-label");
     await buttons.first().click();
     await expect(buttons.first()).toHaveAttribute("aria-pressed", "true");
@@ -299,3 +297,142 @@ for (const width of [390, 1440]) {
     }
   });
 }
+
+for (const viewport of [
+  { width: 1440, height: 1080 },
+  { width: 390, height: 844 },
+  { width: 320, height: 568 }
+]) {
+  test(`hero fills the viewport and keeps dates visible with a crowded schedule at ${viewport.width}px`, async ({
+    page
+  }) => {
+    await page.setViewportSize(viewport);
+    const hero = page.getByRole("region", {
+      name: "Rozpis svätých omší",
+      exact: true
+    });
+    await expect
+      .poll(async () => {
+        const bounds = await hero.boundingBox();
+        return Math.abs(bounds!.y + bounds!.height - viewport.height);
+      })
+      .toBeLessThan(2);
+
+    const content = hero.locator("[data-current-slide]");
+    await content.evaluate((element) => {
+      const masses = element.lastElementChild!;
+      const sample = masses.firstElementChild!;
+      while (masses.children.length < 12) masses.append(sample.cloneNode(true));
+    });
+    const dates = hero.getByRole("group", { name: "Vybrať deň", exact: true });
+    await expect(dates).toBeInViewport({ ratio: 1 });
+    await expect(dates.getByRole("button", { pressed: true })).toBeInViewport({
+      ratio: 1
+    });
+    expect(
+      await content.evaluate((element) => element.scrollHeight)
+    ).toBeGreaterThan(0);
+    await content.evaluate((element) => {
+      element.scrollTop = element.scrollHeight;
+    });
+    if (viewport.width === 320) {
+      expect(
+        await content.evaluate((element) => element.scrollTop)
+      ).toBeGreaterThan(0);
+      await expect(
+        content.locator(":scope > div").last().locator(":scope > div").last()
+      ).toBeInViewport({ ratio: 1 });
+    }
+    await expect(dates).toBeInViewport({ ratio: 1 });
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth
+      )
+    ).toBe(true);
+  });
+}
+
+test("hero swipes animate both directions and keep the selected date in the single row", async ({
+  page
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  const hero = page.getByRole("region", {
+    name: "Rozpis svätých omší",
+    exact: true
+  });
+  const dates = hero.getByRole("group", { name: "Vybrať deň", exact: true });
+  await dates.getByRole("button").nth(2).click();
+  const surface = hero.locator("[data-current-slide]").locator("..");
+  await surface.evaluate((element) => {
+    element.addEventListener("animationstart", (event) => {
+      const animation = event as AnimationEvent;
+      if ((animation.target as HTMLElement).hasAttribute("data-current-slide"))
+        element.setAttribute("data-slide-animation", animation.animationName);
+    });
+  });
+  async function swipe(startX: number, endX: number) {
+    await surface.evaluate((element) =>
+      element.removeAttribute("data-slide-animation")
+    );
+    await surface.evaluate(
+      (element, points) => {
+        const touch = (x: number) =>
+          new Touch({
+            identifier: 1,
+            target: element,
+            clientX: x,
+            clientY: 220
+          });
+        element.dispatchEvent(
+          new TouchEvent("touchstart", {
+            bubbles: true,
+            touches: [touch(points.startX)],
+            changedTouches: [touch(points.startX)]
+          })
+        );
+        element.dispatchEvent(
+          new TouchEvent("touchend", {
+            bubbles: true,
+            touches: [],
+            changedTouches: [touch(points.endX)]
+          })
+        );
+      },
+      { startX, endX }
+    );
+  }
+  await swipe(280, 80);
+  await expect(dates.getByRole("button").nth(3)).toHaveAttribute(
+    "aria-pressed",
+    "true"
+  );
+  const active = hero.locator("[data-current-slide]");
+  await expect(surface).toHaveAttribute("data-slide-animation", /enter-next/);
+  await expect(dates.getByRole("button", { pressed: true })).toBeInViewport({
+    ratio: 1
+  });
+  await expect(hero.locator('[aria-hidden="true"][inert]')).toHaveCount(0);
+
+  await swipe(80, 280);
+  await expect(surface).toHaveAttribute(
+    "data-slide-animation",
+    /enter-previous/
+  );
+  await expect(dates.getByRole("button").nth(2)).toHaveAttribute(
+    "aria-pressed",
+    "true"
+  );
+  await expect(dates.getByRole("button", { pressed: true })).toBeInViewport({
+    ratio: 1
+  });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(hero.locator('[aria-hidden="true"][inert]')).toHaveCount(0);
+
+  await swipe(280, 80);
+  await expect(dates.getByRole("button").nth(3)).toHaveAttribute(
+    "aria-pressed",
+    "true"
+  );
+  await expect(active).toHaveCSS("animation-name", "none");
+  await expect(hero.locator('[aria-hidden="true"][inert]')).toHaveCount(0);
+});

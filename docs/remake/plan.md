@@ -1045,3 +1045,22 @@ those authenticated actions were not performed by this verification.
   [editor guide](../editor-guide.md) describe the new behavior. Fresh local
   verification passed: check, production build, 14 integration and all 19 admin
   browser tests, including ordinary settings saves and the complete lector flow.
+### Hero viewport and swipe format — 6 November 2026
+
+- Removed the 800 px hero cap. Header plus hero fills the visible viewport using
+  the measured header height. The date navigation occupies a fixed bottom row;
+  long day content scrolls within the space above it.
+- Kept all eight Sunday–Sunday dates in one horizontally scrollable row on
+  mobile. Selecting/swiping a day centers its date in the strip; native dragging
+  of the date strip remains independent from day selection.
+- Added paired 300 ms entering/leaving slides matching the legacy carousel tempo.
+  The outgoing panel is inert and hidden from assistive technology. A stable live
+  region announces day changes; reduced-motion preferences skip animation and
+  interrupted transitions are cleaned up. Verse type and quotation marks are smaller.
+- Verification: npm check (95 passes, two opt-in skips), isolated production build,
+  58 public browser/accessibility passes and one optional skip. Added viewport,
+  crowded-schedule and swipe regressions. Checked 1440×1080, 390×844 and 320×568
+  layouts visually, including twelve synthetic Mass cards and the animation midpoint.
+  Native mobile date-strip swiping moved its scroll offset from 166 to 0 without
+  changing the selected day. Review findings about strip alignment and live-region
+  continuity were fixed and rechecked before release.

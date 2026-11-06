@@ -2,8 +2,8 @@
   display: grid;
   align-items: center;
   width: 100%;
-  min-height: 130px;
-  margin-block: 18px 16px;
+  min-height: 106px;
+  margin-block: 14px 12px;
 }
 
 .quote {
@@ -15,7 +15,7 @@
 .mark {
   position: absolute;
   color: var(--gold-light);
-  font-size: 72px;
+  font-size: 60px;
   font-weight: 400;
   font-style: normal;
   line-height: 0.75;
@@ -24,12 +24,12 @@
 }
 
 .openMark {
-  left: -36px;
+  left: -30px;
   top: -2px;
 }
 
 .closeMark {
-  right: -36px;
+  right: -30px;
   bottom: -18px;
 }
 
@@ -43,7 +43,7 @@
 .quote blockquote {
   position: relative;
   color: #f7f1e5;
-  font-size: clamp(1.03rem, 1.7vw, 1.18rem);
+  font-size: clamp(1rem, 1.4vw, 1.1rem);
   font-weight: 350;
   font-style: italic;
   line-height: 1.65;
@@ -83,31 +83,31 @@
 
 @media (max-width: 900px), (pointer: coarse) {
   .space {
-    min-height: 96px;
-    margin-block: 14px;
+    min-height: 72px;
+    margin-block: 10px;
   }
 }
 
 @media (max-width: 550px) {
   .quote {
-    padding-inline: 22px;
+    padding-inline: 18px;
   }
 
   .quote blockquote {
-    font-size: 1.03rem;
+    font-size: 0.95rem;
   }
 
   .mark {
-    font-size: 56px;
+    font-size: 44px;
   }
 
   .openMark {
-    left: -24px;
+    left: -20px;
   }
 
   .closeMark {
-    right: -24px;
-    bottom: -14px;
+    right: -20px;
+    bottom: -10px;
   }
 }
 
