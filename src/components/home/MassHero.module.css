@@ -218,6 +218,11 @@
 }
 
 @media (max-width: 900px), (pointer: coarse) {
+  .hero {
+    /* Browser toolbars must not resize the page while a finger scrolls it. */
+    height: max(0px, calc(100svh - var(--site-header-height, 88px)));
+  }
+
   .inner {
     gap: 12px;
     padding-top: 16px;

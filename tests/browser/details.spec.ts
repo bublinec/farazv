@@ -436,3 +436,60 @@ test("hero swipes animate both directions and keep the selected date in the sing
   await expect(active).toHaveCSS("animation-name", "none");
   await expect(hero.locator('[aria-hidden="true"][inert]')).toHaveCount(0);
 });
+
+test.describe("touchscreen desktop-site viewport", () => {
+  test.use({ hasTouch: true, viewport: { width: 980, height: 900 } });
+
+  test("hero stays stable while mobile browser controls retract and return", async ({
+    page
+  }) => {
+    const hero = page.getByRole("region", {
+      name: "Rozpis svätých omší",
+      exact: true
+    });
+    await page.evaluate(() => document.fonts.ready);
+    expect(
+      await page.evaluate(() => matchMedia("(pointer: coarse)").matches)
+    ).toBe(true);
+    const initialHeight = await hero.evaluate(
+      (element) => element.getBoundingClientRect().height
+    );
+    const initialBottom = await hero.evaluate(
+      (element) => element.getBoundingClientRect().bottom + scrollY
+    );
+    await page.evaluate(() =>
+      window.scrollTo({ top: innerHeight + 100, behavior: "instant" })
+    );
+
+    const client = await page.context().newCDPSession(page);
+    try {
+      for (const difference of [100, 0, 120, 0]) {
+        await client.send(
+          "Emulation.setSmallViewportHeightDifferenceOverride",
+          { difference }
+        );
+        expect(
+          await hero.evaluate(
+            (element) => element.getBoundingClientRect().height
+          )
+        ).toBeCloseTo(initialHeight, 0);
+        expect(
+          await hero.evaluate(
+            (element) => element.getBoundingClientRect().bottom + scrollY
+          )
+        ).toBeCloseTo(initialBottom, 0);
+      }
+      await page.evaluate(() =>
+        window.scrollTo({ top: 0, behavior: "instant" })
+      );
+      await expect(hero.getByRole("button", { pressed: true })).toBeInViewport({
+        ratio: 1
+      });
+    } finally {
+      await client.send("Emulation.setSmallViewportHeightDifferenceOverride", {
+        difference: 0
+      });
+      await client.detach();
+    }
+  });
+});

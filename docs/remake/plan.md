@@ -1064,3 +1064,18 @@ those authenticated actions were not performed by this verification.
   Native mobile date-strip swiping moved its scroll offset from 166 to 0 without
   changing the selected day. Review findings about strip alignment and live-region
   continuity were fixed and rechecked before release.
+### Stable hero during mobile toolbar scrolling — 6 November 2026
+
+- Reproduced the owner's desktop-site-on-mobile scroll jump with a coarse-pointer
+  980×900 Chromium viewport. Emulating a retracted browser toolbar changed the
+  dynamic hero height from 828 to 928 px and moved the section boundary.
+- Use the stable small viewport height in the existing narrow/coarse-pointer
+  media query. The desktop-site layout on touch devices is covered as well as
+  the regular narrow layout. Wide fine-pointer desktops retain dynamic sizing.
+- Added a regression exercising repeated 100/0/120/0 px toolbar changes while
+  scrolled down and returning to the top. It failed before the fix and passed
+  afterward. The hero height and document boundary remain stable.
+- Verification: npm check (95 passes, two opt-in skips), isolated production build,
+  43 public/layout/accessibility browser passes and one optional skip. Before/after
+  screenshots in the emulated desktop-site view were pixel-identical after the
+  fix, with the hero staying at 828 px. Targeted read-only review found no issues.
