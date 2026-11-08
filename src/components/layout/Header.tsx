@@ -162,6 +162,14 @@ export function Header() {
             <Icon name="close" size={24} />
           </button>
         </div>
+        <Link
+          href="/farnost/farske-oznamy"
+          className="button"
+          onClick={closeMenu}
+        >
+          Farské oznamy
+          <Icon name="arrow-right" size={17} />
+        </Link>
         <nav aria-label="Mobilná navigácia" className={styles.mobileNav}>
           {navigation.map((item) =>
             item.href ? (
@@ -196,14 +204,6 @@ export function Header() {
             )
           )}
         </nav>
-        <Link
-          href="/farnost/farske-oznamy"
-          className="button"
-          onClick={closeMenu}
-        >
-          Rozpis svätých omší
-          <Icon name="arrow-right" size={17} />
-        </Link>
         <LectorScheduleDialog
           variant="navigation"
           onOpen={closeMenu}

@@ -1079,3 +1079,10 @@ those authenticated actions were not performed by this verification.
   43 public/layout/accessibility browser passes and one optional skip. Before/after
   screenshots in the emulated desktop-site view were pixel-identical after the
   fix, with the hero staying at 828 px. Targeted read-only review found no issues.
+
+### Mobile bulletin shortcut — 8 November 2026
+
+- Renamed the existing mobile “Rozpis svätých omší” button to “Farské oznamy”
+  and placed it before the menu links, preserving its styling and destination.
+- Verified the fixture build, formatter/types, 95 unit passes (two opt-in skips)
+  and the existing mobile-menu focus/navigation check with the new link order.
