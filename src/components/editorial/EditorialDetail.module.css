@@ -54,7 +54,7 @@
 }
 .body {
   --prose-width: 46rem;
-  --prose-font-size: 1rem;
+  --prose-font-size: 0.95rem;
   --prose-line-height: 1.75;
   --prose-h2-size: clamp(1.5rem, 2.4vw, 1.9rem);
   --prose-h3-size: 1.2rem;
@@ -151,12 +151,12 @@
 
 @media (max-width: 760px) {
   .lead {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.65;
   }
 
   .body {
-    --prose-font-size: 0.95rem;
+    --prose-font-size: 0.9rem;
     --prose-line-height: 1.65;
     --prose-h2-size: 1.35rem;
     --prose-h3-size: 1.15rem;

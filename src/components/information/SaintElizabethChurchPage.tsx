@@ -65,33 +65,7 @@ export function SaintElizabethChurchPage({
       />
       <section className={`container ${styles.history}`}>
         <div className={styles.reading}>
-          <SectionHeading
-            title="Kostol v premenách storočí"
-            action={
-              <details className={styles.sourceDetails}>
-                <summary>
-                  Pramene <Icon name="chevron" size={15} />
-                </summary>
-                <ul>
-                  {Object.values(churchHistory.sources).map((source) => (
-                    <li key={source.href}>
-                      <a
-                        href={source.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {source.label}
-                        <span className="srOnly">
-                          {" "}
-                          (otvorí sa v novom okne)
-                        </span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            }
-          />
+          <SectionHeading title="Kostol v premenách storočí" />
           {churchHistory.sections.map((section) => (
             <section className={styles.chapter} key={section.title}>
               <h3>{section.title}</h3>

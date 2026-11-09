@@ -344,14 +344,17 @@
 }
 
 .priests {
-  padding-block: 12px 64px;
+  padding-block: 0 40px;
+}
+
+.priests :global(.sectionHeading) {
+  margin-bottom: 20px;
 }
 
 .priestGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 28px;
-  margin-top: 30px;
+  gap: 20px;
 }
 
 .priestCard {
@@ -359,26 +362,40 @@
   background: var(--paper);
 }
 
-.priestCard > img {
+.priestPortrait {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+}
+
+.priestPortrait > img,
+.priestPortrait > :global(.mediaMissing) {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 4;
+  height: 100%;
   object-fit: cover;
   object-position: 50% 20%;
   filter: grayscale(1);
 }
 
-.priestCard > div {
+.priestPortrait > :global(.mediaMissing) {
+  min-height: 0;
+  max-height: none;
+}
+
+.priestInfo {
   min-width: 0;
-  padding: 25px;
+  padding: 20px;
 }
 
 .priestRole {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--muted);
-  line-height: 1.6;
-  margin: 0 0 16px;
+  line-height: 1.45;
+  margin: 0 0 6px;
 }
 
 .priestCard h3 {
@@ -394,16 +411,16 @@
   align-items: center;
   min-height: 44px;
   color: var(--blue);
-  line-height: 1.8;
+  line-height: 1.45;
   font-size: 0.9rem;
   overflow-wrap: anywhere;
-  margin-top: 6px;
+  margin-top: 0;
 }
 
 .priestPlaceholder {
   display: grid;
   place-items: center;
-  aspect-ratio: 3 / 4;
+  height: 100%;
   background: #e8e6dc;
   color: var(--gold-dark);
   font-size: 55px;
@@ -476,30 +493,30 @@
 @media (max-width: 760px) {
   .priestGrid {
     grid-template-columns: 1fr;
-    gap: 22px;
+    gap: 14px;
   }
 
   .priestCard {
     display: grid;
-    grid-template-columns: minmax(110px, 0.55fr) minmax(0, 1fr);
+    grid-template-columns: minmax(96px, 0.35fr) minmax(0, 1fr);
   }
 
-  .priestCard > img,
-  .priestPlaceholder {
-    height: auto;
-    align-self: start;
+  .priestPortrait {
+    min-height: 144px;
+    aspect-ratio: auto;
+    align-self: stretch;
   }
 
-  .priestCard > div {
-    padding: 22px 18px;
+  .priestInfo {
+    padding: 14px;
   }
 
   .priestCard h3 {
-    font-size: 21px;
+    font-size: 20px;
   }
 
   .priests {
-    padding-bottom: 40px;
+    padding-bottom: 32px;
   }
 
   .partnerGrid {
@@ -580,20 +597,12 @@
 }
 
 @media (max-width: 480px) {
-  .priestGrid {
-    gap: 16px;
-  }
-
   .priestCard {
-    grid-template-columns: 100px minmax(0, 1fr);
+    grid-template-columns: 96px minmax(0, 1fr);
   }
 
-  .priestCard > div {
-    padding: 16px 14px;
-  }
-
-  .priestRole {
-    margin-bottom: 8px;
+  .priestInfo {
+    padding: 12px;
   }
 }
 

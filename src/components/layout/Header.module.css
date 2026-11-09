@@ -128,9 +128,12 @@
 .menuButton {
   display: none;
   flex-shrink: 0;
-  min-width: var(--icon-button-size);
-  min-height: var(--icon-button-size);
-  padding: var(--icon-button-padding);
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  line-height: 1;
   background: none;
   border: 0;
   color: var(--blue);
@@ -188,10 +191,15 @@
 }
 
 .mobileTop button {
+  display: grid;
+  place-items: center;
   flex-shrink: 0;
+  width: 44px;
+  height: 44px;
   min-width: 44px;
   min-height: 44px;
-  padding: var(--icon-button-padding);
+  padding: 0;
+  line-height: 1;
   background: transparent;
   border: 1px solid var(--line);
   color: var(--blue);
@@ -262,8 +270,6 @@
   .menuButton {
     display: grid;
     place-items: center;
-    min-width: 44px;
-    min-height: 44px;
   }
 }
 

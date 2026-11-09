@@ -1110,3 +1110,32 @@ those authenticated actions were not performed by this verification.
 - At 200% text sizing, the reading and quote containers fit. A separate header
   menu overflow of 22 px at 390 px was observed and remains a header follow-up;
   these scoped prose rules do not change header sizing.
+
+
+### Mobile navigation, contact and footer polish — 9 November 2026
+
+- Fixed mobile menu opener/close controls at 44 × 44 px with centered icons,
+  avoiding inherited padding/line-height distortion. Navigation order and labels
+  are unchanged, including the bulletin button below the links.
+- Added explicit priest portrait/info wrappers. Mobile portraits cover the full
+  card height without distortion; placeholders also fill their column. Reduced
+  card/role gaps and contact section padding while retaining 44 px contact links.
+  Contact details and priest records are unchanged.
+- Formatted the stored postal address into lines at its commas, retained its
+  punctuation, aligned Adresa/IČO labels and used ordinary reading color for
+  non-link address values. No address facts or map destinations were rewritten.
+- Further reduced normal information/article reading text to 17.1 px desktop /
+  16.2 px mobile; the church's separately styled history follows the same scale.
+  Footer column headings are now 18.9 px/550 weight above unchanged 16.2 px links.
+- At the owner's explicit request, removed the church page's “Pramene” disclosure
+  and orphaned styles. Raw source provenance, complete history, photo credits,
+  gallery and tour links remain; the independent content baseline is unchanged.
+- Verification: formatter/types, 95 unit passes (two opt-in skips), fixture build
+  and 12 focused navigation/layout/accessibility/content browser passes, including
+  the full 22-page substantive-content check. Reviewed React/cascade semantics.
+  Visual checks at 320, 390, 760 and 1440 px found no horizontal overflow; menu
+  controls are square and footer headings differentiate correctly. Priest-card
+  layout used an ephemeral local visual sample of already-public priest details
+  because the ordinary fixture settings have no priests; no records were saved.
+  Mobile portrait/card heights matched exactly in those samples. The owned
+  preview used port 3114 and `.next-preview`; other development servers remained.

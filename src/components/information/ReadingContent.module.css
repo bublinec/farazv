@@ -1,5 +1,5 @@
 .readingCopy {
-  --prose-font-size: 1rem;
+  --prose-font-size: 0.95rem;
   --prose-line-height: 1.7;
   --prose-paragraph-gap: 1em;
   --prose-h2-size: 1.5rem;
@@ -125,7 +125,7 @@
 
 @media (max-width: 760px) {
   .readingCopy {
-    --prose-font-size: 0.95rem;
+    --prose-font-size: 0.9rem;
     --prose-line-height: 1.65;
     --prose-h2-size: 1.35rem;
     --prose-h3-size: 1.15rem;
