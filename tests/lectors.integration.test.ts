@@ -72,8 +72,8 @@ test(
               "SELECT count(*)::int AS total, count(DISTINCT hash)::int AS unique FROM drizzle.__drizzle_migrations"
             )
           ).rows[0];
-          assert.equal(before.total, 6);
-          assert.equal(before.unique, 6);
+          assert.equal(before.total, 7);
+          assert.equal(before.unique, 7);
           await getPool().query(
             "INSERT INTO editor_access(email,granted_by) VALUES ('migration-retained@local-tests.example.test','local-fixture')"
           );
@@ -95,7 +95,7 @@ test(
                 "SELECT count(*)::int AS total FROM drizzle.__drizzle_migrations"
               )
             ).rows[0].total,
-            6
+            7
           );
         }
       );
@@ -150,7 +150,7 @@ test(
                   "SELECT count(*)::int AS total FROM drizzle.__drizzle_migrations"
                 )
               ).rows[0].total,
-              6
+              7
             );
           } finally {
             await rm(folder, { recursive: true, force: true });

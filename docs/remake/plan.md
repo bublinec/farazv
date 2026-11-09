@@ -1226,3 +1226,11 @@ those authenticated actions were not performed by this verification.
   ratio 0.996). The gallery keyboard test was intermittent on both builds.
   These depend on the container's blocked fonts/Cloudinary and need a normal
   local or CI run. Live Google login and a physical-phone check remain pending.
+- Release check after merging `main` and adapting the CMS for phones (same
+  day): at 560 px and narrower the admin brand has its own row, so account links
+  no longer overlap it on any admin page. Page lists, history, step and fact
+  rows read well at 390 px, with no horizontal overflow on six admin screens.
+  The lector migration-count assertions now expect seven migrations. Results:
+  npm check 103 passes, two opt-in skips; integration 8/8; `test:lectors` 14/14;
+  production build; `test:admin` 23/23; public/accessibility 54 passes with
+  the same five environment failures described above.
