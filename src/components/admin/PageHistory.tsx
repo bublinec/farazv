@@ -7,6 +7,7 @@ import { TechnicalSupport } from "@/components/ui/TechnicalSupport";
 import { readAdminJson } from "./admin-api";
 import { formatAdminTimestamp } from "./admin-format";
 import styles from "./Admin.module.css";
+import pageStyles from "./PageForm.module.css";
 
 const actionLabels: Record<PageRevision["action"], string> = {
   save: "Uložené",
@@ -154,7 +155,7 @@ export function PageHistory({
         <p role="status">Načítavam históriu…</p>
       ) : null}
       {revisions?.length ? (
-        <ol className={styles.recordList}>
+        <ol className={`${styles.recordList} ${pageStyles.plainList}`}>
           {revisions.map((revision, index) => (
             <li key={revision.id} className={styles.record}>
               <div className={styles.recordCopy}>

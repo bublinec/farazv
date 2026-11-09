@@ -53,3 +53,61 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.plainList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pageButton {
+  width: 100%;
+  align-items: center;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pageButton:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.pageAction {
+  flex-shrink: 0;
+  color: var(--blue-deep);
+  font-weight: 600;
+}
+
+.groupHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.groupHeading h2 {
+  margin: 0;
+}
+
+.pairRow {
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+@media (max-width: 760px) {
+  .block {
+    padding: 0.75rem;
+    margin-inline: -0.25rem;
+  }
+
+  .cardRow {
+    padding: 0.7rem;
+  }
+
+  .pageButton {
+    align-items: flex-start;
+  }
+}

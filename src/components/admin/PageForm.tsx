@@ -264,7 +264,12 @@ function PairRows<T extends Record<string, string | undefined>>({
 }: {
   rows: T[];
   path: string;
-  fields: { key: keyof T & string; label: string; hint?: ReactNode }[];
+  fields: {
+    key: keyof T & string;
+    label: string;
+    hint?: ReactNode;
+    multiline?: boolean;
+  }[];
   empty: T;
   addLabel: string;
   rowLabel: (row: T, index: number) => string;
@@ -283,6 +288,8 @@ function PairRows<T extends Record<string, string | undefined>>({
               key={field.key}
               label={field.label}
               hint={field.hint}
+              multiline={field.multiline}
+              rows={field.multiline ? 3 : undefined}
               path={`${path}.${index}.${field.key}`}
               value={row[field.key]}
               onChange={(value) =>
@@ -606,7 +613,11 @@ export function PageForm({
               path="facts"
               fields={[
                 { key: "label", label: "Názov (napr. Nácvik)" },
-                { key: "value", label: "Hodnota (napr. Nedeľa o 9:00)" }
+                {
+                  key: "value",
+                  label: "Hodnota (napr. Nedeľa o 9:00)",
+                  multiline: true
+                }
               ]}
               empty={{ label: "", value: "" }}
               addLabel="+ Pridať údaj"
@@ -674,7 +685,7 @@ export function PageForm({
               fields={[
                 { key: "when", label: "Kedy" },
                 { key: "title", label: "Krok" },
-                { key: "description", label: "Popis" }
+                { key: "description", label: "Popis", multiline: true }
               ]}
               empty={{ when: "", title: "", description: "" }}
               addLabel="+ Pridať krok"

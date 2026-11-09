@@ -5,8 +5,8 @@
 .cardsBlock > h2 {
   margin: 0 0 var(--space-4);
   color: var(--blue-deep);
-  font-size: 1.5rem;
-  font-weight: 500;
+  font-size: var(--prose-h2-size, 1.5rem);
+  font-weight: var(--prose-heading-weight, 500);
   line-height: 1.3;
 }
 

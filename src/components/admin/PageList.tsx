@@ -14,10 +14,11 @@ import { Field } from "./Fields";
 import { readAdminJson } from "./admin-api";
 import { formatAdminTimestamp } from "./admin-format";
 import styles from "./Admin.module.css";
+import pageStyles from "./PageForm.module.css";
 
 function stateLabel(page: PageSummary) {
   if (!page.recordId) return "Pôvodná verzia z kódu";
-  if (page.hasUnpublishedChanges) return "Zverejnené · neuložené zmeny";
+  if (page.hasUnpublishedChanges) return "Zverejnené · koncept má ďalšie zmeny";
   if (page.isPublished) return "Zverejnené z administrácie";
   return page.builtIn
     ? "Koncept · na webe je verzia z kódu"
@@ -203,7 +204,7 @@ export function PageList() {
               key={group}
               aria-labelledby={`pages-${group}`}
             >
-              <div className={styles.heading}>
+              <div className={pageStyles.groupHeading}>
                 <h2 id={`pages-${group}`}>{pageGroups[group].label}</h2>
                 <button
                   type="button"
@@ -218,14 +219,14 @@ export function PageList() {
               {adding === group ? (
                 <NewPageForm group={group} onCancel={() => setAdding(null)} />
               ) : null}
-              <ul className={styles.recordList}>
+              <ul className={`${styles.recordList} ${pageStyles.plainList}`}>
                 {pages
                   .filter((page) => page.group === group)
                   .map((page) => (
                     <li key={page.route}>
                       <button
                         type="button"
-                        className={styles.record}
+                        className={`${styles.record} ${pageStyles.pageButton}`}
                         disabled={!!opening}
                         onClick={() => void open(page)}
                       >
@@ -238,7 +239,7 @@ export function PageList() {
                               : ""}
                           </small>
                         </span>
-                        <span>
+                        <span className={pageStyles.pageAction}>
                           {opening === page.route
                             ? "Otváram…"
                             : page.recordId
