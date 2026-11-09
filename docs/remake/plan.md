@@ -1086,3 +1086,8 @@ those authenticated actions were not performed by this verification.
   and placed it before the menu links, preserving its styling and destination.
 - Verified the fixture build, formatter/types, 95 unit passes (two opt-in skips)
   and the existing mobile-menu focus/navigation check with the new link order.
+
+- Correction — 9 November 2026: restored the button below the mobile navigation,
+  keeping the “Farské oznamy” label, styling and destination. This supersedes the
+  placement above. Baseline project checks, fixture build, formatting and the
+  mobile-menu focus/navigation check pass with the restored keyboard order.
