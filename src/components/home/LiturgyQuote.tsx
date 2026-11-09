@@ -8,6 +8,7 @@ import {
 } from "@/content/liturgy";
 import type { CalendarDate } from "@/content/types";
 import { formatDate } from "@/lib/calendar";
+import { keepShortWordsTogether } from "@/lib/typography";
 import styles from "./LiturgyQuote.module.css";
 
 function normalizedTitle(value: string) {
@@ -115,7 +116,7 @@ export function LiturgyQuote({
               >
                 “
               </span>
-              <p>{verse.text}</p>
+              <p>{keepShortWordsTogether(verse.text)}</p>
               <span
                 className={`${styles.mark} ${styles.closeMark}`}
                 aria-hidden="true"

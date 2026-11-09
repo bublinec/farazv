@@ -6,6 +6,7 @@ import { bulletinPendingMessage } from "@/content/bulletin-messages";
 import { formatDate } from "@/lib/calendar";
 import { splitLiturgy } from "@/lib/liturgy-day";
 import { formatCelebrantName, getMassLabel } from "@/lib/mass";
+import { keepShortWordsTogether } from "@/lib/typography";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { Icon } from "@/components/ui/Icon";
 import { LiturgyQuote } from "./LiturgyQuote";
@@ -89,9 +90,11 @@ function HeroDaySlide({
             </time>
           </p>
         ) : null}
-        <Heading>{heading.title}</Heading>
+        <Heading>{keepShortWordsTogether(heading.title)}</Heading>
         {heading.liturgyType ? (
-          <p className={styles.liturgyType}>{heading.liturgyType}</p>
+          <p className={styles.liturgyType}>
+            {keepShortWordsTogether(heading.liturgyType)}
+          </p>
         ) : null}
       </header>
       <LiturgyQuote date={day.date} liturgy={heading.title} />
@@ -102,11 +105,15 @@ function HeroDaySlide({
       </div>
       {announcementsPending || day.isRegular ? (
         <p className={styles.notice}>
-          {announcementsPending ? <>{bulletinPendingMessage} </> : null}
+          {announcementsPending ? (
+            <>{keepShortWordsTogether(bulletinPendingMessage)} </>
+          ) : null}
           {day.isRegular
-            ? day.masses.length
-              ? "Uvádzame pravidelné časy svätých omší, ktoré sa môžu zmeniť."
-              : "Časy svätých omší ešte nie sú potvrdené. Informujte sa vo farskej kancelárii."
+            ? keepShortWordsTogether(
+                day.masses.length
+                  ? "Uvádzame pravidelné časy svätých omší, ktoré sa môžu zmeniť."
+                  : "Časy svätých omší ešte nie sú potvrdené. Informujte sa vo farskej kancelárii."
+              )
             : null}
         </p>
       ) : null}
