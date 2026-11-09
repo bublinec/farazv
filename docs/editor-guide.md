@@ -83,21 +83,30 @@ v tomto formulári; jej zmenu dohodnite s technickým správcom. Konkrétne tý�
 
 ## Stránky sviatostí a služieb
 
-V sekcii **Stránky** sú šiesti sviatosti a služby vo farnosti (spevokol, zbor,
+V sekcii **Stránky** sú šesť sviatostí a služby vo farnosti (spevokol, zbor,
 miništranti, lektori, akolyti). Pri stránke, ktorá sa ešte nikdy neupravovala,
 je stav **Pôvodná verzia z kódu**. Tlačidlo **Začať upravovať** skopíruje
 presne to, čo je dnes na webe, do súkromného konceptu.
 
-Upraviť môžete fotku v hlavičke, nadpis, úvod, modrý pás s citátom, obsah,
-bočný panel, kontaktnú osobu a telefóny, praktické údaje, odkazy a kroky
-prípravy. Obsah tvoria **bloky**: textový blok (text, nadpisy, zoznamy, obrázky,
-galérie) a blok kariet (nadpis, text, fotka, odkaz). Bloky pridáte tlačidlami
-pod obsahom a šípkami ↑ ↓ zmeníte ich poradie. **Zbalený blok** sa na webe
-zobrazí ako otázka, ktorú čitateľ otvorí kliknutím.
+Editor má tri karty:
 
-**Kým stránku nezverejníte, na webe ostáva pôvodná verzia.** Náhľad otvorí
-poslednú uloženú verziu v plnom vzhľade webu. Po zverejnení sa každé ďalšie
-uloženie hneď prejaví na webe, rovnako ako pri článkoch.
+- **Obsah** – stránka sa skladá z blokov. Každý blok je zbalený do riadka so
+  súhrnom; ťuknutím ho otvoríte. Tlačidlom **+** medzi blokmi pridáte nový blok
+  na presne to miesto: **Text** (odseky, nadpisy, zoznamy, fotky, galérie),
+  **Otázka a odpoveď** (čitateľ ju vidí zbalenú) alebo **Karty** (dlaždice s
+  nadpisom, textom, fotkou a odkazom). Šípkami ↑ ↓ zmeníte poradie, ⧉ blok
+  zduplikuje a − ho odstráni.
+- **Hlavička** – nadpis, úvod, krátky popis do kariet, fotka a modrý pás s citátom.
+- **Bočný panel** – text panela, kontaktná osoba a telefóny, praktické údaje,
+  odkazy a kroky prípravy.
+
+**Náhľad** ukáže poslednú uloženú verziu v skutočnom vzhľade webu; prepínačom
+**Mobil / Tablet / Počítač** vyskúšate rôzne obrazovky. Neuložené zmeny sa v
+náhľade zobrazia po uložení.
+
+**Kým stránku nezverejníte, na webe ostáva pôvodná verzia.** Po zverejnení sa
+každé ďalšie uloženie hneď prejaví na webe, rovnako ako pri článkoch. Ak pri
+zverejnení niečo chýba, editor sám otvorí správnu kartu a pole.
 
 Každé uloženie sa zapíše do **Histórie** s menom a časom. Tlačidlo **Obnoviť**
 vráti stránku do staršej verzie; najstaršia položka je pôvodná verzia z kódu.
@@ -106,9 +115,11 @@ koncept aj história ostanú uložené.
 
 **+ Pridať službu** a **+ Pridať sviatosť** vytvoria novú stránku. Zadajte názov;
 adresa sa vytvorí z neho a po vytvorení sa nemení. Nová stránka sa po
-zverejnení objaví na konci menu a medzi kartami na úvodnej stránke. Pre kartu
-môžete vyplniť krátky popis. PDF sa nenahrávajú; odkážte ich napríklad z Google
-Drive.
+zverejnení objaví na konci menu a medzi kartami na úvodnej stránke. PDF sa
+nenahrávajú; odkážte ich napríklad z Google Drive.
+
+Na mobile sa sekcie administrácie otvárajú tlačidlom **Menu** vpravo hore;
+v ňom je aj odkaz na web a odhlásenie.
 
 ## Prístupy a podnety
 

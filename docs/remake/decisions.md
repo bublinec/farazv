@@ -362,6 +362,12 @@ editor publishes a page.
   baptism/marriage Náuky, the hospital section, the lector schedule button, the
   six-sacrament band and the reviewed photograph crop.
 - Without a database (fixtures, outage) the code version is shown.
+- The editor is block-based (tabs, closed block summaries, insert between
+  blocks, duplicate). Its preview frames `/admin/nahlad/<id>`: only that private,
+  noindex admin path allows same-origin framing (`frame-ancestors 'self'`,
+  `X-Frame-Options: SAMEORIGIN`); every other route still denies framing.
+- On phones, editors and administrators open admin sections from one Menu
+  button; lectors keep their single link.
 
 ## D33 — One-letter words stay with the next word in the hero (9 November 2026)
 

@@ -1234,3 +1234,19 @@ those authenticated actions were not performed by this verification.
   npm check 103 passes, two opt-in skips; integration 8/8; `test:lectors` 14/14;
   production build; `test:admin` 23/23; public/accessibility 54 passes with
   the same five environment failures described above.
+
+### Block page editor and phone admin menu — 9 November 2026
+
+- On `filip/upravy` only: tabs (Obsah, Hlavička, Bočný panel), closed blocks
+  with summaries, "+" insertion with block types, duplication, and validation
+  that opens the right tab/block. The saved page previews in the real public
+  layout at mobile/tablet/desktop width. The phone admin menu is a single button
+  with section, site and sign-out links. The text toolbar is one swipeable row on
+  phones. Framing is allowed only for `/admin/nahlad/*`, from the same origin.
+- Verification: npm check 103 passes, two opt-in skips; integration 8/8;
+  `test:lectors` 14/14; production build; `test:admin` 25/25, including new
+  phone menu, block editor, preview and framing-header tests. Public and
+  accessibility runs: 56 passes, two skips and three known environment
+  failures: `/kontakt` 320 px overflow and its accessibility case, and the
+  320 px crowded hero ratio. Screens were checked at 390 px and 1366 px.
+

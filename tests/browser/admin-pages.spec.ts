@@ -321,7 +321,13 @@ test.describe("Editable sacrament and service pages", () => {
     ).toBeLessThanOrEqual(391);
 
     const firstBlock = page.getByRole("button", { name: /^1\. Text/ });
+    // A page with a single block opens it right away; the header toggles it.
+    await expect(firstBlock).toHaveAttribute("aria-expanded", "true");
+    await firstBlock.click();
     await expect(firstBlock).toHaveAttribute("aria-expanded", "false");
+    await expect(
+      page.getByRole("textbox", { name: "Text bloku" })
+    ).toBeHidden();
     await firstBlock.click();
     await expect(firstBlock).toHaveAttribute("aria-expanded", "true");
     await expect(
