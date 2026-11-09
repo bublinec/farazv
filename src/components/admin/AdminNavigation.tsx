@@ -38,6 +38,20 @@ export function AdminNavigation({
   useEffect(() => {
     setOpen(false);
   }, [location]);
+
+  // Escape closes the open menu from anywhere and returns to its button.
+  useEffect(() => {
+    if (!open) return;
+
+    function close(event: KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      toggle.current?.focus();
+    }
+
+    document.addEventListener("keydown", close);
+    return () => document.removeEventListener("keydown", close);
+  }, [open]);
   const recordSection = useActiveAdminSection();
   let section: string | null = null;
   if (pathname.startsWith("/admin/lektori")) section = "lectors";
@@ -84,11 +98,6 @@ export function AdminNavigation({
         id="admin-menu"
         className={`${styles.topnav} ${open ? styles.menuOpen : ""}`}
         aria-label="Správa farnosti"
-        onKeyDown={(event) => {
-          if (event.key !== "Escape" || !open) return;
-          setOpen(false);
-          toggle.current?.focus();
-        }}
       >
         {visibleLinks.map((link) => (
           <Link

@@ -24,7 +24,8 @@ export function AdminShell({
         <div className={styles.shell}>
           <header
             className={`${styles.topbar} ${
-              authenticated ? styles.withMenu : ""
+              // Lectors have a single section, so they keep plain links.
+              authenticated && role !== "lektorka" ? styles.withMenu : ""
             }`}
           >
             <Link

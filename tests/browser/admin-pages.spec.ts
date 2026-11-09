@@ -259,7 +259,7 @@ test.describe("Editable sacrament and service pages", () => {
       "true"
     );
     await page
-      .getByRole("textbox", { name: "Úvod pod nadpisom", exact: true })
+      .getByRole("textbox", { name: /^Úvod pod nadpisom/ })
       .fill("Starajú sa o kostol a jeho výzdobu.");
     await page.getByRole("button", { name: "Uložiť", exact: true }).click();
     await expect(
