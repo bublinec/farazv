@@ -1079,3 +1079,25 @@ those authenticated actions were not performed by this verification.
   43 public/layout/accessibility browser passes and one optional skip. Before/after
   screenshots in the emulated desktop-site view were pixel-identical after the
   fix, with the hero staying at 828 px. Targeted read-only review found no issues.
+### Editable sacrament/service pages and hero line breaks — 9 November 2026
+
+- Implemented [D32](decisions.md#d32--sacrament-and-service-pages-are-editable-in-the-cms-9-november-2026)
+  on `filip/upravy`: Admin → Stránky, the `page` record kind, revision history
+  (`drizzle/0006_content_revisions.sql`, additive) and new service/sacrament
+  pages. Not released to `main`. Vercel preview builds do not migrate; apply
+  `npm run db:migrate` to the preview's database before editing pages there.
+- Implemented [D33](decisions.md#d33--one-letter-words-stay-with-the-next-word-in-the-hero-9-november-2026)
+  for the homepage hero.
+- Verification (cloud container, Node 22.23.4, local PostgreSQL 16, Chromium
+  from `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`): npm check 103 passes, two opt-in
+  skips; `test:integration` 8/8, including the page workflow; production build;
+  `test:admin` (production server) 23/23, including four new page tests: every
+  built-in page published unchanged renders the same visible text as its code
+  version, edit/publish/restore/return-to-code, new service in menu and
+  homepage, and access refusals.
+- Public/accessibility suites: 54 passes, two skips, four failures that the
+  unchanged base commit `aa63c72` reproduces in the same container (`/kontakt`
+  overflow at 320/768 px and its accessibility case, the crowded 320 px hero
+  ratio 0.996). The gallery keyboard test was intermittent on both builds.
+  These depend on the container's blocked fonts/Cloudinary and need a normal
+  local or CI run. Live Google login and a physical-phone check remain pending.
