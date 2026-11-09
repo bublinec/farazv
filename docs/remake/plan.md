@@ -1091,3 +1091,22 @@ those authenticated actions were not performed by this verification.
   keeping the “Farské oznamy” label, styling and destination. This supersedes the
   placement above. Baseline project checks, fixture build, formatting and the
   mobile-menu focus/navigation check pass with the restored keyboard order.
+
+
+### Smaller public reading text — 9 November 2026
+
+- Reduced ordinary information-page and article prose to 18 px on desktop and
+  17.1 px through 760 px, with proportionate mobile subheadings and tighter
+  reading line height. Article introductory text follows the same mobile size.
+- Quote bands below page heroes now use 18 px desktop / 16.2 px mobile text.
+  Both imported rich-text and plain community quotations receive the same sizes;
+  attribution and source-credit sizes stay unchanged. Complete source text,
+  photographs, layout, bulletin typography and admin editing are preserved.
+- Verification: baseline project checks (95 unit passes, two opt-in skips),
+  fixture production build, formatting, ten focused reading/content/layout and
+  accessibility browser passes, and visual/computed-style checks at 320, 390,
+  768 and 1440 px. No ordinary-width overflow was found. Read-only CSS review
+  found no cascade or scope issues. The owned preview used port 3114.
+- At 200% text sizing, the reading and quote containers fit. A separate header
+  menu overflow of 22 px at 390 px was observed and remains a header follow-up;
+  these scoped prose rules do not change header sizing.
