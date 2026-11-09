@@ -81,21 +81,23 @@
   }
 }
 
-@media (min-width: 1600px) and (min-height: 850px) and (pointer: fine) {
+@media (min-width: 1100px) and (min-height: 900px) and (pointer: fine) {
   .space {
-    min-height: clamp(106px, 8vw, 160px);
+    min-height: calc(106px + var(--hero-growth, 0px) * 2);
+    margin-block: calc(14px + var(--hero-growth, 0px) * 0.2)
+      calc(12px + var(--hero-growth, 0px) * 0.2);
   }
 
   .calendarLink {
-    width: min(100%, clamp(560px, 36vw, 760px));
+    width: min(100%, calc(560px + var(--hero-growth, 0px) * 8));
   }
 
   .quote blockquote {
-    font-size: clamp(1.1rem, 1.25vw, 1.4rem);
+    font-size: calc(clamp(1rem, 1.4vw, 1.1rem) + var(--hero-growth, 0px) * 0.3);
   }
 
   .mark {
-    font-size: 72px;
+    font-size: calc(60px + var(--hero-growth, 0px) * 0.6);
   }
 }
 

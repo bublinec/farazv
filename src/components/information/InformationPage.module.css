@@ -93,14 +93,12 @@
 }
 
 .officeSection,
-.preparation,
-.asideContact {
+.preparation {
   padding-top: 16px;
   border-top: 1px solid var(--line);
 }
 
-.asideLabel,
-.asideContact h3 {
+.asideLabel {
   color: var(--ink);
   font-size: 0.95rem;
   line-height: 1.35;
@@ -288,11 +286,6 @@
   text-underline-offset: 5px;
 }
 
-.communityAside .asideContactName {
-  color: var(--ink);
-  margin-bottom: 4px;
-}
-
 .facts {
   display: grid;
   gap: 16px;
@@ -301,6 +294,8 @@
 
 .facts dt {
   font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   line-height: 1.4;
   color: var(--muted);
   margin-bottom: 4px;
@@ -312,6 +307,10 @@
   font-size: 0.95rem;
   line-height: 1.45;
   font-weight: 500;
+}
+
+.facts .officePhone {
+  font-size: inherit;
 }
 
 .schoolLayout {

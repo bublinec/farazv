@@ -1170,3 +1170,36 @@ those authenticated actions were not performed by this verification.
 - Final whole-range hours adjustment: repeated checks/build and five focused
   browser/content/accessibility passes. A 1600 × 850 hero with a longer liturgy
   title and five Masses fits without content or horizontal overflow.
+
+
+### Tall desktop hero and community follow-ups — 9 November 2026
+
+- The owner's tall desktop screenshot exposed a gap in the preceding width-only
+  enlargement: a 1490 × 1546 CSS-pixel viewport never reached its 1600 px guard.
+  Replaced it with one capped growth value constrained by available desktop
+  width and height. Title, rank, verse, divider, Mass cards and date controls grow
+  together; the 1440 × 900 laptop baseline and mobile/coarse-pointer rules remain.
+  At the reproduced tall size the title grows from 44.7 to 75.9 px and Mass cards
+  from 160 to 238 px. At larger widths growth caps and the carousel keeps its
+  existing internal scrolling and viewport-bottom date navigation.
+- Footer utilities now form a labeled navigation row beside copyright, with
+  quieter author credits below. All original destinations/names remain and links
+  retain 44 px targets; narrower layouts stack naturally, including 200% text.
+- Restored uppercase community fact labels at the owner's request. Community
+  contact names and telephone links now use the same definition-list hierarchy
+  as the meeting information, including the main ministrant contact.
+- Removed only the children's choir's WhatsApp aside sentence as requested.
+  Added the owner-supplied lector contact Zuzana Caudtová, both phone numbers and
+  a short sacristy/call invitation. The original private lector schedule dialog
+  remains available in the new contact sidebar; source provenance is unchanged.
+- Verification: formatter/types, 95 unit passes (two opt-in skips) and a fixture
+  production build. Extended the existing crowded-Mass layout check with the
+  tall screenshot shape. Visual/computed checks cover 390, 1440, 1490, 1920,
+  2560 and 3440 px heroes and 320–1440 px footer/contact cards; no horizontal
+  overflow was found. Tall hero and mobile lector-page accessibility checks
+  found no violations. Footer text at 200% fits and link targets remain 44 px.
+  CSS and component review found no blocking concerns. The owned preview
+  uses port 3114 and `.next-preview`.
+- Full public/content/layout/accessibility and lector browser run: 52 passes,
+  one optional skip, including modal focus, refresh/new-tab authorization reset,
+  all 22 approved static layouts and the tall crowded-schedule regression.

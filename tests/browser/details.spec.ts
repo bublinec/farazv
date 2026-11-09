@@ -300,6 +300,7 @@ for (const width of [390, 1440]) {
 
 for (const viewport of [
   { width: 1440, height: 1080 },
+  { width: 1490, height: 1546 },
   { width: 390, height: 844 },
   { width: 320, height: 568 }
 ]) {
