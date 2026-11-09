@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import type { EditorRole } from "@/content/editor-access";
 import { canManageLectors } from "@/lib/auth-policy";
 import { usePathname, useSearchParams } from "next/navigation";
 import styles from "./Admin.module.css";
 import { useActiveAdminSection } from "./AdminSectionContext";
 import { FeedbackUnreadBadge } from "./FeedbackUnreadBadge";
+import { SignOut } from "./SignOut";
 
 const links = [
   { id: "bulletin", label: "Oznamy", href: "/admin" },
@@ -28,6 +30,14 @@ export function AdminNavigation({
 }) {
   const pathname = usePathname();
   const params = useSearchParams();
+  const [open, setOpen] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const location = `${pathname}?${params}`;
+
+  // Close the phone menu whenever the editor moves to another section.
+  useEffect(() => {
+    setOpen(false);
+  }, [location]);
   const recordSection = useActiveAdminSection();
   let section: string | null = null;
   if (pathname.startsWith("/admin/lektori")) section = "lectors";
@@ -42,26 +52,62 @@ export function AdminNavigation({
       selected === "posts" || selected === "article" ? selected : "bulletin";
   }
 
+  const visibleLinks = links.filter((link) =>
+    role === "lektorka"
+      ? link.id === "lectors"
+      : link.id === "lectors"
+      ? canManageLectors(role)
+      : !["access", "feedback"].includes(link.id) || canManageAccess
+  );
+  const current = visibleLinks.find((link) => link.id === section);
+
   return (
-    <nav className={styles.topnav} aria-label="Správa farnosti">
-      {links
-        .filter((link) =>
-          role === "lektorka"
-            ? link.id === "lectors"
-            : link.id === "lectors"
-            ? canManageLectors(role)
-            : !["access", "feedback"].includes(link.id) || canManageAccess
-        )
-        .map((link) => (
+    <>
+      {/* Phones show one menu button; wide screens keep the full row of links. */}
+      <button
+        ref={toggle}
+        type="button"
+        className={styles.menuToggle}
+        aria-expanded={open}
+        aria-controls="admin-menu"
+        onClick={() => setOpen((value) => !value)}
+      >
+        <span aria-hidden="true">{open ? "✕" : "☰"}</span>
+        <span>
+          Menu
+          {current ? (
+            <small className={styles.menuCurrent}> · {current.label}</small>
+          ) : null}
+        </span>
+      </button>
+      <nav
+        id="admin-menu"
+        className={`${styles.topnav} ${open ? styles.menuOpen : ""}`}
+        aria-label="Správa farnosti"
+        onKeyDown={(event) => {
+          if (event.key !== "Escape" || !open) return;
+          setOpen(false);
+          toggle.current?.focus();
+        }}
+      >
+        {visibleLinks.map((link) => (
           <Link
             key={link.id}
             href={link.href}
             aria-current={section === link.id ? "page" : undefined}
+            onClick={() => setOpen(false)}
           >
             {link.label}
             {link.id === "feedback" ? <FeedbackUnreadBadge /> : null}
           </Link>
         ))}
-    </nav>
+        <div className={styles.menuExtras}>
+          <a href="/" target="_blank" rel="noopener noreferrer">
+            Web ↗
+          </a>
+          <SignOut />
+        </div>
+      </nav>
+    </>
   );
 }

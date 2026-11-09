@@ -1,13 +1,15 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import type {
   PageBlock,
   PageCard,
   PageDocument
 } from "@/content/page-documents";
+import { richTextToPlainText } from "@/lib/rich-text";
 import { Icon } from "@/components/ui/Icon";
+import { useInvalidField } from "./EditorValidation";
 import { Field, StringList } from "./Fields";
 import { ImageField } from "./MediaPicker";
 import styles from "./Admin.module.css";
@@ -19,10 +21,95 @@ const VisualEditor = dynamic(() => import("./VisualEditor"), {
   loading: () => <p role="status">Načítavam textový editor…</p>
 });
 
+type TabId = "content" | "header" | "aside";
+
+const tabs: { id: TabId; label: string }[] = [
+  { id: "content", label: "Obsah" },
+  { id: "header", label: "Hlavička" },
+  { id: "aside", label: "Bočný panel" }
+];
+
+/** Which tab holds a server validation field path. */
+function tabForField(path: string): TabId | null {
+  if (!path) return null;
+  if (path.startsWith("blocks")) return "content";
+  if (/^(aside|facts|links|preparation)/.test(path)) return "aside";
+  return "header";
+}
+
+type BlockKind = "text" | "question" | "cards";
+
+const blockKinds: {
+  kind: BlockKind;
+  icon: string;
+  label: string;
+  description: string;
+}[] = [
+  {
+    kind: "text",
+    icon: "¶",
+    label: "Text",
+    description: "Odseky, nadpisy, zoznamy, fotky a galérie."
+  },
+  {
+    kind: "question",
+    icon: "?",
+    label: "Otázka a odpoveď",
+    description: "Zbalená otázka, ktorú si čitateľ rozbalí."
+  },
+  {
+    kind: "cards",
+    icon: "▦",
+    label: "Karty",
+    description: "Dlaždice s nadpisom, textom, fotkou a odkazom."
+  }
+];
+
 function newBlockId(prefix: string) {
   return `${prefix}-${Date.now().toString(36)}${Math.random()
     .toString(36)
     .slice(2, 6)}`;
+}
+
+function createBlock(kind: BlockKind): PageBlock {
+  const body = { type: "doc" as const, content: [{ type: "paragraph" }] };
+
+  if (kind === "cards")
+    return { type: "cards", id: newBlockId("karty"), cards: [{ title: "" }] };
+  if (kind === "question")
+    return {
+      type: "text",
+      id: newBlockId("otazka"),
+      title: "",
+      collapsed: true,
+      body
+    };
+  return { type: "text", id: newBlockId("text"), body };
+}
+
+function blockKind(block: PageBlock): BlockKind {
+  if (block.type === "cards") return "cards";
+  return block.collapsed ? "question" : "text";
+}
+
+/** A one-line description of a closed block. */
+function blockSummary(block: PageBlock) {
+  if (block.type === "cards") {
+    const titles = block.cards.map((card) => card.title.trim()).filter(Boolean);
+    const count = `${block.cards.length} ${
+      block.cards.length === 1
+        ? "karta"
+        : block.cards.length < 5
+        ? "karty"
+        : "kariet"
+    }`;
+    return titles.length ? `${count}: ${titles.join(", ")}` : count;
+  }
+
+  const text = richTextToPlainText(block.body).replace(/\s+/g, " ").trim();
+  const heading = block.title?.trim();
+  if (heading && text) return `${heading} – ${text}`;
+  return heading || text || "Prázdny blok";
 }
 
 function move<T>(items: T[], index: number, offset: number) {
@@ -34,18 +121,20 @@ function move<T>(items: T[], index: number, offset: number) {
   return next;
 }
 
-/** Up, down and remove controls shared by blocks, cards and list rows. */
+/** Up, down, duplicate and remove controls for blocks, cards and rows. */
 function RowControls({
   index,
   count,
   label,
   onMove,
+  onDuplicate,
   onRemove
 }: {
   index: number;
   count: number;
   label: string;
   onMove: (offset: number) => void;
+  onDuplicate?: () => void;
   onRemove: () => void;
 }) {
   return (
@@ -70,6 +159,17 @@ function RowControls({
       >
         ↓
       </button>
+      {onDuplicate ? (
+        <button
+          type="button"
+          className={formStyles.rowAction}
+          aria-label={`Duplikovať: ${label}`}
+          title="Duplikovať"
+          onClick={onDuplicate}
+        >
+          ⧉
+        </button>
+      ) : null}
       <button
         type="button"
         className={`${formStyles.rowAction} ${formStyles.removeAction}`}
@@ -80,6 +180,70 @@ function RowControls({
         }}
       >
         <Icon name="minus" size={17} />
+      </button>
+    </div>
+  );
+}
+
+/** Insert a new block at a position; opens a small picker of block types. */
+function BlockInserter({
+  onInsert,
+  prominent = false
+}: {
+  onInsert: (kind: BlockKind) => void;
+  prominent?: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+
+  if (!open)
+    return (
+      <div
+        className={`${pageStyles.inserter} ${
+          prominent ? pageStyles.inserterProminent : ""
+        }`}
+      >
+        <button
+          type="button"
+          aria-expanded={false}
+          onClick={() => setOpen(true)}
+        >
+          <span aria-hidden="true">+</span>
+          {prominent ? "Pridať blok" : "Pridať blok sem"}
+        </button>
+      </div>
+    );
+
+  return (
+    <div
+      className={pageStyles.picker}
+      role="group"
+      aria-label="Vyberte typ bloku"
+    >
+      <div className={pageStyles.pickerTiles}>
+        {blockKinds.map((entry) => (
+          <button
+            key={entry.kind}
+            type="button"
+            className={pageStyles.pickerTile}
+            onClick={() => {
+              setOpen(false);
+              onInsert(entry.kind);
+            }}
+          >
+            <span className={pageStyles.pickerIcon} aria-hidden="true">
+              {entry.icon}
+            </span>
+            <strong>{entry.label}</strong>
+            <small>{entry.description}</small>
+          </button>
+        ))}
+      </div>
+      <button
+        type="button"
+        className={styles.quietLink}
+        onClick={() => setOpen(false)}
+      >
+        Zrušiť
       </button>
     </div>
   );
@@ -166,7 +330,7 @@ function BlockEditor({
           <Field
             label={
               block.collapsed
-                ? "Otázka (nadpis zbaleného bloku)"
+                ? "Otázka (čitateľ ju vidí zbalenú)"
                 : "Nadpis bloku (nepovinné)"
             }
             path={`${path}.title`}
@@ -187,6 +351,7 @@ function BlockEditor({
         </label>
         <div data-field={`${path}.body`}>
           <VisualEditor
+            label={block.collapsed ? "Odpoveď" : "Text bloku"}
             imageTitle={imageTitle}
             disabled={disabled}
             value={block.body}
@@ -224,6 +389,13 @@ function BlockEditor({
               onMove={(offset) =>
                 updateCards(move(block.cards, cardIndex, offset))
               }
+              onDuplicate={() =>
+                updateCards([
+                  ...block.cards.slice(0, cardIndex + 1),
+                  structuredClone(card),
+                  ...block.cards.slice(cardIndex + 1)
+                ])
+              }
               onRemove={() =>
                 updateCards(block.cards.filter((_, i) => i !== cardIndex))
               }
@@ -252,7 +424,7 @@ function BlockEditor({
   );
 }
 
-/** Repeated two-field rows for facts and links. */
+/** Repeated rows for facts, links and preparation steps. */
 function PairRows<T extends Record<string, string | undefined>>({
   rows,
   path,
@@ -321,25 +493,158 @@ function PairRows<T extends Record<string, string | undefined>>({
   );
 }
 
-export function PageForm({
+function ContentTab({
   document,
-  onChange,
-  disabled = false
+  disabled,
+  invalidField,
+  onChange
 }: {
   document: PageDocument;
-  onChange: (document: PageDocument) => void;
-  disabled?: boolean;
+  disabled: boolean;
+  invalidField: string;
+  onChange: (blocks: PageBlock[]) => void;
 }) {
-  function update<K extends keyof PageDocument>(
-    key: K,
-    value: PageDocument[K]
-  ) {
-    onChange({ ...document, [key]: value });
+  const blocks = document.blocks;
+  const [openBlocks, setOpenBlocks] = useState<Set<string>>(
+    () => new Set(blocks.length === 1 ? [blocks[0].id] : [])
+  );
+
+  // A validation error inside a closed block opens that block.
+  useEffect(() => {
+    const match = /^blocks\.(\d+)/.exec(invalidField);
+    const block = match ? blocks[Number(match[1])] : undefined;
+    if (block)
+      setOpenBlocks((current) =>
+        current.has(block.id) ? current : new Set([...current, block.id])
+      );
+  }, [invalidField, blocks]);
+
+  function toggle(id: string) {
+    setOpenBlocks((current) => {
+      const next = new Set(current);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
   }
 
-  const blocks = document.blocks;
-  const updateBlocks = (next: PageBlock[]) => update("blocks", next);
+  function insert(position: number, kind: BlockKind) {
+    const block = createBlock(kind);
+    setOpenBlocks((current) => new Set([...current, block.id]));
+    onChange([...blocks.slice(0, position), block, ...blocks.slice(position)]);
+  }
 
+  return (
+    <section className={styles.panel} data-field="blocks">
+      <h2 className="srOnly">Obsah stránky</h2>
+      <p className={styles.hint}>
+        Stránka sa skladá z blokov. Ťuknutím na blok ho otvoríte na úpravu.
+        Tlačidlom + pridáte nový blok na vybrané miesto.
+      </p>
+      {blocks.map((block, index) => {
+        const kind = blockKinds.find(
+          (entry) => entry.kind === blockKind(block)
+        )!;
+        const isOpen = openBlocks.has(block.id);
+        const summary = blockSummary(block);
+
+        return (
+          <div key={block.id}>
+            {index === 0 ? (
+              <BlockInserter onInsert={(type) => insert(0, type)} />
+            ) : null}
+            <article
+              className={`${pageStyles.block} ${
+                isOpen ? pageStyles.blockOpen : ""
+              }`}
+              data-field={`blocks.${index}`}
+              aria-label={`${index + 1}. ${kind.label}`}
+            >
+              <div className={pageStyles.blockHeader}>
+                <button
+                  type="button"
+                  className={pageStyles.blockToggle}
+                  aria-expanded={isOpen}
+                  aria-controls={`blok-${block.id}`}
+                  onClick={() => toggle(block.id)}
+                >
+                  <span className={pageStyles.blockIcon} aria-hidden="true">
+                    {kind.icon}
+                  </span>
+                  <span className={pageStyles.blockText}>
+                    <strong>
+                      {index + 1}. {kind.label}
+                    </strong>
+                    <small>{summary}</small>
+                  </span>
+                  <span className={pageStyles.blockChevron} aria-hidden="true">
+                    <Icon name="chevron" size={20} />
+                  </span>
+                </button>
+                <RowControls
+                  index={index}
+                  count={blocks.length}
+                  label={`${index + 1}. ${kind.label}`}
+                  onMove={(offset) => onChange(move(blocks, index, offset))}
+                  onDuplicate={() => {
+                    const copy = {
+                      ...structuredClone(block),
+                      id: newBlockId(block.type)
+                    };
+                    setOpenBlocks((current) => new Set([...current, copy.id]));
+                    onChange([
+                      ...blocks.slice(0, index + 1),
+                      copy,
+                      ...blocks.slice(index + 1)
+                    ]);
+                  }}
+                  onRemove={() =>
+                    onChange(blocks.filter((_, i) => i !== index))
+                  }
+                />
+              </div>
+              <div
+                id={`blok-${block.id}`}
+                className={pageStyles.blockBody}
+                hidden={!isOpen}
+              >
+                <BlockEditor
+                  block={block}
+                  index={index}
+                  imageTitle={document.title}
+                  disabled={disabled}
+                  onChange={(next) =>
+                    onChange(
+                      blocks.map((item, i) => (i === index ? next : item))
+                    )
+                  }
+                />
+              </div>
+            </article>
+            <BlockInserter
+              prominent={index === blocks.length - 1}
+              onInsert={(type) => insert(index + 1, type)}
+            />
+          </div>
+        );
+      })}
+      {blocks.length === 0 ? (
+        <BlockInserter prominent onInsert={(type) => insert(0, type)} />
+      ) : null}
+    </section>
+  );
+}
+
+function HeaderTab({
+  document,
+  update
+}: {
+  document: PageDocument;
+  update: <K extends keyof PageDocument>(
+    key: K,
+    value: PageDocument[K]
+  ) => void;
+}) {
   return (
     <>
       <section className={styles.panel}>
@@ -438,92 +743,22 @@ export function PageForm({
           </div>
         ) : null}
       </section>
+    </>
+  );
+}
 
-      <section className={styles.panel} data-field="blocks">
-        <h2>Obsah stránky</h2>
-        <p className={styles.hint}>
-          Obsah tvoria bloky. Bloky môžete pridávať, presúvať a odstraňovať.
-          Textový blok obsahuje text, nadpisy, zoznamy, obrázky aj galérie.
-        </p>
-        {blocks.map((block, index) => {
-          const label =
-            block.title?.trim() ||
-            (block.type === "text"
-              ? `Textový blok ${index + 1}`
-              : `Karty ${index + 1}`);
-
-          return (
-            <div
-              key={block.id}
-              className={pageStyles.block}
-              data-field={`blocks.${index}`}
-            >
-              <div className={pageStyles.rowHeader}>
-                <strong>
-                  {index + 1}.{" "}
-                  {block.type === "text" ? "Textový blok" : "Karty"}
-                  {block.title?.trim() ? ` · ${block.title}` : ""}
-                </strong>
-                <RowControls
-                  index={index}
-                  count={blocks.length}
-                  label={label}
-                  onMove={(offset) => updateBlocks(move(blocks, index, offset))}
-                  onRemove={() =>
-                    updateBlocks(blocks.filter((_, i) => i !== index))
-                  }
-                />
-              </div>
-              <BlockEditor
-                block={block}
-                index={index}
-                imageTitle={document.title}
-                disabled={disabled}
-                onChange={(next) =>
-                  updateBlocks(
-                    blocks.map((item, i) => (i === index ? next : item))
-                  )
-                }
-              />
-            </div>
-          );
-        })}
-        <div className={styles.actions}>
-          <button
-            type="button"
-            className={styles.secondary}
-            onClick={() =>
-              updateBlocks([
-                ...blocks,
-                {
-                  type: "text",
-                  id: newBlockId("text"),
-                  body: { type: "doc", content: [{ type: "paragraph" }] }
-                }
-              ])
-            }
-          >
-            + Textový blok
-          </button>
-          <button
-            type="button"
-            className={styles.secondary}
-            onClick={() =>
-              updateBlocks([
-                ...blocks,
-                {
-                  type: "cards",
-                  id: newBlockId("karty"),
-                  cards: [{ title: "" }]
-                }
-              ])
-            }
-          >
-            + Blok kariet
-          </button>
-        </div>
-      </section>
-
+function AsideTab({
+  document,
+  update
+}: {
+  document: PageDocument;
+  update: <K extends keyof PageDocument>(
+    key: K,
+    value: PageDocument[K]
+  ) => void;
+}) {
+  return (
+    <>
       <section className={styles.panel} data-field="aside">
         <h2>Bočný panel</h2>
         <p className={styles.hint}>
@@ -697,6 +932,87 @@ export function PageForm({
           </>
         ) : null}
       </section>
+    </>
+  );
+}
+
+export function PageForm({
+  document,
+  onChange,
+  disabled = false
+}: {
+  document: PageDocument;
+  onChange: (document: PageDocument) => void;
+  disabled?: boolean;
+}) {
+  const [tab, setTab] = useState<TabId>("content");
+  const invalidField = useInvalidField();
+
+  // Show the tab containing a field the server rejected.
+  useEffect(() => {
+    const target = tabForField(invalidField);
+    if (target) setTab(target);
+  }, [invalidField]);
+
+  function update<K extends keyof PageDocument>(
+    key: K,
+    value: PageDocument[K]
+  ) {
+    onChange({ ...document, [key]: value });
+  }
+
+  return (
+    <>
+      <div
+        className={pageStyles.tabs}
+        role="tablist"
+        aria-label="Časti stránky"
+      >
+        {tabs.map((entry) => (
+          <button
+            key={entry.id}
+            id={`zalozka-${entry.id}`}
+            type="button"
+            role="tab"
+            aria-selected={tab === entry.id}
+            aria-controls={`panel-${entry.id}`}
+            onClick={() => setTab(entry.id)}
+          >
+            {entry.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Panels stay mounted so text editors keep their place between tabs. */}
+      <div
+        id="panel-content"
+        role="tabpanel"
+        aria-labelledby="zalozka-content"
+        hidden={tab !== "content"}
+      >
+        <ContentTab
+          document={document}
+          disabled={disabled}
+          invalidField={invalidField}
+          onChange={(blocks) => update("blocks", blocks)}
+        />
+      </div>
+      <div
+        id="panel-header"
+        role="tabpanel"
+        aria-labelledby="zalozka-header"
+        hidden={tab !== "header"}
+      >
+        <HeaderTab document={document} update={update} />
+      </div>
+      <div
+        id="panel-aside"
+        role="tabpanel"
+        aria-labelledby="zalozka-aside"
+        hidden={tab !== "aside"}
+      >
+        <AsideTab document={document} update={update} />
+      </div>
     </>
   );
 }

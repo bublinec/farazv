@@ -31,3 +31,8 @@ export function useFieldError(path?: string) {
     ? error.message
     : undefined;
 }
+
+/** The field path of the current server validation error, if any. */
+export function useInvalidField() {
+  return useContext(ValidationContext)?.field ?? "";
+}

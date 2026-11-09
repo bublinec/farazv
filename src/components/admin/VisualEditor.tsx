@@ -16,12 +16,14 @@ export default function VisualEditor({
   value,
   onChange,
   imageTitle,
-  disabled = false
+  disabled = false,
+  label = "Obsah článku"
 }: {
   value: RichTextDocument;
   onChange: (value: RichTextDocument) => void;
   imageTitle: string;
   disabled?: boolean;
+  label?: string;
 }) {
   // The editor instance stays stable while receiving the latest controlled callback.
   const changeRef = useRef(onChange);
@@ -57,7 +59,7 @@ export default function VisualEditor({
     editorProps: {
       attributes: {
         role: "textbox",
-        "aria-label": "Obsah článku",
+        "aria-label": label,
         "aria-multiline": "true"
       }
     },

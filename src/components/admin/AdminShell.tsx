@@ -6,6 +6,7 @@ import styles from "./Admin.module.css";
 import { SignOut } from "./SignOut";
 import { AdminNavigation } from "./AdminNavigation";
 import { AdminSectionProvider } from "./AdminSectionContext";
+import { PreviewAwareShell } from "./PreviewAwareShell";
 export function AdminShell({
   children,
   authenticated = false,
@@ -19,32 +20,34 @@ export function AdminShell({
 }) {
   return (
     <AdminSectionProvider>
-      <div
-        className={`${styles.shell} ${
-          role === "lektorka" ? styles.lectorShell : ""
-        }`}
-      >
-        <header className={styles.topbar}>
-          <Link
-            className={styles.brand}
-            href={role === "lektorka" ? "/admin/lektori" : "/admin"}
+      <PreviewAwareShell preview={children}>
+        <div className={styles.shell}>
+          <header
+            className={`${styles.topbar} ${
+              authenticated ? styles.withMenu : ""
+            }`}
           >
-            <ParishLogo />
-          </Link>
-          {authenticated ? (
-            <AdminNavigation canManageAccess={canManageAccess} role={role} />
-          ) : null}
-          <div className={styles.utilities}>
-            <a href="/" target="_blank" rel="noopener noreferrer">
-              Web ↗
-            </a>
-            {authenticated ? <SignOut /> : null}
-          </div>
-        </header>
-        <main id="main" tabIndex={-1} className={styles.content}>
-          {children}
-        </main>
-      </div>
+            <Link
+              className={styles.brand}
+              href={role === "lektorka" ? "/admin/lektori" : "/admin"}
+            >
+              <ParishLogo />
+            </Link>
+            {authenticated ? (
+              <AdminNavigation canManageAccess={canManageAccess} role={role} />
+            ) : null}
+            <div className={styles.utilities}>
+              <a href="/" target="_blank" rel="noopener noreferrer">
+                Web ↗
+              </a>
+              {authenticated ? <SignOut /> : null}
+            </div>
+          </header>
+          <main id="main" tabIndex={-1} className={styles.content}>
+            {children}
+          </main>
+        </div>
+      </PreviewAwareShell>
     </AdminSectionProvider>
   );
 }

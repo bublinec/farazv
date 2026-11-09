@@ -39,7 +39,11 @@ function RecordTimestamp({ value }: { value: string | null }) {
   );
 }
 
-function focusInvalidField(form: HTMLFormElement | null, path: string) {
+function focusInvalidField(
+  form: HTMLFormElement | null,
+  path: string,
+  retried = false
+) {
   if (!form || !path) return;
 
   const field = Array.from(form.querySelectorAll<HTMLElement>("[data-field]"))
@@ -56,9 +60,21 @@ function focusInvalidField(form: HTMLFormElement | null, path: string) {
   if (!field) return;
 
   let ancestor: HTMLElement | null = field;
+  let revealed = false;
   while (ancestor) {
     if (ancestor instanceof HTMLDetailsElement) ancestor.open = true;
+    // Tabs and closed page blocks are opened by their own controls.
+    if (ancestor.hidden && ancestor.id) {
+      form
+        .querySelector<HTMLButtonElement>(`[aria-controls="${ancestor.id}"]`)
+        ?.click();
+      revealed = true;
+    }
     ancestor = ancestor.parentElement;
+  }
+  if (revealed && !retried) {
+    window.setTimeout(() => focusInvalidField(form, path, true), 80);
+    return;
   }
   field.scrollIntoView({ block: "center", behavior: "smooth" });
   field
@@ -307,7 +323,7 @@ export function RecordEditor({
         </div>
         {previewMode ? (
           <div className={layout.preview}>
-            <RecordLivePreview record={record} />
+            <RecordLivePreview record={record} dirty={dirty} />
           </div>
         ) : null}
 

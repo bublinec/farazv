@@ -173,6 +173,7 @@ test.describe("Editable sacrament and service pages", () => {
       page.getByText("Na webe sa teraz zobrazuje pôvodná verzia z kódu.")
     ).toBeVisible();
 
+    await page.getByRole("tab", { name: "Hlavička" }).click();
     const introduction = page.getByRole("textbox", {
       name: "Úvod pod nadpisom",
       exact: true
@@ -232,19 +233,34 @@ test.describe("Editable sacrament and service pages", () => {
       (await page.request.get("/spolocenstva/kostolnici-e2e")).status()
     ).toBe(404);
 
-    await page
-      .getByRole("textbox", { name: "Úvod pod nadpisom", exact: true })
-      .fill("Starajú sa o kostol a jeho výzdobu.");
-    const editor = page.locator('[contenteditable="true"]').first();
+    // A new page opens on its content with the first text block ready.
+    const editor = page.getByRole("textbox", { name: "Text bloku" });
     await editor.click();
     await page.keyboard.type("Pridajte sa k službe pri kostole.");
-    await page.getByRole("button", { name: "+ Blok kariet" }).click();
+    await page
+      .getByRole("button", { name: "Pridať blok", exact: true })
+      .click();
+    await page.getByRole("button", { name: /^Karty/ }).click();
     await page
       .getByLabel("Nadpis karty", { exact: true })
       .fill("Upratovanie kostola");
     await page
       .getByLabel("Text karty", { exact: true })
       .fill("Každú sobotu ráno.");
+    // Publishing without an introduction moves to the header tab and its field.
+    await page.getByRole("button", { name: "Uložiť", exact: true }).click();
+    await expect(
+      page.getByText("Uložené. Obsah zostáva súkromný.")
+    ).toBeVisible();
+    await page.getByRole("switch", { name: "Zverejnenie na webe" }).click();
+    await expect(page.getByRole("alert").first()).toContainText("úvod");
+    await expect(page.getByRole("tab", { name: "Hlavička" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
+    await page
+      .getByRole("textbox", { name: "Úvod pod nadpisom", exact: true })
+      .fill("Starajú sa o kostol a jeho výzdobu.");
     await page.getByRole("button", { name: "Uložiť", exact: true }).click();
     await expect(
       page.getByText("Uložené. Obsah zostáva súkromný.")
@@ -267,5 +283,78 @@ test.describe("Editable sacrament and service pages", () => {
       page.locator('header a[href="/spolocenstva/kostolnici-e2e"]').first()
     ).toBeAttached();
     expect(errors).toEqual([]);
+  });
+
+  test("phone menu, block editor and framed preview work at 390 px", async ({
+    page,
+    context
+  }) => {
+    test.setTimeout(120000);
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    page.on("dialog", (dialog) => void dialog.accept());
+    await page.setViewportSize({ width: 390, height: 844 });
+    await context.addCookies(cookies());
+
+    await page.goto("/admin/stranky");
+    const menu = page.getByRole("button", { name: /Menu/ });
+    await expect(menu).toHaveAttribute("aria-expanded", "false");
+    await expect(page.getByRole("link", { name: "Výveska" })).toBeHidden();
+    await menu.click();
+    await expect(menu).toHaveAttribute("aria-expanded", "true");
+    await page.keyboard.press("Escape");
+    await expect(menu).toHaveAttribute("aria-expanded", "false");
+    await expect(menu).toBeFocused();
+    await menu.click();
+    await page.getByRole("link", { name: "Výveska" }).click();
+    await expect(page).toHaveURL(/section=posts/);
+    await expect(menu).toHaveAttribute("aria-expanded", "false");
+
+    const response = await page.request.post("/api/admin/pages", {
+      headers: { Origin: origin },
+      data: { route: "sviatosti/sviatost-zmierenia" }
+    });
+    const record = (await response.json()) as ContentRecordFor<"page">;
+    await page.goto(`/admin/records/${record.id}`);
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth)
+    ).toBeLessThanOrEqual(391);
+
+    const firstBlock = page.getByRole("button", { name: /^1\. Text/ });
+    await expect(firstBlock).toHaveAttribute("aria-expanded", "false");
+    await firstBlock.click();
+    await expect(firstBlock).toHaveAttribute("aria-expanded", "true");
+    await expect(
+      page.getByRole("textbox", { name: "Text bloku" })
+    ).toBeVisible();
+
+    await page
+      .getByRole("button", { name: "Pridať blok", exact: true })
+      .click();
+    await page.getByRole("button", { name: /^Otázka a odpoveď/ }).click();
+    await expect(
+      page.getByRole("button", { name: /^\d+\. Otázka a odpoveď/ }).last()
+    ).toHaveAttribute("aria-expanded", "true");
+
+    const preview = await page.request.get(`/admin/nahlad/${record.id}`);
+    expect(preview.status()).toBe(200);
+    expect(preview.headers()["x-frame-options"]).toBe("SAMEORIGIN");
+    expect(preview.headers()["content-security-policy"]).toContain(
+      "frame-ancestors 'self'"
+    );
+    const publicPage = await page.request.get("/kontakt");
+    expect(publicPage.headers()["x-frame-options"]).toBe("DENY");
+
+    await page.getByRole("button", { name: "Náhľad", exact: true }).click();
+    const frame = page.frameLocator('iframe[title="Náhľad stránky"]');
+    await expect(
+      frame.getByRole("heading", { level: 1, name: "Sviatosť zmierenia" })
+    ).toBeVisible();
+    expect(errors).toEqual([]);
+  });
+
+  test("anonymous visitors cannot open a page preview", async ({ page }) => {
+    await page.goto("/admin/nahlad/page-sviatosti-sviatost-krstu");
+    await expect(page).toHaveURL(/\/admin\/login/);
   });
 });

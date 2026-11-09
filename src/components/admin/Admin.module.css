@@ -661,34 +661,121 @@ fieldset.disabled {
   }
 }
 
-/* On phones the brand gets its own row so it never collides with the account links. */
-@media (max-width: 560px) {
-  .topbar {
+.menuToggle,
+.menuExtras {
+  display: none;
+}
+
+/* Narrow phones: the menu button names only itself so the parish name fits. */
+@media (max-width: 440px) {
+  .menuCurrent {
+    display: none;
+  }
+}
+
+/* Phones: the text formatting buttons form one swipeable row. */
+@media (max-width: 760px) {
+  .toolbar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+
+  .toolbar button {
+    flex-shrink: 0;
+    min-height: 40px;
+  }
+}
+
+/* Phones: one menu button opens the sections, account links sit inside it. */
+@media (max-width: 760px) {
+  .topbar.withMenu {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.6rem;
+  }
+
+  .withMenu .utilities {
+    display: none;
+  }
+
+  .menuToggle {
+    display: inline-flex;
+    grid-column: 2;
+    grid-row: 1;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    max-width: 52vw;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--admin-border);
+    border-radius: 7px;
+    background: white;
+    color: var(--blue-deep);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .menuToggle > span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .menuToggle[aria-expanded="true"] {
+    background: #e3ecee;
+  }
+
+  .menuCurrent {
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .withMenu .brand {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .withMenu .topnav {
+    display: none;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.15rem;
+    padding: 0.4rem;
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 8px 24px #173c4b14;
+    font-size: 1rem;
+  }
+
+  .withMenu .topnav.menuOpen {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
   }
 
-  .brand {
-    flex-basis: 100%;
+  .withMenu .topnav a {
+    justify-content: space-between;
+    padding: 0.7rem 0.9rem;
   }
 
-  .topnav {
-    justify-content: flex-start;
+  .withMenu .menuExtras {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.3rem;
+    padding: 0.6rem 0.4rem 0.2rem 0.9rem;
+    border-top: 1px solid var(--admin-border);
   }
 
-  .utilities {
-    margin-left: auto;
-  }
-
-  /* The full editor menu wraps across the width; account links stay above it. */
-  .shell:not(.lectorShell) .utilities {
-    order: 1;
-    margin-left: 0;
-  }
-
-  .shell:not(.lectorShell) .topnav {
-    order: 2;
-    flex-basis: 100%;
+  .withMenu .menuExtras > a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    color: var(--muted);
+    text-decoration: none;
   }
 }

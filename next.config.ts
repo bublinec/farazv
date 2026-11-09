@@ -42,6 +42,17 @@ const config: NextConfig = {
         ]
       },
       {
+        // Private page previews may be framed only by the administration itself.
+        source: "/admin/nahlad/:path*",
+        headers: [
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          {
+            key: "Content-Security-Policy",
+            value: "frame-ancestors 'self'; object-src 'none'; base-uri 'self'"
+          }
+        ]
+      },
+      {
         source: "/api/:path*",
         headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }]
       },

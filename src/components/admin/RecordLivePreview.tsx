@@ -14,6 +14,7 @@ import {
 import { BulletinContent } from "@/components/bulletin/BulletinContent";
 import { EditorialDetail } from "@/components/editorial/EditorialDetail";
 import { readAdminJson } from "./admin-api";
+import { PagePreviewFrame } from "./PagePreviewFrame";
 import styles from "./RecordLivePreview.module.css";
 
 class PreviewBoundary extends Component<
@@ -130,7 +131,13 @@ function BulletinPreview({ record }: { record: ContentRecordFor<"bulletin"> }) {
 }
 
 /** Pure local draft rendering; opening this view never saves or publishes. */
-export function RecordLivePreview({ record }: { record: ContentRecord }) {
+export function RecordLivePreview({
+  record,
+  dirty = false
+}: {
+  record: ContentRecord;
+  dirty?: boolean;
+}) {
   let content: ReactNode;
 
   if (record.kind === "bulletin") {
@@ -138,19 +145,7 @@ export function RecordLivePreview({ record }: { record: ContentRecord }) {
   } else if (record.kind === "settings") {
     content = <p className={styles.message}>Nastavenia farnosti</p>;
   } else if (record.kind === "page") {
-    // Page layouts read live office facts on the server; preview the saved draft there.
-    content = (
-      <p className={styles.message}>
-        Náhľad zobrazí poslednú uloženú verziu stránky v plnom vzhľade webu.{" "}
-        <a
-          href={`/admin/preview/${encodeURIComponent(record.id)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Otvoriť náhľad uloženej verzie ↗
-        </a>
-      </p>
-    );
+    content = <PagePreviewFrame record={record} dirty={dirty} />;
   } else if (!validDate(record.draft.date)) {
     content = (
       <p className={styles.message} role="alert">
