@@ -11,6 +11,7 @@ import {
   parseSettingsDraft,
   requirePublishedSettings
 } from "./validation/settings";
+import { parsePageDraft, requirePublishedPage } from "./validation/page";
 import { asObject, fail, validateInputBounds } from "./validation/shared";
 
 export { isCalendarDate, validateMedia } from "./validation/shared";
@@ -21,7 +22,8 @@ export const recordKinds: RecordKind[] = [
   "notice",
   "event",
   "bulletin",
-  "settings"
+  "settings",
+  "page"
 ];
 
 /** Parse a safe editable draft, then apply publication-only completeness rules. */
@@ -46,6 +48,11 @@ export function validateDocument<K extends RecordKind>(
     case "settings": {
       const document = parseSettingsDraft(input);
       if (publishing) requirePublishedSettings(document);
+      return document as ContentDocumentMap[K];
+    }
+    case "page": {
+      const document = parsePageDraft(input);
+      if (publishing) requirePublishedPage(document);
       return document as ContentDocumentMap[K];
     }
     case "article":

@@ -1,5 +1,6 @@
 import { parishServices } from "./services";
 import { hospitalMinistry } from "./hospital-ministry";
+import { pageGroups, type PublicPageLink } from "./page-documents";
 
 export interface NavigationItem {
   label: string;
@@ -46,3 +47,24 @@ export const navigation: NavigationItem[] = [
   },
   { label: "Kontakt", href: "/kontakt" }
 ];
+
+/** Append pages added in the administration to the end of their menu group. */
+export function navigationWithPages(pages: PublicPageLink[]): NavigationItem[] {
+  if (!pages.length) return navigation;
+
+  return navigation.map((item) => {
+    const group = Object.entries(pageGroups).find(
+      ([, definition]) => definition.label === item.label
+    )?.[0];
+    const added = pages.filter((page) => page.group === group);
+    if (!item.children || !added.length) return item;
+
+    return {
+      ...item,
+      children: [
+        ...item.children,
+        ...added.map((page) => ({ label: page.title, href: `/${page.route}` }))
+      ]
+    };
+  });
+}

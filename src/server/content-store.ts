@@ -16,7 +16,7 @@ import type { MediaAsset } from "@/content/types";
 import { addDays, getMonday, getLocalDate } from "@/lib/calendar";
 import { splitLiturgy } from "@/lib/liturgy-day";
 import { getDb } from "./db";
-import { contentRecords } from "./db/schema";
+import { contentRecords, contentRevisions } from "./db/schema";
 import { ContentError } from "./errors";
 import { isCalendarDate, recordKinds, validateDocument } from "./validation";
 
@@ -307,6 +307,12 @@ export async function createRecord<K extends RecordKind>(
     throw new ContentError(422, "Neplatný typ obsahu.", "INVALID_KIND");
   if (kind === "bulletin")
     return (await openBulletinWeek(weekStart)) as ContentRecordFor<K>;
+  if (kind === "page")
+    throw new ContentError(
+      422,
+      "Stránky sa vytvárajú v sekcii Stránky.",
+      "INVALID_KIND"
+    );
   if (kind === "settings") {
     const existing = await getRecord("site-settings");
     if (existing) return existing as ContentRecordFor<K>;
@@ -360,6 +366,11 @@ function publicIdentity(record: ContentRecord) {
       return { title: `Farské oznamy ${record.draft.weekStart}`, slug: null };
     case "settings":
       return { title: "Nastavenia farnosti", slug: null };
+    case "page":
+      return {
+        title: record.draft.title || "Bez názvu",
+        slug: record.draft.route
+      };
     case "article":
     case "news":
     case "notice":
@@ -390,7 +401,8 @@ export async function updateRecord(
   id: string,
   version: number,
   input: unknown,
-  action: "save" | "publish" | "unpublish"
+  action: "save" | "publish" | "unpublish",
+  options: { actor?: string; revisionAction?: "restore" } = {}
 ) {
   if (!Number.isSafeInteger(version) || version < 1)
     throw new ContentError(
@@ -448,6 +460,17 @@ export async function updateRecord(
       ? current.draft
       : validateDocument(current.kind, editableInput, publishing);
   if ("id" in document) document.id = id;
+  if (
+    current.kind === "page" &&
+    "route" in document &&
+    (document.route !== current.draft.route ||
+      document.group !== current.draft.group)
+  )
+    throw new ContentError(
+      422,
+      "Adresa stránky zostáva po vytvorení rovnaká.",
+      "IMMUTABLE_PATH"
+    );
   // The parser above selected its document family from this envelope's kind.
   // Keep that correlation at this write boundary for the remaining operations.
   const edited = { ...current, draft: document } as ContentRecord;
@@ -484,30 +507,45 @@ export async function updateRecord(
       );
   }
   try {
-    const [row] = await getDb()
-      .update(contentRecords)
-      .set({
-        draft: document,
-        ...identity,
-        updatedAt: new Date().toISOString(),
-        version: sql`${contentRecords.version} + 1`,
-        ...(publishing
-          ? {
-              published: document,
-              publicSlug: identity.slug,
-              publishedAt: new Date().toISOString(),
-              eligibleWeek:
-                edited.kind === "bulletin" ? edited.draft.weekStart : null
-            }
-          : {}),
-        ...(action === "unpublish"
-          ? { published: null, eligibleWeek: null }
-          : {})
-      })
-      .where(
-        and(eq(contentRecords.id, id), eq(contentRecords.version, version))
-      )
-      .returning();
+    const row = await getDb().transaction(async (transaction) => {
+      const [updated] = await transaction
+        .update(contentRecords)
+        .set({
+          draft: document,
+          ...identity,
+          updatedAt: new Date().toISOString(),
+          version: sql`${contentRecords.version} + 1`,
+          ...(publishing
+            ? {
+                published: document,
+                publicSlug: identity.slug,
+                publishedAt: new Date().toISOString(),
+                eligibleWeek:
+                  edited.kind === "bulletin" ? edited.draft.weekStart : null
+              }
+            : {}),
+          ...(action === "unpublish"
+            ? { published: null, eligibleWeek: null }
+            : {})
+        })
+        .where(
+          and(eq(contentRecords.id, id), eq(contentRecords.version, version))
+        )
+        .returning();
+
+      // Editable pages keep every write so editors can return to it later.
+      if (updated && current.kind === "page")
+        await transaction.insert(contentRevisions).values({
+          id: randomUUID(),
+          recordId: id,
+          version: updated.version,
+          action: options.revisionAction ?? action,
+          document,
+          actor: options.actor ?? "neznámy"
+        });
+
+      return updated;
+    });
     if (!row)
       throw new ContentError(
         409,

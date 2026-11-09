@@ -12,6 +12,7 @@ const links = [
   { id: "bulletin", label: "Oznamy", href: "/admin" },
   { id: "posts", label: "Výveska", href: "/admin?section=posts" },
   { id: "article", label: "Naše spoločenstvo", href: "/admin?section=article" },
+  { id: "pages", label: "Stránky", href: "/admin/stranky" },
   { id: "lectors", label: "Rozpisy lektorov", href: "/admin/lektori" },
   { id: "settings", label: "Nastavenia", href: "/admin/nastavenia" },
   { id: "feedback", label: "Podnety", href: "/admin/podnety" },
@@ -31,6 +32,7 @@ export function AdminNavigation({
   let section: string | null = null;
   if (pathname.startsWith("/admin/lektori")) section = "lectors";
   else if (pathname.startsWith("/admin/nastavenia")) section = "settings";
+  else if (pathname.startsWith("/admin/stranky")) section = "pages";
   else if (pathname.startsWith("/admin/podnety")) section = "feedback";
   else if (pathname.startsWith("/admin/pristupy")) section = "access";
   else if (pathname.startsWith("/admin/records/")) section = recordSection;

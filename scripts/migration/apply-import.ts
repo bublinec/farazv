@@ -54,6 +54,7 @@ export async function importMigration(
         current?.publicSlug &&
         record.kind !== "settings" &&
         record.kind !== "bulletin" &&
+        record.kind !== "page" &&
         record.published &&
         record.published.slug !== current.publicSlug
       ) {
@@ -64,6 +65,7 @@ export async function importMigration(
       const publishedSlug =
         record.kind !== "settings" &&
         record.kind !== "bulletin" &&
+        record.kind !== "page" &&
         record.published
           ? record.published.slug || null
           : null;

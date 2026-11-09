@@ -9,7 +9,7 @@ import {
 } from "react";
 import type { RecordKind } from "@/content/documents";
 
-type AdminSection = "bulletin" | "posts" | "article" | "settings";
+type AdminSection = "bulletin" | "posts" | "article" | "settings" | "pages";
 
 const AdminSectionContext = createContext<{
   section: AdminSection | null;
@@ -39,6 +39,8 @@ export function useAdminSection(kind: RecordKind) {
     const section =
       kind === "bulletin" || kind === "article" || kind === "settings"
         ? kind
+        : kind === "page"
+        ? "pages"
         : "posts";
     setSection?.(section);
     return () => setSection?.(null);

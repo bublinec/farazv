@@ -1,0 +1,70 @@
+.cardsBlock {
+  margin-block: var(--space-6);
+}
+
+.cardsBlock > h2 {
+  margin: 0 0 var(--space-4);
+  color: var(--blue-deep);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid var(--gold);
+  background: var(--white);
+  box-shadow: 0 1px 0 var(--line);
+}
+
+.cardImage {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.cardImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardCopy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--space-5);
+}
+
+.cardCopy h3 {
+  margin: 0 0 var(--space-3);
+  color: var(--blue);
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.cardCopy p {
+  margin: 0 0 var(--space-4);
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.cardCopy a {
+  align-self: start;
+  min-height: 44px;
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+}

@@ -58,7 +58,11 @@ export function ReadingCopy({
   );
 }
 
-export function PageLinks({ page }: { page: InformationPageDefinition }) {
+export function PageLinks({
+  page
+}: {
+  page: Pick<InformationPageDefinition, "links">;
+}) {
   if (!page.links?.length) return null;
 
   return (
@@ -76,7 +80,11 @@ export function PageLinks({ page }: { page: InformationPageDefinition }) {
   );
 }
 
-export function RelatedPages({ page }: { page: InformationPageDefinition }) {
+export function RelatedPages({
+  page
+}: {
+  page: Pick<InformationPageDefinition, "slug" | "kind">;
+}) {
   const related = informationPages
     .filter((entry) => entry.kind === page.kind && entry.slug !== page.slug)
     .slice(0, 3);

@@ -2,16 +2,19 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, type ReactNode } from "react";
+import type { NavigationItem } from "@/content/navigation";
 import { Header } from "./Header";
 import { DateRefresh } from "./DateRefresh";
 import theme from "./ParishTheme.module.css";
 
 export function SiteShell({
   children,
-  footer
+  footer,
+  navigation
 }: {
   children: ReactNode;
   footer: ReactNode;
+  navigation?: NavigationItem[];
 }) {
   const pathname = usePathname();
   const shell = useRef<HTMLDivElement>(null);
@@ -41,7 +44,7 @@ export function SiteShell({
   return (
     <div ref={shell} className={theme.parish}>
       <div ref={masthead}>
-        <Header />
+        <Header items={navigation} />
       </div>
       <main id="main" tabIndex={-1}>
         {children}

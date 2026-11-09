@@ -16,6 +16,7 @@ import type {
   EditorialRecordKind,
   SettingsDocument
 } from "@/content/documents";
+import type { PageDocument } from "@/content/page-documents";
 import { postRecordKinds } from "@/content/posts";
 import { saintCharbel } from "@/content/saint-charbel";
 import type { CalendarDate } from "@/content/types";
@@ -46,6 +47,19 @@ export async function getPublishedSettings(): Promise<SettingsDocument | null> {
     .limit(1);
 
   return (row?.document as SettingsDocument | null) ?? null;
+}
+
+/** All public sacrament/service page snapshots; there are only a few dozen. */
+export async function getPublishedPages(): Promise<PageDocument[]> {
+  const rows = await getDb()
+    .select({ document: contentRecords.published })
+    .from(contentRecords)
+    .where(
+      and(eq(contentRecords.kind, "page"), isNotNull(contentRecords.published))
+    )
+    .orderBy(contentRecords.createdAt, contentRecords.id);
+
+  return rows.map((row) => row.document as PageDocument);
 }
 
 export async function getPublishedEntry(

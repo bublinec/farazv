@@ -13,8 +13,18 @@ import {
 } from "../src/server/content-store";
 import {
   getPublishedEntry,
+  getPublishedPages,
   getPublishedSettings
 } from "../src/server/published-store";
+import {
+  createPage,
+  listPageRevisions,
+  listPages,
+  openBuiltInPage,
+  restorePageRevision
+} from "../src/server/page-store";
+import { seedPageDocument } from "../src/server/page-seed";
+import type { PageDocument } from "../src/content/page-documents";
 import { importMigration } from "../scripts/migration/apply-import";
 import { ContentError } from "../src/server/errors";
 import { siteSettings } from "../src/content/fixtures";
@@ -567,6 +577,146 @@ test(
             if (importing) await importing.catch(() => {});
             await concurrent.end();
           }
+        }
+      );
+      await t.test(
+        "editable pages keep the code version public until publication and keep a restorable history",
+        async () => {
+          const editor = "editor@example.test";
+          const route = "sviatosti/sviatost-krstu";
+          const before = await listPages();
+          assert.equal(before.length, 11);
+          assert.ok(before.every((page) => page.recordId === null));
+
+          const opened = await openBuiltInPage(route, editor);
+          assert.equal(opened.kind, "page");
+          assert.deepEqual(opened.draft, seedPageDocument(route));
+          assert.equal(opened.published, null);
+          // Opening again never duplicates or reseeds the page.
+          assert.equal((await openBuiltInPage(route, editor)).id, opened.id);
+          assert.deepEqual(await getPublishedPages(), []);
+
+          const edited: PageDocument = {
+            ...(opened.draft as PageDocument),
+            title: "Sviatosť krstu – upravené"
+          };
+          const saved = await updateRecord(
+            opened.id,
+            opened.version,
+            edited,
+            "save",
+            { actor: editor }
+          );
+          assert.equal(saved.published, null);
+          assert.deepEqual(
+            await getPublishedPages(),
+            [],
+            "a private save keeps the code version on the web"
+          );
+
+          const published = await updateRecord(
+            opened.id,
+            saved.version,
+            undefined,
+            "publish",
+            { actor: editor }
+          );
+          assert.equal(
+            (await getPublishedPages())[0].title,
+            "Sviatosť krstu – upravené"
+          );
+
+          await assert.rejects(
+            updateRecord(
+              opened.id,
+              published.version,
+              { ...edited, route: "sviatosti/ina-adresa" },
+              "save",
+              { actor: editor }
+            ),
+            status(422)
+          );
+
+          const history = await listPageRevisions(opened.id);
+          assert.deepEqual(
+            history.map((revision) => revision.action),
+            ["publish", "save", "save"]
+          );
+          assert.ok(history.every((revision) => revision.actor === editor));
+
+          const original = history.at(-1)!;
+          await assert.rejects(
+            restorePageRevision(opened.id, original.id, 1, editor),
+            status(409)
+          );
+          const restored = await restorePageRevision(
+            opened.id,
+            original.id,
+            published.version,
+            editor
+          );
+          assert.equal(
+            (restored.draft as PageDocument).title,
+            "Sviatosť krstu"
+          );
+          // The page was public, so the restored version is public at once.
+          assert.equal((await getPublishedPages())[0].title, "Sviatosť krstu");
+          assert.equal(
+            (await listPageRevisions(opened.id))[0].action,
+            "restore"
+          );
+
+          const hidden = await updateRecord(
+            opened.id,
+            restored.version,
+            undefined,
+            "unpublish",
+            { actor: editor }
+          );
+          assert.equal(hidden.published, null);
+          assert.deepEqual(
+            await getPublishedPages(),
+            [],
+            "turning visibility off returns the web to the code version"
+          );
+
+          const added = await createPage(
+            "service",
+            "Kostolníci",
+            undefined,
+            editor
+          );
+          assert.equal(added.id, "page-spolocenstva-kostolnici");
+          assert.equal(
+            (added.draft as PageDocument).route,
+            "spolocenstva/kostolnici"
+          );
+          await assert.rejects(
+            createPage("service", "Kostolníci", undefined, editor),
+            status(409)
+          );
+          await assert.rejects(
+            createPage("service", "Rehoľné sestry", undefined, editor),
+            status(409)
+          );
+          await assert.rejects(
+            createPage("service", "Zlá adresa", "../admin", editor),
+            status(422)
+          );
+          await assert.rejects(
+            updateRecord(added.id, added.version, undefined, "publish", {
+              actor: editor
+            }),
+            status(422)
+          );
+
+          const pages = await listPages();
+          assert.equal(pages.length, 12);
+          assert.equal(pages.at(-1)?.builtIn, false);
+          assert.equal(
+            pages.find((page) => page.route === route)?.recordId,
+            opened.id
+          );
         }
       );
     } finally {

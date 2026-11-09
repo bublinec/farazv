@@ -337,3 +337,35 @@ This refines D28's photographic accents without changing D30: the homepage hero
 remains the shared v1 composition. V1 and its saved records remain preserved;
 selectors, production default, content publication and hosting are unchanged.
 See [the design direction](design-direction.md) for component owners and scope.
+
+## D32 — Sacrament and service pages are editable in the CMS (9 November 2026)
+
+**User choice; implemented on `filip/upravy`, not released.** The owner asked
+to edit the six sacrament pages and the "Služby vo farnosti" pages (photos,
+text, quotation, aside, facts, links, preparation steps) without code changes,
+to add content blocks and to add new service or sacrament pages. This narrows
+D06 and D26 for these eleven routes: their source-controlled version remains the
+public fallback and the reviewed baseline, and nothing changes publicly until an
+editor publishes a page.
+
+- A `page` record kind stores the whole page. "Začať upravovať" copies the
+  current code version (updates and presentation rules applied, closed questions
+  kept closed) into a private draft; tests prove the copy is complete.
+- A published page replaces its code version; turning publication off returns
+  the code version. New pages are added under `/sviatosti/*` or
+  `/spolocenstva/*`, cannot take an existing route and appear at the end of
+  their menu group and homepage cards only when published. Existing card and
+  menu texts are unchanged.
+- Every write of a page is kept in `content_revisions` with author and time.
+  Restoring a version saves it; like any save, a published page shows it at once.
+- Layout rules tied to routes stay in code: the office aside from settings,
+  baptism/marriage Náuky, the hospital section, the lector schedule button, the
+  six-sacrament band and the reviewed photograph crop.
+- Without a database (fixtures, outage) the code version is shown.
+
+## D33 — One-letter words stay with the next word in the hero (9 November 2026)
+
+**User choice (dean's request); implemented on `filip/upravy`.** Slovak
+one-letter words (v, k, s, z, a, o, u, i) must not end a line. The homepage hero
+title, liturgical type, gospel verse and notice join them to the next word with
+a non-breaking space (`src/lib/typography.ts`).

@@ -10,7 +10,8 @@ import { altarRestoration } from "@/content/altar-restoration";
 import {
   getPublicSettings,
   getPublicBulletins,
-  getPublicActivePosts
+  getPublicActivePosts,
+  getPublicPageLinks
 } from "@/server/public-content";
 import { Unavailable } from "@/components/ui/Unavailable";
 import { getLocalDate, getPublicWeek } from "@/lib/calendar";
@@ -46,6 +47,9 @@ export default async function HomePage() {
       getPublicBulletins(today),
       getPublicActivePosts(today)
     ]
+  );
+  const addedServices = (await getPublicPageLinks()).filter(
+    (page) => page.group === "service"
   );
   const settings =
     settingsResult.status === "fulfilled" ? settingsResult.value : null;
@@ -113,7 +117,15 @@ export default async function HomePage() {
         <div className="container">
           <SectionHeading title="Zapoj sa do života našej farnosti" />
           <div className={styles.communities}>
-            {parishServices.map(({ title, description, href }) => (
+            {[
+              ...parishServices,
+              // Services added in the administration follow the original cards.
+              ...addedServices.map((page) => ({
+                title: page.title,
+                description: page.description,
+                href: `/${page.route}`
+              }))
+            ].map(({ title, description, href }) => (
               <Link href={href} className={styles.community} key={href}>
                 <h3>{title}</h3>
                 <p>{description}</p>

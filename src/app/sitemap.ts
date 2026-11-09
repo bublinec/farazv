@@ -8,6 +8,7 @@ import { altarRestoration } from "@/content/altar-restoration";
 import { getDb } from "@/server/db";
 import { contentRecords } from "@/server/db/schema";
 import { isPublicRelease } from "@/lib/seo";
+import { getPublicPageLinks } from "@/server/public-content";
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +22,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     altarRestoration.href,
     "/farnost/nase-spolocenstvo",
     "/podnety",
-    ...informationPages.map((page) => `/${page.slug}`)
+    ...informationPages.map((page) => `/${page.slug}`),
+    ...(await getPublicPageLinks()).map((page) => `/${page.route}`)
   ].map((path) => ({ url: new URL(path || "/", siteConfig.url).href }));
 
   const records = await getDb()

@@ -5,10 +5,14 @@ import type {
   RegularSchedule,
   SiteSettings
 } from "./types";
+import type { PageDocument } from "./page-documents";
 
 /** Shared persisted/editor contracts. No server clients or secrets belong here. */
 export type RecordKind = keyof ContentDocumentMap;
-export type EditorialRecordKind = Exclude<RecordKind, "bulletin" | "settings">;
+export type EditorialRecordKind = Exclude<
+  RecordKind,
+  "bulletin" | "settings" | "page"
+>;
 
 export interface RichTextNode {
   type: string;
@@ -60,6 +64,7 @@ export interface ContentDocumentMap {
   event: EditorialDocument;
   bulletin: BulletinDocument;
   settings: SettingsDocument;
+  page: PageDocument;
 }
 
 export type ContentDocument = ContentDocumentMap[RecordKind];

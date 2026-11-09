@@ -5,7 +5,7 @@ import { RichText } from "@/components/editorial/RichText";
 import { Icon } from "@/components/ui/Icon";
 import styles from "./SourceQuotation.module.css";
 
-function QuotationBand({
+export function QuotationBand({
   quotation,
   attribution,
   id,

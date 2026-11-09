@@ -24,7 +24,7 @@ const document = (content: RichTextNode[]): RichTextDocument => ({
 });
 
 /** Server-rendered copy, with only the gallery controls sent as client code. */
-function ReadingNodes({
+export function ReadingNodes({
   nodes,
   sectionId
 }: {

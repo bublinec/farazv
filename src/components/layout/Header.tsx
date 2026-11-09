@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { navigation } from "@/content/navigation";
+import { navigation, type NavigationItem } from "@/content/navigation";
 import { siteConfig } from "@/content/site";
 import { containDialogFocus } from "@/lib/dialog";
 import { Icon } from "@/components/ui/Icon";
@@ -11,7 +11,7 @@ import { LectorScheduleDialog } from "@/components/lectors/LectorScheduleDialog"
 import { ParishLogo } from "./ParishLogo";
 import styles from "./Header.module.css";
 
-export function Header() {
+export function Header({ items = navigation }: { items?: NavigationItem[] }) {
   const pathname = usePathname();
   const header = useRef<HTMLElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -71,7 +71,7 @@ export function Header() {
             <ParishLogo />
           </Link>
           <nav className={styles.desktop} aria-label="Hlavná navigácia">
-            {navigation.map((item) =>
+            {items.map((item) =>
               item.href ? (
                 <Link
                   key={item.label}
@@ -163,7 +163,7 @@ export function Header() {
           </button>
         </div>
         <nav aria-label="Mobilná navigácia" className={styles.mobileNav}>
-          {navigation.map((item) =>
+          {items.map((item) =>
             item.href ? (
               <Link
                 key={item.label}

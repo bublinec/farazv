@@ -137,6 +137,20 @@ export function RecordLivePreview({ record }: { record: ContentRecord }) {
     content = <BulletinPreview record={record} />;
   } else if (record.kind === "settings") {
     content = <p className={styles.message}>Nastavenia farnosti</p>;
+  } else if (record.kind === "page") {
+    // Page layouts read live office facts on the server; preview the saved draft there.
+    content = (
+      <p className={styles.message}>
+        Náhľad zobrazí poslednú uloženú verziu stránky v plnom vzhľade webu.{" "}
+        <a
+          href={`/admin/preview/${encodeURIComponent(record.id)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Otvoriť náhľad uloženej verzie ↗
+        </a>
+      </p>
+    );
   } else if (!validDate(record.draft.date)) {
     content = (
       <p className={styles.message} role="alert">

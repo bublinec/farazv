@@ -59,6 +59,31 @@ export const contentRecords = pgTable(
   ]
 );
 
+/** Saved and published versions of editable pages, kept for restoring. */
+export const contentRevisions = pgTable(
+  "content_revisions",
+  {
+    id: text("id").primaryKey(),
+    recordId: text("record_id").notNull(),
+    version: integer("version").notNull(),
+    action: text("action")
+      .$type<"save" | "publish" | "unpublish" | "restore">()
+      .notNull(),
+    document: jsonb("document").$type<ContentDocument>().notNull(),
+    actor: text("actor").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true, mode: "string" })
+      .notNull()
+      .defaultNow()
+  },
+  (table) => [
+    index("content_revisions_record_idx").on(table.recordId, table.createdAt),
+    check(
+      "content_revisions_action_check",
+      sql`${table.action} in ('save', 'publish', 'unpublish', 'restore')`
+    )
+  ]
+);
+
 export const mediaAssets = pgTable(
   "media_assets",
   {

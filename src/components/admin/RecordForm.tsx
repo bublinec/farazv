@@ -3,6 +3,7 @@ import type { ContentRecord } from "@/content/documents";
 import { BulletinForm } from "./BulletinForm";
 import { EditorialForm } from "./EditorialForm";
 import { SettingsForm } from "./SettingsForm";
+import { PageForm } from "./PageForm";
 
 /** Keep each family's document type correlated with the envelope kind. */
 export function RecordForm({
@@ -30,6 +31,14 @@ export function RecordForm({
       return (
         <SettingsForm
           document={record.draft}
+          onChange={(draft) => onChange({ ...record, draft })}
+        />
+      );
+    case "page":
+      return (
+        <PageForm
+          document={record.draft}
+          disabled={disabled}
           onChange={(draft) => onChange({ ...record, draft })}
         />
       );

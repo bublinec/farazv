@@ -135,7 +135,9 @@ community, school, contact, gallery and resource layouts. Server-only reading
 copy contains the 29 published source pages, preserving ordered text, images,
 collections and credits; the unpublished page stays private. This uses rich text
 inside reading areas without recreating the old page builder. Shared facts come
-from published settings. Static reading-copy/layout changes remain code changes.
+from published settings. Static reading-copy/layout changes remain code changes,
+except that sacrament and service pages can be published from the CMS `page`
+record kind with revision history; their code version stays the fallback (D32).
 A later user-authorized refresh uses explicit guarded corrections in
 `information-updates.ts`; the raw 29-record source export remains intact. Current reading is protected by a separately reviewed baseline. See [the editorial record](content-refresh-2026-10-31.md).
 Real photograph constants live in `assets.ts`; synthetic examples stay in explicit

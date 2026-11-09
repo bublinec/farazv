@@ -18,7 +18,7 @@ import {
   validateMedia
 } from "./shared";
 
-function draftBodyImages(node: RichTextNode) {
+export function draftBodyImages(node: RichTextNode) {
   if (node.type === "image") {
     const attrs = node.attrs;
     // The rich-text parser already strips unsupported attributes and schemes.
@@ -36,7 +36,7 @@ function draftBodyImages(node: RichTextNode) {
   node.content?.forEach(draftBodyImages);
 }
 
-function hasMeaningfulBody(node: RichTextNode): boolean {
+export function hasMeaningfulBody(node: RichTextNode): boolean {
   return (
     (node.type === "text" && !!node.text?.trim()) ||
     node.type === "image" ||

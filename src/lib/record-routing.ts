@@ -20,6 +20,8 @@ export function publicRecordPath(record: ContentRecord): string | null {
       return "/farnost/farske-oznamy";
     case "settings":
       return "/kontakt";
+    case "page":
+      return `/${record.published.route}`;
     case "article":
     case "news":
     case "event":

@@ -3,7 +3,8 @@ import { isPublicRelease, pageMetadata } from "@/lib/seo";
 import { Footer } from "@/components/layout/Footer";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { VisitorAnalytics } from "@/components/layout/VisitorAnalytics";
-import { getPublicSettings } from "@/server/public-content";
+import { getPublicPageLinks, getPublicSettings } from "@/server/public-content";
+import { navigationWithPages } from "@/content/navigation";
 import { siteConfig } from "@/content/site";
 import "./globals.css";
 
@@ -30,11 +31,17 @@ export const dynamic = "force-dynamic";
 export default async function RootLayout({
   children
 }: Readonly<{ children: React.ReactNode }>) {
-  const settings = await getPublicSettings().catch(() => null);
+  const [settings, addedPages] = await Promise.all([
+    getPublicSettings().catch(() => null),
+    getPublicPageLinks()
+  ]);
   return (
     <html lang="sk" data-scroll-behavior="smooth">
       <body>
-        <SiteShell footer={<Footer settings={settings} />}>
+        <SiteShell
+          footer={<Footer settings={settings} />}
+          navigation={navigationWithPages(addedPages)}
+        >
           {children}
         </SiteShell>
         {process.env.VERCEL_ENV === "production" ? <VisitorAnalytics /> : null}

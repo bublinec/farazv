@@ -82,7 +82,11 @@ notes, priests and donation details. The original baptism meeting-time
 clause remains unchanged; it is not generalized from shared settings. A settings outage shows an
 unavailable state without fixture contacts. Informational routes render at
 request time so successful publication of settings updates their shared facts.
-Static reading-copy changes require a reviewed code change, as planned.
+Static reading-copy changes require a reviewed code change, except for the six
+sacrament pages and the five "Služby vo farnosti" pages: editors can publish a
+CMS version of them (and add new `/sviatosti/*` or `/spolocenstva/*` pages) in
+Admin → Stránky. Without a published CMS version the code version is shown. See
+[D32](remake/decisions.md#d32--sacrament-and-service-pages-are-editable-in-the-cms-9-november-2026).
 
 ## Editorial paths and schedule history
 

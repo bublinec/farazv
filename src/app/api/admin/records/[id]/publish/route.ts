@@ -6,7 +6,7 @@ export function POST(
   request: Request,
   context: { params: Promise<{ id: string }> }
 ) {
-  return adminResponse(request, async () => {
+  return adminResponse(request, async (identity) => {
     const body = await readJson(request);
     return publicationResponse(
       await updateRecord(
@@ -15,7 +15,8 @@ export function POST(
         ).id,
         body.version as number,
         body.document,
-        "publish"
+        "publish",
+        { actor: identity.email }
       )
     );
   });

@@ -2,9 +2,19 @@ import Link from "next/link";
 import { sacramentsBackground, sacramentSummaries } from "@/content/sacraments";
 import { Icon } from "@/components/ui/Icon";
 import { MediaImage } from "@/components/ui/MediaImage";
+import { getPublicPageLinks } from "@/server/public-content";
 import styles from "./SacramentsSection.module.css";
 
-export function SacramentsSection() {
+export async function SacramentsSection() {
+  // Sacrament pages added in the administration follow the original six.
+  const added = (await getPublicPageLinks())
+    .filter((page) => page.group === "sacrament")
+    .map((page) => ({
+      title: page.title,
+      description: page.description,
+      href: `/${page.route}`
+    }));
+
   return (
     <section
       id="sviatosti"
@@ -28,7 +38,7 @@ export function SacramentsSection() {
         </div>
 
         <ul className={styles.sacraments}>
-          {sacramentSummaries.map((sacrament) => (
+          {[...sacramentSummaries, ...added].map((sacrament) => (
             <li key={sacrament.href}>
               <article className={styles.sacrament}>
                 <h3>{sacrament.title}</h3>

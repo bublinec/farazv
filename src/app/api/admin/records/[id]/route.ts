@@ -7,7 +7,7 @@ interface Context {
 }
 export const dynamic = "force-dynamic";
 export function GET(request: Request, context: Context) {
-  return adminResponse(request, async () => {
+  return adminResponse(request, async (identity) => {
     const record = await getRecord((await context.params).id);
     if (!record)
       throw new ContentError(404, "Záznam sa nenašiel.", "NOT_FOUND");
@@ -15,7 +15,7 @@ export function GET(request: Request, context: Context) {
   });
 }
 export function PUT(request: Request, context: Context) {
-  return adminResponse(request, async () => {
+  return adminResponse(request, async (identity) => {
     const body = await readJson(request);
     if (body.document === undefined)
       throw new ContentError(400, "Chýba obsah formulára.", "INVALID_BODY");
@@ -25,7 +25,8 @@ export function PUT(request: Request, context: Context) {
       ).id,
       body.version as number,
       body.document,
-      "save"
+      "save",
+      { actor: identity.email }
     );
     return record.published ? publicationResponse(record) : record;
   });

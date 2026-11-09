@@ -4,7 +4,11 @@ import { OfficeAside } from "./OfficeAside";
 import { Arrow } from "./PageSections";
 import styles from "./InformationPage.module.css";
 
-export function CommunityAside({ page }: { page: InformationPageDefinition }) {
+export function CommunityAside({
+  page
+}: {
+  page: Pick<InformationPageDefinition, "slug" | "aside" | "facts">;
+}) {
   const contact = page.aside?.contact;
 
   if (!contact && !page.facts?.length)

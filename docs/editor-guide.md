@@ -81,6 +81,35 @@ a platobné údaje. Pravidelná šablóna omší zatiaľ nemá samostatný ovlá
 v tomto formulári; jej zmenu dohodnite s technickým správcom. Konkrétne týždenné
 časy upravujte vo farských oznamoch.
 
+## Stránky sviatostí a služieb
+
+V sekcii **Stránky** sú šiesti sviatosti a služby vo farnosti (spevokol, zbor,
+miništranti, lektori, akolyti). Pri stránke, ktorá sa ešte nikdy neupravovala,
+je stav **Pôvodná verzia z kódu**. Tlačidlo **Začať upravovať** skopíruje
+presne to, čo je dnes na webe, do súkromného konceptu.
+
+Upraviť môžete fotku v hlavičke, nadpis, úvod, modrý pás s citátom, obsah,
+bočný panel, kontaktnú osobu a telefóny, praktické údaje, odkazy a kroky
+prípravy. Obsah tvoria **bloky**: textový blok (text, nadpisy, zoznamy, obrázky,
+galérie) a blok kariet (nadpis, text, fotka, odkaz). Bloky pridáte tlačidlami
+pod obsahom a šípkami ↑ ↓ zmeníte ich poradie. **Zbalený blok** sa na webe
+zobrazí ako otázka, ktorú čitateľ otvorí kliknutím.
+
+**Kým stránku nezverejníte, na webe ostáva pôvodná verzia.** Náhľad otvorí
+poslednú uloženú verziu v plnom vzhľade webu. Po zverejnení sa každé ďalšie
+uloženie hneď prejaví na webe, rovnako ako pri článkoch.
+
+Každé uloženie sa zapíše do **Histórie** s menom a časom. Tlačidlo **Obnoviť**
+vráti stránku do staršej verzie; najstaršia položka je pôvodná verzia z kódu.
+Tlačidlo **Vrátiť web na pôvodnú verziu z kódu** stiahne úpravu z webu, ale
+koncept aj história ostanú uložené.
+
+**+ Pridať službu** a **+ Pridať sviatosť** vytvoria novú stránku. Zadajte názov;
+adresa sa vytvorí z neho a po vytvorení sa nemení. Nová stránka sa po
+zverejnení objaví na konci menu a medzi kartami na úvodnej stránke. Pre kartu
+môžete vyplniť krátky popis. PDF sa nenahrávajú; odkážte ich napríklad z Google
+Drive.
+
 ## Prístupy a podnety
 
 Správca môže v **Prístupy** pridať alebo odobrať redaktora podľa presnej adresy

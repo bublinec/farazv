@@ -8,6 +8,7 @@ import { isPostRecordKind } from "@/content/posts";
 import { publicRecordPath } from "@/lib/record-routing";
 import { RecordForm } from "./RecordForm";
 import { RecordLivePreview } from "./RecordLivePreview";
+import { PageHistory } from "./PageHistory";
 import { EditorValidation } from "./EditorValidation";
 import { useAdminSection } from "./AdminSectionContext";
 import { hasUnpublishedChanges, recordStateLabel } from "./record-state";
@@ -68,9 +69,11 @@ function focusInvalidField(form: HTMLFormElement | null, path: string) {
 }
 
 export function RecordEditor({
-  initialRecord
+  initialRecord,
+  builtInPage = false
 }: {
   initialRecord: ContentRecord;
+  builtInPage?: boolean;
 }) {
   const {
     record,
@@ -131,6 +134,8 @@ export function RecordEditor({
               href={
                 record.kind === "bulletin"
                   ? "/admin"
+                  : record.kind === "page"
+                  ? "/admin/stranky"
                   : `/admin?section=${
                       isPostRecordKind(record.kind) ? "posts" : "article"
                     }`
@@ -139,6 +144,8 @@ export function RecordEditor({
               ←{" "}
               {record.kind === "bulletin"
                 ? "Oznamy"
+                : record.kind === "page"
+                ? "Stránky"
                 : isPostRecordKind(record.kind)
                 ? "Výveska"
                 : "Naše spoločenstvo"}
@@ -302,6 +309,17 @@ export function RecordEditor({
           <div className={layout.preview}>
             <RecordLivePreview record={record} />
           </div>
+        ) : null}
+
+        {record.kind === "page" ? (
+          <PageHistory
+            record={record}
+            builtIn={builtInPage}
+            dirty={dirty}
+            busy={editorBusy}
+            onRestored={reloadLatest}
+            onShowCodeVersion={() => void setPublished(false)}
+          />
         ) : null}
 
         {!isSettings ? (

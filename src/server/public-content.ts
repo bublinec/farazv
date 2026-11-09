@@ -9,6 +9,7 @@ import type {
   SettingsDocument
 } from "@/content/documents";
 import * as fixtures from "@/content/fixtures";
+import type { PageDocument, PublicPageLink } from "@/content/page-documents";
 import { saintCharbel } from "@/content/saint-charbel";
 import {
   allEditorialSummaries,
@@ -19,6 +20,7 @@ import {
 import { editorialRecordPath } from "@/lib/record-routing";
 import * as store from "./published-store";
 import { ContentUnavailableError } from "./errors";
+import { builtInPageRoutes } from "./page-seed";
 
 export function isFixtureMode() {
   return (
@@ -60,6 +62,12 @@ const cachedActivePosts = unstable_cache(
 const cachedBulletins = unstable_cache(
   store.getPublishedBulletins,
   ["parish-bulletins-v2", cacheNamespace],
+  { tags: ["parish-published"], revalidate: 300 }
+);
+
+const cachedPages = unstable_cache(
+  store.getPublishedPages,
+  ["parish-pages-v1", cacheNamespace],
   { tags: ["parish-published"], revalidate: 300 }
 );
 
@@ -179,4 +187,37 @@ export const getPublicEntry = cache(
 export async function getPublicBulletins(today: CalendarDate) {
   if (isFixtureMode()) return fixtures.getFixtureBulletins(today);
   return read(() => cachedBulletins(today));
+}
+
+/**
+ * Published CMS versions of sacrament and service pages. Without a database
+ * (fixtures, outage) the source-controlled pages remain the public version.
+ */
+export const getPublicPages = cache(async (): Promise<PageDocument[]> => {
+  if (isFixtureMode() || !process.env.DATABASE_URL) return [];
+
+  try {
+    return await cachedPages();
+  } catch {
+    console.error("Published pages unavailable; using source-controlled pages");
+    return [];
+  }
+});
+
+export async function getPublicPage(route: string) {
+  return (await getPublicPages()).find((page) => page.route === route) ?? null;
+}
+
+/** Pages added in the administration, for menus, homepage cards and sitemap. */
+export async function getPublicPageLinks(): Promise<PublicPageLink[]> {
+  const builtInRoutes = builtInPageRoutes();
+
+  return (await getPublicPages())
+    .filter((page) => !builtInRoutes.has(page.route))
+    .map((page) => ({
+      route: page.route,
+      group: page.group,
+      title: page.title,
+      description: page.menuDescription?.trim() || page.introduction
+    }));
 }
