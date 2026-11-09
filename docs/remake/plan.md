@@ -1079,6 +1079,131 @@ those authenticated actions were not performed by this verification.
   43 public/layout/accessibility browser passes and one optional skip. Before/after
   screenshots in the emulated desktop-site view were pixel-identical after the
   fix, with the hero staying at 828 px. Targeted read-only review found no issues.
+
+### Mobile bulletin shortcut — 8 November 2026
+
+- Renamed the existing mobile “Rozpis svätých omší” button to “Farské oznamy”
+  and placed it before the menu links, preserving its styling and destination.
+- Verified the fixture build, formatter/types, 95 unit passes (two opt-in skips)
+  and the existing mobile-menu focus/navigation check with the new link order.
+
+- Correction — 9 November 2026: restored the button below the mobile navigation,
+  keeping the “Farské oznamy” label, styling and destination. This supersedes the
+  placement above. Baseline project checks, fixture build, formatting and the
+  mobile-menu focus/navigation check pass with the restored keyboard order.
+
+
+### Smaller public reading text — 9 November 2026
+
+- Reduced ordinary information-page and article prose to 18 px on desktop and
+  17.1 px through 760 px, with proportionate mobile subheadings and tighter
+  reading line height. Article introductory text follows the same mobile size.
+- Quote bands below page heroes now use 18 px desktop / 16.2 px mobile text.
+  Both imported rich-text and plain community quotations receive the same sizes;
+  attribution and source-credit sizes stay unchanged. Complete source text,
+  photographs, layout, bulletin typography and admin editing are preserved.
+- Verification: baseline project checks (95 unit passes, two opt-in skips),
+  fixture production build, formatting, ten focused reading/content/layout and
+  accessibility browser passes, and visual/computed-style checks at 320, 390,
+  768 and 1440 px. No ordinary-width overflow was found. Read-only CSS review
+  found no cascade or scope issues. The owned preview used port 3114.
+- At 200% text sizing, the reading and quote containers fit. A separate header
+  menu overflow of 22 px at 390 px was observed and remains a header follow-up;
+  these scoped prose rules do not change header sizing.
+
+
+### Mobile navigation, contact and footer polish — 9 November 2026
+
+- Fixed mobile menu opener/close controls at 44 × 44 px with centered icons,
+  avoiding inherited padding/line-height distortion. Navigation order and labels
+  are unchanged, including the bulletin button below the links.
+- Added explicit priest portrait/info wrappers. Mobile portraits cover the full
+  card height without distortion; placeholders also fill their column. Reduced
+  card/role gaps and contact section padding while retaining 44 px contact links.
+  Contact details and priest records are unchanged.
+- Formatted the stored postal address into lines at its commas, retained its
+  punctuation, aligned Adresa/IČO labels and used ordinary reading color for
+  non-link address values. No address facts or map destinations were rewritten.
+- Further reduced normal information/article reading text to 17.1 px desktop /
+  16.2 px mobile; the church's separately styled history follows the same scale.
+  Footer column headings are now 18.9 px/550 weight above unchanged 16.2 px links.
+- At the owner's explicit request, removed the church page's “Pramene” disclosure
+  and orphaned styles. Raw source provenance, complete history, photo credits,
+  gallery and tour links remain; the independent content baseline is unchanged.
+- Verification: formatter/types, 95 unit passes (two opt-in skips), fixture build
+  and 12 focused navigation/layout/accessibility/content browser passes, including
+  the full 22-page substantive-content check. Reviewed React/cascade semantics.
+  Visual checks at 320, 390, 760 and 1440 px found no horizontal overflow; menu
+  controls are square and footer headings differentiate correctly. Priest-card
+  layout used an ephemeral local visual sample of already-public priest details
+  because the ordinary fixture settings have no priests; no records were saved.
+  Mobile portrait/card heights matched exactly in those samples. The owned
+  preview used port 3114 and `.next-preview`; other development servers remained.
+
+
+### Sidebar hierarchy and large desktop hero — 9 November 2026
+
+- Grouped office/community card headings, contact methods, hours, preparation and
+  actions with consistent spacing and quiet dividers. Phone text is now 20 px,
+  section headings 17.1 px and supporting notes 14.4 px; contact targets retain
+  at least 44 px height. Hours use constrained columns, with separate time ranges
+  on separate lines. All stored contact facts and time strings are preserved.
+- Reduced oversized mobile magazine-card titles and the church visit-card text;
+  resource links have more compact type/padding and nonshrinking arrow controls.
+- Added capped fluid scaling to the homepage hero only from 1600 × 850 CSS px on
+  fine-pointer displays. Its container grows from 1200 to 1440 px, with larger
+  liturgy, quotation, Mass cards and day controls. Mobile, ordinary laptop widths,
+  short desktops and coarse-pointer layouts retain their existing rules. Hero
+  viewport sizing, church photo, swipe behavior and fixed date navigation remain.
+- Fixed a browser-test hydration race: wait until the measured header CSS height
+  matches the masthead before recording the toolbar test's initial hero height.
+  The previous CI failure captured the 88 px SSR fallback before the 72 px real
+  header measurement. All scroll-stability assertions remain unchanged.
+- Verification: formatter/types and 95 unit passes (two opt-in skips), fixture
+  production build, 45 public/content/layout/accessibility browser passes and one
+  optional skip. Reviewed React structure and CSS specificity independently.
+  Visual/computed checks covered 320–2560 px, long hours, preparation and lector
+  actions, five Sunday Masses and twelve synthetic Mass cards. No ordinary-width
+  horizontal overflow; day controls remained visible. Additional automated
+  accessibility checks found no violations on the 1920 px hero and 320 px marriage
+  page. The owned preview uses port 3114 and `.next-preview`.
+- Final whole-range hours adjustment: repeated checks/build and five focused
+  browser/content/accessibility passes. A 1600 × 850 hero with a longer liturgy
+  title and five Masses fits without content or horizontal overflow.
+
+
+### Tall desktop hero and community follow-ups — 9 November 2026
+
+- The owner's tall desktop screenshot exposed a gap in the preceding width-only
+  enlargement: a 1490 × 1546 CSS-pixel viewport never reached its 1600 px guard.
+  Replaced it with one capped growth value constrained by available desktop
+  width and height. Title, rank, verse, divider, Mass cards and date controls grow
+  together; the 1440 × 900 laptop baseline and mobile/coarse-pointer rules remain.
+  At the reproduced tall size the title grows from 44.7 to 75.9 px and Mass cards
+  from 160 to 238 px. At larger widths growth caps and the carousel keeps its
+  existing internal scrolling and viewport-bottom date navigation.
+- Footer utilities now form a labeled navigation row beside copyright, with
+  quieter author credits below. All original destinations/names remain and links
+  retain 44 px targets; narrower layouts stack naturally, including 200% text.
+- Restored uppercase community fact labels at the owner's request. Community
+  contact names and telephone links now use the same definition-list hierarchy
+  as the meeting information, including the main ministrant contact.
+- Removed only the children's choir's WhatsApp aside sentence as requested.
+  Added the owner-supplied lector contact Zuzana Caudtová, both phone numbers and
+  a short sacristy/call invitation. The original private lector schedule dialog
+  remains available in the new contact sidebar; source provenance is unchanged.
+- Verification: formatter/types, 95 unit passes (two opt-in skips) and a fixture
+  production build. Extended the existing crowded-Mass layout check with the
+  tall screenshot shape. Visual/computed checks cover 390, 1440, 1490, 1920,
+  2560 and 3440 px heroes and 320–1440 px footer/contact cards; no horizontal
+  overflow was found. Tall hero and mobile lector-page accessibility checks
+  found no violations. Footer text at 200% fits and link targets remain 44 px.
+  CSS and component review found no blocking concerns. The owned preview
+  uses port 3114 and `.next-preview`.
+- Full public/content/layout/accessibility and lector browser run: 52 passes,
+  one optional skip, including modal focus, refresh/new-tab authorization reset,
+  all 22 approved static layouts and the tall crowded-schedule regression.
+
 ### Editable sacrament/service pages and hero line breaks — 9 November 2026
 
 - Implemented [D32](decisions.md#d32--sacrament-and-service-pages-are-editable-in-the-cms-9-november-2026)

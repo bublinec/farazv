@@ -100,28 +100,10 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
         </div>
       </div>
       <div className={`container ${styles.bottom}`}>
-        <span>
+        <span className={styles.copyright}>
           © {new Date().getFullYear()} {siteConfig.name}
         </span>
-        <p className={styles.credit}>
-          Pre našu farnosť ·{" "}
-          <a
-            href="https://www.linkedin.com/in/juraj-bublinec"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Juraj Bublinec
-          </a>{" "}
-          ·{" "}
-          <a
-            href="https://www.linkedin.com/in/filipstasek/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Filip Stašek
-          </a>
-        </p>
-        <div className={styles.bottomLinks}>
+        <nav className={styles.bottomLinks} aria-label="Doplnkové odkazy">
           <a
             href="https://farazv.netlify.app/"
             target="_blank"
@@ -135,7 +117,27 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
           <Link href="/admin">
             <Icon name="lock" size={14} /> Admin
           </Link>
-        </div>
+        </nav>
+        <p className={styles.credit}>
+          <span>Pre našu farnosť ·</span>{" "}
+          <span className={styles.creditAuthors}>
+            <a
+              href="https://www.linkedin.com/in/juraj-bublinec"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Juraj Bublinec
+            </a>{" "}
+            ·{" "}
+            <a
+              href="https://www.linkedin.com/in/filipstasek/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Filip Stašek
+            </a>
+          </span>
+        </p>
       </div>
     </footer>
   );

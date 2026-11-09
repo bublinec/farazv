@@ -217,6 +217,87 @@
   padding: 20px 30px;
 }
 
+/* Scale the whole composition when desktop width and height both allow it. */
+@media (min-width: 1100px) and (min-height: 900px) and (pointer: fine) {
+  .hero {
+    --hero-growth: clamp(
+      0px,
+      min(calc((100vw - 1100px) * 0.08), calc((100dvh - 900px) * 0.12)),
+      40px
+    );
+  }
+
+  .hero .inner {
+    width: min(
+      calc(1200px + var(--hero-growth) * 6),
+      1440px,
+      calc(100% - 80px)
+    );
+    gap: calc(36px + var(--hero-growth) * 0.3);
+    padding-bottom: calc(20px + var(--hero-growth) * 0.25);
+  }
+
+  .hero .content :is(h1, h2) {
+    font-size: calc(clamp(1.75rem, 3vw, 2.5rem) + var(--hero-growth));
+  }
+
+  .liturgyType {
+    font-size: calc(1.05rem + var(--hero-growth) * 0.2);
+  }
+
+  .divider {
+    gap: calc(14px + var(--hero-growth) * 0.2);
+    margin-bottom: calc(20px + var(--hero-growth) * 0.4);
+  }
+
+  .divider span {
+    width: calc(37px + var(--hero-growth) * 0.6);
+  }
+
+  .divider svg {
+    width: calc(25px + var(--hero-growth) * 0.25);
+    height: calc(25px + var(--hero-growth) * 0.25);
+  }
+
+  .masses {
+    gap: calc(13px + var(--hero-growth) * 0.3);
+  }
+
+  .mass {
+    min-width: calc(160px + var(--hero-growth) * 2.5);
+    padding: calc(15px + var(--hero-growth) * 0.4)
+      calc(24px + var(--hero-growth) * 0.4)
+      calc(17px + var(--hero-growth) * 0.4);
+  }
+
+  .mass strong {
+    font-size: calc(1.9rem + var(--hero-growth) * 0.6);
+  }
+
+  .designation,
+  .celebrant,
+  .notice {
+    font-size: calc(0.85rem + var(--hero-growth) * 0.15);
+  }
+
+  .notice {
+    max-width: calc(530px + var(--hero-growth) * 4);
+  }
+
+  .direction,
+  .dayButton span {
+    font-size: calc(0.85rem + var(--hero-growth) * 0.1);
+  }
+
+  .dayButton {
+    min-height: calc(55px + var(--hero-growth) * 0.6);
+  }
+
+  .dayButton strong {
+    font-size: calc(0.95rem + var(--hero-growth) * 0.1);
+  }
+}
+
 @media (max-width: 900px), (pointer: coarse) {
   .hero {
     /* Browser toolbars must not resize the page while a finger scrolls it. */

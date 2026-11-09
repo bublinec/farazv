@@ -21,58 +21,8 @@
 }
 
 .chapter p {
-  font-size: 1rem;
-  line-height: 1.8;
-}
-
-.sourceDetails {
-  position: relative;
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-
-.sourceDetails summary {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 44px;
-  cursor: pointer;
-  list-style: none;
-}
-
-.sourceDetails summary::-webkit-details-marker {
-  display: none;
-}
-
-.sourceDetails[open] summary svg {
-  transform: rotate(180deg);
-}
-
-.sourceDetails ul {
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  width: min(350px, calc(100vw - 48px));
-  margin: 4px 0 0;
-  padding: 12px 20px;
-  list-style: none;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
-}
-
-.sourceDetails li + li {
-  border-top: 1px solid var(--line);
-}
-
-.sourceDetails a {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-  padding-block: 8px;
-  color: inherit;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font-size: 0.95rem;
+  line-height: 1.7;
 }
 
 .sidebar {
@@ -99,13 +49,13 @@
 
 .visit h2 {
   color: var(--blue-deep);
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   margin-bottom: 12px;
 }
 
 .visit p {
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .visit a {
@@ -295,10 +245,6 @@
 }
 
 @media (max-width: 650px) {
-  .sourceDetails ul {
-    right: auto;
-    left: 0;
-  }
   .tourGrid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -307,5 +253,12 @@
   }
   .visit > img {
     height: 240px;
+  }
+}
+
+@media (max-width: 760px) {
+  .chapter p {
+    font-size: 0.9rem;
+    line-height: 1.65;
   }
 }

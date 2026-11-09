@@ -300,6 +300,7 @@ for (const width of [390, 1440]) {
 
 for (const viewport of [
   { width: 1440, height: 1080 },
+  { width: 1490, height: 1546 },
   { width: 390, height: 844 },
   { width: 320, height: 568 }
 ]) {
@@ -451,6 +452,18 @@ test.describe("touchscreen desktop-site viewport", () => {
     expect(
       await page.evaluate(() => matchMedia("(pointer: coarse)").matches)
     ).toBe(true);
+    // Font readiness can precede hydration's measured header height.
+    await expect
+      .poll(() =>
+        hero.evaluate((element) => {
+          const header = document.querySelector("header")!;
+          const measuredHeight = Number.parseFloat(
+            getComputedStyle(element).getPropertyValue("--site-header-height")
+          );
+          return measuredHeight - header.getBoundingClientRect().height;
+        })
+      )
+      .toBeCloseTo(0, 0);
     const initialHeight = await hero.evaluate(
       (element) => element.getBoundingClientRect().height
     );

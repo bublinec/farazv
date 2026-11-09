@@ -201,7 +201,7 @@ export function Header({ items = navigation }: { items?: NavigationItem[] }) {
           className="button"
           onClick={closeMenu}
         >
-          Rozpis svätých omší
+          Farské oznamy
           <Icon name="arrow-right" size={17} />
         </Link>
         <LectorScheduleDialog

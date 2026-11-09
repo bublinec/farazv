@@ -1,6 +1,6 @@
 .band {
-  --prose-font-size: 1.08rem;
-  --prose-line-height: 1.75;
+  --prose-font-size: 1rem;
+  --prose-line-height: 1.7;
   --prose-paragraph-gap: 0;
   --prose-width: none;
   margin: 0;
@@ -8,8 +8,8 @@
   background: color-mix(in srgb, var(--blue) 7%, var(--white));
   border-bottom: 1px solid var(--line);
   color: var(--muted);
-  font-size: 1.08rem;
-  line-height: 1.75;
+  font-size: 1rem;
+  line-height: 1.7;
   text-align: center;
   scroll-margin-top: 32px;
 }
@@ -120,10 +120,17 @@
   gap: 8px;
 }
 
+@media (max-width: 760px) {
+  .band {
+    --prose-font-size: 0.9rem;
+    --prose-line-height: 1.6;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+}
+
 @media (max-width: 550px) {
   .band {
-    --prose-font-size: 1rem;
-    font-size: 1rem;
     padding-block: 26px;
   }
 

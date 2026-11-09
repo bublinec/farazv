@@ -29,18 +29,20 @@ function PriestCards({
             className={styles.priestCard}
             key={`${priest.name}-${priest.role}`}
           >
-            {priest.image ? (
-              <MediaImage
-                image={priest.image}
-                sizes="(max-width: 480px) 100px, (max-width: 760px) 34vw, (max-width: 1280px) 33vw, 382px"
-                quality="high"
-              />
-            ) : (
-              <div className={styles.priestPlaceholder} aria-hidden="true">
-                ✝
-              </div>
-            )}
-            <div>
+            <div className={styles.priestPortrait}>
+              {priest.image ? (
+                <MediaImage
+                  image={priest.image}
+                  sizes="(max-width: 480px) 96px, (max-width: 760px) 25vw, (max-width: 1280px) 33vw, 382px"
+                  quality="high"
+                />
+              ) : (
+                <div className={styles.priestPlaceholder} aria-hidden="true">
+                  ✝
+                </div>
+              )}
+            </div>
+            <div className={styles.priestInfo}>
               <h3>{priest.name}</h3>
               <p className={styles.priestRole}>
                 {priest.role.replace(/farský vikár/gi, "Kaplán")}
@@ -73,6 +75,8 @@ export async function ContactPage({
         settings.address
       )}`
     : "";
+
+  const addressLines = settings?.address.split(/,\s*/) ?? [];
 
   return (
     <>
@@ -193,7 +197,14 @@ export async function ContactPage({
                   <div>
                     <dt>Adresa:</dt>
                     <dd>
-                      <address>{settings.address}</address>
+                      <address>
+                        {addressLines.map((line, index) => (
+                          <span key={`${index}-${line}`}>
+                            {line}
+                            {index < addressLines.length - 1 ? ", " : ""}
+                          </span>
+                        ))}
+                      </address>
                     </dd>
                   </div>
                   {settings.ico ? (

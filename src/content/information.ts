@@ -309,7 +309,6 @@ const pageDefinitions: InformationPageConfiguration[] = [
     slug: "spolocenstva/detsky-spevokol",
     aside: {
       title: "Pridaj sa k Alžbetke",
-      description: "Zbor komunikuje cez WhatsApp.",
       contact: {
         name: "Manželia Liečkovci",
         phones: ["+421 949 739 289", "+421 949 171 777"]
@@ -421,9 +420,13 @@ const pageDefinitions: InformationPageConfiguration[] = [
   {
     slug: "spolocenstva/lektori",
     aside: {
-      title: "Chceš sa stať lektorom?",
+      title: "Chcete sa stať lektorom?",
       description:
-        "Oslov kňaza po svätej omši alebo kontaktuj farskú kanceláriu. Dohodneš sa na príprave a možnostiach služby."
+        "Príďte po svätej omši do sakristie alebo zavolajte na uvedené číslo.",
+      contact: {
+        name: "Zuzana Caudtová",
+        phones: ["0902 227 080", "0910 864 134"]
+      }
     },
     title: "Lektori",
     eyebrow: "Služba vo farnosti",
