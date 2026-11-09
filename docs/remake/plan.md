@@ -1139,3 +1139,34 @@ those authenticated actions were not performed by this verification.
   because the ordinary fixture settings have no priests; no records were saved.
   Mobile portrait/card heights matched exactly in those samples. The owned
   preview used port 3114 and `.next-preview`; other development servers remained.
+
+
+### Sidebar hierarchy and large desktop hero — 9 November 2026
+
+- Grouped office/community card headings, contact methods, hours, preparation and
+  actions with consistent spacing and quiet dividers. Phone text is now 20 px,
+  section headings 17.1 px and supporting notes 14.4 px; contact targets retain
+  at least 44 px height. Hours use constrained columns, with separate time ranges
+  on separate lines. All stored contact facts and time strings are preserved.
+- Reduced oversized mobile magazine-card titles and the church visit-card text;
+  resource links have more compact type/padding and nonshrinking arrow controls.
+- Added capped fluid scaling to the homepage hero only from 1600 × 850 CSS px on
+  fine-pointer displays. Its container grows from 1200 to 1440 px, with larger
+  liturgy, quotation, Mass cards and day controls. Mobile, ordinary laptop widths,
+  short desktops and coarse-pointer layouts retain their existing rules. Hero
+  viewport sizing, church photo, swipe behavior and fixed date navigation remain.
+- Fixed a browser-test hydration race: wait until the measured header CSS height
+  matches the masthead before recording the toolbar test's initial hero height.
+  The previous CI failure captured the 88 px SSR fallback before the 72 px real
+  header measurement. All scroll-stability assertions remain unchanged.
+- Verification: formatter/types and 95 unit passes (two opt-in skips), fixture
+  production build, 45 public/content/layout/accessibility browser passes and one
+  optional skip. Reviewed React structure and CSS specificity independently.
+  Visual/computed checks covered 320–2560 px, long hours, preparation and lector
+  actions, five Sunday Masses and twelve synthetic Mass cards. No ordinary-width
+  horizontal overflow; day controls remained visible. Additional automated
+  accessibility checks found no violations on the 1920 px hero and 320 px marriage
+  page. The owned preview uses port 3114 and `.next-preview`.
+- Final whole-range hours adjustment: repeated checks/build and five focused
+  browser/content/accessibility passes. A 1600 × 850 hero with a longer liturgy
+  title and five Masses fits without content or horizontal overflow.

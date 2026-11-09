@@ -45,43 +45,66 @@ export async function OfficeAside({
 
   return (
     <aside className={styles.officeAside} aria-label="Farská kancelária">
-      <h2>{title}</h2>
-      {description ? <p>{description}</p> : null}
-      <a
-        className={styles.officePhone}
-        href={`tel:${settings.phone.replace(/\s/g, "")}`}
-      >
-        {settings.phone}
-      </a>
-      <a className={styles.officeEmail} href={`mailto:${settings.email}`}>
-        {settings.email}
-      </a>
-      {settings.officeHours.length ? (
-        <h3 className={styles.asideLabel}>Úradné hodiny</h3>
+      <header className={styles.asideHeading}>
+        <h2>{title}</h2>
+        {description ? <p>{description}</p> : null}
+      </header>
+      <div className={styles.officeContacts}>
+        <a
+          className={styles.officePhone}
+          href={`tel:${settings.phone.replace(/\s/g, "")}`}
+        >
+          {settings.phone}
+        </a>
+        <a className={styles.officeEmail} href={`mailto:${settings.email}`}>
+          {settings.email}
+        </a>
+      </div>
+      {settings.officeHours.length || settings.officeNote ? (
+        <div className={styles.officeSection}>
+          {settings.officeHours.length ? (
+            <>
+              <h3 className={styles.asideLabel}>Úradné hodiny</h3>
+              <dl className={styles.hours}>
+                {settings.officeHours.map((hours) => (
+                  <div key={hours.day}>
+                    <dt>{hours.day}</dt>
+                    <dd>
+                      {hours.time.split(" a ").map((time, index) => (
+                        <span key={`${index}-${time}`}>
+                          {index ? " a " : null}
+                          {time}
+                        </span>
+                      ))}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </>
+          ) : null}
+          {settings.officeNote ? (
+            <p className={styles.asideNote}>{settings.officeNote}</p>
+          ) : null}
+        </div>
       ) : null}
-      <dl className={styles.hours}>
-        {settings.officeHours.map((hours) => (
-          <div key={hours.day}>
-            <dt>{hours.day}</dt>
-            <dd>{hours.time}</dd>
-          </div>
-        ))}
-      </dl>
-      {settings.officeNote ? <p>{settings.officeNote}</p> : null}
       {preparation ? (
         <div className={styles.preparation}>
-          <span>
+          <h3 className={styles.asideLabel}>
             {preparationType === "baptism"
               ? "Príprava na krst"
               : "Predmanželská náuka"}
-          </span>
+          </h3>
           <strong>{preparation.time}</strong>
           {settings.preparationNote ? (
             <small>{settings.preparationNote}</small>
           ) : null}
         </div>
       ) : null}
-      {showLectorSchedules ? <LectorScheduleDialog /> : null}
+      {showLectorSchedules ? (
+        <div className={styles.asideAction}>
+          <LectorScheduleDialog />
+        </div>
+      ) : null}
       <Link href="/kontakt" className={styles.textLink}>
         Všetky kontakty a adresa <Arrow />
       </Link>

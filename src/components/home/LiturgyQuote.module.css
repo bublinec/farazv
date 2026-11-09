@@ -81,6 +81,24 @@
   }
 }
 
+@media (min-width: 1600px) and (min-height: 850px) and (pointer: fine) {
+  .space {
+    min-height: clamp(106px, 8vw, 160px);
+  }
+
+  .calendarLink {
+    width: min(100%, clamp(560px, 36vw, 760px));
+  }
+
+  .quote blockquote {
+    font-size: clamp(1.1rem, 1.25vw, 1.4rem);
+  }
+
+  .mark {
+    font-size: 72px;
+  }
+}
+
 @media (max-width: 900px), (pointer: coarse) {
   .space {
     min-height: 72px;

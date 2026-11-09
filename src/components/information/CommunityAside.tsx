@@ -24,8 +24,10 @@ export function CommunityAside({ page }: { page: InformationPageDefinition }) {
       className={styles.communityAside}
       aria-label={page.aside?.title ?? "Praktické informácie"}
     >
-      <h2>{page.aside?.title ?? "Praktické informácie"}</h2>
-      {page.aside?.description ? <p>{page.aside.description}</p> : null}
+      <header className={styles.asideHeading}>
+        <h2>{page.aside?.title ?? "Praktické informácie"}</h2>
+        {page.aside?.description ? <p>{page.aside.description}</p> : null}
+      </header>
       {page.facts?.length ? (
         <dl className={styles.facts}>
           {page.facts.map((fact) => (
@@ -39,17 +41,18 @@ export function CommunityAside({ page }: { page: InformationPageDefinition }) {
       {contact ? (
         <div className={styles.asideContact}>
           <h3>Kontakt</h3>
-          <p>{contact.name}</p>
-          {contact.phones.map((phone) => (
-            <div key={phone}>
+          <p className={styles.asideContactName}>{contact.name}</p>
+          <div className={styles.officeContacts}>
+            {contact.phones.map((phone) => (
               <a
+                key={phone}
                 className={styles.officePhone}
                 href={`tel:${phone.replace(/\s/g, "")}`}
               >
                 {phone}
               </a>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       ) : (
         <Link className={styles.textLink} href="/kontakt">

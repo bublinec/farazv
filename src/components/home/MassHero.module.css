@@ -217,6 +217,63 @@
   padding: 20px 30px;
 }
 
+/* Grow with a large desktop canvas without changing laptop or touch layouts. */
+@media (min-width: 1600px) and (min-height: 850px) and (pointer: fine) {
+  .hero .inner {
+    width: min(clamp(1200px, 75vw, 1440px), calc(100% - 96px));
+    gap: clamp(36px, 3dvh, 48px);
+    padding-bottom: 28px;
+  }
+
+  .hero .content :is(h1, h2) {
+    font-size: clamp(2.5rem, 2.8vw, 3.5rem);
+  }
+
+  .liturgyType {
+    font-size: clamp(1.05rem, 1.05vw, 1.3rem);
+  }
+
+  .divider {
+    margin-bottom: 24px;
+  }
+
+  .masses {
+    gap: clamp(13px, 1vw, 22px);
+  }
+
+  .mass {
+    min-width: clamp(160px, 10.5vw, 220px);
+    padding: clamp(17px, 1.2vw, 26px) 28px;
+  }
+
+  .mass strong {
+    font-size: clamp(1.9rem, 2.2vw, 2.8rem);
+  }
+
+  .designation,
+  .celebrant {
+    font-size: clamp(0.85rem, 0.9vw, 1.05rem);
+  }
+
+  .notice {
+    max-width: 620px;
+    font-size: 0.95rem;
+  }
+
+  .direction,
+  .dayButton span {
+    font-size: 0.95rem;
+  }
+
+  .dayButton {
+    min-height: 64px;
+  }
+
+  .dayButton strong {
+    font-size: 1.1rem;
+  }
+}
+
 @media (max-width: 900px), (pointer: coarse) {
   .hero {
     /* Browser toolbars must not resize the page while a finger scrolls it. */
