@@ -15,10 +15,11 @@
   font-family: var(--font-body);
 }
 
+/* MapLibre positions markers absolutely; overriding that offsets later markers.
+   The height ends exactly at the pin tip, so the tip touches the coordinate. */
 .marker {
-  position: relative;
   width: 40px;
-  height: 44px;
+  height: 38px;
   pointer-events: none;
 }
 
@@ -45,7 +46,7 @@
 
 .markerLabel {
   position: absolute;
-  bottom: 49px;
+  bottom: 43px;
   left: 50%;
   transform: translateX(-50%);
   color: var(--blue-deep);

@@ -1250,3 +1250,17 @@ those authenticated actions were not performed by this verification.
   failures: `/kontakt` 320 px overflow and its accessibility case, and the
   320 px crowded hero ratio. Screens were checked at 390 px and 1366 px.
 
+
+### Contact map church pin — 10 November 2026
+
+- The church pin drifted while zooming. The marker CSS set `position: relative`,
+  which overrode MapLibre's absolute marker positioning. The second marker (the
+  church) therefore sat in normal flow below the first and was offset 38 px from
+  its coordinate at every zoom. The marker now keeps MapLibre's positioning, and
+  its height ends at the pin tip.
+- Verification: in a local MapLibre harness with the real marker CSS, the pin
+  tips were 38 px (church) and 6 px (office) from their coordinates before the
+  fix. After it, both were within 0.5 px at zoom 14, 16.5 and 18.5. Added a
+  regression test that fails on the old CSS. npm check passed with 104 passes
+  and two opt-in skips. Live map tiles could not be loaded from the cloud
+  environment.
