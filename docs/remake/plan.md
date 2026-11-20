@@ -1279,3 +1279,20 @@ those authenticated actions were not performed by this verification.
 - Next.js 16.4.3 reported an applicable security advisory during the first
   build. Its documented same-command retry passed; this content-only correction
   does not remediate the dependency advisory. A security upgrade remains needed.
+
+
+### Lector contact privacy correction
+
+- Follow-up to the 9 November contact addition: restored the original lector
+  sidebar invitation and parish-office fallback at the owner's request. Removed
+  the named personal contact and both phone numbers from the code defaults.
+  The lector schedule dialog remains available. No other page content changed.
+- Verification for commit `3bb6de6`: baseline project checks (104 unit passes,
+  two opt-in skips), fixture production build and eight lector/static-content
+  browser passes. The live lector page was checked after its automatic Vercel
+  deployment: restored office guidance, retained schedule button, and no removed
+  personal contact in visible content, telephone links or embedded page HTML.
+- The first local build paused on Next.js 16.4.3's security advisory. The same
+  build succeeded using its documented retry, without changing dependencies.
+  The advisory remains an outstanding framework security update; no external
+  dependency audit or upgrade was run for this content correction.
