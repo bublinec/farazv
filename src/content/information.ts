@@ -420,13 +420,9 @@ const pageDefinitions: InformationPageConfiguration[] = [
   {
     slug: "spolocenstva/lektori",
     aside: {
-      title: "Chcete sa stať lektorom?",
+      title: "Chceš sa stať lektorom?",
       description:
-        "Príďte po svätej omši do sakristie alebo zavolajte na uvedené číslo.",
-      contact: {
-        name: "Zuzana Caudtová",
-        phones: ["0902 227 080", "0910 864 134"]
-      }
+        "Oslov kňaza po svätej omši alebo kontaktuj farskú kanceláriu. Dohodneš sa na príprave a možnostiach služby."
     },
     title: "Lektori",
     eyebrow: "Služba vo farnosti",

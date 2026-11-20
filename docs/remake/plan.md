@@ -1264,3 +1264,18 @@ those authenticated actions were not performed by this verification.
   regression test that fails on the old CSS. npm check passed with 104 passes
   and two opt-in skips. Live map tiles could not be loaded from the cloud
   environment.
+
+
+### Lector contact privacy correction
+
+- At the owner's request, reversed the personal lector contact added on
+  9 November 2026. Restored the original invitation to speak with a priest or
+  the parish office, so the sidebar uses current published parish-office
+  settings again. The lector schedule dialog is retained. No personal phone
+  numbers are repeated in this correction record.
+- Verification: project checks passed (104 unit passes, two opt-in skips),
+  fixture build and eight lector/static-content browser checks. The rendered
+  mobile page contains no removed contact text or telephone links.
+- Next.js 16.4.3 reported an applicable security advisory during the first
+  build. Its documented same-command retry passed; this content-only correction
+  does not remediate the dependency advisory. A security upgrade remains needed.
